@@ -4,7 +4,7 @@ Compile:
 Windows
 	mkdir build; cd build;
 	cmake -G "Visual Studio 14 2015" ..
-	make
+	Open solution in Visual Studio
 
 Unix
 	mkdir build; cd build
