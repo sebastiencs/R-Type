@@ -1,32 +1,41 @@
-cmake_minimum_required(VERSION 3.0)
 
-include_directories(
-  includes
+set(COMMON_INCLUDES
+  ${CMAKE_CURRENT_SOURCE_DIR}/includes
+  PARENT_SCOPE
   )
 
-file(
-	GLOB
-	source_files
-	includes/I*
-	includes/Thread.hh
-	includes/Socket.hh
-)
-  
-if(${UNIX})
+file(GLOB
+  CURRENTSOURCES
+  includes/Debug.hh
+  includes/I*
+  includes/Thread.hh
+  includes/Socket.hh
+  )
 
-	file(
-	GLOB
-	source_files
-	src/*Unix.cpp
-	includes/*Unix.hh
-	)
-	
-else if (WIN32)
+set(COMMON_SOURCES
+  ${CURRENTSOURCES}
+  )
 
-	file(
-	GLOB
-	source_files
-	src/*.Win.cpp
-	)
+if (${UNIX})
+
+  file(GLOB
+    CURRENTSOURCES
+    src/*Unix.cpp
+    includes/*Unix.hh
+    )
+
+elseif (WIN32)
+
+  file(GLOB
+    CURRENTSOURCES
+    src/*.Win.cpp
+    includes/*Win.hh
+    )
 
 endif()
+
+set(COMMON_SOURCES
+  ${COMMON_SOURCES}
+  ${CURRENTSOURCES}
+  PARENT_SCOPE
+  )

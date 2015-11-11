@@ -17,27 +17,49 @@ endfunction()
 
 ForceBuildDir()
 
-project(Server)
+project("R-Type")
 
 add_subdirectory(common)
 add_subdirectory(server)
+add_subdirectory(client)
 
+include_directories(
+  ${COMMON_INCLUDES}
+  ${SERVER_INCLUDES}
+  )
 
 add_executable(
-  server
-  ${source_files}
+  Server
+  ${COMMON_SOURCES}
+  ${SERVER_SOURCES}
   )
 
-add_definitions(
-  -std=c++11
-  -DDEBUG
+add_executable(
+  Client
+  ${COMMON_SOURCES}
+  ${CLIENT_SOURCES}
   )
 
-set_property(TARGET server PROPERTY CXX_STANDARD 11)
-set_property(TARGET server PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(GLOBAL PROPERTY CXX_STANDARD 11)
+set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
 
-target_link_libraries(
-  server
-  pthread
-  dl
-  )
+if (${UNIX})
+
+  add_definitions(
+    -std=c++11
+    -DDEBUG
+    )
+
+  target_link_libraries(
+    Server
+    pthread
+    dl
+    )
+
+  target_link_libraries(
+    Client
+    pthread
+    dl
+    )
+
+endif()
