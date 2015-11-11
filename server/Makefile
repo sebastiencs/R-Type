@@ -18,7 +18,8 @@ SRC			= src/main.cpp				\
 			  src/Network.cpp			\
 			  $(DIR_COMMON)/src/ThreadUnix.cpp	\
 			  $(DIR_COMMON)/src/SocketTCPUnix.cpp	\
-			  $(DIR_COMMON)/src/SocketUDPUnix.cpp
+			  $(DIR_COMMON)/src/SocketUDPUnix.cpp	\
+			  $(DIR_COMMON)/src/DynamicLibUnix.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 
@@ -33,7 +34,8 @@ MACROS			= -D DEFAULT_PORT=4242
 
 override CXXFLAGS	+= -std=c++11 -Wall -Wextra $(INCLUDES) ${MACROS}
 
-LDLIBS			+= -lpthread
+LDLIBS			+= -lpthread	\
+			   -ldl
 
 DEPS			= $(OBJ:.o=.d)
 
