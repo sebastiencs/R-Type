@@ -26,6 +26,7 @@ DynamicLibWin::~DynamicLibWin()
 
 std::function<void()>	DynamicLibWin::getFunc(const std::string &func) const
 {
+  static std::function<void()> f = []() {};
   (void)func;
-  return (0);
+  return (f);
 }

@@ -11,12 +11,13 @@
 #ifndef THREADWIN_H_
 # define THREADWIN_H_
 
+# include <Windows.h>
 # include "IThread.hh"
 
 class		ThreadWin : public IThread
 {
 private:
-  pthread_t	_thread;
+  HANDLE	_thread;
   bool		_running;
 
 public:

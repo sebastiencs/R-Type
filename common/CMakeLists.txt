@@ -28,7 +28,7 @@ elseif (WIN32)
 
   file(GLOB
     CURRENTSOURCES
-    src/*.Win.cpp
+    src/*Win.cpp
     includes/*Win.hh
     )
 

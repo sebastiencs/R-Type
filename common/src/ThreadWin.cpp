@@ -25,11 +25,13 @@ ThreadWin::~ThreadWin()
 
 bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
 {
+	return (true);
 }
 
 std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &func = 0, int save = 0)
 {
-  return (0);
+	static std::function<void *(void *)> f = [](void *param) -> void * { return (0); };
+  return (f);
 }
 
 void	*jump(void *arg)
