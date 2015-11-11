@@ -19,19 +19,9 @@ ForceBuildDir()
 
 project(Server)
 
-include_directories(
-  includes
-  ../common/includes
-  )
+add_subdirectory(common)
+add_subdirectory(server)
 
-file(
-  GLOB_RECURSE
-  source_files
-  src/*
-  includes/*
-  ../common/src/*
-  ../common/includes/*
-  )
 
 add_executable(
   server
@@ -42,6 +32,9 @@ add_definitions(
   -std=c++11
   -DDEBUG
   )
+
+set_property(TARGET server PROPERTY CXX_STANDARD 11)
+set_property(TARGET server PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_link_libraries(
   server

@@ -9,7 +9,6 @@
 //
 
 #include <stdexcept>
-#include <netdb.h>
 #include "SocketUDPWin.hh"
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)

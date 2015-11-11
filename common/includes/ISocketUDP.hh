@@ -20,6 +20,7 @@ typedef int	socket_t;
 # elif defined(_WIN32)
 
 typedef void *	socket_t;
+typedef SSIZE_T ssize_t;
 
 # else
 
