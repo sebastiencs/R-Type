@@ -17,6 +17,8 @@
 # define DEFAULT_PORT	(4242)
 #endif // !DEFAULT_PORT
 
+#include "Socket.hh"
+
 int				main(int argc, char **argv)
 {
   std::unique_ptr<Server>	server;
@@ -28,6 +30,23 @@ int				main(int argc, char **argv)
 
   server.reset(new Server(port));
 
+  ISocketTCP *socket = new SocketTCP(SocketTCPUnix::SERVER);
+
+  char buffer[512];
+
+  socket->bind(port);
+  socket->listen(10);
+
+  ISocketTCP *client = socket->accept();
+
+  while (1) {
+    if (client->read(buffer, 10) > 0) {
+      std::cout << "BUFFER: " << buffer;
+    }
+  }
+
   std::cout << "PORT: " << port << std::endl;
+
+
   return (0);
 }
