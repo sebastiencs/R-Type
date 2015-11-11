@@ -1,15 +1,15 @@
 //
-// ISocketTCP.hh for epitech in /home/chapui_s/rendu/
+// ISocketUDP.hh for epitech in /home/chapui_s/rendu/
 //
 // Made by chapui_s
 // Login   <chapui_s@epitech.eu>
 //
-// Started on  Wed Nov 11 03:33:02 2015 chapui_s
-// Last update Wed Nov 11 03:33:02 2015 chapui_s
+// Started on  Wed Nov 11 10:30:12 2015 chapui_s
+// Last update Wed Nov 11 10:30:12 2015 chapui_s
 //
 
-#ifndef ISOCKETTCP_H_
-# define ISOCKETTCP_H_
+#ifndef ISOCKETUDP_H_
+# define ISOCKETUDP_H_
 
 # ifdef __unix__
 
@@ -29,18 +29,16 @@ typedef void *	socket_t;
 
 # include <string>
 
-class		ISocketTCP
+class		ISocketUDP
 {
 public:
 
-  virtual ~ISocketTCP() {};
+  virtual ~ISocketUDP() {};
 
-  virtual ISocketTCP	*accept() = 0;
   virtual int		connect(const std::string &, uint16_t) = 0;
   virtual int		bind(uint16_t) = 0;
-  virtual int		listen(int) = 0;
   virtual ssize_t	write(const void *, size_t) = 0;
   virtual ssize_t	read(void *, size_t) = 0;
 };
 
-#endif /* !ISOCKETTCP_H_ */
+#endif /* !ISOCKETUDP_H_ */

@@ -17,7 +17,8 @@ SRC			= src/main.cpp				\
 			  src/Party.cpp				\
 			  src/Network.cpp			\
 			  $(DIR_COMMON)/src/ThreadUnix.cpp	\
-			  $(DIR_COMMON)/src/SocketTCPUnix.cpp
+			  $(DIR_COMMON)/src/SocketTCPUnix.cpp	\
+			  $(DIR_COMMON)/src/SocketUDPUnix.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 

@@ -19,7 +19,7 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
 {
   _fd = socket(AF_INET, SOCK_STREAM, 0);
 
-  if (type == SocketTCPUnix::SERVER) {
+  if (_fd >= 0 && type == SocketTCPUnix::SERVER) {
     char unused;
     if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &unused, sizeof unused)) {
       DEBUG_MSG("setsockopt error");
@@ -42,6 +42,7 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type,
     _addr(),
     _type(type)
 {
+  DEBUG_MSG("SocketTCPUnix created");
 }
 
 SocketTCPUnix::~SocketTCPUnix()
@@ -113,7 +114,7 @@ int	SocketTCPUnix::bind(uint16_t port)
   _addr.sin_addr.s_addr = INADDR_ANY;
   _addr.sin_port = htons(port);
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
-    DEBUG_MSG("listen failed");
+    DEBUG_MSG("bind() failed");
     _error = 1;
     return (-1);
   }
@@ -127,7 +128,7 @@ int	SocketTCPUnix::listen(int max)
   }
 
   if (::listen(_fd, max) == -1) {
-    DEBUG_MSG("listen failed");
+    DEBUG_MSG("listen() failed");
     return (-1);
   }
   return (0);

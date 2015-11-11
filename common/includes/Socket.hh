@@ -14,12 +14,16 @@
 # ifdef __unix__
 
 #   include "SocketTCPUnix.hh"
+#   include "SocketUDPUnix.hh"
 typedef SocketTCPUnix SocketTCP;
+typedef SocketUDPUnix SocketUDP;
 
 # elif defined(_WIN32)
 
-#   include "ThreadWin.hh"
+#   include "SocketTCPWin.hh"
+#   include "SocketUDPWin.hh"
 typedef SocketTCPWin SocketTCP;
+typedef SocketUDPWin SocketUDP;
 
 # else
 

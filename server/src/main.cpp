@@ -30,23 +30,19 @@ int				main(int argc, char **argv)
 
   server.reset(new Server(port));
 
-  ISocketTCP *socket = new SocketTCP(SocketTCPUnix::SERVER);
+  ISocketUDP *socket = new SocketUDP(SocketUDP::SERVER);
 
   char buffer[512];
 
   socket->bind(port);
-  socket->listen(10);
-
-  ISocketTCP *client = socket->accept();
 
   while (1) {
-    if (client->read(buffer, 10) > 0) {
-      std::cout << "BUFFER: " << buffer;
-    }
+    socket->read(buffer, 10);
+    std::cout << "BUFFER: " << buffer;
+    socket->write(buffer, 10);
   }
 
   std::cout << "PORT: " << port << std::endl;
-
 
   return (0);
 }
