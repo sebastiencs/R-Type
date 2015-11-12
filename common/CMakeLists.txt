@@ -30,6 +30,7 @@ elseif (WIN32)
     CURRENTSOURCES
     src/*Win.cpp
     includes/*Win.hh
+    includes/WSA.hh
     )
 
 endif()

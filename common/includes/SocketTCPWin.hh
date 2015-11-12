@@ -20,6 +20,10 @@ public:
 
   typedef enum { SERVER = 2, CLIENT = 4 } CONNECTION_TYPE;
 
+private:
+
+  socket_t  _socket;
+
 public:
 
   SocketTCPWin(CONNECTION_TYPE);
@@ -33,5 +37,7 @@ public:
   virtual ssize_t	write(const void *, size_t);
   virtual ssize_t	read(void *, size_t);
 };
+
+
 
 #endif /* !SOCKETTCPWIN_H_ */

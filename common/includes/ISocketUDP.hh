@@ -20,7 +20,9 @@ typedef int	socket_t;
 # elif defined(_WIN32)
 
 #  include <BaseTsd.h>
-typedef void *	socket_t;
+#  include <winsock2.h>
+#  pragma comment(lib, "ws2_32.lib")
+typedef SOCKET	socket_t;
 typedef SSIZE_T ssize_t;
 
 # else

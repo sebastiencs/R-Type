@@ -13,6 +13,10 @@
 #include <string>
 #include "Server.hh"
 
+#ifdef _WIN32
+# include "WSA.hh"
+#endif // !_WIN32
+
 #ifndef DEFAULT_PORT
 # define DEFAULT_PORT	(4242)
 #endif // !DEFAULT_PORT
@@ -27,6 +31,12 @@ int				main(int argc, char **argv)
   if (argc >= 2) {
     port = std::stoi(argv[1]);
   }
+
+#ifdef _WIN32 
+  if (WSA::init()) {
+    return (-1);
+  }
+#endif // !_WIN32
 
   server.reset(new Server(port));
 
@@ -43,6 +53,10 @@ int				main(int argc, char **argv)
   }
 
   std::cout << "PORT: " << port << std::endl;
+
+#ifdef _WIN32
+  WSA::clean();
+#endif // !_WIN32
 
   return (0);
 }
