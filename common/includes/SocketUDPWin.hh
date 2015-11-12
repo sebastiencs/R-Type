@@ -13,6 +13,7 @@
 
 # include "Debug.hh"
 # include "ISocketUDP.hh"
+# include <winsock2.h>
 
 class		SocketUDPWin : public ISocketUDP
 {
@@ -21,6 +22,11 @@ public:
   typedef enum { SERVER = 2, CLIENT = 4 } CONNECTION_TYPE;
 
 private:
+  socket_t _socket;
+  sockaddr_in _server;
+  sockaddr_in _client;
+
+  int _clientLen;
 
 public:
 

@@ -24,6 +24,7 @@ typedef int	socket_t;
 #  pragma comment(lib, "ws2_32.lib")
 typedef SOCKET	socket_t;
 typedef SSIZE_T ssize_t;
+typedef struct sockaddr_in sockaddr_in;
 
 # else
 
