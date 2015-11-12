@@ -25,7 +25,7 @@ SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type)
     _error = 1;
   }
   else {
-    DEBUG_MSG("SocketTCPUnix created");
+    DEBUG_MSG("SocketUDPUnix created");
   }
 }
 
@@ -36,12 +36,12 @@ SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type, socket_t fd)
     _clientAddr(),
     _type(type)
 {
-  DEBUG_MSG("SocketTCPUnix created");
+  DEBUG_MSG("SocketUDPUnix created");
 }
 
 SocketUDPUnix::~SocketUDPUnix()
 {
-  DEBUG_MSG("SocketTCPUnix deleted");
+  DEBUG_MSG("SocketUDPUnix deleted");
   close(_fd);
 }
 

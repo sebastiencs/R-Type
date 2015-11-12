@@ -13,17 +13,17 @@
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
 {
-  DEBUG_MSG("SocketTCPWin created");
+  DEBUG_MSG("SocketUDPWin created");
 }
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
 {
-  DEBUG_MSG("SocketTCPWin created");
+  DEBUG_MSG("SocketUDPWin created");
 }
 
 SocketUDPWin::~SocketUDPWin()
 {
-  DEBUG_MSG("SocketTCPWin deleted");
+  DEBUG_MSG("SocketUDPWin deleted");
 }
 
 int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
