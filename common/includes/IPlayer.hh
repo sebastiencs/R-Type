@@ -20,7 +20,7 @@ class		IPlayer
 public:
   virtual ~IPlayer() {};
 
-  virtual Position		getPosition() const = 0;
+  virtual const Position	&getPosition() const = 0;
   virtual void			setPosition(const Position &) = 0;
 
   virtual uint16_t		getLevel() const = 0;
@@ -30,7 +30,7 @@ public:
   virtual void			setLife(int) = 0;
 
   virtual uint16_t		getID() const = 0;
-  virtual void			setID() = 0;
+  virtual void			setID(uint16_t) = 0;
 
   virtual const std::string	&getName() const = 0;
   virtual void			setName(const std::string &) = 0;

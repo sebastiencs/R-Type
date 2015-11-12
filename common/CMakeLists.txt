@@ -10,6 +10,8 @@ file(GLOB
   includes/I*
   includes/Thread.hh
   includes/Socket.hh
+  includes/Player.hh
+  src/Player.cpp
   )
 
 set(COMMON_SOURCES
