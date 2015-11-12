@@ -1,0 +1,142 @@
+
+===================================================
+Protocole de communication pour le projet R-Type V1
+===================================================
+
+Toutes les chaines de caracteres seront encodees en ASCII.
+Lors de l'envoi d'une chaine de caracteres, tous les octets non utilisés sont a zero.
+Le communication est base sur un protocle UDP, le transferts de bits est en little endian.
+
+1 - 1ere connection
+
+
+Lorsqu'un client se connecte au serveur, il (le client) lui envoi quelques infos.
+Ensuite le serveur lui reponds pour determiner si on peut commencer l'envoi des
+donnees.
+
+		 ----------------------
+Client:		| Version  |   Name    |
+		 ----------------------
+		| uint16_t |  char[16] |
+		 ----------------------
+
+	Version: unsigned short ( 16 bits )
+
+		 Le client envoi sa version du protocole.
+
+	Name: char[32]
+
+	    	 Chaine de caracteres correspondant au nom du client sur 16 octets
+
+
+
+----------------------------------------------------
+
+Les prochains paquets commenceront par un octet qui permet d'identifier
+le type de requete/reponse.
+
+----------------------------------------------------
+
+
+
+2 - Demande de la liste des parties disponible
+
+Le client envoi ce paquet pour demander au serveur quelles parties sont dispos
+
+         ---------
+Client: |   ID    |
+         ---------
+	| uint8_t |
+         ---------
+
+	 ID: unsigned char ( 8 bits )
+
+	     	  Valeur: 0
+
+----------------------------------------------------
+
+
+3 - Envoi de la liste des parties disponibles
+
+Le serveur lui renvoi le nombre de parties disponibles, leurs noms et le nombre
+de joueurs dans chaque parties
+
+
+          -------------------------------------------------------------------------
+Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
+	  -------------------------------------------------------------------------
+	 | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
+          -------------------------------------------------------------------------
+
+	  ID: unsigned char ( 8 bits )
+
+	     	  Valeur: 1
+
+	  NB Parties: unsigned short ( 16 bits )
+
+	     	  Nombre qui defini le nombre de parties disponibles.
+		  La taille du paquet complet sera de:
+
+		     sizeof(ID) + sizeof(NB Parties) + NB Parties * (sizeof(Name) + sizeof(nb))
+
+	  Name: char[16]
+
+		  Nom de la partie sur 16 octets
+
+	  nb: unsigned char ( 8 bits )
+
+	      	  Nombres de joueurs dans la partie
+
+
+----------------------------------------------------
+
+
+4 - Creer / Rejoindre une partie
+
+Le client envoi ce paquet lorsqu'il souhaite creer / rejoindre une partie
+Une reponse du serveur est attendue.
+
+         --------------------
+Client: |   ID    |   Name   |
+         --------------------
+	| uint8_t | char[16] |
+         --------------------
+
+	 ID: unsigned char ( 8 bits )
+
+	         Valeur: 2
+
+         Name: char[16]
+
+	         Nom de la partie souhaitee
+
+
+
+----------------------------------------------------
+
+XXX - Retour du serveur
+
+
+Reponse du serveur lorsque le client demande quelque chose
+
+          --------------------
+Serveur: |    ID   | Retour   |
+	  --------------------
+	 | uint8_t | uint8_t |
+          --------------------
+
+	  ID: unsigned char ( 8 bits )
+
+	     	  Valeur: XXX ( je sais pas pour l'instant )
+
+
+	  Retour: unsigned char ( 8 bits )
+
+	     Retour:
+
+		0	Erreur	La version du protocole n'est pas bonne. Le client se deconnecte
+		1	Erreur	Donnees envoyees au serveur invalides.
+		2	Succes	Le numero du protocole est connu du serveur.
+		3	Erreur	La creation de la partie n'est pas bonne ( Nom deja utilisé par exemple )
+				Ne peut pas rejoindre la parties ( Trop de monde par exemple )
+		4	Succes	Peut creer / rejoindre la partie
