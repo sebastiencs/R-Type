@@ -14,11 +14,11 @@ Lorsqu'un client se connecte au serveur, il (le client) lui envoi quelques infos
 Ensuite le serveur lui reponds pour determiner si on peut commencer l'envoi des
 donnees.
 
-		 ----------------------
-Client:		| Version  |   Name    |
-		 ----------------------
-		| uint16_t |  char[16] |
-		 ----------------------
+		 ----------------------	-----------
+Client:	| Version  |   Name    |   Level   |
+		 ----------------------	-----------
+		| uint16_t |  char[16] |  uint8_t  |
+		 ---------------------- -----------
 
 	Version: unsigned short ( 16 bits )
 
@@ -27,6 +27,9 @@ Client:		| Version  |   Name    |
 	Name: char[16]
 
 	    	 Chaine de caracteres correspondant au nom du client sur 16 octets
+	Levl: uint8_t ( 8 bits )
+
+		 Le client envoi sa version du protocole.
 
 
 
@@ -46,7 +49,7 @@ Le client envoi ce paquet pour demander au serveur quelles parties sont dispos
          ---------
 Client: |   ID    |
          ---------
-	| uint8_t |
+		| uint8_t |
          ---------
 
 	 ID: unsigned char ( 8 bits )
@@ -64,8 +67,8 @@ de joueurs dans chaque parties
 
           -------------------------------------------------------------------------
 Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
-	  -------------------------------------------------------------------------
-	 | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
+		  -------------------------------------------------------------------------
+		 | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
           -------------------------------------------------------------------------
 
 	  ID: unsigned char ( 8 bits )
@@ -91,15 +94,15 @@ Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
 ----------------------------------------------------
 
 
-4 - Creer / Rejoindre une partie
+4 - Rejoindre une partie
 
-Le client envoi ce paquet lorsqu'il souhaite creer / rejoindre une partie
+Le client envoi ce paquet lorsqu'il souhaite rejoindre une partie
 Une reponse du serveur est attendue.
 
          --------------------
 Client: |   ID    |   Name   |
          --------------------
-	| uint8_t | char[16] |
+		| uint8_t | char[16] |
          --------------------
 
 	 ID: unsigned char ( 8 bits )
@@ -110,9 +113,76 @@ Client: |   ID    |   Name   |
 
 	         Nom de la partie souhaitee
 
+----------------------------------------------------
+
+5 - Creer une partie
+
+Le client envoi ce paquet lorsqu'il souhaite creer une partie
+Une reponse du serveur est attendue.
+
+         --------------------
+Client: |   ID    |   Name   |
+         --------------------
+		| uint8_t | char[16] |
+         --------------------
+
+	 ID: unsigned char ( 8 bits )
+
+	         Valeur: 3
+
+         Name: char[16]
+
+	         Nom de la partie souhaitee
 
 
 ----------------------------------------------------
+
+6 - Demande de la liste des joueurs
+
+Le client envoi ce paquet lorsqu'il est accepté dans une partie
+Une reponse du serveur est attendue.
+
+         --------- 
+Client: |   ID    |
+         --------- 
+		| uint8_t |
+         --------- 
+
+	 ID: unsigned char ( 8 bits )
+
+	         Valeur: 4
+
+
+----------------------------------------------------
+
+7 - Envoit de la liste des joueurs
+
+Le serveur envoit ce paquet lorsqu'un client est accepté dans une partie
+
+          -------------------------------------------------------------------------
+Serveur: |    ID   | NB Joueurs |   Name   |   id    ||   Name1   |   id    |
+		  -------------------------------------------------------------------------
+		 | uint8_t |  uint8_t  | char[16] | uint8_t || char[16]  | uint8_t  |
+          -------------------------------------------------------------------------
+
+	 ID: unsigned char ( 8 bits )
+
+	         Valeur: 5
+
+	 Nbr Joueurs: unsigned char ( 8 bits )
+
+	         Valeur: nbr de joueurs dans la partie
+
+     Name: char[16]
+
+	         Nom du joueur
+
+	 Level: unsigned char ( 8 bits )
+
+	         Valeur: level du joueurs
+
+----------------------------------------------------
+
 
 XXX - Retour du serveur
 
@@ -121,8 +191,8 @@ Reponse du serveur lorsque le client demande quelque chose
 
           --------------------
 Serveur: |    ID   | Retour   |
-	  --------------------
-	 | uint8_t | uint8_t |
+		 --------------------
+		 | uint8_t | uint8_t |
           --------------------
 
 	  ID: unsigned char ( 8 bits )
@@ -138,5 +208,5 @@ Serveur: |    ID   | Retour   |
 		1	Erreur	Donnees envoyees au serveur invalides.
 		2	Succes	Le numero du protocole est connu du serveur.
 		3	Erreur	La creation de la partie n'est pas bonne ( Nom deja utilisé par exemple )
-				Ne peut pas rejoindre la parties ( Trop de monde par exemple )
+					Ne peut pas rejoindre la parties ( Trop de monde par exemple )
 		4	Succes	Peut creer / rejoindre la partie
