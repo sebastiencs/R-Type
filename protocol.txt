@@ -24,7 +24,7 @@ Client:		| Version  |   Name    |
 
 		 Le client envoi sa version du protocole.
 
-	Name: char[32]
+	Name: char[16]
 
 	    	 Chaine de caracteres correspondant au nom du client sur 16 octets
 
