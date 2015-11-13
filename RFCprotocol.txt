@@ -1,4 +1,6 @@
-Communication Protocol for R-Type
+Autor							Category 							  [Page 1]
+
+RFC pouf			Communication protocol for R-Type    		 Novemver 2015
 
 
 1. 1st connection
@@ -6,7 +8,7 @@ Communication Protocol for R-Type
 1.1 Client
 
 
-When a client connects to the server, he must send him a login package : 
+When a client connects to the server, he must send him a login package:
 
 
  	+--------------------------------------------+
@@ -41,7 +43,8 @@ package
 2.1 Client
 
 
-The client should send that package to get which game sessions are available
+The client should send that package to get which game sessions are 
+available
 
 
 	+---------+
@@ -50,6 +53,22 @@ The client should send that package to get which game sessions are available
 	| uint8_t |
 	+---------+
 
+
+	
+	
+Autor							Category 							  [Page 2]
+
+RFC pouf			Communication protocol for R-Type    		 Novemver 2015
+
+
+Field
+-----
+
+ID indicates which type of request is sent : 1 for game sessions 
+request.
+
+
 2.2 Server
 
 
+The server must anwser with this 
