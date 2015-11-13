@@ -1,6 +1,7 @@
 
 set(COMMON_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/includes
+  ${CMAKE_CURRENT_SOURCE_DIR}/includes/Paquet
   PARENT_SCOPE
   )
 
@@ -11,6 +12,8 @@ file(GLOB
   includes/Thread.hh
   includes/Socket.hh
   includes/Player.hh
+  includes/Paquet/*
+  src/Paquet/*
   src/Player.cpp
   )
 

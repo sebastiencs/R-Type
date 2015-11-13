@@ -22,6 +22,7 @@
 #endif // !DEFAULT_PORT
 
 #include "Socket.hh"
+#include "PaquetFirst.hh"
 
 int				main(int argc, char **argv)
 {
@@ -32,7 +33,7 @@ int				main(int argc, char **argv)
     port = std::stoi(argv[1]);
   }
 
-#ifdef _WIN32 
+#ifdef _WIN32
   if (WSA::init()) {
     return (-1);
   }
@@ -45,6 +46,15 @@ int				main(int argc, char **argv)
   char buffer[512];
 
   socket->bind(port);
+
+  PaquetFirst paquet;
+
+  paquet.setVersion(1);
+  paquet.setName("sebastien");
+  paquet.setLevel(10);
+  paquet.createPaquet();
+
+  std::cout << paquet << std::endl;
 
   while (1) {
     socket->read(buffer, 10);
