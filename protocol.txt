@@ -6,6 +6,8 @@ Protocole de communication pour le projet R-Type V1
 Toutes les chaines de caracteres seront encodees en ASCII.
 Lors de l'envoi d'une chaine de caracteres, tous les octets non utilisés sont a zero.
 Le communication est base sur un protocle UDP, le transferts de bits est en little endian.
+La taille d'un paquet est fixe: 90 octets. Les octets non utilisés peuvent avoir une
+valeur quelconque.
 
 1 - 1ere connection
 
@@ -14,11 +16,16 @@ Lorsqu'un client se connecte au serveur, il (le client) lui envoi quelques infos
 Ensuite le serveur lui reponds pour determiner si on peut commencer l'envoi des
 donnees.
 
-	 ----------------------	-----------
-Client:	| Version  |   Name    |   Level   |
-	 ----------------------	-----------
-	| uint16_t |  char[16] |  uint8_t  |
-	 ---------------------- -----------
+	 --------------------------------------------
+Client:	|    ID   | Version  |   Name    |   Level   |
+	 ----------------------	---------------------
+	| uint8_t | uint16_t |  char[16] |  uint8_t  |
+	 ---------------------- ---------------------
+
+
+	ID: unsigned char ( 8 bits )
+
+	     	 Valeur: 0
 
 	Version: unsigned short ( 16 bits )
 
@@ -55,7 +62,7 @@ Client: |   ID    |
 
 	 ID: unsigned char ( 8 bits )
 
-	     	  Valeur: 0
+	     	  Valeur: 1
 
 ----------------------------------------------------
 
@@ -63,6 +70,7 @@ Client: |   ID    |
 3 - Envoi de la liste des parties disponibles
 
 Le serveur lui renvoi le nombre de parties disponibles, leurs noms et le nombre
+Le nombre de partie maximum sur un serveur est 5.
 de joueurs dans chaque parties
 
 
@@ -74,7 +82,7 @@ Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
 
 	  ID: unsigned char ( 8 bits )
 
-	     	  Valeur: 1
+	     	  Valeur: 2
 
 	  NB Parties: unsigned short ( 16 bits )
 
@@ -108,7 +116,7 @@ Client: |   ID    |   Name   |
 
 	 ID: unsigned char ( 8 bits )
 
-	         Valeur: 2
+	         Valeur: 3
 
          Name: char[16]
 
@@ -129,7 +137,7 @@ Client: |   ID    |   Name   |
 
 	 ID: unsigned char ( 8 bits )
 
-	         Valeur: 3
+	         Valeur: 4
 
          Name: char[16]
 
@@ -151,7 +159,7 @@ Client: |   ID    |
 
 	 ID: unsigned char ( 8 bits )
 
-	         Valeur: 4
+	         Valeur: 5
 
 
 ----------------------------------------------------
@@ -168,7 +176,7 @@ Serveur: |    ID   | NB Joueurs ||   Name   |   id    |  Level  ||   Name1   |  
 
 	 ID: unsigned char ( 8 bits )
 
-	         Valeur: 5
+	         Valeur: 6
 
 	 Nbr Joueurs: unsigned char ( 8 bits )
 
