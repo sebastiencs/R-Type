@@ -16,7 +16,8 @@ SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type)
   : _error(0),
     _addr(),
     _clientAddr(),
-    _type(type)
+    _type(type),
+    _isKnown(false)
 {
   _fd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -34,7 +35,8 @@ SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type, socket_t fd)
     _error(0),
     _addr(),
     _clientAddr(),
-    _type(type)
+    _type(type),
+    _isKnown(false)
 {
   DEBUG_MSG("SocketUDPUnix created");
 }
@@ -86,6 +88,9 @@ ssize_t	SocketUDPUnix::write(const void * data, size_t len)
   ssize_t	n = 0;
 
   if (_type == SocketUDPUnix::SERVER) {
+    if (_isKnown == false) {
+      throw std::runtime_error("Error sendto() unknown client");
+    }
     n = sendto(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_clientAddr), sizeof(_clientAddr));
   }
   else {
@@ -104,6 +109,9 @@ ssize_t	SocketUDPUnix::read(void *data, size_t len)
 
   if (_type == SocketUDPUnix::SERVER) {
     n = recvfrom(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
+    if (n >= 0) {
+      _isKnown = true;
+    }
   }
   else {
     n = recvfrom(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);

@@ -31,6 +31,8 @@ private:
   struct sockaddr_in	_clientAddr;
   CONNECTION_TYPE	_type;
 
+  bool			_isKnown;
+
 public:
 
   SocketUDPUnix(CONNECTION_TYPE);

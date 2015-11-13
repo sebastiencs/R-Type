@@ -27,6 +27,7 @@ private:
   sockaddr_in _client;
 
   int _clientLen;
+  bool	_isKnown;
 
 public:
 

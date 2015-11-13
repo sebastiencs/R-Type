@@ -12,6 +12,7 @@
 #include "SocketUDPWin.hh"
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
+  : _isKnown(false)
 {
   if (type == SERVER)
   {
@@ -23,6 +24,7 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
 }
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
+  : _isKnown(false)
 {
 	if (type == SERVER)
 	{
@@ -59,7 +61,10 @@ int	SocketUDPWin::bind(uint16_t port)
 
 ssize_t	SocketUDPWin::write(const void * data, size_t len)
 {
-  // Ici on a pas le client a qui on envoit les info ... j'ai fait qqch de temporaire 
+  // Ici on a pas le client a qui on envoit les info ... j'ai fait qqch de temporaire
+  if (_isKnown == false) {
+    throw std::runtime_error("Error sendto() client unknown");
+  }
   if ((sendto(_socket, (const char *)data, len, 0, (struct sockaddr *) &_client, _clientLen)) == SOCKET_ERROR)
       DEBUG_MSG("Sendto failed: " + WSAGetLastError());
   return (0);
@@ -71,7 +76,9 @@ ssize_t	SocketUDPWin::read(void *data, size_t len)
   // Ici il faudrai recuperer les clients, et les stocker dans une classe "conteneur" de client
   if ((recvlen = recvfrom(_socket, (char *)data, len, 0, (struct sockaddr *) &_client, &_clientLen)) == SOCKET_ERROR)
       DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
-  else
+  else {
+      _isKnown = true;
       DEBUG_MSG((char *)data);
+  }
   return (recvlen);
 }
