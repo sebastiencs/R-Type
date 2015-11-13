@@ -71,4 +71,16 @@ request.
 2.2 Server
 
 
-The server must anwser with this 
+The server must anwser with this package : 
+
+ +-------------------------------------------------------------------------
+ |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
+ +-------------------------------------------------------------------------
+ | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
+ +-------------------------------------------------------------------------
+ 
+Fields
+------
+ 
+ID indicates which type of request is sent : 2 for game sessions 
+available.
