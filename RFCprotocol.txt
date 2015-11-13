@@ -1,0 +1,86 @@
+Autor							Category 							  [Page 1]
+
+RFC pouf			Communication protocol for R-Type    		 Novemver 2015
+
+
+1. 1st connection
+
+1.1 Client
+
+
+When a client connects to the server, he must send him a login package:
+
+
+ 	+--------------------------------------------+
+	|    ID   | Version  |   Name    |   Level   |
+	+----------------------+---------------------+
+	| uint8_t | uint16_t |  char[16] |  uint8_t  |
+	+----------------------+---------------------+
+
+Fields
+------
+
+ID indicates which type of request is sent : 0 for first connection.
+
+Version indicates the client's version of the protocol.
+
+Name is a string of characters indicating the client's name.
+
+Level is the client's level.
+
+
+1.2 Server
+
+
+The server must anwser to indicate if more data can be sent : 
+
+package
+
+
+2. List of available game sessions request
+
+
+2.1 Client
+
+
+The client should send that package to get which game sessions are 
+available
+
+
+	+---------+
+	|    ID   |
+	+---------+
+	| uint8_t |
+	+---------+
+
+
+	
+	
+Autor							Category 							  [Page 2]
+
+RFC pouf			Communication protocol for R-Type    		 Novemver 2015
+
+
+Field
+-----
+
+ID indicates which type of request is sent : 1 for game sessions 
+request.
+
+
+2.2 Server
+
+
+The server must anwser with this package : 
+
+ +-------------------------------------------------------------------------
+ |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
+ +-------------------------------------------------------------------------
+ | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
+ +-------------------------------------------------------------------------
+ 
+Fields
+------
+ 
+ID indicates which type of request is sent : 2 for game sessions 
+available.
