@@ -197,20 +197,18 @@ XXX - Retour du serveur
 
 Reponse du serveur lorsque le client demande quelque chose
 
-          --------------------
-Serveur: |    ID   | Retour   |
-	 ---------------------
-	 | uint8_t | uint8_t  |
-          --------------------
+          -------------------------------
+Serveur: |    ID   | Retour   |   Data   |
+	 --------------------------------
+	 | uint8_t | uint8_t  | uint32_t |
+          -------------------------------
 
 	  ID: unsigned char ( 8 bits )
 
-	     	  Valeur: XXX ( je sais pas pour l'instant )
+	     	Valeur: XXX ( je sais pas pour l'instant )
 
 
 	  Retour: unsigned char ( 8 bits )
-
-	     Retour:
 
 		0	Erreur	La version du protocole n'est pas bonne. Le client se deconnecte
 		1	Erreur	Donnees envoyees au serveur invalides.
@@ -218,3 +216,11 @@ Serveur: |    ID   | Retour   |
 		3	Erreur	La creation de la partie n'est pas bonne ( Nom deja utilisé par exemple )
 					Ne peut pas rejoindre la parties ( Trop de monde par exemple )
 		4	Succes	Peut creer / rejoindre la partie
+
+	  Data: unsigned int ( 32 bits )
+
+		Valeure complémentaire du retour
+
+		Si retour == 2:  Correspond a l'id que le serveur aura donné au client
+
+		Sinon data = 0.
