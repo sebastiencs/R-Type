@@ -18,7 +18,7 @@ When a client connects to the server, he must send him a login package :
 Fields
 ------
 
-ID indicates which type of request is sent.
+ID indicates which type of request is sent : 0 for first connection.
 
 Version indicates the client's version of the protocol.
 
