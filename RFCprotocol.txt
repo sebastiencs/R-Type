@@ -38,6 +38,9 @@ package
 2. List of available game sessions request
 
 
+2.1 Client
+
+
 The client should send that package to get which game sessions are available
 
 
@@ -46,3 +49,7 @@ The client should send that package to get which game sessions are available
 	+---------+
 	| uint8_t |
 	+---------+
+
+2.2 Server
+
+
