@@ -39,7 +39,7 @@ protected:
 public:
 
   enum {
-    PAQUET_SIZE = 0x5A
+    PAQUET_SIZE        = 0x01
   };
 
   enum {

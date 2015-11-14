@@ -46,7 +46,15 @@ template<typename T>
 T		&operator<<(T &s, PaquetFirst &p)
 {
   p.createPaquet();
-  s.write(reinterpret_cast<const char *>(p.getData()), Paquet::PAQUET_SIZE);
+  s.write(reinterpret_cast<const char *>(p.getData()), p.getSize());
+  return (s);
+}
+
+template<typename T>
+T		*operator<<(T *s, PaquetFirst &p)
+{
+  p.createPaquet();
+  s->write(reinterpret_cast<const char *>(p.getData()), p.getSize());
   return (s);
 }
 

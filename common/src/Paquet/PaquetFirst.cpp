@@ -14,8 +14,7 @@ PaquetFirst::PaquetFirst()
   : _id(Paquet::FIRST),
     _version(0),
     _name(),
-    _level(0),
-    _parsed(0)
+    _level(0)
 {
 }
 
@@ -24,7 +23,6 @@ PaquetFirst::PaquetFirst(void *data, size_t len)
   size_t	ptr = 0;
 
   writeData<char>(ptr, reinterpret_cast<const char *>(data), len);
-  _parsed = 0;
 }
 
 PaquetFirst::~PaquetFirst()
@@ -74,7 +72,6 @@ void			PaquetFirst::parsePaquet()
   _version = readData<uint16_t>(ptr);
   readData<char>(ptr, _name, sizeof(_name));
   _level = readData<uint8_t>(ptr);
-  _parsed = 1;
 }
 
 void			PaquetFirst::createPaquet()

@@ -50,7 +50,7 @@ int				main(int argc, char **argv)
   PaquetFirst paquet;
 
   paquet.setVersion(1);
-  paquet.setName("sebastien");
+  paquet.setName("sebastienchapuis");
   paquet.setLevel(10);
   paquet.createPaquet();
 
@@ -59,7 +59,10 @@ int				main(int argc, char **argv)
   while (1) {
     socket->read(buffer, 10);
     std::cout << "BUFFER: " << buffer;
-    socket->write(buffer, 10);
+
+    socket << paquet;
+
+//    socket->write(buffer, 10);
   }
 
   std::cout << "PORT: " << port << std::endl;
