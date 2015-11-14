@@ -6,8 +6,6 @@ Protocole de communication pour le projet R-Type V1
 Toutes les chaines de caracteres seront encodees en ASCII.
 Lors de l'envoi d'une chaine de caracteres, tous les octets non utilisés sont a zero.
 Le communication est base sur un protocle UDP, le transferts de bits est en little endian.
-La taille d'un paquet est fixe: 90 octets. Les octets non utilisés peuvent avoir une
-valeur quelconque.
 
 1 - 1ere connection
 
