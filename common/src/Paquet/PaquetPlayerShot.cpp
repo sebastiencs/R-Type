@@ -1,7 +1,7 @@
 #include "PaquetPlayerShot.hh"
 
 PaquetPlayerShot::PaquetPlayerShot()
-	: _id(Paquet::COORD_PLAYER)
+	: _id(Paquet::PLAYER_SHOT)
 {
 }
 
