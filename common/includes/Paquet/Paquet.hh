@@ -34,7 +34,7 @@ protected:
   delete[] _data;
   _data = tmp;
   _size = size;
-}
+  }
 
 public:
 
@@ -63,6 +63,8 @@ public:
     delete[] _data;
   }
 
+  virtual void	createPaquet() = 0;
+
   size_t	getSize() const {
     return (_size);
   }
@@ -81,8 +83,11 @@ public:
       changeSize(ptr + len);
     }
 
-    std::copy(new_data, new_data + len, _data + ptr);
-    ptr += len;
+    size_t i;
+    for (i = 0; i < len; i += 1) {
+      _data[ptr + i] = reinterpret_cast<const uint8_t *>(new_data)[i];
+    }
+    ptr += i;
   }
 
   template<typename T>
@@ -97,25 +102,29 @@ public:
     byte = reinterpret_cast<uint8_t *>((buffer) ? (buffer) : (&value));
 
     if (ptr + len <= _size) {
-      std::copy(_data + ptr, _data + ptr + len, byte);
-      ptr += len;
+      for (size_t i = 0; i < len; i += 1) {
+	byte[i] = _data[ptr];
+	ptr += 1;
+      }
     }
     return (value);
   }
 };
 
-// std::ostream	&operator<<(std::ostream &os, const Paquet &p)
-// {
-//   const uint8_t	*data;
+template<typename T>
+T		&operator<<(T &s, Paquet &p)
+{
+  p.createPaquet();
+  s.write(reinterpret_cast<const char *>(p.getData()), p.getSize());
+  return (s);
+}
 
-//   data = p.getData();
-//   os << "Paquet = { ";
-//   os << std::hex << std::uppercase;
-//   for (size_t i = 0; i < p.getSize(); i += 1) {
-//     os << (int)((unsigned char)data[i]) << " ";
-//   }
-//   os << std::dec << "}; " << std::endl;
-//   return (os);
-// }
+template<typename T>
+T		*operator<<(T *s, Paquet &p)
+{
+  p.createPaquet();
+  s->write(reinterpret_cast<const char *>(p.getData()), p.getSize());
+  return (s);
+}
 
 #endif /* !PAQUET_H_ */

@@ -21,8 +21,6 @@ private:
   char		_name[16];
   uint8_t	_level;
 
-  bool		_parsed;
-
 public:
   PaquetFirst();
   PaquetFirst(void *, size_t);
@@ -41,21 +39,5 @@ public:
 };
 
 std::ostream	&operator<<(std::ostream &, PaquetFirst &);
-
-template<typename T>
-T		&operator<<(T &s, PaquetFirst &p)
-{
-  p.createPaquet();
-  s.write(reinterpret_cast<const char *>(p.getData()), p.getSize());
-  return (s);
-}
-
-template<typename T>
-T		*operator<<(T *s, PaquetFirst &p)
-{
-  p.createPaquet();
-  s->write(reinterpret_cast<const char *>(p.getData()), p.getSize());
-  return (s);
-}
 
 #endif /* !PAQUETFIRST_H_ */
