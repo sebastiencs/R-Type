@@ -46,7 +46,7 @@ long		Timer::ms()
 
   std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - _t);
 
-  return (diff.count());
+  return (static_cast<long>(diff.count()));
 }
 
 bool		Timer::ns(long ms)
@@ -66,7 +66,7 @@ long		Timer::ns()
 
   std::chrono::nanoseconds diff = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - _t);
 
-  return (diff.count());
+  return (static_cast<long>(diff.count()));
 }
 
 bool		Timer::min(long ms)

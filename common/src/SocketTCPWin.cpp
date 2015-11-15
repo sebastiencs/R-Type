@@ -13,20 +13,10 @@
 
 SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
 {
-  if (type == SERVER)
-  {
-    if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-      DEBUG_MSG("SockectTCOWin failed : " + WSAGetLastError());
-    else
-      DEBUG_MSG("SocketTCPWin created");
-  }
-  else if (type == CLIENT)
-  {
-    if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-      DEBUG_MSG("SockectTCPWin failed : " + WSAGetLastError());
-    else
-      DEBUG_MSG("SocketTCPWin created");
-  }
+  if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+    DEBUG_MSG("SockectTCOWin failed : " + WSAGetLastError());
+  else
+    DEBUG_MSG("SocketTCPWin created");
 }
 
 SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type,
@@ -90,8 +80,8 @@ int	SocketTCPWin::listen(int max)
 
 ssize_t	SocketTCPWin::write(const void *data, size_t len)
 {
-  if ((sendto(_socket, (const char *)data, len, 0, (struct sockaddr *) &_client, _clientLen)) == SOCKET_ERROR) {
-    DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+  if ((send(_socket, (const char *)data, len, 0)) == SOCKET_ERROR) {
+    DEBUG_MSG("Send failed: " + WSAGetLastError());
   }
   return (0);
 }
@@ -99,9 +89,8 @@ ssize_t	SocketTCPWin::write(const void *data, size_t len)
 ssize_t	SocketTCPWin::read(void *data, size_t len)
 {
   int recvlen = 0;
-  // Ici il faudrai recuperer les clients, et les stocker dans une classe "conteneur" de client
-  if ((recvlen = recvfrom(_socket, (char *)data, len, 0, (struct sockaddr *) &_client, &_clientLen)) == SOCKET_ERROR)
-    DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
+  if ((recvlen = recv(_socket, (char *)data, len, 0)) == SOCKET_ERROR)
+    DEBUG_MSG("Recv failed: " + WSAGetLastError());
   else {
     DEBUG_MSG((char *)data);
   }

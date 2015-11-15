@@ -13,6 +13,8 @@
 
 # include <iostream>
 
+# undef min
+
 class		ITimer
 {
 public:
