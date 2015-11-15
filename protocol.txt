@@ -22,19 +22,15 @@ Client:	|    ID   | Version  |   Name    |   Level   |
 
 
 	ID: unsigned char ( 8 bits )
-
 	     	 Valeur: 0
 
 	Version: unsigned short ( 16 bits )
-
 		 Le client envoi sa version du protocole.
 
 	Name: char[16]
-
 	    	 Chaine de caracteres correspondant au nom du client sur 16 octets
 
 	Level: unsigned char ( 8 bits )
-
 		 Le client envoi son niveau
 
 
@@ -59,7 +55,6 @@ Client: |   ID    |
          ---------
 
 	 ID: unsigned char ( 8 bits )
-
 	     	  Valeur: 1
 
 ----------------------------------------------------
@@ -79,22 +74,18 @@ Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
           -------------------------------------------------------------------------
 
 	  ID: unsigned char ( 8 bits )
-
 	     	  Valeur: 2
 
 	  NB Parties: unsigned short ( 16 bits )
-
 	     	  Nombre qui defini le nombre de parties disponibles.
 		  La taille du paquet complet sera de:
 
 		     sizeof(ID) + sizeof(NB Parties) + NB Parties * (sizeof(Name) + sizeof(nb))
 
 	  Name: char[16]
-
 		  Nom de la partie sur 16 octets
 
 	  nb: unsigned char ( 8 bits )
-
 	      	  Nombres de joueurs dans la partie
 
 
@@ -113,11 +104,9 @@ Client: |   ID    |   Name   |
          --------------------
 
 	 ID: unsigned char ( 8 bits )
-
 	         Valeur: 3
 
          Name: char[16]
-
 	         Nom de la partie souhaitee
 
 ----------------------------------------------------
@@ -134,11 +123,9 @@ Client: |   ID    |   Name   |
          --------------------
 
 	 ID: unsigned char ( 8 bits )
-
 	         Valeur: 4
 
          Name: char[16]
-
 	         Nom de la partie souhaitee
 
 
@@ -156,7 +143,6 @@ Client: |   ID    |
          ---------
 
 	 ID: unsigned char ( 8 bits )
-
 	         Valeur: 5
 
 
@@ -173,27 +159,99 @@ Serveur: |    ID   | NB Joueurs ||   Name   |   id    |  Level  ||   Name1   |  
           -----------------------------------------------------------------------------------------
 
 	 ID: unsigned char ( 8 bits )
-
 	         Valeur: 6
 
 	 Nbr Joueurs: unsigned char ( 8 bits )
-
 	         Valeur: nbr de joueurs dans la partie
 		 La taille du paquet complet sera de:
 
 		     sizeof(ID) + sizeof(NB Joueurs) + NB Joueurs * (sizeof(Name) + sizeof(id) + sizeof(Level))
 
          Name: char[16]
-
 	         Nom du joueur
 
 	 id: unsigned char ( 8 bits )
-
 	         Identifiant du joueur
 
 	 Level: unsigned char ( 8 bits )
-
 	         Level du joueurs
+
+----------------------------------------------------
+
+8 - Envoit des coordonées du joueur au serveur
+
+Le serveur ne repond pas.
+
+   	+---------+-----------+---------+---------+
+Client: |    ID   | ID Player |    X    |    Y	  |
+	+---------+-----------+---------+---------+
+	| uint8_t | uint8_t   | uint8_t | uint8_t | 
+	+---------+-----------+---------+---------+
+
+	 ID: unsigned char ( 8 bits )
+	        Valeur: 7
+
+	ID Player: unsigned char (8 bits)
+	   	Valeur attribuée précedement par le serveur
+
+	X: unsigned char (8 bits)
+	   	Position en x du joueur
+
+	Y: unsigned char (8 bits)
+	   	Position en y du joueur
+
+
+----------------------------------------------------
+
+9 - Envoit des tirs du joueur au serveur
+
+Le serveur ne repond pas.
+
+   	+---------+-----------+---------+---------+-----------+
+Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
+	+---------+-----------+---------+---------+-----------+
+	| uint8_t | uint8_t   | uint8_t | uint8_t |  uint8_t  | 
+	+---------+-----------+---------+---------+-----------+
+
+	 ID: unsigned char ( 8 bits )
+	        Valeur: 8
+
+	ID Player: unsigned char (8 bits)
+	   	Valeur attribuée précedement par le serveur
+
+	X: unsigned char (8 bits)
+	   	Position en x du joueur
+
+	Y: unsigned char (8 bits)
+	   	Position en y du joueur
+
+	Type du tir: unsigned char (8 bits)
+	   	Type du tir du joueur
+
+----------------------------------------------------
+
+10 - Envoit des obstacles par le serveru
+
+Le client ne repond pas.
+
+   	+---------+---------------+---------+---------+
+Server: |    ID   | Type Obstacle |    X    |    Y    |
+	+---------+---------------+---------+---------+
+	| uint8_t |    uint8_t    | uint8_t | uint8_t | 
+	+---------+---------------+---------+---------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 9
+
+	ID Obstacle: unsigned char (8 bits)
+	   	Valeur attribuée au type de l'obstacle (ex: 0 = arbre, 1 = ta mère ...)
+
+	X: unsigned char (8 bits)
+	   	Position en x du joueur
+
+	Y: unsigned char (8 bits)
+	   	Position en y du joueur
+
 
 ----------------------------------------------------
 
