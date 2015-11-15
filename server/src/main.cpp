@@ -22,7 +22,14 @@
 #endif // !DEFAULT_PORT
 
 #include "Socket.hh"
-#include "PaquetFirst.hh"
+#include "Paquets.hh"
+// #include "PaquetFirst.hh"
+// #include "PaquetJoinParty.hh"
+// #include "PaquetCreateParty.hh"
+// #include "PaquetListParties.hh"
+// #include "PaquetListPlayers.hh"
+// #include "PaquetRequestParties.hh"
+// #include "PaquetRequestPlayers.hh"
 
 int				main(int argc, char **argv)
 {
@@ -48,19 +55,53 @@ int				main(int argc, char **argv)
   socket->bind(port);
 
   PaquetFirst paquet;
-
   paquet.setVersion(1);
-  paquet.setName("sebastienchapuis");
+  paquet.setName("sebastien");
   paquet.setLevel(10);
   paquet.createPaquet();
-
   std::cout << paquet << std::endl;
+
+  PaquetRequestParties p2;
+  p2.createPaquet();
+  std::cout << p2 << std::endl;
+
+  PaquetListParties p3;
+  p3.addParty("sebastien", 10);
+  p3.addParty("chapuis", 100);
+  p3.createPaquet();
+  std::cout << p3 << std::endl;
+
+  PaquetJoinParty p4;
+  p4.setName("Zizou");
+  p4.createPaquet();
+  std::cout << p4 << std::endl;
+
+  PaquetCreateParty p5;
+  p5.setName("Okok");
+  p5.createPaquet();
+  std::cout << p5 << std::endl;
+
+  PaquetRequestPlayers p6;
+  p6.createPaquet();
+  std::cout << p6 << std::endl;
+
+  PaquetListPlayers p7;
+  p7.addPlayer("sebastien", 1, 10);
+  p7.addPlayer("chapuis", 2, 100);
+  p7.createPaquet();
+  std::cout << p7 << std::endl;
 
   while (1) {
     socket->read(buffer, 10);
     std::cout << "BUFFER: " << buffer;
 
     socket << paquet;
+    socket << p2;
+    socket << p3;
+    socket << p4;
+    socket << p5;
+    socket << p6;
+    socket << p7;
 
 //    socket->write(buffer, 10);
   }

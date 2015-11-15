@@ -56,7 +56,7 @@ uint16_t		PaquetFirst::getVersion() const
 
 const std::string	PaquetFirst::getName() const
 {
-  return (std::string(_name, sizeof(_name)));
+  return (_name);
 }
 
 uint8_t			PaquetFirst::getLevel() const
@@ -91,8 +91,8 @@ std::ostream	&operator<<(std::ostream &os, PaquetFirst &p)
 
   p.parsePaquet();
   os << "PaquetFirst = { version : " << version
-     << ", name : " << p.getName()
-     << ", level : " << level
+     << ", name : '" << p.getName()
+     << "', level : " << level
      << " };" << std::endl;
   return (os);
 }

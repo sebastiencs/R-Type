@@ -29,20 +29,4 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetRequestParties &);
 
-template<typename T>
-T		&operator<<(T &s, PaquetRequestParties &p)
-{
-  p.createPaquet();
-  s.write(reinterpret_cast<const char *>(p.getData()), p.getSize());
-  return (s);
-}
-
-template<typename T>
-T		*operator<<(T *s, PaquetRequestParties &p)
-{
-  p.createPaquet();
-  s->write(reinterpret_cast<const char *>(p.getData()), p.getSize());
-  return (s);
-}
-
 #endif /* !PAQUETREQUESTPARTIES_H_ */
