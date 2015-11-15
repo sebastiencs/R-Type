@@ -180,12 +180,13 @@ Serveur: |    ID   | NB Joueurs ||   Name   |   id    |  Level  ||   Name1   |  
 
 8 - Envoit des coordonées du joueur au serveur
 
-Le serveur ne repond pas.
+Lorsque le client bouge, il envoi ce paquet au serveur.
+Le serveur le renvoi aux autres clients du serveur.
 
    	+---------+-----------+---------+---------+
 Client: |    ID   | ID Player |    X    |    Y	  |
 	+---------+-----------+---------+---------+
-	| uint8_t | uint8_t   | uint8_t | uint8_t | 
+	| uint8_t | uint8_t   | uint8_t | uint8_t |
 	+---------+-----------+---------+---------+
 
 	 ID: unsigned char ( 8 bits )
@@ -203,14 +204,15 @@ Client: |    ID   | ID Player |    X    |    Y	  |
 
 ----------------------------------------------------
 
-9 - Envoit des tirs du joueur au serveur
+9 - Envoi des tirs du joueur au serveur
 
-Le serveur ne repond pas.
+Lorsque le client effectue un tir, il envoi ce paquet au serveur.
+Le serveur le renvoi aux autres clients de la partie.
 
    	+---------+-----------+---------+---------+-----------+
 Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
 	+---------+-----------+---------+---------+-----------+
-	| uint8_t | uint8_t   | uint8_t | uint8_t |  uint8_t  | 
+	| uint8_t | uint8_t   | uint8_t | uint8_t |  uint8_t  |
 	+---------+-----------+---------+---------+-----------+
 
 	 ID: unsigned char ( 8 bits )
@@ -230,14 +232,14 @@ Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
 
 ----------------------------------------------------
 
-10 - Envoit des obstacles par le serveru
+10 - Envoit des obstacles par le serveur
 
 Le client ne repond pas.
 
    	+---------+---------------+---------+---------+
 Server: |    ID   | Type Obstacle |    X    |    Y    |
 	+---------+---------------+---------+---------+
-	| uint8_t |    uint8_t    | uint8_t | uint8_t | 
+	| uint8_t |    uint8_t    | uint8_t | uint8_t |
 	+---------+---------------+---------+---------+
 
 	ID: unsigned char ( 8 bits )
@@ -255,8 +257,66 @@ Server: |    ID   | Type Obstacle |    X    |    Y    |
 
 ----------------------------------------------------
 
+11 - Pret pour la partie
 
-XXX - Retour du serveur
+Lorsque le client se retrouve dans le lobby, il envoi ce paquet pour indiqué qu'il
+est pret a lancer la partie.
+Le serveur renvoi ce paquet aux autres clients du lobby pour indiquer qui est pret.
+
+   	+---------+-----------+
+Client: |    ID   | ID Player |
+	+---------+-----------+
+	| uint8_t | uint8_t   |
+	+---------+-----------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 10
+
+	ID Player: unsigned char ( 8 bits )
+	   	Valeur attribuée précedement par le serveur
+
+
+----------------------------------------------------
+
+12 - La partie se lance
+
+Le serveur envoi ce paquets a tous les joueurs du lobby pour leur indiquer que
+la partie debute.
+
+   	+---------+
+Client: |    ID   |
+	+---------+
+	| uint8_t |
+	+---------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 11
+
+
+----------------------------------------------------
+
+13 - Un joueur quitte la partie
+
+Lorsqu'un client quitte la partie, il envoi ce paquet au serveur.
+Le serveur renvoie ce paquet aux autres clients.
+
+   	+---------+-----------+
+Client: |    ID   | ID Player |
+	+---------+-----------+
+	| uint8_t | uint8_t   |
+	+---------+-----------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 12
+
+	ID Player: unsigned char ( 8 bits )
+	   	Valeur attribuée précedement par le serveur
+
+
+----------------------------------------------------
+
+
+XX - Retour du serveur
 
 
 Reponse du serveur lorsque le client demande quelque chose
