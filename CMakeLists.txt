@@ -47,6 +47,8 @@ if (${UNIX})
 
   add_definitions(
     -std=c++11
+    -ggdb
+    -Wall -Wextra
     -DDEBUG
     )
 
