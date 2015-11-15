@@ -119,8 +119,8 @@ Author							Category 					   [Page 3]
 RFC pouf			Communication protocol for R-Type     Novemver 2015
 
 
- Fields
- ------
+Fields
+------
  
 ID indicates which type of request is sent : 3 to join game session
 											 4 to create one.
@@ -129,6 +129,8 @@ Name is the name of the session.
 
 5. Player list request
 
+5.1 Client
+
 The client must send this package when it is accepted in a game.
 
  +---------+
@@ -136,4 +138,148 @@ The client must send this package when it is accepted in a game.
  +---------+
  | uint8_t |
  +---------+
+ 
+Field
+-----
+ 
+ID indicates which type of request is sent : 5 for the player list.
+ 
+5.2 Server
 
+The server must anwser with this package:
+
+ +-------------------------------------------------------+
+ |    ID   | NB Players ||   Name   |ID Player|   level  |
+ +-------------------------------------------------------+
+ | uint8_t |  uint16_t  || char[16] | uint8_t |  uint8_t |
+ +-------------------------------------------------------+
+						|| char[16] | uint8_t |  uint8_t |
+						---------------------------------+
+						||			|		  |			 |
+
+The size of the package will be :
+
+			sizeof(ID) + sizeof(NB Players) + NB Players *
+			(sizeof(Name) + sizeof(ID Player) + sizeof(Level))
+						
+Fields
+------
+
+ID indicates which type of package is sent : 6 for the player list.
+
+NB Players is the number of player in the game.
+
+Name is the name of the player.
+
+
+Author							Category 					   [Page 4]
+
+RFC pouf			Communication protocol for R-Type     Novemver 2015
+
+
+ID Player is the player's id.
+
+Level is the player's level.
+
+6. Player coordinates
+
+The client must send this package to trasmit it's coordinates
+ to the server. There is no anwser from the server needed.
+
+ +---------+-----------+---------+---------+
+ |    ID   | ID Player |    X    |    Y	   |
+ +---------+-----------+---------+---------+
+ | uint8_t | uint8_t   | uint8_t | uint8_t | 
+ +---------+-----------+---------+---------+
+ 
+Fields
+------
+ 
+ID indicates which type of package is sent : 7 for the coordinates.
+ 
+ID Player is the player's id.
+ 
+X is the player's positon on the x axis.
+ 
+Y is the player's postion on the y axis.
+ 
+ 
+7. Player's shot
+ 
+The client must send this package when the player is shooting.
+No anwser from the server is needed.
+ 
+ +---------+-----------+---------+---------+-----------+
+ |    ID   | ID Player |    X    |    Y	   | Shot Type |
+ +---------+-----------+---------+---------+-----------+
+ | uint8_t | uint8_t   | uint8_t | uint8_t |  uint8_t  | 
+ +---------+-----------+---------+---------+-----------+
+
+Fields
+------
+
+ID indicates which type of package is sent : 8 for the shots.
+ 
+ID Player is the player's id.
+ 
+X is the player's positon on the x axis.
+ 
+Y is the player's postion on the y axis.
+
+Shot Type is the type of the shot.
+
+
+
+Author							Category 					   [Page 5]
+
+RFC pouf			Communication protocol for R-Type     Novemver 2015
+
+
+8. Obstacles
+
+The server must send this package to the client to inform it of the
+coming obstacles. No answer from the client is needed.
+
+ +---------+---------------+---------+---------+
+ |    ID   | Obstacle Type |    X    |    Y    |
+ +---------+---------------+---------+---------+
+ | uint8_t |    uint8_t    | uint8_t | uint8_t | 
+ +---------+---------------+---------+---------+
+
+ID indicates which type of package is sent : 9 for the obstacles.
+ 
+Obstacle Type is the type of te obstacle.
+ 
+X is the obstacle's positon on the x axis.
+ 
+Y is the obstacle's postion on the y axis.
+
+
+XXX. Sever's answer
+
+
+The server must send this package for any client package when it
+ hasn't been precised what the answer is.
+
+ +-------------------------------+
+ |    ID   | Return   |   Data   |
+ +-------------------------------+
+ | uint8_t | uint8_t  | uint32_t |
+ +-------------------------------+
+ 
+Fields
+------
+
+ID indicates which type of package is sent :
+
+Return indicates the anwser from the server : 
+		0 - Error : Wrong protocol version, client disconnects.
+		1 - Error : Wrong data sent to the server.
+		2 - Succes : Good protocol version.
+		3 - Error : Creation or joining of game session failed.
+		4 - Success : Creation or joining of game session succeded.
+		
+Data is a complimentary value to the return : 
+		When return equals 2 it is the id that the server has assigned
+		the client.
+		Else it is 0.
