@@ -33,22 +33,11 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
   : _isKnown(false)
 {
-	if (type == SERVER)
-	{
-		_socket = fd;
-		if (_socket == INVALID_SOCKET)
-			DEBUG_MSG("SockectUDPWin failed : ");
-		else
-			DEBUG_MSG("SocketUDPWin created");
-	}
-  else if (type == CLIENT)
-  {
-    _socket = fd;
-    if (_socket == INVALID_SOCKET)
-      DEBUG_MSG("SockectUDPWin failed : ");
-    else
-      DEBUG_MSG("SocketUDPWin created");
-  }
+	_socket = fd;
+	if (_socket == INVALID_SOCKET)
+		DEBUG_MSG("SockectUDPWin failed : ");
+	else
+		DEBUG_MSG("SocketUDPWin created");
 }
 
 SocketUDPWin::~SocketUDPWin()
@@ -72,7 +61,7 @@ int	SocketUDPWin::bind(uint16_t port)
   _server.sin_family = AF_INET;
 	_server.sin_addr.s_addr = INADDR_ANY;
 	_server.sin_port = htons(port);
-	if (bind((_socket, (struct sockaddr *)&_server, sizeof(_server))) == SOCKET_ERROR)
+	if (::bind(_socket, (struct sockaddr *)&_server, sizeof(_server)) == SOCKET_ERROR)
 		DEBUG_MSG("Bind failed");
 	else
 		DEBUG_MSG("Bind done");

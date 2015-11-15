@@ -23,7 +23,10 @@ public:
 private:
 
   socket_t  _socket;
+  sockaddr_in _server;
+  sockaddr_in _client;
 
+  int _clientLen;
 public:
 
   SocketTCPWin(CONNECTION_TYPE);
@@ -31,13 +34,12 @@ public:
   virtual ~SocketTCPWin();
 
   virtual ISocketTCP	*accept();
-  virtual int		connect(const std::string &, uint16_t);
+  virtual int	  connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t);
   virtual int		listen(int);
   virtual ssize_t	write(const void *, size_t);
   virtual ssize_t	read(void *, size_t);
 };
-
 
 
 #endif /* !SOCKETTCPWIN_H_ */
