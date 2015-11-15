@@ -23,13 +23,7 @@
 
 #include "Socket.hh"
 #include "Paquets.hh"
-// #include "PaquetFirst.hh"
-// #include "PaquetJoinParty.hh"
-// #include "PaquetCreateParty.hh"
-// #include "PaquetListParties.hh"
-// #include "PaquetListPlayers.hh"
-// #include "PaquetRequestParties.hh"
-// #include "PaquetRequestPlayers.hh"
+#include "Timer.hh"
 
 int				main(int argc, char **argv)
 {
@@ -45,6 +39,10 @@ int				main(int argc, char **argv)
     return (-1);
   }
 #endif // !_WIN32
+
+  ITimer *time = new Timer();
+
+  time->start();
 
   server.reset(new Server(port));
 

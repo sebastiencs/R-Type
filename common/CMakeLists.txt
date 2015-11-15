@@ -12,7 +12,9 @@ file(GLOB
   includes/Thread.hh
   includes/Socket.hh
   includes/Player.hh
+  includes/Timer.hh
   includes/Paquet/*
+  src/Timer.cpp
   src/Paquet/*
   src/Player.cpp
   )
