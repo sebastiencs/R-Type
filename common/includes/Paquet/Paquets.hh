@@ -19,5 +19,6 @@
 # include "PaquetRequestParties.hh"
 # include "PaquetRequestPlayers.hh"
 # include "PaquetResponse.hh"
+# include "PaquetPlayerCoord.hh"
 
 #endif /* !PAQUETS_H_ */

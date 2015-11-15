@@ -12,6 +12,8 @@
 # define IPLAYER_H_
 
 # include <tuple>
+# include <stdint.h>
+# include <iostream>
 
 typedef std::tuple<uint16_t, uint16_t>	Position;
 
