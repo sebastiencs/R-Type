@@ -1,6 +1,6 @@
-Autor							Category 							  [Page 1]
+Autor							Category 					   [Page 1]
 
-RFC pouf			Communication protocol for R-Type    		 Novemver 2015
+RFC pouf			Communication protocol for R-Type     Novemver 2015
 
 
 1. 1st connection
@@ -56,9 +56,9 @@ available
 
 	
 	
-Autor							Category 							  [Page 2]
+Author							Category 					   [Page 2]
 
-RFC pouf			Communication protocol for R-Type    		 Novemver 2015
+RFC pouf			Communication protocol for R-Type     Novemver 2015
 
 
 Field
@@ -73,14 +73,67 @@ request.
 
 The server must anwser with this package : 
 
- +-------------------------------------------------------------------------
- |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
- +-------------------------------------------------------------------------
- | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
- +-------------------------------------------------------------------------
+ +--------------------------------------------+
+ |    ID   | NB Sessions||   Name   |   nb    |
+ +--------------------------------------------+
+ | uint8_t |  uint16_t  || char[16] | uint8_t |
+ +--------------------------------------------+
+						|| char[16] | uint8_t |
+						----------------------+
+						||					  |
+ 
+ The size of the complete package will be : 
+			
+			sizeof(ID) + sizeof(NB Sessions) + NB Sessions * 
+								(sizeof(Name) + sizeof(nb))
  
 Fields
 ------
  
 ID indicates which type of request is sent : 2 for game sessions 
 available.
+
+NB Sessions indicates the number of available sessions.
+
+Name is the name of the game session
+
+nb is the number of players in the session.
+
+
+4. Join and create a game session
+
+
+The client may send this package if he wants to join or create a game
+ session:
+
+ +-------------------+
+ |   ID    |   Name  |
+ +-------------------+
+ | uint8_t | char[16]|
+ +-------------------+
+ 
+ 
+ 
+Author							Category 					   [Page 3]
+
+RFC pouf			Communication protocol for R-Type     Novemver 2015
+
+
+ Fields
+ ------
+ 
+ID indicates which type of request is sent : 3 to join game session
+											 4 to create one.
+
+Name is the name of the session.
+
+5. Player list request
+
+The client must send this package when it is accepted in a game.
+
+ +---------+
+ |   ID    |
+ +---------+
+ | uint8_t |
+ +---------+
+
