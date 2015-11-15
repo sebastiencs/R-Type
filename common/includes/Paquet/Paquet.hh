@@ -39,21 +39,24 @@ protected:
 public:
 
   enum {
-    PAQUET_SIZE        = 0x01
+    PAQUET_SIZE		= 0x01
   };
 
   enum {
-    FIRST              = 0x00,
-    REQUEST_PARTIES    = 0x01,
-    LIST_PARTIES       = 0x02,
-    JOIN_PARTY         = 0x03,
-    CREATE_PARTY       = 0x04,
-    REQUEST_PLAYERS    = 0x05,
-    LIST_PLAYERS       = 0x06,
-		COORD_PLAYER			 = 0x07,
-		PLAYER_SHOT			   = 0x08,
-		OBSTACLE    			 = 0x09,
-		RESPONSE           = 0xFF
+    FIRST		= 0x00,
+    REQUEST_PARTIES	= 0x01,
+    LIST_PARTIES	= 0x02,
+    JOIN_PARTY		= 0x03,
+    CREATE_PARTY	= 0x04,
+    REQUEST_PLAYERS	= 0x05,
+    LIST_PLAYERS	= 0x06,
+    COORD_PLAYER	= 0x07,
+    PLAYER_SHOT		= 0x08,
+    OBSTACLE		= 0x09,
+    READY		= 0x0A,
+    LAUNCH		= 0x0B,
+    LEAVE		= 0x0C,
+    RESPONSE		= 0xFF
   };
 
 

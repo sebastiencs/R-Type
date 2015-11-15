@@ -22,5 +22,8 @@
 # include "PaquetPlayerCoord.hh"
 # include "PaquetPlayerShot.hh"
 # include "PaquetObstacle.hh"
+# include "PaquetLaunch.hh"
+# include "PaquetReady.hh"
+# include "PaquetLeave.hh"
 
 #endif /* !PAQUETS_H_ */
