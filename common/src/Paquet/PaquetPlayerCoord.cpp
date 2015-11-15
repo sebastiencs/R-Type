@@ -1,4 +1,3 @@
-
 #include "PaquetPlayerCoord.hh"
 
 PaquetPlayerCoord::PaquetPlayerCoord()

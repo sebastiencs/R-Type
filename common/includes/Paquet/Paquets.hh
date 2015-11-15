@@ -20,5 +20,7 @@
 # include "PaquetRequestPlayers.hh"
 # include "PaquetResponse.hh"
 # include "PaquetPlayerCoord.hh"
+# include "PaquetPlayerShot.hh"
+# include "PaquetObstacle.hh"
 
 #endif /* !PAQUETS_H_ */

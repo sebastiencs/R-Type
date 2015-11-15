@@ -1,5 +1,5 @@
 
-#ifndef PAQUETREPLAYERCOORD_H_
+#ifndef PAQUETPLAYERCOORD_H_
 # define PAQUETPLAYERCOORD_H_
 
 # include "Paquet.hh"

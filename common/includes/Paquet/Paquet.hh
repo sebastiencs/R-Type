@@ -50,8 +50,10 @@ public:
     CREATE_PARTY       = 0x04,
     REQUEST_PLAYERS    = 0x05,
     LIST_PLAYERS       = 0x06,
-		COORD_PLAYER       = 0x07,
-    RESPONSE           = 0xFF
+		COORD_PLAYER			 = 0x07,
+		PLAYER_SHOT			   = 0x08,
+		OBSTACLE    			 = 0x09,
+		RESPONSE           = 0xFF
   };
 
 
