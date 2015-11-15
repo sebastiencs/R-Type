@@ -17,9 +17,16 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
   if (type == SERVER)
   {
 	  if ((_socket = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
-		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
+  		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
 	  else
-		DEBUG_MSG("SocketUDPWin created");
+	  	DEBUG_MSG("SocketUDPWin created");
+  }
+  else if (type == CLIENT)
+  {
+	  if ((_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
+  		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
+	  else
+	  	DEBUG_MSG("SocketUDPWin created");
   }
 }
 
@@ -34,6 +41,14 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
 		else
 			DEBUG_MSG("SocketUDPWin created");
 	}
+  else if (type == CLIENT)
+  {
+    _socket = fd;
+    if (_socket == INVALID_SOCKET)
+      DEBUG_MSG("SockectUDPWin failed : ");
+    else
+      DEBUG_MSG("SocketUDPWin created");
+  }
 }
 
 SocketUDPWin::~SocketUDPWin()
@@ -44,12 +59,17 @@ SocketUDPWin::~SocketUDPWin()
 
 int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
 {
+  // For the Client
+  _client.sin_family = AF_INET;
+  _client.sin_port = htons(port);
+  _client.sin_addr.S_un.S_addr = inet_addr(addr.c_str());
 	return (0);
 }
 
 int	SocketUDPWin::bind(uint16_t port)
 {
-	_server.sin_family = AF_INET;
+  // For the Server
+  _server.sin_family = AF_INET;
 	_server.sin_addr.s_addr = INADDR_ANY;
 	_server.sin_port = htons(port);
 	if (bind((_socket, (struct sockaddr *)&_server, sizeof(_server))) == SOCKET_ERROR)
@@ -65,8 +85,9 @@ ssize_t	SocketUDPWin::write(const void * data, size_t len)
   if (_isKnown == false) {
     throw std::runtime_error("Error sendto() client unknown");
   }
-  if ((sendto(_socket, (const char *)data, len, 0, (struct sockaddr *) &_client, _clientLen)) == SOCKET_ERROR)
+  if ((sendto(_socket, (const char *)data, len, 0, (struct sockaddr *) &_client, _clientLen)) == SOCKET_ERROR) {
       DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+  }
   return (0);
 }
 
