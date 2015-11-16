@@ -134,22 +134,22 @@ int	SocketTCPUnix::listen(int max)
   return (0);
 }
 
-ssize_t	SocketTCPUnix::write(const void *data, size_t len)
+ssize_t	SocketTCPUnix::write(const Buffer &buf)
 {
   if (_error) {
     DEBUG_MSG("Try to send on an invalid socket");
     return (-1);
   }
 
-  return (::write(_fd, data, len));
+  return (::write(_fd, buf.get(), buf.size()));
 }
 
-ssize_t	SocketTCPUnix::read(void *data, size_t len)
+ssize_t	SocketTCPUnix::read(Buffer &buf)
 {
   if (_error) {
     DEBUG_MSG("Try to send on an invalid socket");
     return (-1);
   }
 
-  return (::read(_fd, data, len));
+  return (::read(_fd, buf.get(), buf.size()));
 }

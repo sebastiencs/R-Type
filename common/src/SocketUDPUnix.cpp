@@ -83,7 +83,7 @@ int	SocketUDPUnix::bind(uint16_t port)
   return (0);
 }
 
-ssize_t	SocketUDPUnix::write(const void * data, size_t len)
+ssize_t	SocketUDPUnix::write(const Buffer &buf)
 {
   ssize_t	n = 0;
 
@@ -91,10 +91,10 @@ ssize_t	SocketUDPUnix::write(const void * data, size_t len)
     if (_isKnown == false) {
       throw std::runtime_error("Error sendto() unknown client");
     }
-    n = sendto(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_clientAddr), sizeof(_clientAddr));
+    n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), sizeof(_clientAddr));
   }
   else {
-    n = sendto(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
+    n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
   }
   if (n < 0) {
     DEBUG_MSG("sendto() failed");
@@ -102,31 +102,31 @@ ssize_t	SocketUDPUnix::write(const void * data, size_t len)
   return (n);
 }
 
-ssize_t	SocketUDPUnix::write(const void *data, size_t len, const Addr &addr)
+ssize_t	SocketUDPUnix::write(const Buffer &buf, const Addr &addr)
 {
   struct sockaddr_in	addrIn = addr.get();
   ssize_t		n = 0;
 
-  n = sendto(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
+  n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
   if (n < 0) {
     DEBUG_MSG("sendto() failed");
   }
   return (n);
 }
 
-ssize_t	SocketUDPUnix::read(void *data, size_t len)
+ssize_t	SocketUDPUnix::read(Buffer &buf)
 {
   ssize_t	n = 0;
   socklen_t	sizeSock = sizeof(_clientAddr);
 
   if (_type == SocketUDPUnix::SERVER) {
-    n = recvfrom(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
+    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
     if (n >= 0) {
       _isKnown = true;
     }
   }
   else {
-    n = recvfrom(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
+    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
   }
   if (n < 0) {
     DEBUG_MSG("recvfrom() failed");

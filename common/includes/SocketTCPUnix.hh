@@ -17,6 +17,7 @@
 # include <string>
 # include "Debug.hh"
 # include "ISocketTCP.hh"
+# include "Buffer.hh"
 
 class		SocketTCPUnix : public ISocketTCP
 {
@@ -38,10 +39,10 @@ public:
 
   virtual ISocketTCP	*accept();
   virtual int		connect(const std::string &, uint16_t);
-  virtual int		bind(uint16_t);
-  virtual int		listen(int);
-  virtual ssize_t	write(const void *, size_t);
-  virtual ssize_t	read(void *, size_t);
+  virtual int		bind(uint16_t port);
+  virtual int		listen(int max);
+  virtual ssize_t	write(const Buffer &buf);
+  virtual ssize_t	read(Buffer &);
 };
 
 #endif /* !SOCKETTCPUNIX_H_ */
