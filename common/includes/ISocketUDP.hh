@@ -46,6 +46,7 @@ public:
   virtual ssize_t	write(const void *, size_t) = 0;
   virtual ssize_t	write(const void *, size_t, const Addr &) = 0;
   virtual ssize_t	read(void *, size_t) = 0;
+  virtual const Addr	getAddr() const = 0;
 };
 
 #endif /* !ISOCKETUDP_H_ */

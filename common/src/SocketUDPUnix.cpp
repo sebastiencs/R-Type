@@ -133,3 +133,8 @@ ssize_t	SocketUDPUnix::read(void *data, size_t len)
   }
   return (n);
 }
+
+const Addr	SocketUDPUnix::getAddr() const
+{
+  return (Addr(_clientAddr));
+}

@@ -28,7 +28,7 @@ private:
 
 public:
   Addr();
-  Addr(struct sockaddr_in &);
+  Addr(const struct sockaddr_in &);
   virtual ~Addr();
 
   void				set(struct sockaddr_in &);

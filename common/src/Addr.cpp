@@ -15,7 +15,7 @@ Addr::Addr()
 {
 }
 
-Addr::Addr(struct sockaddr_in &addr)
+Addr::Addr(const struct sockaddr_in &addr)
 {
   _addr = addr;
 }

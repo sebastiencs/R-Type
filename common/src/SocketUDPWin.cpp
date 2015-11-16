@@ -102,3 +102,9 @@ ssize_t	SocketUDPWin::read(void *data, size_t len)
   }
   return (recvlen);
 }
+
+
+const Addr	SocketUDPWin::getAddr() const
+{
+  return (Addr(_client));
+}
