@@ -80,6 +80,16 @@ ssize_t	SocketUDPWin::write(const void * data, size_t len)
   return (0);
 }
 
+ssize_t	SocketUDPWin::write(const void * data, size_t len, const Addr &addr)
+{
+  struct sockaddr_in	addrIn = addr.get();
+
+  if ((sendto(_socket, (const char *)data, len, 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
+      DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+  }
+  return (0);
+}
+
 ssize_t	SocketUDPWin::read(void *data, size_t len)
 {
   int recvlen = 0;

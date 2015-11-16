@@ -33,6 +33,7 @@ typedef struct sockaddr_in sockaddr_in;
 # endif
 
 # include <string>
+# include "Addr.hh"
 
 class		ISocketUDP
 {
@@ -43,6 +44,7 @@ public:
   virtual int		connect(const std::string &, uint16_t) = 0;
   virtual int		bind(uint16_t) = 0;
   virtual ssize_t	write(const void *, size_t) = 0;
+  virtual ssize_t	write(const void *, size_t, const Addr &) = 0;
   virtual ssize_t	read(void *, size_t) = 0;
 };
 

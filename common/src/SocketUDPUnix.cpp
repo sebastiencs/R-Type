@@ -102,6 +102,18 @@ ssize_t	SocketUDPUnix::write(const void * data, size_t len)
   return (n);
 }
 
+ssize_t	SocketUDPUnix::write(const void *data, size_t len, const Addr &addr)
+{
+  struct sockaddr_in	addrIn = addr.get();
+  ssize_t		n = 0;
+
+  n = sendto(_fd, data, len, 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
+  if (n < 0) {
+    DEBUG_MSG("sendto() failed");
+  }
+  return (n);
+}
+
 ssize_t	SocketUDPUnix::read(void *data, size_t len)
 {
   ssize_t	n = 0;

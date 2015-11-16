@@ -42,6 +42,7 @@ public:
   virtual int		connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t);
   virtual ssize_t	write(const void *, size_t);
+  virtual ssize_t	write(const void *, size_t, const Addr &);
   virtual ssize_t	read(void *, size_t);
 };
 
