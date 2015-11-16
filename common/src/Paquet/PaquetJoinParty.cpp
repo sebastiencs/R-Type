@@ -67,6 +67,6 @@ void			PaquetJoinParty::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetJoinParty &p)
 {
   p.parsePaquet();
-  os << "PaquetJoinParty = { name : '" << p.getName() << " };" << std::endl;
+  os << "PaquetJoinParty = { name : '" << p.getName() << "' };" << std::endl;
   return (os);
 }
