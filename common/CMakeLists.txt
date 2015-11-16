@@ -17,6 +17,7 @@ file(GLOB
   includes/Paquet/*
   src/Timer.cpp
   src/Addr.cpp
+  src/Buffer.cpp
   src/Paquet/*
   src/Player.cpp
   )
