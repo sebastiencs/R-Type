@@ -86,10 +86,11 @@ void			PaquetFirst::createPaquet()
 
 std::ostream	&operator<<(std::ostream &os, PaquetFirst &p)
 {
+  p.parsePaquet();
+
   int		version = p.getVersion();
   int		level = p.getLevel();
 
-  p.parsePaquet();
   os << "PaquetFirst = { version : " << version
      << ", name : '" << p.getName()
      << "', level : " << level

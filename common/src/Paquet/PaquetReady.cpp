@@ -54,9 +54,10 @@ void			PaquetReady::createPaquet()
 
 std::ostream	&operator<<(std::ostream &os, PaquetReady &p)
 {
+  p.parsePaquet();
+
   int		playerID = p.getID();
 
-  p.parsePaquet();
   os << "PaquetReady = { playerID : " << playerID << " };" << std::endl;
   return (os);
 }

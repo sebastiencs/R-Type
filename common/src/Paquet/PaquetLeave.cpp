@@ -54,9 +54,10 @@ void			PaquetLeave::createPaquet()
 
 std::ostream	&operator<<(std::ostream &os, PaquetLeave &p)
 {
+  p.parsePaquet();
+
   int		playerID = p.getID();
 
-  p.parsePaquet();
   os << "PaquetLeave = { player ID : " << playerID << " };" << std::endl;
   return (os);
 }

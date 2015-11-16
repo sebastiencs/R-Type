@@ -96,9 +96,10 @@ void			PaquetListPlayers::createPaquet()
 
 std::ostream	&operator<<(std::ostream &os, PaquetListPlayers &p)
 {
+  p.parsePaquet();
+
   std::list<std::tuple<std::string, uint8_t, uint8_t>>	list = p.getPlayers();
 
-  p.parsePaquet();
   os << "PaquetListPlayers = " << std::endl
      << " { nb Players : " << list.size() << std::endl;
   for (auto player : list) {

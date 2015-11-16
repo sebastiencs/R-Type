@@ -91,9 +91,10 @@ void			PaquetListParties::createPaquet()
 
 std::ostream	&operator<<(std::ostream &os, PaquetListParties &p)
 {
+  p.parsePaquet();
+
   std::list<std::tuple<std::string, uint8_t>>	list = p.getParties();
 
-  p.parsePaquet();
   os << "PaquetListParties = " << std::endl
      << " { nb Parties : " << list.size() << std::endl;
   for (auto party : list) {
