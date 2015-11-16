@@ -19,6 +19,8 @@
 # include "Debug.hh"
 # include "Paquets.hh"
 
+class	Selector;
+
 class				Network
 {
 private:
@@ -28,7 +30,7 @@ private:
   std::unique_ptr<ISocketUDP>	_socket;
   bool				_running;
   char				_buffer[BUFFER_SIZE];
-  std::map<uint8_t, std::function<int(const ssize_t)>>	_paquetFunc;
+  std::unique_ptr<Selector>	_selector;
 
 public:
   Network(const uint16_t);
@@ -37,7 +39,7 @@ public:
   virtual int	run();
   virtual int	stop();
 
-  virtual int	manageFirst(PaquetFirst);
+  virtual int	handleFirst(PaquetFirst);
 };
 
 #endif /* !NETWORK_H_ */
