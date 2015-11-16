@@ -40,11 +40,8 @@ int				main(int argc, char **argv)
   }
 #endif // !_WIN32
 
-  ITimer *time = new Timer();
-
-  time->start();
-
   server.reset(new Server(port));
+  server->run();
 
   ISocketUDP *socket = new SocketUDP(SocketUDP::SERVER);
 

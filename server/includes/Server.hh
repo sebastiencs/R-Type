@@ -23,6 +23,9 @@ private:
 public:
   Server(const uint16_t);
   virtual ~Server();
+
+  int	run();
+  int	stop();
 };
 
 #endif /* !SERVER_H_ */

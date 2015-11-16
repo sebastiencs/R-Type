@@ -12,16 +12,32 @@
 # define NETWORK_H_
 
 # include <iostream>
+# include <memory>
+# include <map>
+# include <functional>
+# include "Socket.hh"
 # include "Debug.hh"
+# include "Paquets.hh"
 
 class				Network
 {
 private:
-  const uint16_t		_port;
+
+  enum { BUFFER_SIZE = 512 };
+
+  std::unique_ptr<ISocketUDP>	_socket;
+  bool				_running;
+  char				_buffer[BUFFER_SIZE];
+  std::map<uint8_t, std::function<int(const ssize_t)>>	_paquetFunc;
 
 public:
   Network(const uint16_t);
   virtual ~Network();
+
+  virtual int	run();
+  virtual int	stop();
+
+  virtual int	manageFirst(PaquetFirst);
 };
 
 #endif /* !NETWORK_H_ */

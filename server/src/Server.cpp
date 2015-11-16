@@ -20,3 +20,13 @@ Server::~Server()
 {
   DEBUG_MSG("Server deleted");
 }
+
+int	Server::run()
+{
+  return (_network->run());
+}
+
+int	Server::stop()
+{
+  return (_network->stop());
+}

@@ -16,7 +16,8 @@ class		INetwork
 public:
   virtual ~INetwork() {};
 
-
+  virtual int	run() = 0;
+  virtual int	stop() = 0;
 };
 
 
