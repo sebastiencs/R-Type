@@ -41,6 +41,6 @@ public:
   virtual ssize_t	write(const void *, size_t, const Addr &);
   virtual ssize_t	read(void *, size_t);
   virtual const Addr	getAddr() const;
-
+};
 
 #endif /* !SOCKETUDPWIN_H_ */
