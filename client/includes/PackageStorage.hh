@@ -25,12 +25,21 @@ public:
 	const Paquet *getEnemiesPackage() const;
 	const Paquet *getObstaclesPackage() const;
 	const Paquet *getShotsPackage() const;
+	const Paquet *getToSendPackage() const;
 	
 	void storeReceivedPackage(Paquet *package);
 	void storePlayersPackage(Paquet *package);
 	void storeEnemiesPackage(Paquet *package);
 	void storeObstaclesPackage(Paquet *package);
 	void storeShotsPackage(Paquet *package);
+	void storeToSendPackage(Paquet *package);
+
+	void deleteReceivedPackage();
+	void deletePlayersPackage();
+	void deleteEnemiesPackage();
+	void deleteObstaclesPackage();
+	void deleteShotsPackage();
+	void deleteToSendPackage();
 
 };
 

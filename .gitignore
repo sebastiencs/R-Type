@@ -32,3 +32,4 @@
 build/
 server/server
 CMakeFiles/cmake.check_cache
+Visual Studio 14 2015.bat
