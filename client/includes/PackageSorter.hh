@@ -12,8 +12,6 @@
 # define PACKAGE_SORTER_HH
 
 # include <iostream>
-# include <list>
-# include <map>
 # include <functional>
 # include "PackageStorage.hh"
 
