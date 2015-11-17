@@ -14,11 +14,11 @@ Lorsqu'un client se connecte au serveur, il (le client) lui envoi quelques infos
 Ensuite le serveur lui reponds pour determiner si on peut commencer l'envoi des
 donnees.
 
-	 --------------------------------------------
-Client:	|    ID   | Version  |   Name    |   Level   |
-	 ----------------------	---------------------
-	| uint8_t | uint16_t |  char[16] |  uint8_t  |
-	 ---------------------- ---------------------
+	 ----------------------------------------------
+Client:	|    ID   | Version  |    Name     |   Level   |
+	 ----------------------	-----------------------
+	| uint8_t | uint16_t | uint8_t[16] |  uint8_t  |
+	 ---------------------- -----------------------
 
 
 	ID: unsigned char ( 8 bits )
@@ -27,7 +27,7 @@ Client:	|    ID   | Version  |   Name    |   Level   |
 	Version: unsigned short ( 16 bits )
 		 Le client envoi sa version du protocole.
 
-	Name: char[16]
+	Name: uint8_t[16] ( 128 bits )
 	    	 Chaine de caracteres correspondant au nom du client sur 16 octets
 
 	Level: unsigned char ( 8 bits )
@@ -67,11 +67,11 @@ Le nombre de partie maximum sur un serveur est 5.
 de joueurs dans chaque parties
 
 
-          -------------------------------------------------------------------------
-Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
-	  -------------------------------------------------------------------------
-	 | uint8_t |  uint16_t  || char[16] | uint8_t || char[16]  | uint8_t  |
-          -------------------------------------------------------------------------
+          --------------------------------------------------------------------------
+Serveur: |    ID   | NB Parties ||     Name    |   nb    ||     Name1    |   nb1    |
+	  --------------------------------------------------------------------------
+	 | uint8_t |  uint16_t  || uint8_t[16] | uint8_t || uint8_t[16]  | uint8_t  |
+          --------------------------------------------------------------------------
 
 	  ID: unsigned char ( 8 bits )
 	     	  Valeur: 2
@@ -82,7 +82,7 @@ Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
 
 		     sizeof(ID) + sizeof(NB Parties) + NB Parties * (sizeof(Name) + sizeof(nb))
 
-	  Name: char[16]
+	  Name: uint8_t[16] ( 128 bits )
 		  Nom de la partie sur 16 octets
 
 	  nb: unsigned char ( 8 bits )
@@ -97,16 +97,16 @@ Serveur: |    ID   | NB Parties ||   Name   |   nb    ||   Name1   |   nb1    |
 Le client envoi ce paquet lorsqu'il souhaite rejoindre une partie
 Une reponse du serveur est attendue.
 
-         --------------------
-Client: |   ID    |   Name   |
-         --------------------
-	| uint8_t | char[16] |
-         --------------------
+         -----------------------
+Client: |   ID    |     Name    |
+         -----------------------
+	| uint8_t | uint8_t[16] |
+         -----------------------
 
 	 ID: unsigned char ( 8 bits )
 	         Valeur: 3
 
-         Name: char[16]
+         Name: uint8_t[16] ( 128 bits )
 	         Nom de la partie souhaitee
 
 ----------------------------------------------------
@@ -116,16 +116,16 @@ Client: |   ID    |   Name   |
 Le client envoi ce paquet lorsqu'il souhaite creer une partie
 Une reponse du serveur est attendue.
 
-         --------------------
-Client: |   ID    |   Name   |
-         --------------------
-	| uint8_t | char[16] |
-         --------------------
+         -----------------------
+Client: |   ID    |     Name    |
+         -----------------------
+	| uint8_t | uint8_t[16] |
+         -----------------------
 
 	 ID: unsigned char ( 8 bits )
 	         Valeur: 4
 
-         Name: char[16]
+         Name: uint8_t[16] ( 128 bits )
 	         Nom de la partie souhaitee
 
 
@@ -152,11 +152,11 @@ Client: |   ID    |
 
 Le serveur envoit ce paquet lorsqu'un client est accepté dans une partie
 
-          -----------------------------------------------------------------------------------------
-Serveur: |    ID   | NB Joueurs ||   Name   |   id    |  Level  ||   Name1   |   id1   |  Level1 |
-	  -----------------------------------------------------------------------------------------
-	 | uint8_t |  uint8_t   || char[16] | uint8_t | uint8_t || char[16]  | uint8_t | uint8_t |
-          -----------------------------------------------------------------------------------------
+          ---------------------------------------------------------------------------------------------
+Serveur: |    ID   | NB Joueurs ||     Name    |   id    |  Level  ||     Name1    |   id1   |  Level1 |
+	  ---------------------------------------------------------------------------------------------
+	 | uint8_t |  uint8_t   || uint8_t[16] | uint8_t | uint8_t || uint8_t[16]  | uint8_t | uint8_t |
+          ---------------------------------------------------------------------------------------------
 
 	 ID: unsigned char ( 8 bits )
 	         Valeur: 6
@@ -167,7 +167,7 @@ Serveur: |    ID   | NB Joueurs ||   Name   |   id    |  Level  ||   Name1   |  
 
 		     sizeof(ID) + sizeof(NB Joueurs) + NB Joueurs * (sizeof(Name) + sizeof(id) + sizeof(Level))
 
-         Name: char[16]
+         Name: uint8_t[16] ( 128 bits )
 	         Nom du joueur
 
 	 id: unsigned char ( 8 bits )
