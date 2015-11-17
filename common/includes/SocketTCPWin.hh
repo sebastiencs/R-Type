@@ -12,6 +12,7 @@
 # define SOCKETTCPWIN_H_
 
 # include "Debug.hh"
+# include "Buffer.hh"
 # include "ISocketTCP.hh"
 
 class		SocketTCPWin : public ISocketTCP
@@ -37,8 +38,8 @@ public:
   virtual int	  connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t);
   virtual int		listen(int);
-  virtual ssize_t	write(const void *, size_t);
-  virtual ssize_t	read(void *, size_t);
+  virtual ssize_t	write(const Buffer &buf);
+  virtual ssize_t	read(Buffer &buf);
 };
 
 

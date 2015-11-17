@@ -13,6 +13,7 @@
 
 # include "Debug.hh"
 # include "ISocketUDP.hh"
+# include "Buffer.hh"
 # include <winsock2.h>
 
 class		SocketUDPWin : public ISocketUDP
@@ -37,9 +38,9 @@ public:
 
   virtual int		connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t);
-  virtual ssize_t	write(const void *, size_t);
-  virtual ssize_t	write(const void *, size_t, const Addr &);
-  virtual ssize_t	read(void *, size_t);
+  virtual ssize_t	write(const Buffer &buf);
+  virtual ssize_t	write(const Buffer &buf, const Addr &);
+  virtual ssize_t	read(Buffer &buf);
   virtual const Addr	getAddr() const;
 };
 

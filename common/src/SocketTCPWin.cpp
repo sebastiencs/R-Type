@@ -78,18 +78,18 @@ int	SocketTCPWin::listen(int max)
   return (0);
 }
 
-ssize_t	SocketTCPWin::write(const void *data, size_t len)
+ssize_t	SocketTCPWin::write(const Buffer &buf)
 {
-  if ((send(_socket, (const char *)data, len, 0)) == SOCKET_ERROR) {
+  if ((send(_socket, (const char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR) {
     DEBUG_MSG("Send failed: " + WSAGetLastError());
   }
   return (0);
 }
 
-ssize_t	SocketTCPWin::read(void *data, size_t len)
+ssize_t	SocketTCPWin::read(Buffer &buf)
 {
   int recvlen = 0;
-  if ((recvlen = recv(_socket, (char *)data, len, 0)) == SOCKET_ERROR)
+  if ((recvlen = recv(_socket, (char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR)
     DEBUG_MSG("Recv failed: " + WSAGetLastError());
   else {
     DEBUG_MSG((char *)data);
