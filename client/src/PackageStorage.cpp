@@ -1,4 +1,4 @@
-#include "..\includes\PackageStorage.hh"
+#include "PackageStorage.hh"
 
 PackageStorage::PackageStorage()
 {
@@ -93,5 +93,3 @@ void PackageStorage::deleteToSendPackage()
 {
 	toSend.erase(received.begin());
 }
-
-

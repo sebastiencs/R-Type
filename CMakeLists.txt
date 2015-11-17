@@ -26,6 +26,7 @@ add_subdirectory(client)
 include_directories(
   ${COMMON_INCLUDES}
   ${SERVER_INCLUDES}
+  ${CLIENT_INCLUDES}
   )
 
 add_executable(

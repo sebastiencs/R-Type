@@ -8,7 +8,7 @@
 // Last update Sun Nov 15 02:08:19 2015 chapui_s
 //
 
-#include "..\includes\PackageSorter.hh"
+#include "PackageSorter.hh"
 
 PackageSorter::PackageSorter()
 {
