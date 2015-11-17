@@ -22,3 +22,21 @@ PackageSorter::PackageSorter(PackageStorage * storage) : storage(storage)
 PackageSorter::~PackageSorter()
 {
 }
+
+void PackageSorter::sortPaquet()
+{
+  std::function<void(Paquet *)> tab[4];
+  tab[0] = [this](Paquet *paquet) {storage->storeEnemiesPackage(paquet); };
+  tab[1] = [this](Paquet *paquet) {storage->storeObstaclesPackage(paquet); };
+  tab[2] = [this](Paquet *paquet) {storage->storePlayersPackage(paquet); };
+  tab[3] = [this](Paquet *paquet) {storage->storeShotsPackage(paquet); };
+
+  while (1)
+  {
+    //if (anyPaquet) {
+      const Paquet *paquet = storage->getReceivedPackage();
+      tab[paquet->getData()[0]](const_cast<Paquet*>(paquet));
+      delete(paquet);
+    //}
+  }
+}
