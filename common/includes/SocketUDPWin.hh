@@ -23,9 +23,10 @@ public:
   typedef enum { SERVER = 2, CLIENT = 4 } CONNECTION_TYPE;
 
 private:
-  socket_t _socket;
-  sockaddr_in _server;
-  sockaddr_in _client;
+  socket_t		_socket;
+  sockaddr_in 		_server;
+  sockaddr_in 		_client;
+  CONNECTION_TYPE	_type;
 
   int _clientLen;
   bool	_isKnown;

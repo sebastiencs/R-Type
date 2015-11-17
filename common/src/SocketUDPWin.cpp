@@ -12,7 +12,8 @@
 #include "SocketUDPWin.hh"
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
-  : _isKnown(false)
+  : _isKnown(false),
+    _type(type)
 {
   if (type == SERVER)
   {
@@ -70,35 +71,55 @@ int	SocketUDPWin::bind(uint16_t port)
 
 ssize_t	SocketUDPWin::write(const Buffer &buf)
 {
-  // Ici on a pas le client a qui on envoit les info ... j'ai fait qqch de temporaire
-  if (_isKnown == false) {
-    throw std::runtime_error("Error sendto() client unknown");
+  ssize_t	n;
+
+  if (_type == SocketUDPWin::SERVER) {
+    if (_isKnown == false) {
+      throw std::runtime_error("Error sendto() client unknown");
+    }
+    n = sendto(_socket, buf.get(), buf.size(), 0, (struct sockaddr *) &_client, _clientLen);
   }
-  if ((sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_client, _clientLen)) == SOCKET_ERROR) {
-      DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+  else {
+    n = sendto(_socket, buf.get(), buf.size(), 0, (struct sockaddr *) &_server, sizeof(_server));
   }
-  return (0);
+  if (n == SOCKET_ERROR) {
+    DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+    n = -1;
+  }
+  return (n);
 }
 
 ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
 {
   struct sockaddr_in	addrIn = addr.get();
+  ssize_t		n;
 
-  if ((sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
+  if ((n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
       DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+      n = -1;
   }
-  return (0);
+  return (n);
 }
 
 ssize_t	SocketUDPWin::read(Buffer &buf)
 {
-  int recvlen = 0;
-  // Ici il faudrai recuperer les clients, et les stocker dans une classe "conteneur" de client
-  if ((recvlen = recvfrom(_socket, (char*)buf.get(), buf.size(), 0, (struct sockaddr *) &_client, &_clientLen)) == SOCKET_ERROR)
+  Buffer	tmp;
+  int		recvlen = 0;
+
+  if (_type == SocketUDPWin::SERVER) {
+    recvlen = recvfrom(_socket, tmp.get(), tmp.size(), 0, (struct sockaddr *) &_client, &_clientLen);
+    if (n >= 0) {
+      _isKnown = true;
+    }
+  }
+  else {
+    recvfrom = recvfrom(_socket, tmp.get(), tmp.size(), 0, (struct sockaddr *) &_server, &_clientLen);
+  }
+  if (recvlen = SOCKET_ERROR) {
       DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
   else {
-      _isKnown = true;
-      DEBUG_MSG((char *)buf.get());
+    tmp.setSize(recvlen);
+    buf = tmp;
   }
   return (recvlen);
 }

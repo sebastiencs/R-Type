@@ -55,7 +55,7 @@ ISocketTCP	*SocketTCPWin::accept()
     DEBUG_MSG("Accept failed");
     return (0);
   }
-  DEBUG_MSG("Accept done"); 
+  DEBUG_MSG("Accept done");
   SocketTCPWin* newClient = new SocketTCPWin(CLIENT, socket);
   return newClient;
 }
@@ -88,11 +88,15 @@ ssize_t	SocketTCPWin::write(const Buffer &buf)
 
 ssize_t	SocketTCPWin::read(Buffer &buf)
 {
-  int recvlen = 0;
-  if ((recvlen = recv(_socket, (char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR)
+  Buffer	tmp;
+  int		recvlen = 0;
+
+  if ((recvlen = recv(_socket, (char *)tmp.get(), tmp.size(), 0)) == SOCKET_ERROR)
     DEBUG_MSG("Recv failed: " + WSAGetLastError());
   else {
     DEBUG_MSG((char *)data);
+    tmp.setSize(recvlen);
+    buf = tmp;
   }
   return (recvlen);
 }
