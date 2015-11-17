@@ -1,5 +1,5 @@
 #ifndef IGRAPHICENGINE_H_
-# define IGRAPHICENGIN_H_
+# define IGRAPHICENGINE_H_
 
 # include <iostream>
 
