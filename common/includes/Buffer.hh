@@ -37,6 +37,7 @@ public:
   void		setSize(Size size);
 
   const Data	&operator[](Size id) const;
+  const Buffer	&operator=(const Buffer &);
 };
 
 #endif /* !BUFFER_H_ */

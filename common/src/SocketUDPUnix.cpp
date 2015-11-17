@@ -116,21 +116,25 @@ ssize_t	SocketUDPUnix::write(const Buffer &buf, const Addr &addr)
 
 ssize_t	SocketUDPUnix::read(Buffer &buf)
 {
+  Buffer	tmp;
   ssize_t	n = 0;
   socklen_t	sizeSock = sizeof(_clientAddr);
 
   if (_type == SocketUDPUnix::SERVER) {
-    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
+    n = recvfrom(_fd, tmp.get(), tmp.size(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
     if (n >= 0) {
       _isKnown = true;
     }
   }
   else {
-    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
+    n = recvfrom(_fd, tmp.get(), tmp.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
   }
-  buf.setSize(n);
   if (n < 0) {
     DEBUG_MSG("recvfrom() failed");
+  }
+  else {
+    tmp.setSize(n);
+    buf = tmp;
   }
   return (n);
 }

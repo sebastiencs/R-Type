@@ -70,3 +70,9 @@ const Data	&Buffer::operator[](Size id) const
     throw std::runtime_error("Wrong access on buffer");
   }
 }
+
+const Buffer	&Buffer::operator=(const Buffer &buf)
+{
+  set(buf.get(), buf.size());
+  return (*this);
+}
