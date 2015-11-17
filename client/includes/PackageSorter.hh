@@ -12,7 +12,7 @@
 # define PACKAGE_SORTER_HH
 
 # include <iostream>
-# include <list>
+# include <functional>
 # include "PackageStorage.hh"
 
 class PackageSorter {
@@ -20,6 +20,7 @@ public:
   PackageSorter();
   PackageSorter(PackageStorage *storage);
   virtual ~PackageSorter();
+  void sortPaquet();
 
 private:
   PackageStorage *storage;
