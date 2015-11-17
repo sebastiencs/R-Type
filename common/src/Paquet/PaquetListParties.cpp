@@ -24,6 +24,14 @@ PaquetListParties::PaquetListParties(void *data, size_t len)
   parsePaquet();
 }
 
+PaquetListParties::PaquetListParties(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetListParties::~PaquetListParties()
 {
 }
@@ -36,11 +44,11 @@ void			PaquetListParties::addParty(const std::string &name, uint8_t n)
     tmp.resize(16);
   }
 
-  std::tuple<std::string, uint8_t>	tuple(tmp, n);
+  PartyNB		tuple(tmp, n);
   _listParties.push_back(tuple);
 }
 
-const std::list<std::tuple<std::string, uint8_t>>	&PaquetListParties::getParties() const
+const std::list<PartyNB>	&PaquetListParties::getParties() const
 {
   return (_listParties);
 }
@@ -94,7 +102,7 @@ std::ostream	&operator<<(std::ostream &os, PaquetListParties &p)
 {
   p.parsePaquet();
 
-  std::list<std::tuple<std::string, uint8_t>>	list = p.getParties();
+  std::list<PartyNB>	list = p.getParties();
 
   os << "PaquetListParties = " << std::endl
      << " { nb Parties : " << list.size() << std::endl;

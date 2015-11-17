@@ -22,6 +22,7 @@ private:
 
 public:
   PaquetResponse();
+  PaquetResponse(const Buffer &);
   PaquetResponse(void *, size_t);
   virtual ~PaquetResponse();
 

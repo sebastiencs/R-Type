@@ -15,21 +15,24 @@
 # include <tuple>
 # include "Paquet.hh"
 
+typedef std::tuple<std::string, uint8_t>	PartyNB;
+
 class		PaquetListParties : public Paquet
 {
 private:
-  uint8_t					_id;
-  uint16_t					_nbParties;
-  std::list<std::tuple<std::string, uint8_t>>	_listParties;
+  uint8_t		_id;
+  uint16_t		_nbParties;
+  std::list<PartyNB>	_listParties;
 
 public:
   PaquetListParties();
+  PaquetListParties(const Buffer &);
   PaquetListParties(void *, size_t);
   virtual ~PaquetListParties();
 
   void		addParty(const std::string &, uint8_t);
 
-  const std::list<std::tuple<std::string, uint8_t>>	&getParties() const;
+  const std::list<PartyNB>	&getParties() const;
 
   void		createPaquet();
   void		parsePaquet();

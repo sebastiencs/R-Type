@@ -23,6 +23,7 @@ private:
 
 public:
   PaquetFirst();
+  PaquetFirst(const Buffer &);
   PaquetFirst(void *, size_t);
   virtual ~PaquetFirst();
 

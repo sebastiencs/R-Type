@@ -15,21 +15,24 @@
 # include <tuple>
 # include "Paquet.hh"
 
+typedef std::tuple<std::string, uint8_t, uint8_t>	PlayerIDLevel;
+
 class		PaquetListPlayers : public Paquet
 {
 private:
-  uint8_t						_id;
-  uint16_t						_nbPlayers;
-  std::list<std::tuple<std::string, uint8_t, uint8_t>>	_listPlayers;
+  uint8_t			_id;
+  uint16_t			_nbPlayers;
+  std::list<PlayerIDLevel>	_listPlayers;
 
 public:
   PaquetListPlayers();
+  PaquetListPlayers(const Buffer &);
   PaquetListPlayers(void *, size_t);
   virtual ~PaquetListPlayers();
 
   void		addPlayer(const std::string &, uint8_t, uint8_t);
 
-  const std::list<std::tuple<std::string, uint8_t, uint8_t>>	&getPlayers() const;
+  const std::list<PlayerIDLevel>	&getPlayers() const;
 
   void		createPaquet();
   void		parsePaquet();

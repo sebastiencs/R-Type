@@ -21,6 +21,7 @@ private:
 
 public:
   PaquetJoinParty();
+  PaquetJoinParty(const Buffer &);
   PaquetJoinParty(void *, size_t);
   virtual ~PaquetJoinParty();
 

@@ -23,6 +23,14 @@ PaquetResponse::PaquetResponse(void *data, size_t len)
   parsePaquet();
 }
 
+PaquetResponse::PaquetResponse(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetResponse::~PaquetResponse()
 {
 }

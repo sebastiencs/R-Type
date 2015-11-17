@@ -31,9 +31,11 @@ int	Network::run()
 
     ssize_t	size;
 
-    size = _socket->read(_buffer, sizeof(_buffer));
+    size = _socket->read(_buffer);
 
-    _selector->execFunc(_buffer, size);
+    if (size >= 0) {
+      _selector->execFunc(_buffer);
+    }
   }
   return (0);
 }

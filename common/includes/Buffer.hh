@@ -31,9 +31,12 @@ public:
   Buffer(Data *data, Size len);
   virtual ~Buffer();
 
-  void		set(Data *data, Size len);
+  void		set(const Data *data, Size len);
   Data		*get() const;
   Size		size() const;
+  void		setSize(Size size);
+
+  const Data	&operator[](Size id) const;
 };
 
 #endif /* !BUFFER_H_ */

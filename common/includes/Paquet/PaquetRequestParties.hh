@@ -20,6 +20,7 @@ private:
 
 public:
   PaquetRequestParties();
+  PaquetRequestParties(const Buffer &);
   PaquetRequestParties(void *, size_t);
   virtual ~PaquetRequestParties();
 

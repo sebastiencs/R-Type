@@ -21,6 +21,7 @@ private:
 
 public:
   PaquetReady();
+  PaquetReady(const Buffer &);
   PaquetReady(void *, size_t);
   virtual ~PaquetReady();
 

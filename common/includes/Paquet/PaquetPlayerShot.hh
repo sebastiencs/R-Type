@@ -15,6 +15,7 @@ private:
 
 public:
 	PaquetPlayerShot();
+	PaquetPlayerShot(const Buffer &);
 	PaquetPlayerShot(void *, size_t);
 	virtual ~PaquetPlayerShot();
 

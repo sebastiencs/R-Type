@@ -23,6 +23,14 @@ PaquetLaunch::PaquetLaunch(void *data, size_t len)
   parsePaquet();
 }
 
+PaquetLaunch::PaquetLaunch(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetLaunch::~PaquetLaunch()
 {
 }

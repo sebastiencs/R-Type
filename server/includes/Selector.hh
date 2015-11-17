@@ -17,15 +17,16 @@
 
 class		Network;
 
+typedef std::map<uint8_t, std::function<int (const Buffer &)>>	listFunc;
+
 class		Selector
 {
 private:
   Network	*_net;
-  char		*_data;
 
   int		(Network::*_handleFirst)(PaquetFirst);
 
-  std::map<uint8_t, std::function<int (ssize_t)>>	_selectorFunc;
+  listFunc	_selectorFunc;
 
 public:
   Selector(Network *net) {
@@ -33,19 +34,19 @@ public:
 
     _handleFirst = &Network::handleFirst;
 
-    _selectorFunc[Paquet::FIRST] = [this](ssize_t size) -> int { return ((_net->*_handleFirst)(PaquetFirst(_data, size))); };
+    _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf) -> int { return ((_net->*_handleFirst)(PaquetFirst(buf))); };
     }
 
   virtual ~Selector() {};
 
-  int		execFunc(char *, ssize_t);
+  int		execFunc(const Buffer &);
 };
 
-int		Selector::execFunc(char *data, ssize_t size)
+int		Selector::execFunc(const Buffer &buf)
 {
-  _data = data;
+  Data		*data = buf.get();
 
-  if (!data || size <= 0) {
+  if (!data || buf.size() <= 0) {
     std::cerr << "Wrong paquet size" << std::endl;
     return (-1);
   }
@@ -53,7 +54,7 @@ int		Selector::execFunc(char *data, ssize_t size)
   auto func = _selectorFunc.find(data[0]);
 
   if (func != _selectorFunc.end()) {
-    return (func->second(size));
+    return (func->second(buf));
   }
   else {
     std::cerr << "Unknown paquet" << std::endl;

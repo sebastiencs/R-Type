@@ -23,6 +23,14 @@ PaquetReady::PaquetReady(void *data, size_t len)
   parsePaquet();
 }
 
+PaquetReady::PaquetReady(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetReady::~PaquetReady()
 {
 }

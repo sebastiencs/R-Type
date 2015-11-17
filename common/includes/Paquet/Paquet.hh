@@ -120,16 +120,22 @@ public:
 template<typename T>
 T		&operator<<(T &s, Paquet &p)
 {
+  Buffer	buf;
+
   p.createPaquet();
-  s.write(reinterpret_cast<const char *>(p.getData()), p.getSize());
+  buf.set(p.getData(), p.getSize());
+  s.write(buf);
   return (s);
 }
 
 template<typename T>
 T		*operator<<(T *s, Paquet &p)
 {
+  Buffer	buf;
+
   p.createPaquet();
-  s->write(reinterpret_cast<const char *>(p.getData()), p.getSize());
+  buf.set(p.getData(), p.getSize());
+  s->write(buf);
   return (s);
 }
 

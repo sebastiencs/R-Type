@@ -146,10 +146,16 @@ ssize_t	SocketTCPUnix::write(const Buffer &buf)
 
 ssize_t	SocketTCPUnix::read(Buffer &buf)
 {
+  ssize_t n;
+
   if (_error) {
     DEBUG_MSG("Try to send on an invalid socket");
     return (-1);
   }
 
-  return (::read(_fd, buf.get(), buf.size()));
+  n = ::read(_fd, buf.get(), buf.size());
+
+  buf.setSize(n);
+
+  return (n);
 }

@@ -20,6 +20,7 @@ private:
 
 public:
   PaquetRequestPlayers();
+  PaquetRequestPlayers(const Buffer &);
   PaquetRequestPlayers(void *, size_t);
   virtual ~PaquetRequestPlayers();
 

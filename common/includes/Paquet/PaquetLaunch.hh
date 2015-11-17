@@ -20,6 +20,7 @@ private:
 
 public:
   PaquetLaunch();
+  PaquetLaunch(const Buffer &);
   PaquetLaunch(void *, size_t);
   virtual ~PaquetLaunch();
 

@@ -24,6 +24,14 @@ PaquetListPlayers::PaquetListPlayers(void *data, size_t len)
   parsePaquet();
 }
 
+PaquetListPlayers::PaquetListPlayers(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetListPlayers::~PaquetListPlayers()
 {
 }
@@ -36,11 +44,11 @@ void			PaquetListPlayers::addPlayer(const std::string &name, uint8_t id, uint8_t
     tmp.resize(16);
   }
 
-  std::tuple<std::string, uint8_t, uint8_t>	tuple(tmp, id, level);
+  PlayerIDLevel		tuple(tmp, id, level);
   _listPlayers.push_back(tuple);
 }
 
-const std::list<std::tuple<std::string, uint8_t, uint8_t>>	&PaquetListPlayers::getPlayers() const
+const std::list<PlayerIDLevel>	&PaquetListPlayers::getPlayers() const
 {
   return (_listPlayers);
 }
@@ -99,7 +107,7 @@ std::ostream	&operator<<(std::ostream &os, PaquetListPlayers &p)
 {
   p.parsePaquet();
 
-  std::list<std::tuple<std::string, uint8_t, uint8_t>>	list = p.getPlayers();
+  std::list<PlayerIDLevel>	list = p.getPlayers();
 
   os << "PaquetListPlayers = " << std::endl
      << " { nb Players : " << list.size() << std::endl;

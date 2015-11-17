@@ -128,6 +128,7 @@ ssize_t	SocketUDPUnix::read(Buffer &buf)
   else {
     n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
   }
+  buf.setSize(n);
   if (n < 0) {
     DEBUG_MSG("recvfrom() failed");
   }

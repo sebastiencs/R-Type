@@ -14,6 +14,7 @@ private:
 
 public:
 	PaquetObstacle();
+	PaquetObstacle(const Buffer &);
 	PaquetObstacle(void *, size_t);
 	virtual ~PaquetObstacle();
 

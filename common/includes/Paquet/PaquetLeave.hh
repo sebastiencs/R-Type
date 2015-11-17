@@ -21,6 +21,7 @@ private:
 
 public:
   PaquetLeave();
+  PaquetLeave(const Buffer &);
   PaquetLeave(void *, size_t);
   virtual ~PaquetLeave();
 

@@ -14,6 +14,7 @@ private:
 
 public:
 	PaquetPlayerCoord();
+	PaquetPlayerCoord(const Buffer &);
 	PaquetPlayerCoord(void *, size_t);
 	virtual ~PaquetPlayerCoord();
 

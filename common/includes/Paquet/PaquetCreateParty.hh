@@ -21,6 +21,7 @@ private:
 
 public:
   PaquetCreateParty();
+  PaquetCreateParty(const Buffer &);
   PaquetCreateParty(void *, size_t);
   virtual ~PaquetCreateParty();
 

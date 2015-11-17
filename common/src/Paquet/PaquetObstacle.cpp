@@ -14,6 +14,14 @@ PaquetObstacle::PaquetObstacle(void *data, size_t len)
 	parsePaquet();
 }
 
+PaquetObstacle::PaquetObstacle(const Buffer &buf)
+{
+  size_t	ptr = 0;
+
+  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  parsePaquet();
+}
+
 PaquetObstacle::~PaquetObstacle()
 {
 }

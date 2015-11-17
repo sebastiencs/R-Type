@@ -87,8 +87,11 @@ int				main(int argc, char **argv)
   std::cout << p7 << std::endl;
 
   while (1) {
-    socket->read(buffer, 10);
-    std::cout << "BUFFER: " << buffer;
+
+    Buffer buf;
+
+    socket->read(buf);
+    std::cout << "BUFFER: " << buf.get();
 
     socket << paquet;
     socket << p2;

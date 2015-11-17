@@ -25,11 +25,9 @@ class				Network
 {
 private:
 
-  enum { BUFFER_SIZE = 512 };
-
   std::unique_ptr<ISocketUDP>	_socket;
   bool				_running;
-  char				_buffer[BUFFER_SIZE];
+  Buffer			_buffer;
   std::unique_ptr<Selector>	_selector;
 
 public:
