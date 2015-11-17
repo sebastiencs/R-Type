@@ -17,7 +17,21 @@ private:
 
 public:
 
+	PackageStorage();
+	virtual ~PackageStorage();
 	
+	const Paquet *getReceivedPackage() const;
+	const Paquet *getPlayersPackage() const;
+	const Paquet *getEnemiesPackage() const;
+	const Paquet *getObstaclesPackage() const;
+	const Paquet *getShotsPackage() const;
+	
+	void storeReceivedPackage(Paquet *package);
+	void storePlayersPackage(Paquet *package);
+	void storeEnemiesPackage(Paquet *package);
+	void storeObstaclesPackage(Paquet *package);
+	void storeShotsPackage(Paquet *package);
+
 };
 
 #endif
