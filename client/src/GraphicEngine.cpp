@@ -105,8 +105,8 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	textToDraw.setCharacterSize(size);
 	if (t.hasPosition())
 		textToDraw.setPosition(t.getX(), t.getY());
-//	if (color.isUsed())
-		textToDraw.setColor(sf::Color(Color::Green.getColor()));
+	if (color.isUsed())
+		textToDraw.setColor(sf::Color(color.getColor()));
 	window->draw(textToDraw);
 
 }
