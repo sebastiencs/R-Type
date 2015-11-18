@@ -18,10 +18,11 @@
 # include "Socket.hh"
 # include "Debug.hh"
 # include "Paquets.hh"
+# include "INetwork.hh"
 
 class	Selector;
 
-class				Network
+class				Network : public INetwork
 {
 private:
 

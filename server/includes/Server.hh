@@ -18,7 +18,7 @@
 class				Server
 {
 private:
-  std::unique_ptr<Network>	_network;
+  std::unique_ptr<INetwork>	_network;
 
 public:
   Server(const uint16_t);
