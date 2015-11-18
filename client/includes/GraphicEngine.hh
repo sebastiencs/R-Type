@@ -13,7 +13,7 @@
 # include <SFML\Graphics\Sprite.hpp>
 # include "IGraphicEngine.hh"
 
-# define RS_PATH "../../client/ressources/"
+# define RS_PATH "ressources/"
 
 class GraphicEngine : public IGraphicEngine {
 public:
