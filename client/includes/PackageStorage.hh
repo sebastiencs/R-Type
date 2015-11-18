@@ -53,6 +53,15 @@ public:
 	void deletePlayerListPackage();
 	void deleteAnswersPackage();
 
+	bool isThereReceivedPackage();
+	/*bool deletePlayersPackage();
+	bool deleteEnemiesPackage();
+	bool deleteObstaclesPackage();
+	bool deleteShotsPackage();
+	bool deleteToSendPackage();
+	bool deleteGameListPackage();
+	bool deletePlayerListPackage();
+	bool deleteAnswersPackage();*/
 };
 
 #endif

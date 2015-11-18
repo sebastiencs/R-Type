@@ -138,3 +138,8 @@ void PackageStorage::deleteAnswersPackage()
 {
 	answers.erase(answers.begin());
 }
+
+bool PackageStorage::isThereReceivedPackage()
+{
+	return !received.empty;
+}
