@@ -25,18 +25,41 @@ PackageSorter::~PackageSorter()
 
 void PackageSorter::sortPaquet()
 {
-  std::function<void(Paquet *)> tab[4];
-  tab[0] = [this](Paquet *paquet) {storage->storeEnemiesPackage(paquet); };
-  tab[1] = [this](Paquet *paquet) {storage->storeObstaclesPackage(paquet); };
-  tab[2] = [this](Paquet *paquet) {storage->storePlayersPackage(paquet); };
-  tab[3] = [this](Paquet *paquet) {storage->storeShotsPackage(paquet); };
+  std::function<void(Paquet *)> tab[13];
+  tab[0] = [this](Paquet *paquet) {};
+  tab[1] = [this](Paquet *paquet) {};
+  tab[2] = [this](Paquet *paquet) {
+    storage->storeGameListPackage(paquet);
+    storage->deleteReceivedPackage();
+  };
+  tab[3] = [this](Paquet *paquet) {};
+  tab[4] = [this](Paquet *paquet) {};
+  tab[5] = [this](Paquet *paquet) {};
+  tab[6] = [this](Paquet *paquet) {
+    storage->storePlayerListPackage(paquet);
+    storage->deletePlayerListPackage();
+  };
+  tab[7] = [this](Paquet *paquet) {
+    storage->storePlayersPackage(paquet);
+    storage->deletePlayerListPackage();
+  };
+  tab[8] = [this](Paquet *paquet) {
+    storage->storeShotsPackage(paquet);
+    storage->deletePlayerListPackage();
+  };
+  tab[9] = [this](Paquet *paquet) {
+    storage->storeObstaclesPackage(paquet);
+    storage->deletePlayerListPackage();
+  };
+  tab[10] = [this](Paquet *paquet) {};
+  tab[11] = [this](Paquet *paquet) {};
+  tab[12] = [this](Paquet *paquet) {};
 
   while (1)
   {
-    //if (anyPaquet) {
+    if (storage->isThereReceivedPackage()) {
       const Paquet *paquet = storage->getReceivedPackage();
       tab[paquet->getData()[0]](const_cast<Paquet*>(paquet));
-      delete(paquet);
-    //}
+    }
   }
 }
