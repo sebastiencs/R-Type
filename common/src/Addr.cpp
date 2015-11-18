@@ -33,3 +33,12 @@ const struct sockaddr_in	&Addr::get() const
 {
   return (_addr);
 }
+
+bool				Addr::operator==(const Addr &other)
+{
+  struct sockaddr_in	o = other.get();
+  uint8_t		*ptr = reinterpret_cast<uint8_t *>(&_addr);
+  uint8_t		*ptr2 = reinterpret_cast<uint8_t *>(&o);
+
+  return (std::equal(ptr, ptr + sizeof(_addr), ptr2));
+}

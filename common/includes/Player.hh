@@ -13,6 +13,7 @@
 
 # include <tuple>
 # include "IPlayer.hh"
+# include "Addr.hh"
 
 class		Player : public IPlayer
 {
@@ -22,6 +23,7 @@ private:
   uint16_t	_level;
   int		_life;
   uint16_t	_id;
+  Addr		_addr;
 
 public:
   Player();

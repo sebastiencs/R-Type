@@ -14,7 +14,7 @@
 # include <iostream>
 # include <string>
 
-# include "Socket.hh"
+# include "Buffer.hh"
 
 class		Paquet
 {
@@ -60,16 +60,24 @@ public:
   };
 
 
-  Paquet() {
+  Paquet() : _data(0) {
     _data = new uint8_t[Paquet::PAQUET_SIZE];
     _size = Paquet::PAQUET_SIZE;
+  }
+
+  Paquet(const Paquet &paquet) : _data(0) {
+    _data = new uint8_t[paquet.getSize()];
+    _size = paquet.getSize();
+
+    const uint8_t	*data = paquet.getData();
+    std::copy(data, data + _size, _data);
   }
 
   virtual ~Paquet() {
     delete[] _data;
   }
 
-  virtual void	createPaquet() = 0;
+  virtual void	createPaquet() {};
 
   size_t	getSize() const {
     return (_size);
@@ -114,6 +122,22 @@ public:
       }
     }
     return (value);
+  }
+
+  Paquet	&operator=(const Paquet &paquet) {
+
+    if (this == &paquet) {
+      return (*this);
+    }
+
+    if (_size != paquet.getSize()) {
+      _data = new uint8_t[paquet.getSize()];
+      _size = paquet.getSize();
+    }
+
+    const uint8_t	*data = paquet.getData();
+    std::copy(data, data + _size, _data);
+    return (*this);
   }
 };
 

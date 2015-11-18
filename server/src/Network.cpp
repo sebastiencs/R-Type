@@ -12,9 +12,10 @@
 #include "Selector.hh"
 
 Network::Network(const uint16_t port)
-  : _socket(new SocketUDP(SocketUDP::SERVER)),
-    _running(true),
-    _selector(new Selector(this))
+  : _sem(new Semaphore),
+    _socket(new SocketUDP(SocketUDP::SERVER)),
+    _selector(new Selector(this)),
+    _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0))
 {
   DEBUG_MSG("Network created");
   _socket->bind(port);
@@ -23,17 +24,20 @@ Network::Network(const uint16_t port)
 Network::~Network()
 {
   DEBUG_MSG("Network deleted");
+  _thread->close();
 }
 
 int	Network::run()
 {
+  _running = true;
+
   while (_running) {
 
     ssize_t	size;
 
     size = _socket->read(_buffer);
 
-    if (size >= 0) {
+    if (size > 0) {
       _selector->execFunc(_buffer);
     }
   }
@@ -46,8 +50,49 @@ int	Network::stop()
   return (0);
 }
 
+bool	Network::write(const Paquet &paquet, const Addr &addr)
+{
+  PaquetClient	pc;
+
+  pc.paquet = paquet;
+  pc.addr = addr;
+
+  _stackPaquet.push(pc);
+  _sem->post();
+  return (true);
+}
+
+bool	Network::write()
+{
+  for (;;) {
+    _sem->wait();
+
+    if (_stackPaquet.size()) {
+
+      PaquetClient pc = _stackPaquet.top();
+
+      if (_socket->write(pc.paquet, pc.addr) >= 0) {
+	_stackPaquet.pop();
+      }
+      else {
+	_sem->post();
+      }
+    }
+  }
+  return (true);
+}
+
 int	Network::handleFirst(PaquetFirst paquet)
 {
+  PaquetFirst	p;
+
+  p.setVersion(1);
+  p.setName("seb");
+  p.setLevel(1);
+  p.createPaquet();
+
+  write(p, _socket->getAddr());
+
   DEBUG_MSG(paquet);
   return (0);
 }

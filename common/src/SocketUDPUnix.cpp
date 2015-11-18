@@ -114,6 +114,37 @@ ssize_t	SocketUDPUnix::write(const Buffer &buf, const Addr &addr)
   return (n);
 }
 
+ssize_t	SocketUDPUnix::write(const Paquet &paquet)
+{
+  ssize_t	n = 0;
+
+  if (_type == SocketUDPUnix::SERVER) {
+    if (_isKnown == false) {
+      throw std::runtime_error("Error sendto() unknown client");
+    }
+    n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), sizeof(_clientAddr));
+  }
+  else {
+    n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
+  }
+  if (n < 0) {
+    DEBUG_MSG("sendto() failed");
+  }
+  return (n);
+}
+
+ssize_t	SocketUDPUnix::write(const Paquet &paquet, const Addr &addr)
+{
+  struct sockaddr_in	addrIn = addr.get();
+  ssize_t		n = 0;
+
+  n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
+  if (n < 0) {
+    DEBUG_MSG("sendto() failed");
+  }
+  return (n);
+}
+
 ssize_t	SocketUDPUnix::read(Buffer &buf)
 {
   Buffer	tmp;

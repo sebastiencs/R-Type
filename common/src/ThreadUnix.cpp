@@ -23,6 +23,7 @@ ThreadUnix::ThreadUnix(const std::function<void *(void *)> &func, void *arg = 0)
 
 ThreadUnix::~ThreadUnix()
 {
+  close();
 }
 
 bool	ThreadUnix::run(const std::function<void *(void *)> &func, void *arg = 0)

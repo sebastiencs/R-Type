@@ -36,6 +36,7 @@ typedef struct sockaddr_in sockaddr_in;
 # include <string>
 # include "Addr.hh"
 # include "Buffer.hh"
+# include "Paquet.hh"
 
 class		ISocketUDP
 {
@@ -47,6 +48,8 @@ public:
   virtual int		bind(uint16_t port) = 0;
   virtual ssize_t	write(const Buffer &buf) = 0;
   virtual ssize_t	write(const Buffer &buf, const Addr &addr) = 0;
+  virtual ssize_t	write(const Paquet &paquet) = 0;
+  virtual ssize_t	write(const Paquet &paquet, const Addr &addr) = 0;
   virtual ssize_t	read(Buffer &buf) = 0;
   virtual const Addr	getAddr() const = 0;
 };

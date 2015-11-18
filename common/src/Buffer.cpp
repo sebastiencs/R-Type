@@ -17,7 +17,7 @@ Buffer::Buffer()
   DEBUG_MSG("Buffer created");
 }
 
-Buffer::Buffer(Data *data, Size len)
+Buffer::Buffer(const Data *data, Size len)
 {
   _buffer.reset(new Data[len]);
   std::copy(data, data + len, _buffer.get());

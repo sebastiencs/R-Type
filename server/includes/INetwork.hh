@@ -11,6 +11,8 @@
 #ifndef INETWORK_H_
 # define INETWORK_H_
 
+# include "Paquets.hh"
+
 class		INetwork
 {
 public:
@@ -18,6 +20,7 @@ public:
 
   virtual int	run() = 0;
   virtual int	stop() = 0;
+  virtual bool	write(const Paquet &, const Addr &) = 0;
 };
 
 

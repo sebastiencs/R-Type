@@ -21,6 +21,8 @@
 
 # endif
 
+# include <algorithm>
+
 class				Addr
 {
 private:
@@ -33,6 +35,8 @@ public:
 
   void				set(struct sockaddr_in &);
   const struct sockaddr_in	&get() const;
+
+  bool				operator==(const Addr &);
 };
 
 #endif /* !ADDR_H_ */

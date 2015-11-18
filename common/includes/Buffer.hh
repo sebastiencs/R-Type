@@ -15,7 +15,7 @@
 # include <iostream>
 # include "Debug.hh"
 
-typedef std::unique_ptr<uint8_t>	buffer_t;
+typedef std::unique_ptr<uint8_t[]>	buffer_t;
 typedef uint8_t				Data;
 typedef size_t				Size;
 
@@ -28,7 +28,7 @@ private:
 
 public:
   Buffer();
-  Buffer(Data *data, Size len);
+  Buffer(const Data *data, Size len);
   virtual ~Buffer();
 
   void		set(const Data *data, Size len);

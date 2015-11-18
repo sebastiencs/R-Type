@@ -15,21 +15,35 @@
 # include <memory>
 # include <map>
 # include <functional>
+# include <stack>
 # include "Socket.hh"
 # include "Debug.hh"
 # include "Paquets.hh"
 # include "INetwork.hh"
+# include "Thread.hh"
+# include "Semaphore.hh"
 
 class	Selector;
+
+//typedef std::tuple<Paquet *, Addr>	PaquetClient;
+
+typedef struct	s_paquet_client
+{
+  Paquet	paquet;
+  Addr		addr;
+}		PaquetClient;
 
 class				Network : public INetwork
 {
 private:
 
+  std::unique_ptr<Semaphore>	_sem;
   std::unique_ptr<ISocketUDP>	_socket;
+  std::unique_ptr<Selector>	_selector;
+  std::unique_ptr<IThread>	_thread;
+  std::stack<PaquetClient>	_stackPaquet;
   bool				_running;
   Buffer			_buffer;
-  std::unique_ptr<Selector>	_selector;
 
 public:
   Network(const uint16_t);
@@ -39,6 +53,8 @@ public:
   virtual int	stop();
 
   virtual int	handleFirst(PaquetFirst);
+  virtual bool	write(const Paquet &, const Addr &);
+  virtual bool	write();
 };
 
 #endif /* !NETWORK_H_ */
