@@ -60,6 +60,11 @@ add_executable(
 set_property(GLOBAL PROPERTY CXX_STANDARD 11)
 set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
 
+add_custom_command(TARGET Client POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:Client>/ressources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/client/ressources" $<TARGET_FILE_DIR:Client>/ressources
+  )
+
 if (${UNIX})
 
   add_definitions(
@@ -79,23 +84,24 @@ if (${UNIX})
     Client
     pthread
     dl
+    sfml-graphics
+    sfml-window
+    sfml-system
     )
-	
+
 elseif (WIN32)
 
-	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
-	
-	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+  add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 
-	add_custom_command(TARGET Client POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:Client>
-		COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:Client>/ressources
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/client/ressources" $<TARGET_FILE_DIR:Client>/ressources
-		)
+  set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-	target_link_libraries(
-	Client
-	${SFML_LIBRARIES}
-	)
-		
+  add_custom_command(TARGET Client POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:Client>
+    )
+
+  target_link_libraries(
+    Client
+    ${SFML_LIBRARIES}
+    )
+
 endif()
