@@ -14,6 +14,8 @@ public:
 	// a compléter ?
 	virtual void handleEvents() = 0;
 
+	virtual void launch() = 0;
+
 	virtual void repaint() = 0;
 };
 

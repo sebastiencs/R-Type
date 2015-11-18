@@ -31,6 +31,7 @@ int		main(int argc, char **argv)
 	
 	
 	IGraphicEngine* engine = new GraphicEngine;
-	engine->createWindow(800, 600, "coucou");
+	engine->createWindow(800, 600, "R-Type");
+	engine->launch();
 	return (0);
 }
