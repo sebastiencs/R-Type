@@ -9,44 +9,44 @@ PackageStorage::~PackageStorage()
 }
 
 const Paquet *PackageStorage::getReceivedPackage() const {
-	return received.front();
+	return received.empty() ? nullptr : received.front();
 }
 
 const Paquet *PackageStorage::getPlayersPackage() const {
-	return players.front();
+	return players.empty() ? nullptr : players.front();
 }
 
 const Paquet *PackageStorage::getEnemiesPackage() const {
-	return enemies.front();
+	return enemies.empty() ? nullptr : enemies.front();
 }
 
 const Paquet *PackageStorage::getObstaclesPackage() const {
-	return obstacles.front();
+	return obstacles.empty() ? nullptr : obstacles.front();
 }
 
 const Paquet * PackageStorage::getShotsPackage() const
 {
-	return shots.front();
+	return shots.empty() ? nullptr : shots.front();
 }
 
 const Paquet * PackageStorage::getToSendPackage() const
 {
-	return toSend.front();
+	return toSend.empty() ? nullptr : toSend.front();
 }
 
 const Paquet * PackageStorage::getGameList() const
 {
-	return gameList.front();
+	return gameList.empty() ? nullptr : gameList.front();
 }
 
 const Paquet * PackageStorage::getPlayerList() const
 {
-	return playerList.front();
+	return playerList.empty() ? nullptr : playerList.front();
 }
 
 const Paquet * PackageStorage::getAnswers() const
 {
-	return answers.front();
+	return answers.empty() ? nullptr : answers.front();
 }
 
 void PackageStorage::storeReceivedPackage(Paquet * package)
@@ -141,5 +141,5 @@ void PackageStorage::deleteAnswersPackage()
 
 bool PackageStorage::isThereReceivedPackage()
 {
-	return !received.empty;
+	return !received.empty();
 }
