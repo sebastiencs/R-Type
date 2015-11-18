@@ -37,7 +37,9 @@ void GraphicEngine::launch()
 		handleEvents();
 		window->clear(sf::Color::Black);
 
-		drawImage("r-typesheet26.gif", 0, 0);
+		drawImage("r-typesheet26.gif", Transformation(0, 0));
+		drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
+		drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
 		// TODO: Timer, paquets etc
 
 		window->display();
@@ -56,7 +58,21 @@ bool GraphicEngine::loadImageFromFile(const std::string& file)
 	return true;
 }
 
-void GraphicEngine::drawImage(const std::string& name, uint16_t x, uint16_t y)
+bool GraphicEngine::loadFontFromFile(const std::string & file)
+{
+	if (cachedFonts.find(file) != cachedFonts.end())
+		return true;
+
+	sf::Font* font = new sf::Font();
+	if (!font->loadFromFile(FONT_PATH + file))
+		return false;
+	cachedFonts[file] = font;
+	return true;
+}
+
+
+
+void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
 	if (cachedImages.find(name) == cachedImages.end() &&
 		!loadImageFromFile(name)) {
@@ -64,7 +80,34 @@ void GraphicEngine::drawImage(const std::string& name, uint16_t x, uint16_t y)
 		return;
 	}
 	sf::Sprite sprite(*cachedImages[name]);
-	sprite.setPosition(x, y);
+	if (t.hasPosition())
+		sprite.setPosition(t.getX(), t.getY());
+	if (t.hasRotation())
+		sprite.rotate(t.getRotation());
+	if (color.isUsed())
+		sprite.setColor(sf::Color(color.getColor()));
+	// TODO: crop if asked
 	window->draw(sprite);
+}
+
+void GraphicEngine::drawText(const std::string& text, const Transformation& t,
+	uint16_t size, const Color& color, const std::string& font)
+{
+	std::string fontName = (font == "" ? DEFAULT_FONT : font);
+	if (cachedFonts.find(fontName) == cachedFonts.end() &&
+		!loadFontFromFile(fontName)) {
+		std::cerr << "Couldn't open font file: \"" << fontName << "\"" << std::endl;
+		return;
+	}
+	sf::Text textToDraw;
+	textToDraw.setFont(*cachedFonts[fontName]);
+	textToDraw.setString(text);
+	textToDraw.setCharacterSize(size);
+	if (t.hasPosition())
+		textToDraw.setPosition(t.getX(), t.getY());
+	if (color.isUsed())
+		textToDraw.setColor(sf::Color(color.getColor()));
+	window->draw(textToDraw);
+
 }
 

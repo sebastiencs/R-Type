@@ -9,29 +9,49 @@ PackageStorage::~PackageStorage()
 }
 
 const Paquet *PackageStorage::getReceivedPackage() const {
-	return received.front();
+	return received.empty() ? nullptr : received.front();
 }
 
 const Paquet *PackageStorage::getPlayersPackage() const {
-	return players.front();
+	return players.empty() ? nullptr : players.front();
 }
 
 const Paquet *PackageStorage::getEnemiesPackage() const {
-	return enemies.front();
+	return enemies.empty() ? nullptr : enemies.front();
 }
 
 const Paquet *PackageStorage::getObstaclesPackage() const {
-	return obstacles.front();
+	return obstacles.empty() ? nullptr : obstacles.front();
 }
 
 const Paquet * PackageStorage::getShotsPackage() const
 {
-	return shots.front();
+	return shots.empty() ? nullptr : shots.front();
 }
 
 const Paquet * PackageStorage::getToSendPackage() const
 {
-	return toSend.front();
+	return toSend.empty() ? nullptr : toSend.front();
+}
+
+const Paquet * PackageStorage::getGameListPackage() const
+{
+	return gameList.empty() ? nullptr : gameList.front();
+}
+
+const Paquet * PackageStorage::getPlayerListPackage() const
+{
+	return playerList.empty() ? nullptr : playerList.front();
+}
+
+const Paquet * PackageStorage::getAnswersPackage() const
+{
+	return answers.empty() ? nullptr : answers.front();
+}
+
+const Paquet * PackageStorage::getLaunchPackage() const
+{
+	return launch.empty() ? nullptr : launch.front();
 }
 
 void PackageStorage::storeReceivedPackage(Paquet * package)
@@ -64,6 +84,26 @@ void PackageStorage::storeToSendPackage(Paquet * package)
 	toSend.push_back(package);
 }
 
+void PackageStorage::storeGameListPackage(Paquet * package)
+{
+	gameList.push_back(package);
+}
+
+void PackageStorage::storePlayerListPackage(Paquet * package)
+{
+	playerList.push_back(package);
+}
+
+void PackageStorage::storeAnswersPackage(Paquet * package)
+{
+	answers.push_back(package);
+}
+
+void PackageStorage::storeLaunchPackage(Paquet * package)
+{
+	launch.push_back(package);
+}
+
 void PackageStorage::deleteReceivedPackage()
 {
 	received.erase(received.begin());
@@ -92,4 +132,29 @@ void PackageStorage::deleteShotsPackage()
 void PackageStorage::deleteToSendPackage()
 {
 	toSend.erase(received.begin());
+}
+
+void PackageStorage::deleteGameListPackage()
+{
+	gameList.erase(gameList.begin());
+}
+
+void PackageStorage::deletePlayerListPackage()
+{
+	playerList.erase(playerList.begin());
+}
+
+void PackageStorage::deleteAnswersPackage()
+{
+	answers.erase(answers.begin());
+}
+
+void PackageStorage::deleteLaunchPackage()
+{
+	launch.erase(launch.begin());
+}
+
+bool PackageStorage::isThereReceivedPackage()
+{
+	return !received.empty();
 }
