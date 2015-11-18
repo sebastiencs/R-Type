@@ -63,6 +63,7 @@ set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
 add_custom_command(TARGET Client POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:Client>/ressources
   COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/client/ressources" $<TARGET_FILE_DIR:Client>/ressources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/client/ressources" ${CMAKE_CURRENT_BINARY_DIR}
   )
 
 if (${UNIX})
