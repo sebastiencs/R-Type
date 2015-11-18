@@ -4,9 +4,17 @@ set(COMMON_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/includes/Paquet
   PARENT_SCOPE
   )
-
-file(GLOB
-  CURRENTSOURCES
+  
+file (GLOB
+  COMMON_SOURCES
+  src/Timer.cpp
+  src/Addr.cpp
+  src/Buffer.cpp
+  src/Player.cpp
+  )
+    
+file (GLOB
+  COMMON_HEADERS
   includes/Debug.hh
   includes/I*
   includes/Thread.hh
@@ -14,39 +22,66 @@ file(GLOB
   includes/Player.hh
   includes/Timer.hh
   includes/Addr.hh
-  includes/Paquet/*
-  src/Timer.cpp
-  src/Addr.cpp
-  src/Buffer.cpp
+  )
+  
+file(GLOB
+  PAQUETSOURCES
   src/Paquet/*
-  src/Player.cpp
   )
-
-set(COMMON_SOURCES
-  ${CURRENTSOURCES}
+    
+file(GLOB
+  PAQUETHEADERS
+  includes/Paquet/*
   )
+  
+set(PAQUETSOURCES
+  ${PAQUETSOURCES}
+  PARENT_SCOPE
+)
+  
+set(PAQUETHEADERS
+  ${PAQUETHEADERS}
+  PARENT_SCOPE
+)
 
 if (${UNIX})
 
   file(GLOB
-    CURRENTSOURCES
+    COMMON_PLATE_SOURCES
     src/*Unix.cpp
+    )
+	
+  file(GLOB
+    COMMON_PLATE_HEADERS
     includes/*Unix.hh
+	includes/WSA.hh
     )
 
 elseif (WIN32)
 
   file(GLOB
-    CURRENTSOURCES
+    COMMON_PLATE_SOURCES
     src/*Win.cpp
+    )
+	
+  file(GLOB
+    COMMON_PLATE_HEADERS
     includes/*Win.hh
-    includes/WSA.hh
+	includes/WSA.hh
     )
 
 endif()
 
-set(COMMON_SOURCES
-  ${COMMON_SOURCES}
-  ${CURRENTSOURCES}
-  PARENT_SCOPE
+	
+  set(COMMON_SOURCES
+    ${COMMON_SOURCES}
+    ${COMMON_PLATE_SOURCES}
+    PARENT_SCOPE
   )
+  	
+  set(COMMON_HEADERS
+    ${COMMON_HEADERS}
+    ${COMMON_PLATE_HEADERS}
+    PARENT_SCOPE
+  )
+

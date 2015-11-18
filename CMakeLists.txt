@@ -26,6 +26,12 @@ add_subdirectory(common)
 add_subdirectory(server)
 add_subdirectory(client)
 
+source_group("Header Files\\Common" FILES ${COMMON_HEADERS})
+source_group("Source Files\\Common" FILES ${COMMON_SOURCES})
+source_group("Source Files\\Common\\Paquet" FILES ${PAQUETSOURCES})
+source_group("Header Files\\Common\\Paquet" FILES ${PAQUETHEADERS})
+
+
 include_directories(
   ${COMMON_INCLUDES}
   ${SERVER_INCLUDES}
@@ -36,12 +42,18 @@ include_directories(
 add_executable(
   Server
   ${COMMON_SOURCES}
+  ${COMMON_HEADERS}
+  ${PAQUETSOURCES}
+  ${PAQUETHEADERS}
   ${SERVER_SOURCES}
   )
 
 add_executable(
   Client
   ${COMMON_SOURCES}
+  ${COMMON_HEADERS}
+  ${PAQUETSOURCES}
+  ${PAQUETHEADERS}
   ${CLIENT_SOURCES}
   )
 
@@ -72,6 +84,8 @@ if (${UNIX})
 elseif (WIN32)
 
 	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+	
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 	add_custom_command(TARGET Client POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_directory
