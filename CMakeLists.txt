@@ -19,6 +19,9 @@ ForceBuildDir()
 
 project("R-Type")
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+find_package(SFML 2 REQUIRED system window graphics network audio)
+
 add_subdirectory(common)
 add_subdirectory(server)
 add_subdirectory(client)
@@ -27,6 +30,7 @@ include_directories(
   ${COMMON_INCLUDES}
   ${SERVER_INCLUDES}
   ${CLIENT_INCLUDES}
+  ${SFML_INCLUDE_DIR}
   )
 
 add_executable(
@@ -64,5 +68,18 @@ if (${UNIX})
     pthread
     dl
     )
+	
+elseif (WIN32)
 
+	add_custom_command(TARGET Client POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${SFML_ROOT}/bin"
+        $<TARGET_FILE_DIR:Client>
+		)
+
+	target_link_libraries(
+	Client
+	${SFML_LIBRARIES}
+	)
+		
 endif()
