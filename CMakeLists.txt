@@ -71,6 +71,8 @@ if (${UNIX})
 	
 elseif (WIN32)
 
+	add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+
 	add_custom_command(TARGET Client POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${SFML_ROOT}/bin"
