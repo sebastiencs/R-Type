@@ -26,9 +26,9 @@ public:
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
-	virtual void drawImage(const std::string& name, uint16_t x, uint16_t y);
-	virtual void drawText(const std::string& text, uint16_t x, uint16_t y,
-		uint16_t size, const std::string& font = "");
+	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
+	virtual void drawText(const std::string& text, const Transformation& transformation,
+		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 	virtual void handleEvents();
 	virtual void repaint();
 	virtual void launch();

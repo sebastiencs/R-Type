@@ -18,6 +18,7 @@ private:
 
 public:
 	Transformation();
+	Transformation(uint16_t x, uint16_t y);
 	~Transformation();
 
 	void setPosition(uint16_t x, uint16_t y);

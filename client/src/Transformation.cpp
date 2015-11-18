@@ -7,6 +7,13 @@ Transformation::Transformation()
 	_hasRotation = false;
 }
 
+Transformation::Transformation(uint16_t x, uint16_t y)
+{
+	setPosition(x, y);
+	_hasCrop = false;
+	_hasRotation = false;
+}
+
 Transformation::~Transformation()
 {
 }
