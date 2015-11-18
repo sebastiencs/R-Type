@@ -38,7 +38,8 @@ SocketTCPWin::~SocketTCPWin()
 int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
 {
   _client.sin_family = AF_INET;
-  _client.sin_addr.s_addr = inet_addr(addr.c_str());
+  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_client.sin_addr.s_addr));
+  //_client.sin_addr.s_addr = inet_addr(addr.c_str());
   _client.sin_port = htons(port);
   if (::connect(_socket, (struct sockaddr *)&_client, sizeof(_client)) == INVALID_SOCKET) {
     DEBUG_MSG("Connect failed");

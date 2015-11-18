@@ -52,7 +52,8 @@ int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
   // For the Client
   _client.sin_family = AF_INET;
   _client.sin_port = htons(port);
-  _client.sin_addr.S_un.S_addr = inet_addr(addr.c_str());
+  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_client.sin_addr.S_un.S_addr));
+  //_client.sin_addr.S_un.S_addr = inet_addr(addr.c_str());
 	return (0);
 }
 
