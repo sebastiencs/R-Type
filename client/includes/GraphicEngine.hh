@@ -5,12 +5,12 @@
 #	include <iostream>
 #	include <chrono>
 # include <map>
-# include <SFML\Window\Window.hpp>
-# include <SFML\Graphics\RenderWindow.hpp>
-# include <SFML\Window\Event.hpp>
-# include <SFML\Graphics\Image.hpp>
-# include <SFML\Graphics\Texture.hpp>
-# include <SFML\Graphics\Sprite.hpp>
+# include <SFML/Window/Window.hpp>
+# include <SFML/Graphics/RenderWindow.hpp>
+# include <SFML/Window/Event.hpp>
+# include <SFML/Graphics/Image.hpp>
+# include <SFML/Graphics/Texture.hpp>
+# include <SFML/Graphics/Sprite.hpp>
 # include "IGraphicEngine.hh"
 
 # define RS_PATH "ressources/"
