@@ -53,7 +53,7 @@ void		Buffer::setSize(Size size)
     _size = size;
   }
   else {
-    Data *tmp = new Data(size);
+    Data *tmp = new Data[size];
 
     std::copy(_buffer.get(), _buffer.get() + size, tmp);
     _buffer.reset(new Data[size]);
