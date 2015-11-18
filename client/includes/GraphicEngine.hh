@@ -37,7 +37,6 @@ protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);
 
-
 	sf::RenderWindow* window;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;

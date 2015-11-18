@@ -8,13 +8,13 @@
 
 class Color {
 private:
-	uint32_t _r;
-	uint32_t _g;
-	uint32_t _b;
-	uint32_t _a;
+	uint8_t _r;
+	uint8_t _g;
+	uint8_t _b;
+	uint8_t _a;
 	bool _used;
 public:
-	Color(uint32_t red, uint32_t green, uint32_t blue, uint32_t alpha = 255, bool used = true);
+	Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255, bool used = true);
 
 	uint32_t getColor() const;
 	bool isUsed() const;
