@@ -34,19 +34,24 @@ const Paquet * PackageStorage::getToSendPackage() const
 	return toSend.empty() ? nullptr : toSend.front();
 }
 
-const Paquet * PackageStorage::getGameList() const
+const Paquet * PackageStorage::getGameListPackage() const
 {
 	return gameList.empty() ? nullptr : gameList.front();
 }
 
-const Paquet * PackageStorage::getPlayerList() const
+const Paquet * PackageStorage::getPlayerListPackage() const
 {
 	return playerList.empty() ? nullptr : playerList.front();
 }
 
-const Paquet * PackageStorage::getAnswers() const
+const Paquet * PackageStorage::getAnswersPackage() const
 {
 	return answers.empty() ? nullptr : answers.front();
+}
+
+const Paquet * PackageStorage::getLaunchPackage() const
+{
+	return launch.empty() ? nullptr : launch.front();
 }
 
 void PackageStorage::storeReceivedPackage(Paquet * package)
@@ -94,6 +99,11 @@ void PackageStorage::storeAnswersPackage(Paquet * package)
 	answers.push_back(package);
 }
 
+void PackageStorage::storeLaunchPackage(Paquet * package)
+{
+	launch.push_back(package);
+}
+
 void PackageStorage::deleteReceivedPackage()
 {
 	received.erase(received.begin());
@@ -137,6 +147,11 @@ void PackageStorage::deletePlayerListPackage()
 void PackageStorage::deleteAnswersPackage()
 {
 	answers.erase(answers.begin());
+}
+
+void PackageStorage::deleteLaunchPackage()
+{
+	launch.erase(launch.begin());
 }
 
 bool PackageStorage::isThereReceivedPackage()

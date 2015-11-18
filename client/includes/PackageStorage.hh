@@ -17,6 +17,7 @@ private:
 	std::list<Paquet *> gameList;
 	std::list<Paquet *> playerList;
 	std::list<Paquet *> answers;
+	std::list<Paquet * > launch;
 
 public:
 
@@ -29,9 +30,10 @@ public:
 	const Paquet *getObstaclesPackage() const;
 	const Paquet *getShotsPackage() const;
 	const Paquet *getToSendPackage() const;
-	const Paquet *getGameList() const;
-	const Paquet *getPlayerList() const;
-	const Paquet *getAnswers() const;
+	const Paquet *getGameListPackage() const;
+	const Paquet *getPlayerListPackage() const;
+	const Paquet *getAnswersPackage() const;
+	const Paquet *getLaunchPackage() const;
 
 	void storeReceivedPackage(Paquet *package);
 	void storePlayersPackage(Paquet *package);
@@ -42,6 +44,7 @@ public:
 	void storeGameListPackage(Paquet *package);
 	void storePlayerListPackage(Paquet *package);
 	void storeAnswersPackage(Paquet *package);
+	void storeLaunchPackage(Paquet *package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
@@ -52,6 +55,7 @@ public:
 	void deleteGameListPackage();
 	void deletePlayerListPackage();
 	void deleteAnswersPackage();
+	void deleteLaunchPackage();
 
 	bool isThereReceivedPackage();
 	/*bool deletePlayersPackage();
