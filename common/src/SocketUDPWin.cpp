@@ -102,26 +102,57 @@ ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
   return (n);
 }
 
-ssize_t	SocketUDPWin::read(Buffer &buf)
+ssize_t	SocketUDPWin::write(const Paquet &paquet)
 {
-  Buffer	tmp;
-  int		recvlen = 0;
+  ssize_t	n;
 
   if (_type == SocketUDPWin::SERVER) {
-    recvlen = recvfrom(_socket, (char *)tmp.get(), tmp.size(), 0, (struct sockaddr *) &_client, &_clientLen);
+    if (_isKnown == false) {
+      throw std::runtime_error("Error sendto() client unknown");
+    }
+    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_client, _clientLen);
+  }
+  else {
+    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_server, sizeof(_server));
+  }
+  if (n == SOCKET_ERROR) {
+    DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+    n = -1;
+  }
+  return (n);
+}
+
+ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
+{
+  struct sockaddr_in	addrIn = addr.get();
+  ssize_t		n;
+
+  if ((n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
+      DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+      n = -1;
+  }
+  return (n);
+}
+
+ssize_t	SocketUDPWin::read(Buffer &buf)
+{
+  int		recvlen = 0;
+
+  buf.reset();
+  if (_type == SocketUDPWin::SERVER) {
+    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_client, &_clientLen);
     if (recvlen >= 0) {
       _isKnown = true;
     }
   }
   else {
-    recvlen = recvfrom(_socket, (char *)tmp.get(), tmp.size(), 0, (struct sockaddr *) &_server, &_clientLen);
+    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_server, &_clientLen);
   }
   if (recvlen = SOCKET_ERROR) {
     DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
   }
   else {
-    tmp.setSize(recvlen);
-    buf = tmp;
+    buf.setSize(recvlen);
   }
   return (recvlen);
 }

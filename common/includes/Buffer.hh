@@ -23,6 +23,8 @@ class		Buffer
 {
 private:
 
+  enum { DEFAULT_SIZE = 0x200 };
+
   buffer_t	_buffer;
   Size		_size;
 
@@ -35,6 +37,7 @@ public:
   Data		*get() const;
   Size		size() const;
   void		setSize(Size size);
+  void		reset();
 
   const Data	&operator[](Size id) const;
   const Buffer	&operator=(const Buffer &);

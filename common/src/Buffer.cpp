@@ -11,8 +11,8 @@
 #include "Buffer.hh"
 
 Buffer::Buffer()
-  : _buffer(new Data[512]),
-    _size(512)
+  : _buffer(new Data[Buffer::DEFAULT_SIZE]),
+    _size(Buffer::DEFAULT_SIZE)
 {
   DEBUG_MSG("Buffer created");
 }
@@ -61,6 +61,13 @@ void		Buffer::setSize(Size size)
     _size = size;
   }
 }
+
+void		Buffer::reset()
+{
+  _buffer.reset(new Data[Buffer::DEFAULT_SIZE]);
+  _size = Buffer::DEFAULT_SIZE;
+}
+
 const Data	&Buffer::operator[](Size id) const
 {
   if (id <= _size) {
