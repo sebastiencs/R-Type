@@ -13,6 +13,12 @@
 
 # include "Paquets.hh"
 
+# ifdef __unix__
+
+#  include <poll.h>
+
+# endif
+
 class		INetwork
 {
 public:

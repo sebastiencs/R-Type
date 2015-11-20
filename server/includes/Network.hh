@@ -23,9 +23,17 @@
 # include "Thread.hh"
 # include "Semaphore.hh"
 
-class	Selector;
+# ifdef __unix__
 
-//typedef std::tuple<Paquet *, Addr>	PaquetClient;
+typedef std::vector<struct pollfd>	Pollfd;
+
+# elif defined(_WIN32)
+
+typedef std::vector<WSAPOLLFD>		Pollfd;
+
+# endif
+
+class	Selector;
 
 typedef struct	s_paquet_client
 {
@@ -38,10 +46,12 @@ class				Network : public INetwork
 private:
 
   std::unique_ptr<Semaphore>	_sem;
-  std::unique_ptr<ISocketUDP>	_socket;
+  std::unique_ptr<ISocketUDP>	_socketUDP;
+  std::unique_ptr<ISocketTCP>	_socketTCP;
   std::unique_ptr<Selector>	_selector;
   std::unique_ptr<IThread>	_thread;
   std::stack<PaquetClient>	_stackPaquet;
+  std::list<ISocketTCP *>	_socketClient;
   bool				_running;
   Buffer			_buffer;
 

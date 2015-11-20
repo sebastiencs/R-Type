@@ -13,12 +13,15 @@
 
 Network::Network(const uint16_t port)
   : _sem(new Semaphore),
-    _socket(new SocketUDP(SocketUDP::SERVER)),
+    _socketUDP(new SocketUDP(SocketUDP::SERVER)),
+    _socketTCP(new SocketTCP(SocketTCP::SERVER)),
     _selector(new Selector(this)),
     _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0))
 {
   DEBUG_MSG("Network created");
-  _socket->bind(port);
+  _socketUDP->bind(port);
+  _socketTCP->bind(port);
+  _socketTCP->listen(0x200);
 }
 
 Network::~Network()
@@ -27,18 +30,84 @@ Network::~Network()
   _thread->close();
 }
 
+#include <set>
+
 int	Network::run()
 {
   _running = true;
 
+  Pollfd	fds(2);
+
+  fds[0].fd = _socketTCP->socket();
+  fds[0].events = POLLIN;
+  fds[1].fd = _socketUDP->socket();
+  fds[1].events = POLLIN;
+
   while (_running) {
 
-    ssize_t	size;
+    if (poll(fds.data(), fds.size(), 0) > 0) {
 
-    size = _socket->read(_buffer);
+      for (auto fd : fds) {
+	if (fd.revents & POLLIN) {
 
-    if (size > 0) {
-      _selector->execFunc(_buffer);
+	  if (fd.fd == _socketUDP->socket()) {
+
+	    ssize_t size = _socketUDP->read(_buffer);
+
+	    if (size > 0) {
+	      _selector->execFunc(_buffer);
+	    }
+	    break ;
+	  }
+	  else if (fd.fd == _socketTCP->socket()) {
+
+	    DEBUG_MSG("New client TCP");
+
+	    ISocketTCP *sock = _socketTCP->accept();
+	    _socketClient.push_back(sock);
+
+	    size_t	size_fds = fds.size();
+	    fds.resize(size_fds + 1);
+	    fds[size_fds - 1].fd = sock->socket();
+	    fds[size_fds - 1].events = POLLIN;
+
+	    ssize_t	size;
+	    size = sock->read(_buffer);
+	    std::cout << "SIZE: " << size << std::endl;
+	    break ;
+	  }
+	  else {
+
+	    for (auto fd_client : _socketClient) {
+
+	      if (fd_client->socket() == fd.fd) {
+
+		ssize_t	size;
+		size = fd_client->read(_buffer);
+
+		std::cout << "SIZE: " << (int)size << std::endl;
+
+		if (size <= 0) {
+
+		  std::cerr << "Client disconnect\n";
+
+		  socket_t fdc = fd.fd;
+		  for (auto it = fds.cbegin(); it != fds.cend(); ++it) {
+		    if ((*it).fd == fdc) {
+		      fds.erase(it);
+		      break ;
+		    }
+		  }
+		  _socketClient.remove(fd_client);
+
+		  break ;
+
+		}
+	      }
+	    }
+	  }
+	}
+      }
     }
   }
   return (0);
@@ -71,7 +140,7 @@ bool	Network::write()
 
       PaquetClient pc = _stackPaquet.top();
 
-      if (_socket->write(pc.paquet, pc.addr) >= 0) {
+      if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
 	_stackPaquet.pop();
       }
       else {
@@ -91,7 +160,7 @@ int	Network::handleFirst(PaquetFirst paquet)
   p.setLevel(1);
   p.createPaquet();
 
-  write(p, _socket->getAddr());
+  write(p, _socketUDP->getAddr());
 
   DEBUG_MSG(paquet);
   return (0);
