@@ -17,12 +17,13 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
     _addr(),
     _type(type)
 {
-  _fd = socket(AF_INET, SOCK_STREAM, 0);
+  _fd = ::socket(AF_INET, SOCK_STREAM, 0);
 
   if (_fd >= 0 && type == SocketTCPUnix::SERVER) {
-    char unused;
+    int unused = 0;
     if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &unused, sizeof unused)) {
       DEBUG_MSG("setsockopt error");
+      perror("->");
     }
   }
 
@@ -49,6 +50,11 @@ SocketTCPUnix::~SocketTCPUnix()
 {
   DEBUG_MSG("SocketTCPUnix deleted");
   close(_fd);
+}
+
+socket_t	SocketTCPUnix::socket() const
+{
+  return (_fd);
 }
 
 int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
@@ -115,6 +121,7 @@ int	SocketTCPUnix::bind(uint16_t port)
   _addr.sin_port = htons(port);
   if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
     DEBUG_MSG("bind() failed");
+    perror("->");
     _error = 1;
     return (-1);
   }
@@ -146,22 +153,21 @@ ssize_t	SocketTCPUnix::write(const Buffer &buf)
 
 ssize_t	SocketTCPUnix::read(Buffer &buf)
 {
-  Buffer	tmp;
-  ssize_t	n;
+  ssize_t n;
 
+  buf.reset();
   if (_error) {
     DEBUG_MSG("Try to send on an invalid socket");
     return (-1);
   }
 
-  n = ::read(_fd, tmp.get(), tmp.size());
+  n = ::read(_fd, buf.get(), buf.size());
 
   if (n < 0) {
     DEBUG_MSG("read() failed");
   }
   else {
-    tmp.setSize(n);
-    buf = tmp;
+    buf.setSize(n);
   }
 
   return (n);

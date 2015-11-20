@@ -13,7 +13,7 @@
 
 SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
 {
-  if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+  if ((_socket = ::socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
     DEBUG_MSG("SockectTCOWin failed : " + WSAGetLastError());
   else
     DEBUG_MSG("SocketTCPWin created");
@@ -33,6 +33,11 @@ SocketTCPWin::~SocketTCPWin()
 {
   closesocket(_socket);
   DEBUG_MSG("SocketTCPWin deleted");
+}
+
+socket_t	SocketTCPWin::socket() const
+{
+  return (_socket);
 }
 
 int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
@@ -89,15 +94,14 @@ ssize_t	SocketTCPWin::write(const Buffer &buf)
 
 ssize_t	SocketTCPWin::read(Buffer &buf)
 {
-  Buffer	tmp;
   int		recvlen = 0;
 
-  if ((recvlen = recv(_socket, (char *)tmp.get(), tmp.size(), 0)) == SOCKET_ERROR)
+  buf.reset();
+  if ((recvlen = recv(_socket, (char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR)
     DEBUG_MSG("Recv failed: " + WSAGetLastError());
   else {
     DEBUG_MSG((char *)data);
-    tmp.setSize(recvlen);
-    buf = tmp;
+    buf.setSize(recvlen);
   }
   return (recvlen);
 }

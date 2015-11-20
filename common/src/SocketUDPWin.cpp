@@ -17,14 +17,14 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
 {
   if (type == SERVER)
   {
-	  if ((_socket = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
+	  if ((_socket = ::socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
   		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
 	  else
 	  	DEBUG_MSG("SocketUDPWin created");
   }
   else if (type == CLIENT)
   {
-	  if ((_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
+	  if ((_socket = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
   		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
 	  else
 	  	DEBUG_MSG("SocketUDPWin created");
@@ -45,6 +45,11 @@ SocketUDPWin::~SocketUDPWin()
 {
   closesocket(_socket);
   DEBUG_MSG("SocketUDPWin deleted");
+}
+
+socket_t	SocketUDPWin::socket() const
+{
+  return (_socket);
 }
 
 int	SocketUDPWin::connect(const std::string &addr, uint16_t port)

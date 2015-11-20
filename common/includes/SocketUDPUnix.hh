@@ -39,6 +39,7 @@ public:
   SocketUDPUnix(CONNECTION_TYPE, socket_t);
   virtual ~SocketUDPUnix();
 
+  virtual socket_t	socket() const;
   virtual int		connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t);
   virtual ssize_t	write(const Buffer &buf);

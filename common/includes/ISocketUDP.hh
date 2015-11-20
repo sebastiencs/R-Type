@@ -44,6 +44,7 @@ public:
 
   virtual ~ISocketUDP() {};
 
+  virtual socket_t	socket() const = 0;
   virtual int		connect(const std::string &, uint16_t port) = 0;
   virtual int		bind(uint16_t port) = 0;
   virtual ssize_t	write(const Buffer &buf) = 0;

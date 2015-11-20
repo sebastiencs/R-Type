@@ -19,7 +19,7 @@ SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type)
     _type(type),
     _isKnown(false)
 {
-  _fd = socket(AF_INET, SOCK_DGRAM, 0);
+  _fd = ::socket(AF_INET, SOCK_DGRAM, 0);
 
   if (_fd < 0) {
     DEBUG_MSG("Couldn't create socket");
@@ -45,6 +45,11 @@ SocketUDPUnix::~SocketUDPUnix()
 {
   DEBUG_MSG("SocketUDPUnix deleted");
   close(_fd);
+}
+
+socket_t	SocketUDPUnix::socket() const
+{
+  return (_fd);
 }
 
 int	SocketUDPUnix::connect(const std::string &addr, uint16_t port)

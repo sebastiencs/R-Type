@@ -37,6 +37,7 @@ public:
   SocketTCPUnix(CONNECTION_TYPE, socket_t);
   virtual ~SocketTCPUnix();
 
+  virtual socket_t	socket() const;
   virtual ISocketTCP	*accept();
   virtual int		connect(const std::string &, uint16_t);
   virtual int		bind(uint16_t port);

@@ -41,6 +41,7 @@ public:
 
   virtual ~ISocketTCP() {};
 
+  virtual socket_t	socket() const = 0;
   virtual ISocketTCP	*accept() = 0;
   virtual int		connect(const std::string &, uint16_t) = 0;
   virtual int		bind(uint16_t) = 0;
