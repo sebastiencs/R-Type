@@ -52,11 +52,15 @@ std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &fu
   return (f);
 }
 
+void	*unused(void *param)
+{
+	return (nullptr);
+}
+
 void	*jump(void *arg)
 {
-	/*std::function<void *(void *)> f = save_func();
-	return (f(arg));*/
-	return 0;
+	std::function<void *(void *)> f = save_func(unused, 0);
+	return (f(arg));
 }
 
 bool	ThreadWin::close()
