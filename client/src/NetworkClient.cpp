@@ -38,7 +38,7 @@ int NetworkClient::handleFirst(PaquetFirst first)
 
   _socketUDP->write(p, _socketUDP->getAddr());
 
-  DEBUG_MSG(paquet);
+  //DEBUG_MSG(paquet);
   return 0;
 }
 
