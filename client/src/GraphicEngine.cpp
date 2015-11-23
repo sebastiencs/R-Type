@@ -3,6 +3,24 @@
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
 	_timer.start();
+	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[3] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[4] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[5] = "r-typesheet17.gif";
+
+	playerIDToSpriteString[0] = "r-typesheet42.gif";
+	playerIDToSpriteString[1] = "r-typesheet42.gif";
+	playerIDToSpriteString[2] = "r-typesheet42.gif";
+	playerIDToSpriteString[3] = "r-typesheet42.gif";
+	playerIDToSpriteString[4] = "r-typesheet42.gif";
+
+	shotTypeToSpriteString[0] = "r-typesheet1.gif";
+	shotTypeToSpriteString[1] = "r-typesheet1.gif";
+	shotTypeToSpriteString[2] = "r-typesheet1.gif";
+	shotTypeToSpriteString[3] = "r-typesheet1.gif";
+	shotTypeToSpriteString[4] = "r-typesheet1.gif";
 }
 
 GraphicEngine::~GraphicEngine()
@@ -27,8 +45,19 @@ void GraphicEngine::handleEvents()
 	sf::Event event;
 	while (window->pollEvent(event))
 	{
+		// TODO: Trouver quoi faire des positions du joueur
 		if (event.type == sf::Event::Closed)
 			window->close();
+		else if (event.key.code == sf::Keyboard::Space)
+			_packager->createShotPackage(0, 0, 0, 0);
+		else if (event.key.code == sf::Keyboard::Z)
+			_packager->createMovementPackage(0, 0, 0);
+		else if (event.key.code == sf::Keyboard::Q)
+			_packager->createMovementPackage(0, 0, 0);
+		else if (event.key.code == sf::Keyboard::S)
+			_packager->createMovementPackage(0, 0, 20);
+		else if (event.key.code == sf::Keyboard::D)
+			_packager->createMovementPackage(0, 20, 0);
 	}
 }
 
@@ -38,16 +67,30 @@ void GraphicEngine::repaint()
 
 void GraphicEngine::launch()
 {
-
 	while (window->isOpen())
 	{
 		handleEvents();
-		// TODO: get les paquets
+		// TODO: get les paquets ?
 		if (_timer.ms() >= MS_REFRESH)
 		{
-			// TODO: faire l'interface en fct des paquets
-
 			window->clear(sf::Color::Black);
+			// TODO: faire l'interface en fct des paquets
+			while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
+				const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+				drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+				PackageStorage::getInstance().deleteObstaclesPackage();
+			}
+			while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
+				const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
+				drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
+				PackageStorage::getInstance().deletePlayersPackage();
+			}
+			while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
+				const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
+				drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+				PackageStorage::getInstance().deleteShotsPackage();
+			}
+
 			drawImage("r-typesheet26.gif", Transformation(0, 0));
 			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
 			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
