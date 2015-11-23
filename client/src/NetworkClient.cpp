@@ -6,7 +6,6 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 
 {
   DEBUG_MSG(_socketTCP->bind(port));
-  _socketUDP->bind(port);
   _socketTCP->connect(ip, port);
 }
 
