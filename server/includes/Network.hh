@@ -29,6 +29,8 @@ typedef std::vector<struct pollfd>	Pollfd;
 
 # elif defined(_WIN32)
 
+# include <vector>
+# define poll WSAPoll
 typedef std::vector<WSAPOLLFD>		Pollfd;
 
 # endif
