@@ -32,13 +32,13 @@ bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
 {
   if (!_running) {
     save_func(func, 1);
-	if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump), arg, 0, nullptr))) {
+    if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump), arg, 0, nullptr))) {
       DEBUG_MSG("CreateThread: create thread failed");
       return false;
     }
     _running = true;
     DEBUG_MSG("ThreadWin created");
-    return true;	      
+    return true;
   }
   DEBUG_MSG("Try to start an already running thread");
   return (false);
@@ -59,7 +59,7 @@ void	*unused(void *param)
 
 void	*jump(void *arg)
 {
-	std::function<void *(void *)> f = save_func(unused, 0);
+  std::function<void *(void *)> f = save_func(unused, 0);
 	return (f(arg));
 }
 
