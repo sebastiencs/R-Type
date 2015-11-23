@@ -12,6 +12,7 @@
 # include "GraphicEngine.hh"
 #include "PackageStorage.hh"
 #include "Packager.hh"
+#include "NetworkClient.hh"
 
 #ifdef _WIN32
 # include "WSA.hh"
@@ -34,7 +35,13 @@ int		main(int argc, char **argv)
 	
 	Packager *packager = new Packager();
 	IGraphicEngine* engine = new GraphicEngine(packager);
+  NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
 
+  PaquetFirst paquet;
+  paquet.setLevel(5);
+  paquet.setName("Alex");
+  paquet.setVersion(0);
+  network->handleFirst(paquet);
 	engine->createWindow(800, 600, "R-Type");
 	engine->launch();
 	delete engine;

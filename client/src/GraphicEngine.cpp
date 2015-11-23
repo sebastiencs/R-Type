@@ -1,4 +1,5 @@
 #include "GraphicEngine.hh"
+#include <Windows.h>
 
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
@@ -91,8 +92,14 @@ void GraphicEngine::launch()
 				PackageStorage::getInstance().deleteShotsPackage();
 			}
 
-			drawImage("r-typesheet26.gif", Transformation(0, 0));
-			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
+      drawImage("r-typesheet26.gif", Transformation(0, 0));
+      /* test */
+      static unsigned int i = 0;
+      if (i > 6)
+        i = 0;
+      drawSplitImage("r-typesheet26.gif", Transformation(100, 100), Color::None, i * 65, 0, 65, 50);
+      i++;
+      drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
 			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
 
 			window->display();
@@ -144,6 +151,29 @@ void GraphicEngine::drawImage(const std::string& name, const Transformation& t, 
 	// TODO: crop if asked
 	window->draw(sprite);
 }
+
+void GraphicEngine::drawSplitImage(const std::string & name, const Transformation & t, const Color & color, const int x, const int y, const int width, const int height)
+{
+  if (cachedImages.find(name) == cachedImages.end() &&
+    !loadImageFromFile(name)) {
+    std::cerr << "Couldn't open texture file: \"" << name << "\"" << std::endl;
+    return;
+  }
+  sf::IntRect subRect;
+  subRect.left = x;
+  subRect.top = y;
+  subRect.width = width;
+  subRect.height = height;
+  sf::Sprite sprite(*cachedImages[name], subRect); 
+  if (t.hasPosition())
+    sprite.setPosition(t.getX(), t.getY());
+  if (t.hasRotation())
+    sprite.rotate(t.getRotation());
+  if (color.isUsed())
+    sprite.setColor(sf::Color(color.getColor()));
+  window->draw(sprite);
+}
+
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	uint16_t size, const Color& color, const std::string& font)

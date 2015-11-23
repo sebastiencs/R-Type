@@ -5,7 +5,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
     _socketUDP(new SocketUDP(SocketUDP::CLIENT))
 
 {
-  _socketTCP->bind(port);
+  DEBUG_MSG(_socketTCP->bind(port));
   _socketUDP->bind(port);
   _socketTCP->connect(ip, port);
 }
@@ -34,11 +34,12 @@ int NetworkClient::handleFirst(PaquetFirst first)
   p.setName("Alex");
   p.setLevel(1);
   p.createPaquet();
+  Buffer buff(p.getData(), p.getSize());
   /* !Test*/
 
-  _socketUDP->write(p, _socketUDP->getAddr());
+  _socketTCP->write(buff);
 
-  //DEBUG_MSG(paquet);
+  DEBUG_MSG(paquet);
   return 0;
 }
 
