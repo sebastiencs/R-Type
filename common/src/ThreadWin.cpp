@@ -11,14 +11,14 @@
 #include "ThreadWin.hh"
 
 ThreadWin::ThreadWin()
-  : _running(false),
-    _thread(nullptr)
+  : _running(false)/*,
+    _thread(nullptr)*/
 {
 }
 
 ThreadWin::ThreadWin(const std::function<void *(void *)> &func, void *arg = 0)
-  : _running(false),
-    _thread(nullptr)
+  : _running(false)/*,
+    _thread(nullptr)*/
 {
   run(func, arg);
 }
