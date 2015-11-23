@@ -30,8 +30,6 @@ Network::~Network()
   _thread->close();
 }
 
-#include <set>
-
 int	Network::run()
 {
   _running = true;
@@ -51,66 +49,80 @@ int	Network::run()
 	if (fd.revents & POLLIN) {
 
 	  if (fd.fd == _socketUDP->socket()) {
-
-	    ssize_t size = _socketUDP->read(_buffer);
-
-	    if (size > 0) {
-	      _selector->execFunc(_buffer);
-	    }
+	    handleUDP();
 	    break ;
 	  }
 	  else if (fd.fd == _socketTCP->socket()) {
-
-	    DEBUG_MSG("New client TCP");
-
-	    ISocketTCP *sock = _socketTCP->accept();
-	    _socketClient.push_back(sock);
-
-	    size_t	size_fds = fds.size();
-	    fds.resize(size_fds + 1);
-	    fds[size_fds - 1].fd = sock->socket();
-	    fds[size_fds - 1].events = POLLIN;
-
-	    ssize_t	size;
-	    size = sock->read(_buffer);
-	    std::cout << "SIZE: " << size << std::endl;
+	    handleNewTCP(fds);
 	    break ;
 	  }
 	  else {
-
-	    for (auto fd_client : _socketClient) {
-
-	      if (fd_client->socket() == fd.fd) {
-
-		ssize_t	size;
-		size = fd_client->read(_buffer);
-
-		std::cout << "SIZE: " << (int)size << std::endl;
-
-		if (size <= 0) {
-
-		  std::cerr << "Client disconnect\n";
-
-		  socket_t fdc = fd.fd;
-		  for (auto it = fds.cbegin(); it != fds.cend(); ++it) {
-		    if ((*it).fd == fdc) {
-		      fds.erase(it);
-		      break ;
-		    }
-		  }
-		  _socketClient.remove(fd_client);
-
-		  break ;
-
-		}
-	      }
-	    }
+	    handleTCP(fd.fd, fds);
+	    break ;
 	  }
 	}
       }
     }
   }
   return (0);
+}
+
+inline bool	Network::handleUDP()
+{
+  ssize_t size = _socketUDP->read(_buffer);
+
+  if (size > 0) {
+    _selector->execFunc(_buffer);
+  }
+  return (true);
+}
+
+inline bool	Network::handleNewTCP(Pollfd &fds)
+{
+  DEBUG_MSG("New client TCP");
+
+  ISocketTCP *sock = _socketTCP->accept();
+  _socketClient.push_back(sock);
+
+  size_t	size_fds = fds.size();
+  fds.resize(size_fds + 1);
+  fds[size_fds - 1].fd = sock->socket();
+  fds[size_fds - 1].events = POLLIN;
+
+  ssize_t	size;
+  size = sock->read(_buffer);
+  std::cout << "SIZE: " << size << std::endl;
+  return (true);
+}
+
+inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
+{
+  for (auto fd_client : _socketClient) {
+
+    if (fd_client->socket() == socket) {
+
+      ssize_t	size;
+      size = fd_client->read(_buffer);
+
+      std::cout << "SIZE: " << (int)size << std::endl;
+
+      if (size <= 0) {
+
+	std::cerr << "Client disconnect\n";
+
+	socket_t fdc = socket;
+	for (auto it = fds.cbegin(); it != fds.cend(); ++it) {
+	  if ((*it).fd == fdc) {
+	    fds.erase(it);
+	    break ;
+	  }
+	}
+	_socketClient.remove(fd_client);
+	break ;
+      }
+    }
+  }
+  return (true);
 }
 
 int	Network::stop()

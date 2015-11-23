@@ -65,6 +65,10 @@ public:
   virtual int	handleFirst(PaquetFirst);
   virtual bool	write(const Paquet &, const Addr &);
   virtual bool	write();
+
+  bool		handleUDP();
+  bool		handleNewTCP(Pollfd &fds);
+  bool		handleTCP(const socket_t socket, Pollfd &fds);
 };
 
 #endif /* !NETWORK_H_ */
