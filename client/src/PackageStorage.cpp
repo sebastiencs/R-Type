@@ -1,5 +1,17 @@
 #include "PackageStorage.hh"
 
+PackageStorage & PackageStorage::getInstance()
+{
+	static PackageStorage *instance;
+	if (instance != nullptr) {
+		instance = new PackageStorage();
+		return *instance;
+	}
+	else {
+		return *instance;
+	}
+}
+
 PackageStorage::PackageStorage()
 {
 }

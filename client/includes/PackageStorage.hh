@@ -21,6 +21,8 @@ private:
 
 public:
 
+	static PackageStorage& getInstance();
+
 	PackageStorage();
 	virtual ~PackageStorage();
 	
