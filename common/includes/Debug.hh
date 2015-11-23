@@ -18,4 +18,14 @@
 #  define DEBUG_MSG(x)
 # endif // !DEBUG
 
+# ifdef __unix__
+
+#  define UNUSED __attribute__((__unused__))
+
+# elif defined(_WIN32)
+
+#  define UNUSED
+
+# endif
+
 #endif /* !DEBUG_H_ */

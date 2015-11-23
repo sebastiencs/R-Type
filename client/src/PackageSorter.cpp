@@ -9,6 +9,7 @@
 //
 
 #include "PackageSorter.hh"
+#include "Debug.hh"
 
 PackageSorter::PackageSorter()
 {
@@ -26,16 +27,16 @@ PackageSorter::~PackageSorter()
 void PackageSorter::sortPaquet()
 {
   std::function<void(Paquet *)> tab[13];
-  tab[0] = [this](Paquet *paquet) {};
-  tab[1] = [this](Paquet *paquet) {};
+  tab[0] = [this](Paquet *paquet UNUSED) {};
+  tab[1] = [this](Paquet *paquet UNUSED) {};
   tab[2] = [this](Paquet *paquet) {
     storage->storeGameListPackage(paquet);
     storage->deleteReceivedPackage();
   };
-  tab[3] = [this](Paquet *paquet) {};
-  tab[4] = [this](Paquet *paquet) {};
-  tab[5] = [this](Paquet *paquet) {};
-  tab[6] = [this](Paquet *paquet) {
+  tab[3] = [this](Paquet *paquet UNUSED) {};
+  tab[4] = [this](Paquet *paquet UNUSED) {};
+  tab[5] = [this](Paquet *paquet UNUSED) {};
+  tab[6] = [this](Paquet *paquet UNUSED) {
     storage->storePlayerListPackage(paquet);
     storage->deletePlayerListPackage();
   };
@@ -51,9 +52,9 @@ void PackageSorter::sortPaquet()
     storage->storeObstaclesPackage(paquet);
     storage->deletePlayerListPackage();
   };
-  tab[10] = [this](Paquet *paquet) {};
-  tab[11] = [this](Paquet *paquet) {};
-  tab[12] = [this](Paquet *paquet) {};
+  tab[10] = [this](Paquet *paquet UNUSED) {};
+  tab[11] = [this](Paquet *paquet UNUSED) {};
+  tab[12] = [this](Paquet *paquet UNUSED) {};
 
   while (1)
   {

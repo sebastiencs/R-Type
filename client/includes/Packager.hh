@@ -10,4 +10,4 @@ public:
 	void createShotPackage();
 };
 
-#endif PACKAGER_HH
+#endif // !PACKAGER_HH
