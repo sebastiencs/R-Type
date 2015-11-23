@@ -94,9 +94,14 @@ void GraphicEngine::launch()
       drawImage("r-typesheet26.gif", Transformation(0, 0));
       /* test */
       static unsigned int i = 0;
-      if (i > 6)
+      static unsigned int j = 0;
+      if (i > 6){
         i = 0;
-      drawSplitImage("r-typesheet26.gif", Transformation(100, 100), Color::None, i * 65, 0, 65, 50);
+        j++;
+      }
+      if (j > 1)
+        j = 0;
+      drawSplitImage("r-typesheet23.gif", Transformation(100, 100), Color::None, i * 34, j * 33, 34, 33);
       i++;
       drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
 			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
