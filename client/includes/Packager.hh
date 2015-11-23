@@ -14,7 +14,7 @@
 
 class Packager {
 public:
-	Packager(PackageStorage *_storage);
+	Packager();
 	virtual ~Packager();
 
 	void createMovementPackage(uint8_t _playerID, uint8_t _x,	uint8_t _y);
@@ -28,9 +28,6 @@ public:
 
 	void createReadyPackage(uint8_t	_playerID);
 	void createLeavePackage(uint8_t	_playerID);
-
-private:
-	PackageStorage *storage;
 };
 
 #endif // !PACKAGER_HH

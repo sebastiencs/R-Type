@@ -34,7 +34,7 @@ int		main(int argc, char **argv)
 	
 	IGraphicEngine* engine = new GraphicEngine;
 	PackageStorage *storage = new PackageStorage();
-	Packager *packager = new Packager(storage);
+	Packager *packager = new Packager();
 
 	engine->createWindow(800, 600, "R-Type");
 	engine->launch();
