@@ -32,8 +32,8 @@ int		main(int argc, char **argv)
 	
 	
 	
-	IGraphicEngine* engine = new GraphicEngine;
 	Packager *packager = new Packager();
+	IGraphicEngine* engine = new GraphicEngine(packager);
 
 	engine->createWindow(800, 600, "R-Type");
 	engine->launch();

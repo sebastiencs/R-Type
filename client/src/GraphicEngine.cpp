@@ -1,5 +1,10 @@
 #include "GraphicEngine.hh"
 
+GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
+{
+	_timer.start();
+}
+
 GraphicEngine::~GraphicEngine()
 {
 	if (window)
@@ -9,11 +14,12 @@ GraphicEngine::~GraphicEngine()
 			delete it->second;
 }
 
+IGraphicEngine::~IGraphicEngine() {};
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
 {
 	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title);
-	window->setFramerateLimit(30);
+	window->setFramerateLimit(60);
 }
 
 void GraphicEngine::handleEvents()
@@ -32,17 +38,23 @@ void GraphicEngine::repaint()
 
 void GraphicEngine::launch()
 {
+
 	while (window->isOpen())
 	{
 		handleEvents();
-		window->clear(sf::Color::Black);
+		// TODO: get les paquets
+		if (_timer.ms() >= MS_REFRESH)
+		{
+			// TODO: faire l'interface en fct des paquets
 
-		drawImage("r-typesheet26.gif", Transformation(0, 0));
-		drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
-		drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
-		// TODO: Timer, paquets etc
+			window->clear(sf::Color::Black);
+			drawImage("r-typesheet26.gif", Transformation(0, 0));
+			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
+			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
 
-		window->display();
+			window->display();
+			_timer.reset();
+		}
 	}
 }
 
