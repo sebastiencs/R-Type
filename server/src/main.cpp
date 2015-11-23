@@ -45,7 +45,7 @@ int				main(int argc, char **argv)
 
   ISocketUDP *socket = new SocketUDP(SocketUDP::SERVER);
 
-  char buffer[512];
+//  char buffer[512];
 
   socket->bind(port);
 

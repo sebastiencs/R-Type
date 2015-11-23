@@ -73,6 +73,13 @@ public:
     std::copy(data, data + _size, _data);
   }
 
+  Paquet(const void *data, size_t len) {
+    _data = new uint8_t[len];
+    _size = len;
+
+    std::copy((uint8_t *)data, (uint8_t *)data + len, _data);
+  }
+
   virtual ~Paquet() {
     delete[] _data;
   }

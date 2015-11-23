@@ -32,11 +32,15 @@ Paquet * PackageTranslator::BufferToPaquet(const Buffer& buff)
   tab[11] = [this](const Buffer& buff) {return (new PaquetLaunch(buff)); };
   tab[12] = [this](const Buffer& buff) {return (new PaquetLeave(buff)); };
 
-  size_t	ptr = 0;
+  // size_t	ptr = 0;
   uint8_t id;
 
-  writeData<char>(ptr, reinterpret_cast<const char *>(buff.get()), buff.size());
-  id = readData<uint8_t>(ptr);
+  Paquet	paquet(buff.get(), buff.size());
+
+  id = paquet.getData()[0];
+
+  // writeData<char>(ptr, reinterpret_cast<const char *>(buff.get()), buff.size());
+  // id = readData<uint8_t>(ptr);
   return tab[id](buff);
 }
 
