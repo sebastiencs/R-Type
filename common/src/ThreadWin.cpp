@@ -32,8 +32,8 @@ bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
 {
   if (!_running) {
     save_func(func, 1);
-    // if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(func),
-    // 				 reinterpret_cast<LPVOID>(arg), 0, nullptr))) {
+	if (!(_thread = CreateThread(nullptr, 0, nullptr,
+									reinterpret_cast<LPVOID>(arg), 0, nullptr))) {
       DEBUG_MSG("CreateThread: create thread failed");
       return false;
     }
@@ -55,8 +55,9 @@ std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &fu
 
 void	*jump(void *arg)
 {
-  std::function<void *(void *)> f = save_func();
-  return (f(arg));
+	/*std::function<void *(void *)>	f = save_func();
+	return (f(arg));*/
+	return 0;
 }
 
 bool	ThreadWin::close()
