@@ -9,6 +9,8 @@
 #include "PaquetRequestPlayers.hh"
 #include "PaquetJoinParty.hh"
 #include "PaquetCreateParty.hh"
+#include "PaquetReady.hh"
+#include "PaquetLeave.hh"
 
 class Packager {
 public:
@@ -22,7 +24,10 @@ public:
 	void createPlayerListPackage();
 
 	void createJoinPartyPackage(std::string	_name);
-	void createCreatePartyPackage(std::string	_name);
+	void createCreatePartyPackage(std::string _name);
+
+	void createReadyPackage(uint8_t	_playerID);
+	void createLeavePackage(uint8_t	_playerID);
 
 private:
 	PackageStorage *storage;
