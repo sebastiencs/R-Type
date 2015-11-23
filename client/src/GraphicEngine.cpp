@@ -1,5 +1,4 @@
 #include "GraphicEngine.hh"
-#include <Windows.h>
 
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
