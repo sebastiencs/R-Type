@@ -27,6 +27,8 @@ private:
   sockaddr_in _server;
   sockaddr_in _client;
 
+  CONNECTION_TYPE	_type;
+
   int _clientLen;
 public:
 
