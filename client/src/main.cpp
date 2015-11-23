@@ -10,6 +10,8 @@
 
 # include "IGraphicEngine.hh"
 # include "GraphicEngine.hh"
+#include "PackageStorage.hh"
+#include "Packager.hh"
 
 #ifdef _WIN32
 # include "WSA.hh"
@@ -31,7 +33,13 @@ int		main(int argc, char **argv)
 	
 	
 	IGraphicEngine* engine = new GraphicEngine;
+	PackageStorage *storage = new PackageStorage();
+	Packager *packager = new Packager(storage);
+
 	engine->createWindow(800, 600, "R-Type");
 	engine->launch();
+	delete engine;
+	delete storage;
+	delete packager;
 	return (0);
 }
