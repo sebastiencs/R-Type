@@ -32,8 +32,7 @@ bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
 {
   if (!_running) {
     save_func(func, 1);
-	if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump),
-									reinterpret_cast<LPVOID>(arg), 0, nullptr))) {
+	if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump), arg, 0, nullptr))) {
       DEBUG_MSG("CreateThread: create thread failed");
       return false;
     }
