@@ -13,11 +13,6 @@
 
 PackageSorter::PackageSorter()
 {
-  storage = new PackageStorage();
-}
-
-PackageSorter::PackageSorter(PackageStorage * storage) : storage(storage)
-{
 }
 
 PackageSorter::~PackageSorter()
@@ -30,27 +25,27 @@ void PackageSorter::sortPaquet()
   tab[0] = [this](Paquet *paquet UNUSED) {};
   tab[1] = [this](Paquet *paquet UNUSED) {};
   tab[2] = [this](Paquet *paquet) {
-    storage->storeGameListPackage(paquet);
-    storage->deleteReceivedPackage();
+    PackageStorage::getInstance().storeGameListPackage(paquet);
+    PackageStorage::getInstance().deleteReceivedPackage();
   };
   tab[3] = [this](Paquet *paquet UNUSED) {};
   tab[4] = [this](Paquet *paquet UNUSED) {};
   tab[5] = [this](Paquet *paquet UNUSED) {};
   tab[6] = [this](Paquet *paquet UNUSED) {
-    storage->storePlayerListPackage(paquet);
-    storage->deletePlayerListPackage();
+    PackageStorage::getInstance().storePlayerListPackage(paquet);
+    PackageStorage::getInstance().deletePlayerListPackage();
   };
   tab[7] = [this](Paquet *paquet) {
-    storage->storePlayersPackage(paquet);
-    storage->deletePlayerListPackage();
+    PackageStorage::getInstance().storePlayersPackage(paquet);
+    PackageStorage::getInstance().deletePlayerListPackage();
   };
   tab[8] = [this](Paquet *paquet) {
-    storage->storeShotsPackage(paquet);
-    storage->deletePlayerListPackage();
+    PackageStorage::getInstance().storeShotsPackage(paquet);
+    PackageStorage::getInstance().deletePlayerListPackage();
   };
   tab[9] = [this](Paquet *paquet) {
-    storage->storeObstaclesPackage(paquet);
-    storage->deletePlayerListPackage();
+    PackageStorage::getInstance().storeObstaclesPackage(paquet);
+    PackageStorage::getInstance().deletePlayerListPackage();
   };
   tab[10] = [this](Paquet *paquet UNUSED) {};
   tab[11] = [this](Paquet *paquet UNUSED) {};
@@ -58,8 +53,8 @@ void PackageSorter::sortPaquet()
 
   while (1)
   {
-    if (storage->isThereReceivedPackage()) {
-      const Paquet *paquet = storage->getReceivedPackage();
+    if (PackageStorage::getInstance().isThereReceivedPackage()) {
+      const Paquet *paquet = PackageStorage::getInstance().getReceivedPackage();
       tab[paquet->getData()[0]](const_cast<Paquet*>(paquet));
     }
   }
