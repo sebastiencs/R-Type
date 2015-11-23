@@ -127,7 +127,7 @@ ssize_t	SocketUDPWin::write(const Paquet &paquet)
   return (n);
 }
 
-ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
+ssize_t	SocketUDPWin::write(const Paquet &paquet, const Addr &addr)
 {
   struct sockaddr_in	addrIn = addr.get();
   ssize_t		n;
