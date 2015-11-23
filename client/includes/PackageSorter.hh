@@ -18,12 +18,8 @@
 class PackageSorter {
 public:
   PackageSorter();
-  PackageSorter(PackageStorage *storage);
   virtual ~PackageSorter();
   void sortPaquet();
-
-private:
-  PackageStorage *storage;
 };
 
 #endif /* !PACKAGE_SORTER_HH */

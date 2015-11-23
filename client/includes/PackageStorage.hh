@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include "Paquets.hh"
 #include "Paquet.hh"
 
 class PackageStorage {
@@ -19,23 +20,24 @@ private:
 	std::list<Paquet *> answers;
 	std::list<Paquet * > launch;
 
+	PackageStorage();
+
 public:
 
 	static PackageStorage& getInstance();
 
-	PackageStorage();
 	virtual ~PackageStorage();
 	
 	const Paquet *getReceivedPackage() const;
-	const Paquet *getPlayersPackage() const;
-	const Paquet *getEnemiesPackage() const;
-	const Paquet *getObstaclesPackage() const;
-	const Paquet *getShotsPackage() const;
+	const PaquetPlayerCoord *getPlayersPackage() const;
+	const PaquetPlayerCoord *getEnemiesPackage() const;
+	const PaquetObstacle *getObstaclesPackage() const;
+	const PaquetPlayerShot *getShotsPackage() const;
 	const Paquet *getToSendPackage() const;
-	const Paquet *getGameListPackage() const;
-	const Paquet *getPlayerListPackage() const;
-	const Paquet *getAnswersPackage() const;
-	const Paquet *getLaunchPackage() const;
+	const PaquetListParties *getGameListPackage() const;
+	const PaquetListPlayers *getPlayerListPackage() const;
+	const PaquetResponse *getAnswersPackage() const;
+	const PaquetLaunch *getLaunchPackage() const;
 
 	void storeReceivedPackage(Paquet *package);
 	void storePlayersPackage(Paquet *package);

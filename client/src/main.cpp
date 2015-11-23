@@ -32,14 +32,12 @@ int		main(int argc, char **argv)
 	
 	
 	
-	IGraphicEngine* engine = new GraphicEngine;
-	PackageStorage *storage = new PackageStorage();
 	Packager *packager = new Packager();
+	IGraphicEngine* engine = new GraphicEngine(packager);
 
 	engine->createWindow(800, 600, "R-Type");
 	engine->launch();
 	delete engine;
-	delete storage;
 	delete packager;
 	return (0);
 }

@@ -3,7 +3,7 @@
 PackageStorage & PackageStorage::getInstance()
 {
 	static PackageStorage *instance;
-	if (instance != nullptr) {
+	if (instance == nullptr) {
 		instance = new PackageStorage();
 		return *instance;
 	}
@@ -24,46 +24,46 @@ const Paquet *PackageStorage::getReceivedPackage() const {
 	return received.empty() ? nullptr : received.front();
 }
 
-const Paquet *PackageStorage::getPlayersPackage() const {
-	return players.empty() ? nullptr : players.front();
+const PaquetPlayerCoord *PackageStorage::getPlayersPackage() const {
+	return players.empty() ? nullptr : (const PaquetPlayerCoord *)players.front();
 }
 
-const Paquet *PackageStorage::getEnemiesPackage() const {
-	return enemies.empty() ? nullptr : enemies.front();
+const PaquetPlayerCoord *PackageStorage::getEnemiesPackage() const {
+	return enemies.empty() ? nullptr : (const PaquetPlayerCoord *)enemies.front();
 }
 
-const Paquet *PackageStorage::getObstaclesPackage() const {
-	return obstacles.empty() ? nullptr : obstacles.front();
+const PaquetObstacle *PackageStorage::getObstaclesPackage() const {
+	return obstacles.empty() ? nullptr : (const PaquetObstacle *)obstacles.front();
 }
 
-const Paquet * PackageStorage::getShotsPackage() const
+const PaquetPlayerShot * PackageStorage::getShotsPackage() const
 {
-	return shots.empty() ? nullptr : shots.front();
+	return shots.empty() ? nullptr : (const PaquetPlayerShot *)shots.front();
 }
 
 const Paquet * PackageStorage::getToSendPackage() const
 {
-	return toSend.empty() ? nullptr : toSend.front();
+	return toSend.empty() ? nullptr : (const Paquet *)toSend.front();
 }
 
-const Paquet * PackageStorage::getGameListPackage() const
+const PaquetListParties * PackageStorage::getGameListPackage() const
 {
-	return gameList.empty() ? nullptr : gameList.front();
+	return gameList.empty() ? nullptr : (const PaquetListParties *)gameList.front();
 }
 
-const Paquet * PackageStorage::getPlayerListPackage() const
+const PaquetListPlayers * PackageStorage::getPlayerListPackage() const
 {
-	return playerList.empty() ? nullptr : playerList.front();
+	return playerList.empty() ? nullptr : (const PaquetListPlayers *)playerList.front();
 }
 
-const Paquet * PackageStorage::getAnswersPackage() const
+const PaquetResponse * PackageStorage::getAnswersPackage() const
 {
-	return answers.empty() ? nullptr : answers.front();
+	return answers.empty() ? nullptr : (const PaquetResponse *)answers.front();
 }
 
-const Paquet * PackageStorage::getLaunchPackage() const
+const PaquetLaunch * PackageStorage::getLaunchPackage() const
 {
-	return launch.empty() ? nullptr : launch.front();
+	return launch.empty() ? nullptr : (const PaquetLaunch *)launch.front();
 }
 
 void PackageStorage::storeReceivedPackage(Paquet * package)
@@ -123,27 +123,27 @@ void PackageStorage::deleteReceivedPackage()
 
 void PackageStorage::deletePlayersPackage()
 {
-	players.erase(received.begin());
+	players.erase(players.begin());
 }
 
 void PackageStorage::deleteEnemiesPackage()
 {
-	enemies.erase(received.begin());
+	enemies.erase(enemies.begin());
 }
 
 void PackageStorage::deleteObstaclesPackage()
 {
-	obstacles.erase(received.begin());
+	obstacles.erase(obstacles.begin());
 }
 
 void PackageStorage::deleteShotsPackage()
 {
-	shots.erase(received.begin());
+	shots.erase(shots.begin());
 }
 
 void PackageStorage::deleteToSendPackage()
 {
-	toSend.erase(received.begin());
+	toSend.erase(toSend.begin());
 }
 
 void PackageStorage::deleteGameListPackage()

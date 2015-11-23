@@ -14,15 +14,19 @@
 # include <SFML/Graphics/Texture.hpp>
 # include <SFML/Graphics/Sprite.hpp>
 # include "IGraphicEngine.hh"
+# include "Packager.hh"
+# include "Timer.hh"
 
 # define RS_PATH "ressources/"
 # define FONT_PATH "ressources/fonts/"
 # define DEFAULT_FONT "default.ttf"
 # define DEFAULT_FONT_SIZE 12
+# define MS_REFRESH 33.3
 
 class GraphicEngine : public IGraphicEngine {
 
 public:
+	GraphicEngine(Packager* packager);
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
@@ -36,6 +40,9 @@ public:
 protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);
+
+	Packager* _packager;
+	Timer _timer;
 
 	sf::RenderWindow* window;
 	std::map<std::string, sf::Texture*> cachedImages;
