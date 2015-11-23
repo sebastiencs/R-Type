@@ -17,3 +17,55 @@ Manager::Manager()
 Manager::~Manager()
 {
 }
+
+void		Manager::handlePaquet(const PaquetFirst &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetJoinParty &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetCreateParty &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetLaunch &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetLeave &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetListParties &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetListPlayers &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetObstacle &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetPlayerCoord &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetReady &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetRequestParties &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetRequestPlayers &)
+{
+}
+
+void		Manager::handlePaquet(const PaquetResponse &)
+{
+}
