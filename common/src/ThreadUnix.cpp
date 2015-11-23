@@ -40,10 +40,8 @@ bool	ThreadUnix::run(const std::function<void *(void *)> &func, void *arg = 0)
     DEBUG_MSG("ThreadUnix created");
     return (true);
   }
-  else {
-    DEBUG_MSG("Try to start an already running thread");
-    return (false);
-  }
+  DEBUG_MSG("Try to start an already running thread");
+  return (false);
 }
 
 std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &func = 0, int save = 0)
