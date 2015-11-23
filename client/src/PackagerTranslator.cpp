@@ -42,6 +42,9 @@ Paquet * PackageTranslator::BufferToPaquet(const Buffer& buff)
 
 Buffer * PackageTranslator::PaquetToBuffer(const Paquet& paquet)
 {
-  return nullptr;
+  Buffer *buf = new Buffer();
+  
+  buf->set(paquet.getData(), paquet.getSize());
+  return buf;
 }
 
