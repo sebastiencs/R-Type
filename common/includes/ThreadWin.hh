@@ -11,14 +11,14 @@
 #ifndef THREADWIN_H_
 # define THREADWIN_H_
 
-# include <thread>
+# include <Windows.h>
 # include "IThread.hh"
 
 class		ThreadWin : public IThread
 {
 private:
-  std::thread	_thread;
-  bool			_running;
+  HANDLE	_thread;
+  bool		_running;
 
 public:
   ThreadWin();

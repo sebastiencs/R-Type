@@ -11,14 +11,14 @@
 #include "ThreadWin.hh"
 
 ThreadWin::ThreadWin()
-  : _running(false)/*,
-    _thread(nullptr)*/
+  : _running(false),
+    _thread(nullptr)
 {
 }
 
 ThreadWin::ThreadWin(const std::function<void *(void *)> &func, void *arg = 0)
-  : _running(false)/*,
-    _thread(nullptr)*/
+  : _running(false),
+    _thread(nullptr)
 {
   run(func, arg);
 }
@@ -32,10 +32,11 @@ bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
 {
   if (!_running) {
     save_func(func, 1);
-	/*if (!(_thread = CreateThread(nullptr, 0, nullptr, arg, 0, nullptr))) {
+	if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump),
+									reinterpret_cast<LPVOID>(arg), 0, nullptr))) {
       DEBUG_MSG("CreateThread: create thread failed");
       return false;
-    }*/
+    }
     _running = true;
     DEBUG_MSG("ThreadWin created");
     return true;	      
@@ -54,15 +55,15 @@ std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &fu
 
 void	*jump(void *arg)
 {
-	/*std::function<void *(void *)>	f = save_func();
+	/*std::function<void *(void *)> f = save_func();
 	return (f(arg));*/
 	return 0;
 }
 
 bool	ThreadWin::close()
 {
-  /*if (TerminateThread(_thread, EXIT_SUCCESS))
-    return (join());*/
+  if (TerminateThread(_thread, EXIT_SUCCESS))
+    return (join());
   _running = false;
   DEBUG_MSG("ThreadWin ended");
   return (true);
@@ -70,10 +71,10 @@ bool	ThreadWin::close()
 
 bool	ThreadWin::join()
 {
- /* if (!WaitForSingleObject(_thread, INFINITE)) {
+  if (!WaitForSingleObject(_thread, INFINITE)) {
     DEBUG_MSG("WaitForSIngleObject: join failed");
     return (false);
-  }*/
+  }
   _running = false;
   DEBUG_MSG("ThreadWin ended");
   return (true);
