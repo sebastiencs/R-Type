@@ -39,7 +39,7 @@ int NetworkClient::handleFirst(PaquetFirst first)
 
   _socketTCP->write(buff);
 
-  DEBUG_MSG(paquet);
+//  DEBUG_MSG(paquet);
   return 0;
 }
 
