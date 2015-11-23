@@ -4,11 +4,6 @@
 
 PackageTranslator::PackageTranslator()
 {
-  storage = new PackageStorage();
-}
-
-PackageTranslator::PackageTranslator(PackageStorage * storage) : storage(storage)
-{
 }
 
 PackageTranslator::~PackageTranslator()
