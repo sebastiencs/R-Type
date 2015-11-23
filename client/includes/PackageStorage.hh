@@ -20,11 +20,12 @@ private:
 	std::list<Paquet *> answers;
 	std::list<Paquet * > launch;
 
+	PackageStorage();
+
 public:
 
 	static PackageStorage& getInstance();
 
-	PackageStorage();
 	virtual ~PackageStorage();
 	
 	const Paquet *getReceivedPackage() const;
