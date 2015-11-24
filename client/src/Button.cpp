@@ -1,4 +1,4 @@
-#include "..\includes\Button.hh"
+#include "Button.hh"
 
 Button::Button(const std::string & name) : _isPressed(false)
 {
@@ -25,4 +25,3 @@ void Button::drawButton(const Transformation& t)
 //  else
 //    GraphicEngine::drawImage("Button.png", t, Color::None);
 }
-
