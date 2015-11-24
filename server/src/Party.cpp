@@ -41,3 +41,14 @@ const std::string	&Party::getName() const
 {
   return (_name);
 }
+
+bool			Party::addPlayer(Player *player)
+{
+  if (_players.size() < 4) {
+    _players.push_back(player);
+    return (true);
+  }
+  else {
+    return (false);
+  }
+}

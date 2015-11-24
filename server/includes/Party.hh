@@ -15,7 +15,7 @@
 # include "Debug.hh"
 # include "Player.hh"
 
-typedef std::list<Player>	listPlayers;
+typedef std::list<Player *>	listPlayers;
 
 class		Party
 {
@@ -30,6 +30,7 @@ public:
   const listPlayers	&getPlayers() const;
   uint8_t		getNb() const;
   const std::string	&getName() const;
+  bool			addPlayer(Player *);
 };
 
 #endif /* !PARTY_H_ */
