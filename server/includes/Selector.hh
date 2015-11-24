@@ -14,10 +14,11 @@
 # include <map>
 # include <functional>
 # include "Paquets.hh"
+# include "Addr.hh"
 
 class		Manager;
 
-typedef std::map<uint8_t, std::function<void (const Buffer &)>>	listFunc;
+typedef std::map<uint8_t, std::function<void (const Buffer &, const Addr &)>>	listFunc;
 
 class		Selector
 {
@@ -27,82 +28,16 @@ private:
   listFunc	_selectorFunc;
 
   template<class Arg>
-  auto resolver(void (Manager::*func)(Arg) = &Manager::handlePaquet) -> decltype(func)
+  auto resolver(void (Manager::*func)(Arg, const Addr &)) -> decltype(func)
     { return func; }
 
 public:
 
-  Selector(Manager *manager) {
-   _manager = manager;
+  Selector(Manager *manager);
 
-   _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetFirst *>())(new PaquetFirst(buf));
-   };
-   _selectorFunc[Paquet::CREATE_PARTY] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetCreateParty *>())(new PaquetCreateParty(buf));
-   };
-   _selectorFunc[Paquet::JOIN_PARTY] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetJoinParty *>())(new PaquetJoinParty(buf));
-   };
-   _selectorFunc[Paquet::LAUNCH] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetLaunch *>())(new PaquetLaunch(buf));
-   };
-   _selectorFunc[Paquet::LEAVE] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetLeave *>())(new PaquetLeave(buf));
-   };
-   _selectorFunc[Paquet::LIST_PARTIES] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetListParties *>())(new PaquetListParties(buf));
-   };
-   _selectorFunc[Paquet::LIST_PLAYERS] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetListPlayers *>())(new PaquetListPlayers(buf));
-   };
-   _selectorFunc[Paquet::OBSTACLE] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetObstacle *>())(new PaquetObstacle(buf));
-   };
-   _selectorFunc[Paquet::COORD_PLAYER] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetPlayerCoord *>())(new PaquetPlayerCoord(buf));
-   };
-   _selectorFunc[Paquet::PLAYER_SHOT] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetPlayerShot *>())(new PaquetPlayerShot(buf));
-   };
-   _selectorFunc[Paquet::READY] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetReady *>())(new PaquetReady(buf));
-   };
-   _selectorFunc[Paquet::REQUEST_PARTIES] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetRequestParties *>())(new PaquetRequestParties(buf));
-   };
-   _selectorFunc[Paquet::REQUEST_PLAYERS] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetRequestPlayers *>())(new PaquetRequestPlayers(buf));
-   };
-   _selectorFunc[Paquet::RESPONSE] = [this](const Buffer &buf) {
-     (_manager->*resolver<PaquetResponse *>())(new PaquetResponse(buf));
-   };
-  }
+  virtual ~Selector();
 
-  virtual ~Selector() {};
-
-  int		execFunc(const Buffer &);
+  int		execFunc(const Buffer &, const Addr &);
 };
-
-int		Selector::execFunc(const Buffer &buf)
-{
-  Data		*data = buf.get();
-
-  if (!data || buf.size() <= 0) {
-    std::cerr << "Wrong paquet size" << std::endl;
-    return (-1);
-  }
-
-  auto func = _selectorFunc.find(data[0]);
-
-  if (func != _selectorFunc.end()) {
-    func->second(buf);
-    return (0);
-  }
-  else {
-    std::cerr << "Unknown paquet" << std::endl;
-    return (-1);
-  }
-}
 
 #endif /* !SELECTOR_H_ */

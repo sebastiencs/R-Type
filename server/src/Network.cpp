@@ -10,6 +10,7 @@
 
 #include "Network.hh"
 #include "Selector.hh"
+#include "Manager.hh"
 
 Network::Network(Manager *manager, const uint16_t port)
   : _sem(new Semaphore),
@@ -22,6 +23,7 @@ Network::Network(Manager *manager, const uint16_t port)
   _socketUDP->bind(port);
   _socketTCP->bind(port);
   _socketTCP->listen(0x200);
+  manager->setNetwork(this);
 }
 
 Network::~Network()
@@ -74,7 +76,7 @@ inline bool	Network::handleUDP()
   ssize_t size = _socketUDP->read(_buffer);
 
   if (size > 0) {
-    _selector->execFunc(_buffer);
+    _selector->execFunc(_buffer, _socketUDP->getAddr());
   }
   return (true);
 }
@@ -95,7 +97,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
   size = sock->read(_buffer);
   std::cout << "SIZE: " << size << std::endl;
   if (size > 0) {
-    _selector->execFunc(_buffer);
+    _selector->execFunc(_buffer, _socketTCP->getAddr());
   }
   return (true);
 }
@@ -111,7 +113,10 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 
       std::cout << "SIZE: " << (int)size << std::endl;
 
-      if (size <= 0) {
+      if (size > 0) {
+	_selector->execFunc(_buffer, _socketTCP->getAddr());
+      }
+      else {
 
 	std::cerr << "Client disconnect\n";
 
@@ -157,11 +162,21 @@ bool	Network::write()
 
       PaquetClient pc = _stackPaquet.top();
 
-      if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
-	_stackPaquet.pop();
+      if (pc.addr.getType() == Addr::UDP) {
+	if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
+	  _stackPaquet.pop();
+	}
+	else {
+	  _sem->post();
+	}
       }
       else {
-	_sem->post();
+	if (_socketTCP->write(pc.paquet, pc.addr) >= 0) {
+	  _stackPaquet.pop();
+	}
+	else {
+	  _sem->post();
+	}
       }
     }
   }

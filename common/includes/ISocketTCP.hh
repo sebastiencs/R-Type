@@ -35,6 +35,7 @@ typedef SSIZE_T ssize_t;
 # include <string>
 # include "Buffer.hh"
 # include "Addr.hh"
+# include "Paquet.hh"
 
 class		ISocketTCP
 {
@@ -48,8 +49,11 @@ public:
   virtual int		bind(uint16_t) = 0;
   virtual int		listen(int) = 0;
   virtual ssize_t	write(const Buffer &buf) = 0;
+  virtual ssize_t	write(const Buffer &buf, const Addr &addr) = 0;
+  virtual ssize_t	write(const Paquet &paquet) = 0;
+  virtual ssize_t	write(const Paquet &paquet, const Addr &addr) = 0;
   virtual ssize_t	read(Buffer &) = 0;
-  virtual const Addr	getAddr() const;
+  virtual const Addr	getAddr() const = 0;
 };
 
 #endif /* !ISOCKETTCP_H_ */

@@ -28,7 +28,8 @@ private:
 public:
   Player();
   Player(const std::string &, uint16_t, const Position &, uint16_t, int);
-  virtual ~Player();
+  Player(const std::string &name, uint16_t id, uint16_t level, const Addr &);
+virtual ~Player();
 
   virtual const Position	&getPosition() const;
   virtual void			setPosition(const Position &);

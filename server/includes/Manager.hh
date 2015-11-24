@@ -16,35 +16,44 @@
 # include "Semaphore.hh"
 # include "Paquets.hh"
 # include "Player.hh"
+# include "Addr.hh"
 
-typedef std::list<Party>	PartyList;
-typedef std::list<Player>	PlayerList;
+typedef std::list<Party *>	PartyList;
+typedef std::list<IPlayer *>	PlayerList;
+
+class		Network;
 
 class		Manager
 {
 private:
+
   PartyList	_parties;
   PlayerList	_pWaiting;
   Semaphore	_sem;
+  Network	*_network;
 
 public:
   Manager();
   virtual ~Manager();
 
-  void		handlePaquet(PaquetFirst *);
-  void		handlePaquet(PaquetJoinParty *);
-  void		handlePaquet(PaquetCreateParty *);
-  void		handlePaquet(PaquetLaunch *);
-  void		handlePaquet(PaquetLeave *);
-  void		handlePaquet(PaquetListParties *);
-  void		handlePaquet(PaquetListPlayers *);
-  void		handlePaquet(PaquetObstacle *);
-  void		handlePaquet(PaquetPlayerCoord *);
-  void		handlePaquet(PaquetPlayerShot *);
-  void		handlePaquet(PaquetReady *);
-  void		handlePaquet(PaquetRequestParties *);
-  void		handlePaquet(PaquetRequestPlayers *);
-  void		handlePaquet(PaquetResponse *);
+  void		write(const Paquet &, const Addr &);
+  void		setNetwork(Network *);
+  uint8_t	getID() const;
+
+  void		handlePaquet(PaquetFirst *, const Addr &);
+  void		handlePaquet(PaquetJoinParty *, const Addr &);
+  void		handlePaquet(PaquetCreateParty *, const Addr &);
+  void		handlePaquet(PaquetLaunch *, const Addr &);
+  void		handlePaquet(PaquetLeave *, const Addr &);
+  void		handlePaquet(PaquetListParties *, const Addr &);
+  void		handlePaquet(PaquetListPlayers *, const Addr &);
+  void		handlePaquet(PaquetObstacle *, const Addr &);
+  void		handlePaquet(PaquetPlayerCoord *, const Addr &);
+  void		handlePaquet(PaquetPlayerShot *, const Addr &);
+  void		handlePaquet(PaquetReady *, const Addr &);
+  void		handlePaquet(PaquetRequestParties *, const Addr &);
+  void		handlePaquet(PaquetRequestPlayers *, const Addr &);
+  void		handlePaquet(PaquetResponse *, const Addr &);
 };
 
 #endif /* !MANAGER_H_ */

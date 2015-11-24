@@ -105,6 +105,30 @@ ssize_t	SocketTCPWin::write(const Buffer &buf)
   return (0);
 }
 
+ssize_t	SocketTCPWin::write(const Buffer &buf, const Addr &addr)
+{
+  if ((send(addr.getSocket(), (const char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR) {
+    DEBUG_MSG("Send failed: " + WSAGetLastError());
+  }
+  return (0);
+}
+
+ssize_t	SocketTCPWin::write(const Paquet &paquet)
+{
+  if ((send(_socket, (const char *)paquet.getData(), paquet.getSize(), 0)) == SOCKET_ERROR) {
+    DEBUG_MSG("Send failed: " + WSAGetLastError());
+  }
+  return (0);
+}
+
+ssize_t	SocketTCPWin::write(const Paquet &paquet, const Addr &addr)
+{
+  if ((send(addr.getSocket(), (const char *)paquet.getData(), paquet.getSize(), 0)) == SOCKET_ERROR) {
+    DEBUG_MSG("Send failed: " + WSAGetLastError());
+  }
+  return (0);
+}
+
 ssize_t	SocketTCPWin::read(Buffer &buf)
 {
   int		recvlen = 0;

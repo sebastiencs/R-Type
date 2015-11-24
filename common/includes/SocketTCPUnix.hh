@@ -43,6 +43,9 @@ public:
   virtual int		bind(uint16_t port);
   virtual int		listen(int max);
   virtual ssize_t	write(const Buffer &buf);
+  virtual ssize_t	write(const Buffer &buf, const Addr &addr);
+  virtual ssize_t	write(const Paquet &paquet);
+  virtual ssize_t	write(const Paquet &paquet, const Addr &);
   virtual ssize_t	read(Buffer &);
   virtual const Addr	getAddr() const;
 };

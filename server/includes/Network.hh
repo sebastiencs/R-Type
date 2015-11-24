@@ -22,7 +22,7 @@
 # include "INetwork.hh"
 # include "Thread.hh"
 # include "Semaphore.hh"
-# include "Manager.hh"
+//# include "Manager.hh"
 
 # ifdef __unix__
 
@@ -37,6 +37,7 @@ typedef std::vector<WSAPOLLFD>		Pollfd;
 # endif
 
 class	Selector;
+class	Manager;
 
 typedef struct	s_paquet_client
 {

@@ -65,3 +65,7 @@ bool				Addr::operator==(const Addr &other)
 
   return (std::equal(ptr, ptr + sizeof(_addr), ptr2));
 }
+
+Addr::TypeAddr			Addr::getType() const {
+  return (_type);
+}

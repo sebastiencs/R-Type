@@ -27,9 +27,11 @@ typedef SOCKET	socket_t;
 
 class				Addr
 {
-private:
+public:
 
   typedef enum { UDP, TCP, NONE } TypeAddr;
+
+private:
 
   struct sockaddr_in		_addr;
   socket_t			_socket;
@@ -47,6 +49,8 @@ public:
   const socket_t		&getSocket() const;
 
   bool				operator==(const Addr &);
+
+  Addr::TypeAddr		getType() const;
 };
 
 #endif /* !ADDR_H_ */

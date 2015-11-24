@@ -16,7 +16,8 @@ Player::Player()
     _position(),
     _level(0),
     _life(100),
-    _id(0)
+    _id(0),
+    _addr()
 {
   DEBUG_MSG("Player created");
 }
@@ -28,7 +29,19 @@ Player::Player(const std::string &name, uint16_t id,
     _position(pos),
     _level(level),
     _life(life),
-    _id(id)
+    _id(id),
+    _addr()
+{
+  DEBUG_MSG("Player created");
+}
+
+Player::Player(const std::string &name, uint16_t id, uint16_t level, const Addr &addr)
+  : _name(name),
+    _position(),
+    _level(level),
+    _life(0),
+    _id(id),
+    _addr(addr)
 {
   DEBUG_MSG("Player created");
 }

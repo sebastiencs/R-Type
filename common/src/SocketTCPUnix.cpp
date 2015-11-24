@@ -151,6 +151,36 @@ ssize_t	SocketTCPUnix::write(const Buffer &buf)
   return (::write(_fd, buf.get(), buf.size()));
 }
 
+ssize_t	SocketTCPUnix::write(const Buffer &buf, const Addr &addr)
+{
+  if (_error) {
+    DEBUG_MSG("Try to send on an invalid socket");
+    return (-1);
+  }
+
+  return (::write(addr.getSocket(), buf.get(), buf.size()));
+}
+
+ssize_t	SocketTCPUnix::write(const Paquet &paquet)
+{
+  if (_error) {
+    DEBUG_MSG("Try to send on an invalid socket");
+    return (-1);
+  }
+
+  return (::write(_fd, paquet.getData(), paquet.getSize()));
+}
+
+ssize_t	SocketTCPUnix::write(const Paquet &paquet, const Addr &addr)
+{
+  if (_error) {
+    DEBUG_MSG("Try to send on an invalid socket");
+    return (-1);
+  }
+
+  return (::write(addr.getSocket(), paquet.getData(), paquet.getSize()));
+}
+
 ssize_t	SocketTCPUnix::read(Buffer &buf)
 {
   ssize_t n;

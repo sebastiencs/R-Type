@@ -13,6 +13,7 @@
 
 # include <memory>
 # include "Network.hh"
+# include "Manager.hh"
 # include "Debug.hh"
 
 class				Server
