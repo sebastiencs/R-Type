@@ -11,13 +11,25 @@
 #ifndef PARTY_H_
 # define PARTY_H_
 
+# include <list>
 # include "Debug.hh"
+# include "Player.hh"
+
+typedef std::list<Player>	listPlayers;
 
 class		Party
 {
+  std::string	_name;
+  listPlayers	_players;
+
 public:
   Party();
+  Party(const std::string &);
   virtual ~Party();
+
+  const listPlayers	&getPlayers() const;
+  uint16_t		getNb() const;
+  const std::string	&getName() const;
 };
 
 #endif /* !PARTY_H_ */

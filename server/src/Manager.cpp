@@ -132,7 +132,15 @@ void		Manager::handlePaquet(PaquetReady *paquet UNUSED, const Addr &addr UNUSED)
 
 void		Manager::handlePaquet(PaquetRequestParties *paquet UNUSED, const Addr &addr UNUSED)
 {
-  // DEBUG_MSG(paquet);
+  PaquetListParties	p;
+
+  for (auto party : _parties) {
+    p.addParty(party->getName(), party->getNb());
+  }
+  p.createPaquet();
+  write(p, addr);
+  DEBUG_MSG(*paquet);
+  delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetRequestPlayers *paquet UNUSED, const Addr &addr UNUSED)

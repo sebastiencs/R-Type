@@ -11,11 +11,33 @@
 #include "Party.hh"
 
 Party::Party()
+  : _name("Unknwon")
 {
+  DEBUG_MSG("Party created");
+}
+
+Party::Party(const std::string &name)
+{
+  _name = name;
   DEBUG_MSG("Party created");
 }
 
 Party::~Party()
 {
   DEBUG_MSG("Party deleted");
+}
+
+const listPlayers	&Party::getPlayers() const
+{
+  return (_players);
+}
+
+uint16_t		Party::getNb() const
+{
+  return (_players.size());
+}
+
+const std::string	&Party::getName() const
+{
+  return (_name);
 }
