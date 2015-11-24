@@ -11,13 +11,24 @@
 #include "Addr.hh"
 
 Addr::Addr()
-  : _addr()
+  : _addr(),
+    _socket(),
+    _type(Addr::NONE)
 {
 }
 
 Addr::Addr(const struct sockaddr_in &addr)
+  : _socket()
 {
+  _type = Addr::UDP;
   _addr = addr;
+}
+
+Addr::Addr(const socket_t &socket)
+  : _addr()
+{
+  _type = Addr::TCP;
+  _socket = socket;
 }
 
 Addr::~Addr()
@@ -26,12 +37,24 @@ Addr::~Addr()
 
 void				Addr::set(struct sockaddr_in &addr)
 {
+  _type = Addr::UDP;
   _addr = addr;
+}
+
+void				Addr::set(const socket_t &socket)
+{
+  _type = Addr::TCP;
+  _socket = socket;
 }
 
 const struct sockaddr_in	&Addr::get() const
 {
   return (_addr);
+}
+
+const socket_t			&Addr::getSocket() const
+{
+  return (_socket);
 }
 
 bool				Addr::operator==(const Addr &other)
