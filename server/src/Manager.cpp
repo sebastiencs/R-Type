@@ -65,6 +65,11 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet)
   // DEBUG_MSG(paquet);
 }
 
+void		Manager::handlePaquet(PaquetPlayerShot *paquet)
+{
+  // DEBUG_MSG(paquet);
+}
+
 void		Manager::handlePaquet(PaquetReady *paquet)
 {
   // DEBUG_MSG(paquet);

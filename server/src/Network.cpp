@@ -69,6 +69,8 @@ int	Network::run()
 
 inline bool	Network::handleUDP()
 {
+  DEBUG_MSG("UDP socket");
+
   ssize_t size = _socketUDP->read(_buffer);
 
   if (size > 0) {
@@ -92,6 +94,9 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
   ssize_t	size;
   size = sock->read(_buffer);
   std::cout << "SIZE: " << size << std::endl;
+  if (size > 0) {
+    _selector->execFunc(_buffer);
+  }
   return (true);
 }
 
@@ -161,19 +166,4 @@ bool	Network::write()
     }
   }
   return (true);
-}
-
-int	Network::handleFirst(PaquetFirst paquet)
-{
-  PaquetFirst	p;
-
-  p.setVersion(1);
-  p.setName("seb");
-  p.setLevel(1);
-  p.createPaquet();
-
-  write(p, _socketUDP->getAddr());
-
-  DEBUG_MSG(paquet);
-  return (0);
 }

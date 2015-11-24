@@ -40,6 +40,7 @@ public:
   void		handlePaquet(PaquetListPlayers *);
   void		handlePaquet(PaquetObstacle *);
   void		handlePaquet(PaquetPlayerCoord *);
+  void		handlePaquet(PaquetPlayerShot *);
   void		handlePaquet(PaquetReady *);
   void		handlePaquet(PaquetRequestParties *);
   void		handlePaquet(PaquetRequestPlayers *);

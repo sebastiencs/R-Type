@@ -65,7 +65,6 @@ public:
   virtual int	run();
   virtual int	stop();
 
-  virtual int	handleFirst(PaquetFirst);
   virtual bool	write(const Paquet &, const Addr &);
   virtual bool	write();
 
