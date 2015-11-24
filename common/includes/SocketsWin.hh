@@ -11,9 +11,9 @@
 #ifndef SOCKETSWIN_H_
 # define SOCKETSWIN_H_
 
-# if _MSC_VER > 1000
-#  pragma once
-# endif
+//# if _MSC_VER > 1000
+//#  pragma once
+//# endif
 
 # ifndef _WINDOWS_
 #  define WIN32_LEAN_AND_MEAN
@@ -21,6 +21,7 @@
 #  undef WIN32_LEAN_AND_MEAN
 # endif
 
+# include <Ws2tcpip.h>
 # include <winsock2.h>
 
 # pragma comment(lib, "ws2_32.lib")
