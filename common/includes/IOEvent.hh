@@ -20,6 +20,7 @@ typedef std::vector<struct pollfd>	Pollfd;
 
 # elif defined(_WIN32)
 
+# include "SocketsWin.hh"
 typedef std::vector<WSAPOLLFD>		Pollfd;
 
 # endif
