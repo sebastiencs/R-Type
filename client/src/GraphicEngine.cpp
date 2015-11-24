@@ -95,13 +95,15 @@ void GraphicEngine::launch()
 			/* test */
 			static unsigned int i = 0;
 			static unsigned int j = 0;
+			Transformation t(100, 100);
 			if (i > 6) {
 				i = 0;
 				j++;
 			}
 			if (j > 1)
 				j = 0;
-			drawSplitImage("r-typesheet23.gif", Transformation(100, 100), Color::None, i * 34, j * 33, 34, 33);
+			t.setCrop(i * 34, j * 33, 34, 33);
+			//drawSplitImage("r-typesheet23.gif", t, Color::None);
 			i++;
 			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
 			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
@@ -157,18 +159,29 @@ void GraphicEngine::drawImage(const std::string& name, const Transformation& t, 
 	window->draw(sprite);
 }
 
-void GraphicEngine::drawSplitImage(const std::string & name, const Transformation & t, const Color & color, const int x, const int y, const int width, const int height)
+void GraphicEngine::drawSplitImage(const std::string & name, const Transformation & t, const Color & color)
 {
 	if (cachedImages.find(name) == cachedImages.end() &&
 		!loadImageFromFile(name)) {
 		std::cerr << "Couldn't open texture file: \"" << name << "\"" << std::endl;
 		return;
 	}
+
 	sf::IntRect subRect;
-	subRect.left = x;
-	subRect.top = y;
-	subRect.width = width;
-	subRect.height = height;
+	if (t.hasCrop())
+	{
+		subRect.left = t.getCrop()[Transformation::SRCX];
+		subRect.top = t.getCrop()[Transformation::SRCY];
+		subRect.width = t.getCrop()[Transformation::SRCWIDTH];
+		subRect.height = t.getCrop()[Transformation::SRCHEIGHT];
+	}
+	else
+	{
+		subRect.left = 0;
+		subRect.top = 0;
+		subRect.width = cachedImages[name]->getSize().x;
+		subRect.height = cachedImages[name]->getSize().x;
+	}
 	sf::Sprite sprite(*cachedImages[name], subRect);
 	if (t.hasPosition())
 		sprite.setPosition(t.getX(), t.getY());

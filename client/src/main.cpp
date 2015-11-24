@@ -33,8 +33,8 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 
 
 
-	Packager *packager = new Packager();
-	IGraphicEngine* engine = new GraphicEngine(packager);
+  Packager *packager = new Packager();
+  IGraphicEngine* engine = new GraphicEngine(packager);
   NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
 
   PaquetFirst paquet;
