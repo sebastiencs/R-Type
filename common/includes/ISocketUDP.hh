@@ -20,10 +20,6 @@ typedef int	socket_t;
 # elif defined(_WIN32)
 
 #  include "SocketsWin.hh"
-// #  include <BaseTsd.h>
-// #  include <winsock2.h>
-// #  include <Ws2tcpip.h>
-// #  pragma comment(lib, "ws2_32.lib")
 typedef SOCKET	socket_t;
 typedef SSIZE_T ssize_t;
 typedef struct sockaddr_in sockaddr_in;

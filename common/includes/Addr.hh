@@ -18,7 +18,6 @@ typedef int	socket_t;
 
 # elif defined(_WIN32)
 
-//#  include <Windows.h>
 #  include "SocketsWin.hh"
 typedef SOCKET	socket_t;
 

@@ -12,7 +12,6 @@
 # define THREADWIN_H_
 
 # include "SocketsWin.hh"
-//# include <Windows.h>
 # include "IThread.hh"
 
 class		ThreadWin : public IThread
