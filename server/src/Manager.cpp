@@ -41,7 +41,10 @@ uint8_t		Manager::getID() const
 {
   static uint8_t	id = 0;
 
-  // TODO: Manage overflow
+  // TODO: check if id isn't use by another player
+  if (id == 0xFF) {
+    id = 0;
+  }
   return (id++);
 }
 
