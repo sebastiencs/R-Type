@@ -103,7 +103,7 @@ void GraphicEngine::launch()
 			if (j > 1)
 				j = 0;
 			t.setCrop(i * 34, j * 33, 34, 33);
-			//drawSplitImage("r-typesheet23.gif", t, Color::None);
+			drawSplitImage("r-typesheet23.gif", t, Color::None);
 			i++;
 			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
 			drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
@@ -170,10 +170,10 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	sf::IntRect subRect;
 	if (t.hasCrop())
 	{
-		subRect.left = t.getCrop()[Transformation::SRCX];
-		subRect.top = t.getCrop()[Transformation::SRCY];
-		subRect.width = t.getCrop()[Transformation::SRCWIDTH];
-		subRect.height = t.getCrop()[Transformation::SRCHEIGHT];
+		subRect.left = t.getCrop().at(Transformation::CROP::SRCX);
+		subRect.top = t.getCrop().at(Transformation::CROP::SRCY);
+		subRect.width = t.getCrop().at(Transformation::CROP::SRCWIDTH);
+		subRect.height = t.getCrop().at(Transformation::CROP::SRCHEIGHT);
 	}
 	else
 	{

@@ -28,10 +28,10 @@ void Transformation::setPosition(uint16_t x, uint16_t y)
 void Transformation::setCrop(uint16_t x, uint16_t y, uint16_t width, uint16_t height)
 {
 	_hasCrop = true;
-	crop[0] = x;
-	crop[1] = y;
-	crop[2] = width;
-	crop[3] = height;
+	crop[SRCX] = x;
+	crop[SRCY] = y;
+	crop[SRCWIDTH] = width;
+	crop[SRCHEIGHT] = height;
 }
 
 void Transformation::setRotation(uint16_t rotation)
@@ -50,7 +50,7 @@ uint16_t Transformation::getY() const
 	return _posY;
 }
 
-const std::vector<uint16_t>& Transformation::getCrop() const
+const std::map<uint8_t, uint16_t>& Transformation::getCrop() const
 {
 	return crop;
 }
