@@ -10,7 +10,9 @@
 
 #include "Party.hh"
 
+#ifdef __unix__
 # include <unistd.h>
+#endif
 
 Party::Party()
   : _sem(new Semaphore()),
