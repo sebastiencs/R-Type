@@ -85,7 +85,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
 {
   DEBUG_MSG("New client TCP");
 
-  ISocketTCP *sock = _socketTCP->accept();
+  ISocketTCP	*sock = _socketTCP->accept();
   _socketClient.push_back(sock);
 
   size_t	size_fds = fds.size();
@@ -97,7 +97,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
   size = sock->read(_buffer);
   std::cout << "SIZE: " << size << std::endl;
   if (size > 0) {
-    _selector->execFunc(_buffer, _socketTCP->getAddr());
+    _selector->execFunc(_buffer, sock->getAddr());
   }
   return (true);
 }
@@ -114,7 +114,7 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
       std::cout << "SIZE: " << (int)size << std::endl;
 
       if (size > 0) {
-	_selector->execFunc(_buffer, _socketTCP->getAddr());
+	_selector->execFunc(_buffer, fd_client->getAddr());
       }
       else {
 
@@ -175,6 +175,7 @@ bool	Network::write()
 	  _stackPaquet.pop();
 	}
 	else {
+	  std::cout << "write failed" << std::endl;
 	  _sem->post();
 	}
       }
