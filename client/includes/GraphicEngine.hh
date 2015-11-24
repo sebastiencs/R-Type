@@ -32,8 +32,8 @@ public:
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
-  virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color,
-   const int x, const int y, const int width, const int height);
+	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color,
+		const int x, const int y, const int width, const int height);
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 	virtual void handleEvents();
