@@ -16,12 +16,12 @@ DisplayUpdater::~DisplayUpdater()
 
 void DisplayUpdater::inMenu()
 {
-	//graphicEngine.setCallBackFunction(&mainMenu);
+	//graphicEngine.setCallBackFunction(&mainMenu, this);
 }
 
 void DisplayUpdater::inGame()
 {
-	//graphicEngine.setCallBackFunction(&game);
+	//graphicEngine.setCallBackFunction(&game, this);
 }
 
 const Packager * DisplayUpdater::getPackager()
