@@ -32,7 +32,7 @@ const listPlayers	&Party::getPlayers() const
   return (_players);
 }
 
-uint16_t		Party::getNb() const
+uint8_t			Party::getNb() const
 {
   return (_players.size());
 }
@@ -40,4 +40,15 @@ uint16_t		Party::getNb() const
 const std::string	&Party::getName() const
 {
   return (_name);
+}
+
+bool			Party::addPlayer(Player *player)
+{
+  if (_players.size() < 4) {
+    _players.push_back(player);
+    return (true);
+  }
+  else {
+    return (false);
+  }
 }

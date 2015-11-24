@@ -15,7 +15,7 @@
 # include "Debug.hh"
 # include "Player.hh"
 
-typedef std::list<Player>	listPlayers;
+typedef std::list<Player *>	listPlayers;
 
 class		Party
 {
@@ -28,8 +28,9 @@ public:
   virtual ~Party();
 
   const listPlayers	&getPlayers() const;
-  uint16_t		getNb() const;
+  uint8_t		getNb() const;
   const std::string	&getName() const;
+  bool			addPlayer(Player *);
 };
 
 #endif /* !PARTY_H_ */
