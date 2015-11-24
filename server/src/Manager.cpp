@@ -41,6 +41,9 @@ void		Manager::deletePlayer(socket_t socket)
       return ;
     }
   }
+  for (auto party : _parties) {
+    party->deletePlayer(socket);
+  }
 }
 
 void		Manager::setNetwork(Network *network)
@@ -63,6 +66,8 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 {
   PaquetResponse	p;
 
+  DEBUG_MSG(*paquet);
+
   if (paquet->getVersion() == 1) {
 
     uint8_t id = getID();
@@ -76,18 +81,82 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
   }
   p.createPaquet();
   write(p, addr);
-  DEBUG_MSG(*paquet);
   delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetJoinParty *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+  std::string	name = paquet->getName();
+  Party		*party = 0;
+  Player	*player;
+
+  DEBUG_MSG(*paquet);
+
+  auto pa = std::find_if(_parties.begin(), _parties.end(), [&name](Party *p) { return (p->getName() == name); });
+  party = (pa != _parties.end()) ? (*pa) : (0);
+
+  auto pl = std::find_if(_pWaiting.begin(), _pWaiting.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
+  player = (pl != _pWaiting.end()) ? (*pl) : (0);
+
+  PaquetResponse	p;
+
+  if (party && player && party->addPlayer(player)) {
+    _pWaiting.remove(player);
+    p.setReturn(4);
+
+  }
+  else {
+    p.setReturn(3);
+#ifdef DEBUG
+    if (!player) {
+      std::cerr << "JoinParty: Can't find player" << std::endl;
+    }
+    if (!party) {
+      std::cerr << "JoinParty: Can't find party" << std::endl;
+    }
+    if (party && player) {
+      std::cerr << "JoinParty: Too many players" << std::endl;
+    }
+#endif // !DEBUG
+  }
+  p.createPaquet();
+  write(p, addr);
+  delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetCreateParty *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+  std::string	name = paquet->getName();
+  Player	*player;
+
+  auto pa = std::find_if(_parties.begin(), _parties.end(), [&name](Party *p) { return (p->getName() == name); });
+
+  auto pl = std::find_if(_pWaiting.begin(), _pWaiting.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
+  player = (pl != _pWaiting.end()) ? (*pl) : (0);
+
+  PaquetResponse	p;
+
+  if (pa != _parties.end() && player) {
+    Party	*party(new Party(name));
+    party->addPlayer(player);
+    _pWaiting.remove(player);
+    _parties.push_back(party);
+    p.setReturn(4);
+  }
+  else {
+    p.setReturn(3);
+#ifdef DEBUG
+    if (pa == _parties.end()) {
+      std::cerr << "CreateParty: Party already exist" << std::endl;
+    }
+    if (!player) {
+      std::cerr << "JoinParty: Can't find player" << std::endl;
+    }
+#endif // !DEBUG
+  }
+  p.createPaquet();
+  write(p, addr);
+  delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetLaunch *paquet UNUSED, const Addr &addr UNUSED)
@@ -130,7 +199,7 @@ void		Manager::handlePaquet(PaquetReady *paquet UNUSED, const Addr &addr UNUSED)
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetRequestParties *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
 {
   PaquetListParties	p;
 

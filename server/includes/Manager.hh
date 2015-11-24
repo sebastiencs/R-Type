@@ -19,7 +19,7 @@
 # include "Addr.hh"
 
 typedef std::list<Party *>	PartyList;
-typedef std::list<IPlayer *>	PlayerList;
+typedef std::list<Player *>	PlayerList;
 
 class		Network;
 

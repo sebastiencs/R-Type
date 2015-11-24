@@ -7,7 +7,7 @@
 
 class PackageTranslator {
 private:
-  PackageStorage* storage;
+  PackageStorage* storage UNUSED; // Enlevez UNUSED quand vous l'utiliserez
 
 public:
   PackageTranslator();

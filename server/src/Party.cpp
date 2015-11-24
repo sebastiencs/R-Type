@@ -10,21 +10,47 @@
 
 #include "Party.hh"
 
+# include <unistd.h>
+
 Party::Party()
-  : _name("Unknwon")
+  : _sem(new Semaphore()),
+    _thread(new Thread()),
+    _name("Unknwon")
 {
   DEBUG_MSG("Party created");
+  _thread->run([this](void *) -> void * { run(); return (0); }, 0);
 }
 
 Party::Party(const std::string &name)
+  : _sem(new Semaphore()),
+    _thread(new Thread()),
+    _name(name)
 {
-  _name = name;
   DEBUG_MSG("Party created");
+  _thread->run([this](void *) -> void * { run(); return (0); }, 0);
 }
 
 Party::~Party()
 {
   DEBUG_MSG("Party deleted");
+}
+
+void			Party::run()
+{
+  for (;;) {
+    std::cerr << "A party is running" << std::endl;
+
+#ifdef __unix__
+    sleep(2);
+#elif defined(_WIN32)
+    Sleep(2);
+#endif
+  }
+}
+
+void			Party::stop()
+{
+  _thread->close();
 }
 
 const listPlayers	&Party::getPlayers() const
@@ -40,4 +66,26 @@ uint8_t			Party::getNb() const
 const std::string	&Party::getName() const
 {
   return (_name);
+}
+
+bool			Party::addPlayer(Player *player)
+{
+  if (_players.size() < 4) {
+    _players.push_back(player);
+    return (true);
+  }
+  else {
+    return (false);
+  }
+}
+
+void			Party::deletePlayer(socket_t socket)
+{
+  auto p = std::find_if(_players.begin(), _players.end(), [&socket] (Player *p) { return (p->socket() == socket); });
+
+  if (p != _players.end()) {
+    delete *p;
+    _players.erase(p);
+    DEBUG_MSG("Player deleted from party");
+  }
 }

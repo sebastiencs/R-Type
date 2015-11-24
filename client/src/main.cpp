@@ -18,7 +18,7 @@
 # include "WSA.hh"
 #endif // !_WIN32
 
-int		main(int argc, char **argv)
+int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous les utiliserez
 {
 #ifdef _WIN32
 	if (WSA::init()) {
@@ -30,9 +30,9 @@ int		main(int argc, char **argv)
 	WSA::clean();
 #endif // !_WIN32
 
-	
-	
-	
+
+
+
 	Packager *packager = new Packager();
 	IGraphicEngine* engine = new GraphicEngine(packager);
   NetworkClient* network = new NetworkClient("127.0.0.1", 4242);

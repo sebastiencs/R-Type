@@ -1,9 +1,8 @@
 #include <NetworkClient.hh>
 
 NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
-  : _socketTCP(new SocketTCP(SocketTCP::CLIENT)),
-    _socketUDP(new SocketUDP(SocketUDP::CLIENT))
-
+  : _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
+    _socketTCP(new SocketTCP(SocketTCP::CLIENT))
 {
   _socketTCP->connect(ip, port);
 }
@@ -23,7 +22,7 @@ int NetworkClient::stop()
   return 0;
 }
 
-int NetworkClient::handleFirst(PaquetFirst first)
+int NetworkClient::handleFirst(PaquetFirst first UNUSED) // Enlever unused quand vous l'utliserez
 {
   /* Test */
   PaquetFirst	p;
