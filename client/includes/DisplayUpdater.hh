@@ -22,7 +22,7 @@ private:
 	IGraphicEngine *graphicEngine;
 };
 
-void mainMenu();
-void game();
+void mainMenu(void *arg);
+void game(void *arg);
 
 #endif
