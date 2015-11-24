@@ -78,3 +78,14 @@ bool			Party::addPlayer(Player *player)
     return (false);
   }
 }
+
+void			Party::deletePlayer(socket_t socket)
+{
+  auto p = std::find_if(_players.begin(), _players.end(), [&socket] (Player *p) { return (p->socket() == socket); });
+
+  if (p != _players.end()) {
+    delete *p;
+    _players.erase(p);
+    DEBUG_MSG("Player deleted from party");
+  }
+}

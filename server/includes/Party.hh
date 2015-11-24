@@ -38,6 +38,7 @@ public:
   uint8_t		getNb() const;
   const std::string	&getName() const;
   bool			addPlayer(Player *);
+  void			deletePlayer(socket_t);
 };
 
 #endif /* !PARTY_H_ */

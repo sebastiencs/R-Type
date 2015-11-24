@@ -41,8 +41,9 @@ void		Manager::deletePlayer(socket_t socket)
       return ;
     }
   }
-
-  // TODO: delete players in party
+  for (auto party : _parties) {
+    party->deletePlayer(socket);
+  }
 }
 
 void		Manager::setNetwork(Network *network)
