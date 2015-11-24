@@ -11,6 +11,7 @@
 #include "Network.hh"
 #include "Selector.hh"
 #include "Manager.hh"
+#include "IOEvent.hh"
 
 Network::Network(Manager *manager, const uint16_t port)
   : _sem(new Semaphore),
@@ -46,7 +47,7 @@ int	Network::run()
 
   while (_running) {
 
-    if (poll(fds.data(), fds.size(), 0) > 0) {
+    if (IOEvent::poll(fds, 0) > 0) {
 
       for (auto fd : fds) {
 	if (fd.revents & POLLIN) {

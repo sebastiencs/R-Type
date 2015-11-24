@@ -4,15 +4,16 @@ set(COMMON_INCLUDES
   ${CMAKE_CURRENT_SOURCE_DIR}/includes/Paquet
   PARENT_SCOPE
   )
-  
+
 file (GLOB
   COMMON_SOURCES
   src/Timer.cpp
   src/Addr.cpp
   src/Buffer.cpp
   src/Player.cpp
+  src/IOEvent.cpp
   )
-    
+
 file (GLOB
   COMMON_HEADERS
   includes/Debug.hh
@@ -23,22 +24,22 @@ file (GLOB
   includes/Timer.hh
   includes/Addr.hh
   )
-  
+
 file(GLOB
   PAQUETSOURCES
   src/Paquet/*
   )
-    
+
 file(GLOB
   PAQUETHEADERS
   includes/Paquet/*
   )
-  
+
 set(PAQUETSOURCES
   ${PAQUETSOURCES}
   PARENT_SCOPE
 )
-  
+
 set(PAQUETHEADERS
   ${PAQUETHEADERS}
   PARENT_SCOPE
@@ -50,7 +51,7 @@ if (${UNIX})
     COMMON_PLATE_SOURCES
     src/*Unix.cpp
     )
-	
+
   file(GLOB
     COMMON_PLATE_HEADERS
     includes/*Unix.hh
@@ -63,7 +64,7 @@ elseif (WIN32)
     COMMON_PLATE_SOURCES
     src/*Win.cpp
     )
-	
+
   file(GLOB
     COMMON_PLATE_HEADERS
     includes/*Win.hh
@@ -72,16 +73,15 @@ elseif (WIN32)
 
 endif()
 
-	
+
   set(COMMON_SOURCES
     ${COMMON_SOURCES}
     ${COMMON_PLATE_SOURCES}
     PARENT_SCOPE
   )
-  	
+
   set(COMMON_HEADERS
     ${COMMON_HEADERS}
     ${COMMON_PLATE_HEADERS}
     PARENT_SCOPE
   )
-
