@@ -80,8 +80,6 @@ void GraphicEngine::launch()
 			if (call && callbackArg)
 				call(callbackArg);
 
-			
-			/* END TEST */
 
 			window->display();
 			_timer.reset();
