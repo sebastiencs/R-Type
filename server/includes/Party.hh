@@ -28,7 +28,7 @@ public:
   virtual ~Party();
 
   const listPlayers	&getPlayers() const;
-  uint16_t		getNb() const;
+  uint8_t		getNb() const;
   const std::string	&getName() const;
 };
 

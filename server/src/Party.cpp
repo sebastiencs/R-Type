@@ -32,7 +32,7 @@ const listPlayers	&Party::getPlayers() const
   return (_players);
 }
 
-uint16_t		Party::getNb() const
+uint8_t			Party::getNb() const
 {
   return (_players.size());
 }
