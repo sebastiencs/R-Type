@@ -123,9 +123,39 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
   delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetCreateParty *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+  std::string	name = paquet->getName();
+  Player	*player;
+
+  auto pa = std::find_if(_parties.begin(), _parties.end(), [&name](Party *p) { return (p->getName() == name); });
+
+  auto pl = std::find_if(_pWaiting.begin(), _pWaiting.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
+  player = (pl != _pWaiting.end()) ? (*pl) : (0);
+
+  PaquetResponse	p;
+
+  if (pa != _parties.end() && player) {
+    Party	*party(new Party(name));
+    party->addPlayer(player);
+    _pWaiting.remove(player);
+    _parties.push_back(party);
+    p.setReturn(4);
+  }
+  else {
+    p.setReturn(3);
+#ifdef DEBUG
+    if (pa == _parties.end()) {
+      std::cerr << "CreateParty: Party already exist" << std::endl;
+    }
+    if (!player) {
+      std::cerr << "JoinParty: Can't find player" << std::endl;
+    }
+#endif // !DEBUG
+  }
+  p.createPaquet();
+  write(p, addr);
+  delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetLaunch *paquet UNUSED, const Addr &addr UNUSED)
