@@ -83,15 +83,14 @@ void GraphicEngine::launch()
 			drawImage("r-typesheet26.gif", Transformation(0, 0));
 			/* test */
 			static unsigned int i = 0;
-			static unsigned int j = 0;
 			Transformation t(100, 100);
 			if (i > 6) {
 				i = 0;
-				j++;
 			}
-			if (j > 1)
-				j = 0;
-			t.setCrop(i * 34, j * 33, 34, 33);
+			t.setCrop(i * 33, 0, 33, 33);
+			drawSplitImage("r-typesheet23.gif", t, Color::None);
+			t.setCrop(i * 33, 33, 33, 33);
+			t.setPosition(150, 100);
 			drawSplitImage("r-typesheet23.gif", t, Color::None);
 			i++;
 			drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
