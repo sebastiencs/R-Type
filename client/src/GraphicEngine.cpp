@@ -2,6 +2,8 @@
 
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
+	callbackArg = nullptr;
+	call = nullptr;
 	_timer.start();
 	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
@@ -74,22 +76,9 @@ void GraphicEngine::launch()
 		if (_timer.ms() >= MS_REFRESH)
 		{
 			window->clear(sf::Color::Black);
-			// TODO: faire l'interface en fct des paquets
-			while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
-				const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
-				drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-				PackageStorage::getInstance().deleteObstaclesPackage();
-			}
-			while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
-				const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
-				drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
-				PackageStorage::getInstance().deletePlayersPackage();
-			}
-			while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
-				const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-				drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-				PackageStorage::getInstance().deleteShotsPackage();
-			}
+
+			if (call && callbackArg)
+				call(callbackArg);
 
 			drawImage("r-typesheet26.gif", Transformation(0, 0));
 			/* test */
@@ -113,6 +102,12 @@ void GraphicEngine::launch()
 			_timer.reset();
 		}
 	}
+}
+
+void GraphicEngine::setCallbackFunction(callback fct, void * arg)
+{
+	call = fct;
+	callbackArg = arg;
 }
 
 bool GraphicEngine::loadImageFromFile(const std::string& file)

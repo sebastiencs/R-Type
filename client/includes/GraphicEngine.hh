@@ -24,6 +24,7 @@
 # define DEFAULT_FONT_SIZE 12
 # define MS_REFRESH 33.3
 
+
 class GraphicEngine : public IGraphicEngine {
 
 public:
@@ -38,6 +39,7 @@ public:
 	virtual void handleEvents();
 	virtual void repaint();
 	virtual void launch();
+	virtual void setCallbackFunction(callback, void* arg);
 
 protected:
 	bool loadImageFromFile(const std::string& file);
@@ -45,6 +47,8 @@ protected:
 
 	Packager* _packager;
 	Timer _timer;
+	callback call;
+	void* callbackArg;
 
 	sf::RenderWindow* window;
 	std::map<std::string, sf::Texture*> cachedImages;
