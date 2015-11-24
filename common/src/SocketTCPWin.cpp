@@ -118,3 +118,8 @@ ssize_t	SocketTCPWin::read(Buffer &buf)
   }
   return (recvlen);
 }
+
+const Addr	SocketTCPWin::getAddr() const
+{
+  return (Addr(_socket));
+}

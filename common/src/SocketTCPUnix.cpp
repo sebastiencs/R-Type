@@ -172,3 +172,8 @@ ssize_t	SocketTCPUnix::read(Buffer &buf)
 
   return (n);
 }
+
+const Addr	SocketTCPUnix::getAddr() const
+{
+  return (Addr(_fd));
+}

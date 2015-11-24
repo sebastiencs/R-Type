@@ -44,6 +44,7 @@ public:
   virtual int		listen(int max);
   virtual ssize_t	write(const Buffer &buf);
   virtual ssize_t	read(Buffer &);
+  virtual const Addr	getAddr() const;
 };
 
 #endif /* !SOCKETTCPUNIX_H_ */

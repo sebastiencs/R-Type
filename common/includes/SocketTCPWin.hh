@@ -43,6 +43,7 @@ public:
   virtual int		listen(int);
   virtual ssize_t	write(const Buffer &buf);
   virtual ssize_t	read(Buffer &buf);
+  virtual const Addr	getAddr() const;
 };
 
 
