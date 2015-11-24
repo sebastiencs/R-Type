@@ -13,6 +13,7 @@
 #include "PackageStorage.hh"
 #include "Packager.hh"
 #include "NetworkClient.hh"
+#include "DisplayUpdater.hh"
 
 #ifdef _WIN32
 # include "WSA.hh"
@@ -33,18 +34,20 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 
 
 
-  Packager *packager = new Packager();
-  IGraphicEngine* engine = new GraphicEngine(packager);
-  NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
+	Packager *packager = new Packager();
+	/*IGraphicEngine* engine = new GraphicEngine(packager);*/
+	NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
+	DisplayUpdater updater(packager);
 
-  PaquetFirst paquet;
-  paquet.setLevel(5);
-  paquet.setName("Alex");
-  paquet.setVersion(0);
-  network->handleFirst(paquet);
-	engine->createWindow(800, 600, "R-Type");
-	engine->launch();
-	delete engine;
+	/*PaquetFirst paquet;
+	paquet.setLevel(5);
+	paquet.setName("Alex");
+	paquet.setVersion(0);
+	network->handleFirst(paquet);*/
+
+	/*engine->createWindow(800, 600, "R-Type");
+	engine->launch();*/
+	//delete engine;
 	delete packager;
 	return (0);
 }
