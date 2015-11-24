@@ -62,7 +62,7 @@ const listPlayers	&Party::getPlayers() const
 
 uint8_t			Party::getNb() const
 {
-  return (_players.size());
+  return (static_cast<uint8_t>(_players.size()));
 }
 
 const std::string	&Party::getName() const
