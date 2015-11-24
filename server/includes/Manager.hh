@@ -24,26 +24,26 @@ class		Manager
 {
 private:
   PartyList	_parties;
-  PlayerList	_playersWaiting;
+  PlayerList	_pWaiting;
   Semaphore	_sem;
 
 public:
   Manager();
   virtual ~Manager();
 
-  void		handlePaquet(const PaquetFirst &);
-  void		handlePaquet(const PaquetJoinParty &);
-  void		handlePaquet(const PaquetCreateParty &);
-  void		handlePaquet(const PaquetLaunch &);
-  void		handlePaquet(const PaquetLeave &);
-  void		handlePaquet(const PaquetListParties &);
-  void		handlePaquet(const PaquetListPlayers &);
-  void		handlePaquet(const PaquetObstacle &);
-  void		handlePaquet(const PaquetPlayerCoord &);
-  void		handlePaquet(const PaquetReady &);
-  void		handlePaquet(const PaquetRequestParties &);
-  void		handlePaquet(const PaquetRequestPlayers &);
-  void		handlePaquet(const PaquetResponse &);
+  void		handlePaquet(PaquetFirst *);
+  void		handlePaquet(PaquetJoinParty *);
+  void		handlePaquet(PaquetCreateParty *);
+  void		handlePaquet(PaquetLaunch *);
+  void		handlePaquet(PaquetLeave *);
+  void		handlePaquet(PaquetListParties *);
+  void		handlePaquet(PaquetListPlayers *);
+  void		handlePaquet(PaquetObstacle *);
+  void		handlePaquet(PaquetPlayerCoord *);
+  void		handlePaquet(PaquetReady *);
+  void		handlePaquet(PaquetRequestParties *);
+  void		handlePaquet(PaquetRequestPlayers *);
+  void		handlePaquet(PaquetResponse *);
 };
 
 #endif /* !MANAGER_H_ */

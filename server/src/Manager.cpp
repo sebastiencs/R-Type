@@ -12,60 +12,75 @@
 
 Manager::Manager()
 {
+  DEBUG_MSG("Manager created");
 }
 
 Manager::~Manager()
 {
+  DEBUG_MSG("Manager deleted");
 }
 
-void		Manager::handlePaquet(const PaquetFirst &)
+void		Manager::handlePaquet(PaquetFirst *paquet)
 {
+  DEBUG_MSG(*paquet);
 }
 
-void		Manager::handlePaquet(const PaquetJoinParty &)
+void		Manager::handlePaquet(PaquetJoinParty *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetCreateParty &)
+void		Manager::handlePaquet(PaquetCreateParty *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetLaunch &)
+void		Manager::handlePaquet(PaquetLaunch *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetLeave &)
+void		Manager::handlePaquet(PaquetLeave *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetListParties &)
+void		Manager::handlePaquet(PaquetListParties *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetListPlayers &)
+void		Manager::handlePaquet(PaquetListPlayers *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetObstacle &)
+void		Manager::handlePaquet(PaquetObstacle *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetPlayerCoord &)
+void		Manager::handlePaquet(PaquetPlayerCoord *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetReady &)
+void		Manager::handlePaquet(PaquetReady *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetRequestParties &)
+void		Manager::handlePaquet(PaquetRequestParties *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetRequestPlayers &)
+void		Manager::handlePaquet(PaquetRequestPlayers *paquet)
 {
+  // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(const PaquetResponse &)
+void		Manager::handlePaquet(PaquetResponse *paquet)
 {
+  // DEBUG_MSG(paquet);
 }

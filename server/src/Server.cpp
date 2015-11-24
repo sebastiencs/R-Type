@@ -11,7 +11,8 @@
 #include "Server.hh"
 
 Server::Server(const uint16_t port)
-  : _network(new Network(port))
+  : _manager(new Manager()),
+    _network(new Network(_manager.get(), port))
 {
   DEBUG_MSG("Server created");
 }

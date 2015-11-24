@@ -18,6 +18,7 @@
 class				Server
 {
 private:
+  std::unique_ptr<Manager>	_manager;
   std::unique_ptr<INetwork>	_network;
 
 public:

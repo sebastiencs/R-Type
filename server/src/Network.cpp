@@ -11,11 +11,11 @@
 #include "Network.hh"
 #include "Selector.hh"
 
-Network::Network(const uint16_t port)
+Network::Network(Manager *manager, const uint16_t port)
   : _sem(new Semaphore),
     _socketUDP(new SocketUDP(SocketUDP::SERVER)),
     _socketTCP(new SocketTCP(SocketTCP::SERVER)),
-    _selector(new Selector(this)),
+    _selector(new Selector(manager)),
     _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0))
 {
   DEBUG_MSG("Network created");

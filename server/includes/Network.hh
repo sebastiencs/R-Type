@@ -22,6 +22,7 @@
 # include "INetwork.hh"
 # include "Thread.hh"
 # include "Semaphore.hh"
+# include "Manager.hh"
 
 # ifdef __unix__
 
@@ -58,7 +59,7 @@ private:
   Buffer			_buffer;
 
 public:
-  Network(const uint16_t);
+  Network(Manager *, const uint16_t);
   virtual ~Network();
 
   virtual int	run();

@@ -15,26 +15,27 @@
 # include <functional>
 # include "Paquets.hh"
 
-class		Network;
+class		Manager;
 
-typedef std::map<uint8_t, std::function<int (const Buffer &)>>	listFunc;
+typedef std::map<uint8_t, std::function<void (const Buffer &)>>	listFunc;
 
 class		Selector
 {
 private:
-  Network	*_net;
-
-  int		(Network::*_handleFirst)(PaquetFirst);
+  Manager	*_manager;
 
   listFunc	_selectorFunc;
 
 public:
-  Selector(Network *net) {
-    _net = net;
 
-    _handleFirst = &Network::handleFirst;
+  template<class Arg, class Ret>
+  auto resolver(Ret (Manager::*m)(Arg)) -> decltype(m)
+    { return m; }
 
-    _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf) -> int { return ((_net->*_handleFirst)(PaquetFirst(buf))); };
+  Selector(Manager *manager) {
+   _manager = manager;
+
+   _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf) { (_manager->*resolver<PaquetFirst *>(&Manager::handlePaquet))(new PaquetFirst(buf)) };
     }
 
   virtual ~Selector() {};
@@ -54,12 +55,13 @@ int		Selector::execFunc(const Buffer &buf)
   auto func = _selectorFunc.find(data[0]);
 
   if (func != _selectorFunc.end()) {
-    return (func->second(buf));
+    func->second(buf);
+    return (0);
   }
   else {
     std::cerr << "Unknown paquet" << std::endl;
+    return (-1);
   }
-  return (-1);
 }
 
 #endif /* !SELECTOR_H_ */
