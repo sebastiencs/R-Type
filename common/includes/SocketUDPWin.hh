@@ -14,7 +14,6 @@
 # include "Debug.hh"
 # include "ISocketUDP.hh"
 # include "Buffer.hh"
-//# include <winsock2.h>
 
 class		SocketUDPWin : public ISocketUDP
 {

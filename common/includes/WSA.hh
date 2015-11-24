@@ -3,8 +3,9 @@
 # define WSA_HH_
 
 # include <iostream>
-# include <winsock2.h>
-# pragma comment(lib, "ws2_32.lib")
+# include "SocketsWin.hh"
+// # include <winsock2.h>
+// # pragma comment(lib, "ws2_32.lib")
 
 namespace WSA
 {
