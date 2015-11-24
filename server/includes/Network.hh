@@ -22,18 +22,7 @@
 # include "INetwork.hh"
 # include "Thread.hh"
 # include "Semaphore.hh"
-
-# ifdef __unix__
-
-typedef std::vector<struct pollfd>	Pollfd;
-
-# elif defined(_WIN32)
-
-# include <vector>
-# define poll WSAPoll
-typedef std::vector<WSAPOLLFD>		Pollfd;
-
-# endif
+# include "IOEvent.hh"
 
 class	Selector;
 class	Manager;
