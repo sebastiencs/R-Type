@@ -1,6 +1,7 @@
 #include "Button.hh"
 
-Button::Button(const std::string & name) : _isPressed(false)
+Button::Button(const std::string& text, const sf::Sprite& sprite, std::function<void(void *)> fptr) 
+	: _text(text), _sprite(sprite), _fptr(fptr)
 {
 }
 
@@ -8,20 +9,26 @@ Button::~Button()
 {
 }
 
-void Button::setButtonState(bool isPressed)
+const bool Button::isPressed(const int x, const int y) const
 {
-  _isPressed = isPressed;
+	if (x >= _sprite.getPosition().x && x <= (_sprite.getLocalBounds().width + _sprite.getPosition().x) &&
+		y >= _sprite.getPosition().y && y <= (_sprite.getLocalBounds().height + _sprite.getPosition().y))
+		return true;
+	return false;
 }
 
-const bool & Button::getButtonState() const
+const std::string& Button::getName() const
 {
-  return (_isPressed);
+	return (_text);
 }
 
-void Button::drawButton(const Transformation& t)
+const sf::Sprite& Button::getSprite() const
 {
-//  if (_isPressed)
-//    GraphicEngine::drawImage("ButtonPressed.png", t, Color::None);
-//  else
-//    GraphicEngine::drawImage("Button.png", t, Color::None);
+	return (_sprite);
+}
+
+void Button::onAction(void *arg)
+{
+	if (_fptr != nullptr)
+		_fptr(arg);
 }
