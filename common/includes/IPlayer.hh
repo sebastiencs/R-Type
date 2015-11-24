@@ -17,8 +17,7 @@ typedef int	socket_t;
 
 # elif defined(_WIN32)
 
-#  include <winsock2.h>
-typedef SOCKET	socket_t;
+#  include "ISocketTCP.hh"
 
 # endif
 

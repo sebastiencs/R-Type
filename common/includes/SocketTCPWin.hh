@@ -42,7 +42,9 @@ public:
   virtual int		bind(uint16_t);
   virtual int		listen(int);
   virtual ssize_t	write(const Buffer &buf);
-  virtual ssize_t	write(const Buffer &buf, const Addr &addr) = 0;
+  virtual ssize_t	write(const Buffer &buf, const Addr &addr);
+  virtual ssize_t	write(const Paquet &paquet);
+  virtual ssize_t	write(const Paquet &paquet, const Addr &addr);
   virtual ssize_t	read(Buffer &buf);
   virtual const Addr	getAddr() const;
 };
