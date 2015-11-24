@@ -32,6 +32,17 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
   }
 }
 
+void		Manager::deletePlayer(socket_t socket)
+{
+  for (PlayerList::iterator it = _pWaiting.begin(); it != _pWaiting.end(); ++it) {
+    if ((*it)->socket() == socket) {
+      delete *it;
+      _pWaiting.erase(it);
+      return ;
+    }
+  }
+}
+
 void		Manager::setNetwork(Network *network)
 {
   _network = network;

@@ -45,6 +45,7 @@ virtual ~Player();
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
+  virtual socket_t		socket() const;
 };
 
 #endif /* !PLAYER_H_ */

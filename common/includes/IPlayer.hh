@@ -11,6 +11,17 @@
 #ifndef IPLAYER_H_
 # define IPLAYER_H_
 
+# ifdef __unix__
+
+typedef int	socket_t;
+
+# elif defined(_WIN32)
+
+#  include <winsock2.h>
+typedef SOCKET	socket_t;
+
+# endif
+
 # include <tuple>
 # include <iostream>
 
@@ -35,6 +46,7 @@ public:
 
   virtual const std::string	&getName() const = 0;
   virtual void			setName(const std::string &) = 0;
+  virtual socket_t		socket() const = 0;
 };
 
 #endif /* !IPLAYER_H_ */

@@ -100,3 +100,8 @@ void			Player::setName(const std::string &name)
 {
   _name = name;
 }
+
+socket_t		Player::socket() const
+{
+  return (_addr.getSocket());
+}

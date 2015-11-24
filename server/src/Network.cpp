@@ -17,13 +17,14 @@ Network::Network(Manager *manager, const uint16_t port)
     _socketUDP(new SocketUDP(SocketUDP::SERVER)),
     _socketTCP(new SocketTCP(SocketTCP::SERVER)),
     _selector(new Selector(manager)),
-    _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0))
+    _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0)),
+    _manager(manager)
 {
   DEBUG_MSG("Network created");
   _socketUDP->bind(port);
   _socketTCP->bind(port);
   _socketTCP->listen(0x200);
-  manager->setNetwork(this);
+  _manager->setNetwork(this);
 }
 
 Network::~Network()
@@ -121,6 +122,8 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 	std::cerr << "Client disconnect\n";
 
 	socket_t fdc = socket;
+
+	_manager->deletePlayer(fdc);
 	for (auto it = fds.cbegin(); it != fds.cend(); ++it) {
 	  if ((*it).fd == fdc) {
 	    fds.erase(it);

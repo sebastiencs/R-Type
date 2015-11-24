@@ -22,7 +22,6 @@
 # include "INetwork.hh"
 # include "Thread.hh"
 # include "Semaphore.hh"
-//# include "Manager.hh"
 
 # ifdef __unix__
 
@@ -56,6 +55,7 @@ private:
   std::unique_ptr<IThread>	_thread;
   std::stack<PaquetClient>	_stackPaquet;
   std::list<ISocketTCP *>	_socketClient;
+  Manager			*_manager;
   bool				_running;
   Buffer			_buffer;
 
