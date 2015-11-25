@@ -26,6 +26,7 @@
 # define DEFAULT_FONT_SIZE 12
 # define MS_REFRESH 33.3
 
+class Button;
 
 class GraphicEngine : public IGraphicEngine {
 
