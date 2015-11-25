@@ -60,6 +60,7 @@ void game(void *arg) {
 	}*/
 
 	tmp->getGraphicEngine()->drawImage("r-typesheet26.gif", Transformation(0, 0));
+	tmp->getGraphicEngine()->drawImage("Button.png", Transformation(0, 0));
 	/* test */
 	static unsigned int i = 0;
 	Transformation t(100, 100);

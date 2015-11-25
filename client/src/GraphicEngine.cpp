@@ -5,7 +5,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	callbackArg = nullptr;
 	call = nullptr;
 	_timer.start();
-	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
+	obstacleTypeToSpriteString[0] = "Button.png";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[3] = "r-typesheet17.gif";
@@ -63,7 +63,7 @@ void GraphicEngine::handleEvents()
 		else if (event.mouseButton.button == sf::Mouse::Left) {
 			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
-					drawImage("button.png", Transformation(0, 50), Color::None);
+					(*it)->onAction((void *)*it);
 		}
 	}
 }
@@ -72,10 +72,18 @@ void GraphicEngine::repaint()
 {
 }
 
+void test(void *l) {
+	static int i = 0;
+
+	std::cout << "COUCOU BITE : " << i << std::endl;
+	++i;
+}
+
 void GraphicEngine::launch()
 {
+	loadImageFromFile("Button.png");
 	sf::Sprite sprite(*cachedImages["Button.png"]);
-	buttons.push_front(new Button("Test", sprite, nullptr));
+	buttons.push_front(new Button("Test", sprite, test));
 	while (window->isOpen())
 	{
 		handleEvents();
@@ -86,8 +94,6 @@ void GraphicEngine::launch()
 
 			if (call && callbackArg)
 				call(callbackArg);
-
-
 			window->display();
 			_timer.reset();
 		}
