@@ -5,7 +5,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	callbackArg = nullptr;
 	call = nullptr;
 	_timer.start();
-	obstacleTypeToSpriteString[0] = "Button.png";
+	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[3] = "r-typesheet17.gif";
@@ -43,17 +43,6 @@ void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::stri
 	window->setFramerateLimit(60);
 }
 
-void GraphicEngine::createButton(const std::string & img, const Transformation & t, const Color & color, void *fptr)
-{
-	if (cachedImages.find(img) == cachedImages.end() &&
-		!loadImageFromFile(img)) {
-		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
-		return;
-	}
-	sf::Sprite sprite(*cachedImages["Button.png"]);
-	buttons.push_front(new Button(img, sprite, t, color, fptr));
-}
-
 void GraphicEngine::handleEvents()
 {
 	sf::Event event;
@@ -72,10 +61,10 @@ void GraphicEngine::handleEvents()
 			_packager->createMovementPackage(0, 0, 20);
 		else if (event.key.code == sf::Keyboard::D)
 			_packager->createMovementPackage(0, 20, 0);
-		else if (event.mouseButton.button == sf::Mouse::Left) {
+		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
-					(*it)->onAction((void *)*it);
+					(*it)->onAction(nullptr);
 		}
 	}
 }
@@ -89,13 +78,13 @@ void GraphicEngine::launch()
 	while (window->isOpen())
 	{
 		handleEvents();
-		// TODO: get les paquets ?
 		if (_timer.ms() >= MS_REFRESH)
 		{
 			window->clear(sf::Color::Black);
 
+			// a mettre dans la callback?
 			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
-					drawImage((*it)->getName(), (*it)->getTransformation(), (*it)->getColor());
+				window->draw((*it)->getSprite());
 			if (call && callbackArg)
 				call(callbackArg);
 			window->display();
@@ -135,6 +124,26 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 }
 
 
+
+void GraphicEngine::createButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
+{
+	for (Button* b : buttons)
+		if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t & b->getColor() == color && b->getArgs() == arg)
+			return;
+	if (cachedImages.find(img) == cachedImages.end() &&
+		!loadImageFromFile(img)) {
+		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
+		return;
+	}
+	sf::Sprite sprite(*cachedImages[img]);
+	if (t.hasPosition())
+		sprite.setPosition(t.getX(), t.getY());
+	if (t.hasRotation())
+		sprite.rotate(t.getRotation());
+	if (color.isUsed())
+		sprite.setColor(sf::Color(color.getColor()));
+	buttons.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
+}
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {

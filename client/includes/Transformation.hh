@@ -44,4 +44,6 @@ private:
 
 };
 
+bool operator==(const Transformation& lhs, const Transformation& rhs);
+
 #endif /* !TRANSFORMATION_H_ */

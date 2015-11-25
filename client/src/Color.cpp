@@ -22,3 +22,8 @@ const Color Color::Green = Color(0, 255, 0, 255);
 const Color Color::Blue = Color(0, 0, 255, 255);
 const Color Color::Transparent = Color(0, 0, 0, 0);
 const Color Color::None = Color(0, 0, 0, 0, false);
+
+
+bool operator==(const Color& lhs, const Color& rhs) {
+	return (lhs.isUsed() == rhs.isUsed() && lhs.getColor() == rhs.getColor());
+}

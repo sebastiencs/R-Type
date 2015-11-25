@@ -5,6 +5,13 @@ Transformation::Transformation()
 	_hasPos = false;
 	_hasCrop = false;
 	_hasRotation = false;
+	_posX = 0;
+	_posY = 0;
+	_rotation = 0;
+	crop[SRCX] = 0;
+	crop[SRCY] = 0;
+	crop[SRCWIDTH] = 0;
+	crop[SRCHEIGHT] = 0;
 }
 
 Transformation::Transformation(uint16_t x, uint16_t y)
@@ -12,6 +19,11 @@ Transformation::Transformation(uint16_t x, uint16_t y)
 	setPosition(x, y);
 	_hasCrop = false;
 	_hasRotation = false;
+	_rotation = 0;
+	crop[SRCX] = 0;
+	crop[SRCY] = 0;
+	crop[SRCWIDTH] = 0;
+	crop[SRCHEIGHT] = 0;
 }
 
 Transformation::~Transformation()
@@ -73,4 +85,16 @@ bool Transformation::hasCrop() const
 bool Transformation::hasRotation() const
 {
 	return _hasRotation;
+}
+
+bool operator==(const Transformation& lhs, const Transformation& rhs) {
+	return ((lhs.hasPosition() == rhs.hasPosition()) &&
+		(lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY()) &&
+		(lhs.hasRotation() == rhs.hasRotation()) &&
+		(lhs.getRotation() == rhs.getRotation()) &&
+		((lhs.hasCrop() == rhs.hasCrop()) &&
+		(lhs.getCrop().at(Transformation::CROP::SRCX) == rhs.getCrop().at(Transformation::CROP::SRCX) &&
+			lhs.getCrop().at(Transformation::CROP::SRCY) == rhs.getCrop().at(Transformation::CROP::SRCY) &&
+			lhs.getCrop().at(Transformation::CROP::SRCWIDTH) == rhs.getCrop().at(Transformation::CROP::SRCWIDTH) &&
+			lhs.getCrop().at(Transformation::CROP::SRCHEIGHT) == rhs.getCrop().at(Transformation::CROP::SRCHEIGHT))));
 }

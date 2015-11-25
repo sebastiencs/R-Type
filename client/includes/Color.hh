@@ -28,4 +28,6 @@ public:
 	static const Color None;
 };
 
+bool operator==(const Color& lhs, const Color& rhs);
+
 #endif /* !COLOR_H_ */
