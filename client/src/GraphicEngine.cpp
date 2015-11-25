@@ -38,8 +38,20 @@ IGraphicEngine::~IGraphicEngine() {};
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
 {
+
 	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title);
 	window->setFramerateLimit(60);
+}
+
+void GraphicEngine::createButton(const std::string & img, const Transformation & t, const Color & color, void *fptr)
+{
+	if (cachedImages.find(img) == cachedImages.end() &&
+		!loadImageFromFile(img)) {
+		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
+		return;
+	}
+	sf::Sprite sprite(*cachedImages["Button.png"]);
+	buttons.push_front(new Button(img, sprite, t, color, fptr));
 }
 
 void GraphicEngine::handleEvents()
@@ -72,18 +84,8 @@ void GraphicEngine::repaint()
 {
 }
 
-void test(void *l) {
-	static int i = 0;
-
-	std::cout << "COUCOU BITE : " << i << std::endl;
-	++i;
-}
-
 void GraphicEngine::launch()
 {
-	loadImageFromFile("Button.png");
-	sf::Sprite sprite(*cachedImages["Button.png"]);
-	buttons.push_front(new Button("Test", sprite, test));
 	while (window->isOpen())
 	{
 		handleEvents();
@@ -92,6 +94,8 @@ void GraphicEngine::launch()
 		{
 			window->clear(sf::Color::Black);
 
+			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
+					drawImage((*it)->getName(), (*it)->getTransformation(), (*it)->getColor());
 			if (call && callbackArg)
 				call(callbackArg);
 			window->display();

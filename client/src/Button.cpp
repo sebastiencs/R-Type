@@ -1,7 +1,8 @@
 #include "Button.hh"
 
-Button::Button(const std::string& text, const sf::Sprite& sprite, std::function<void(void *)> fptr) 
-	: _text(text), _sprite(sprite), _fptr(fptr)
+
+Button::Button(const std::string & text, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void(void*)> fptr)
+	: _text(text), _sprite(sprite), _fptr(fptr), _t(t), _color(color)
 {
 }
 
@@ -20,6 +21,16 @@ const bool Button::isPressed(const int x, const int y) const
 const std::string& Button::getName() const
 {
 	return (_text);
+}
+
+const Transformation & Button::getTransformation() const
+{
+	return (_t);
+}
+
+const Color & Button::getColor() const
+{
+	return (_color);
 }
 
 const sf::Sprite& Button::getSprite() const
