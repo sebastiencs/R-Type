@@ -53,7 +53,7 @@ protected:
 	void* callbackArg;
 
 	sf::RenderWindow* window;
-	std::list<Button *> listButtons;
+	std::list<Button *> buttons;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
