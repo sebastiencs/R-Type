@@ -2,9 +2,10 @@
 # define GRAPHIC_ENGINE_H_
 
 # include <thread>
-#	include <iostream>
-#	include <chrono>
+# include <iostream>
+# include <chrono>
 # include <map>
+# include <list>
 # include <SFML/Window/Window.hpp>
 # include <SFML/Graphics/RenderWindow.hpp>
 # include <SFML/Window/Event.hpp>
@@ -16,6 +17,7 @@
 # include "Paquets.hh"
 # include "IGraphicEngine.hh"
 # include "Packager.hh"
+# include "Button.hh"
 # include "Timer.hh"
 
 # define RS_PATH "ressources/"
@@ -51,6 +53,7 @@ protected:
 	void* callbackArg;
 
 	sf::RenderWindow* window;
+	std::list<Button *> listButtons;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;

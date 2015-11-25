@@ -60,6 +60,12 @@ void GraphicEngine::handleEvents()
 			_packager->createMovementPackage(0, 0, 20);
 		else if (event.key.code == sf::Keyboard::D)
 			_packager->createMovementPackage(0, 20, 0);
+		else if (event.mouseButton.button == sf::Mouse::Left) {
+			std::list<Button *>::iterator *it;
+			for (*it = listButtons.begin(); *it != listButtons.end(); *it++)
+				if (it.isPressed(event.mouseButton.x, event.mouseButton.y) == true)
+					drawImage("button.png", Transformation(0, 50), Color::None);
+		}
 	}
 }
 
@@ -69,6 +75,8 @@ void GraphicEngine::repaint()
 
 void GraphicEngine::launch()
 {
+	sf::Sprite sprite(*cachedImages["Button.png"]);
+	listButtons.push_front(Button("Test", sprite, nullptr));
 	while (window->isOpen())
 	{
 		handleEvents();
