@@ -19,6 +19,7 @@ public:
 	uint32_t getColor() const;
 	bool isUsed() const;
 
+	static const Color Darker;
 	static const Color Black;
 	static const Color White;
 	static const Color Red;

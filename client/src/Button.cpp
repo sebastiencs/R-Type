@@ -12,8 +12,8 @@ Button::~Button()
 
 bool Button::isPressed(uint32_t x, uint32_t y) const
 {
-	return (x >= _sprite.getPosition().x && x <= (_sprite.getLocalBounds().width + _sprite.getPosition().x) &&
-		y >= _sprite.getPosition().y && y <= (_sprite.getLocalBounds().height + _sprite.getPosition().y));
+	return (x >= _sprite.getPosition().x && x <= ((_sprite.getLocalBounds().width * _sprite.getScale().y) + _sprite.getPosition().x) &&
+		y >= _sprite.getPosition().y && y <= ((_sprite.getLocalBounds().height * _sprite.getScale().x) + _sprite.getPosition().y));
 }
 
 const std::string& Button::getName() const
@@ -58,4 +58,13 @@ void Button::onAction(void *arg)
 			_fptr(_arg);
 		_fptr(arg);
 	}
+}
+
+void Button::onHover(uint32_t x, uint32_t y)
+{
+	if (isPressed(x, y)) {
+		_sprite.setColor(sf::Color(Color::Darker.getColor()));
+	}
+	else
+		_sprite.setColor(sf::Color::White);
 }

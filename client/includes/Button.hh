@@ -14,6 +14,7 @@ public:
 	// ICallback
 	bool isPressed(uint32_t x, uint32_t y) const;
 	void onAction(void *arg);
+	void onHover(uint32_t x, uint32_t y);
 	const void* getArgs() const;
 	const std::function<void(void *)>& getCallback() const;
 

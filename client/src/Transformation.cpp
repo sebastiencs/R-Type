@@ -5,6 +5,7 @@ Transformation::Transformation()
 	_hasPos = false;
 	_hasCrop = false;
 	_hasRotation = false;
+	_hasScale = false;
 	_posX = 0;
 	_posY = 0;
 	_rotation = 0;
@@ -12,6 +13,8 @@ Transformation::Transformation()
 	crop[SRCY] = 0;
 	crop[SRCWIDTH] = 0;
 	crop[SRCHEIGHT] = 0;
+	_scaleX = 1;
+	_scaleY = 1;
 }
 
 Transformation::Transformation(uint16_t x, uint16_t y)
@@ -19,11 +22,14 @@ Transformation::Transformation(uint16_t x, uint16_t y)
 	setPosition(x, y);
 	_hasCrop = false;
 	_hasRotation = false;
+	_hasScale = false;
 	_rotation = 0;
 	crop[SRCX] = 0;
 	crop[SRCY] = 0;
 	crop[SRCWIDTH] = 0;
 	crop[SRCHEIGHT] = 0;
+	_scaleX = 1;
+	_scaleY = 1;
 }
 
 Transformation::~Transformation()
@@ -52,6 +58,13 @@ void Transformation::setRotation(uint16_t rotation)
 	_rotation = rotation;
 }
 
+void Transformation::setScale(float x, float y)
+{
+	_scaleX = x;
+	_scaleY = y;
+	_hasScale = true;
+}
+
 uint16_t Transformation::getX() const
 {
 	return _posX;
@@ -72,6 +85,16 @@ uint16_t Transformation::getRotation() const
 	return _rotation;
 }
 
+float Transformation::getScaleX() const
+{
+	return _scaleX;
+}
+
+float Transformation::getScaleY() const
+{
+	return _scaleY;
+}
+
 bool Transformation::hasPosition() const
 {
 	return _hasPos;
@@ -85,6 +108,11 @@ bool Transformation::hasCrop() const
 bool Transformation::hasRotation() const
 {
 	return _hasRotation;
+}
+
+bool Transformation::hasScale() const
+{
+	return _hasScale;
 }
 
 bool operator==(const Transformation& lhs, const Transformation& rhs) {

@@ -38,7 +38,7 @@ public:
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
-	virtual void createButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr);
+	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);

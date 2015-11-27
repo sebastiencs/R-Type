@@ -40,6 +40,10 @@ void mainMenu(void *arg) {
 	//drawButton("exit");
 }
 
+void myexit(void *t)
+{
+	exit(EXIT_SUCCESS);
+}
 void buttonListener(void* arg) {
 	std::cout << "Clicked" << std::endl;
 }
@@ -63,21 +67,10 @@ void game(void *arg) {
 		PackageStorage::getInstance().deleteShotsPackage();
 	}*/
 
-	engine->drawImage("r-typesheet26.gif", Transformation(0, 0));
-	/* test */
-	static unsigned int i = 0;
-	Transformation t(100, 100);
-	if (i > 6) {
-		i = 0;
-	}
-	t.setCrop(i * 33, 0, 33, 33);
-	engine->drawSplitImage("r-typesheet23.gif", t, Color::None);
-	t.setPosition(150, 100);
-	t.setCrop(i * 33, 33, 33, 33);
-	engine->drawSplitImage("r-typesheet23.gif", t, Color::None);
-	i++;
-	engine->drawText("DefaultText", Transformation(50, 50), DEFAULT_FONT_SIZE);
-	engine->drawText("OtherText", Transformation(80, 80), 20, Color::White, "Fipps.otf");
+	engine->drawText("R-Type", Transformation(80, 80), 20, Color::White, "Fipps.otf");
 
-	engine->createButton("Coucou", "Button.png", Transformation(0, 500), Color::None, &buttonListener, nullptr);
+	Transformation t1(200, 500);
+	t1.setScale(0.25, 0.25);
+	engine->displayButton("Exit", "Button.png", t1, Color::None, &myexit);
 }
+

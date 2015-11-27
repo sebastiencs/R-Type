@@ -64,6 +64,10 @@ void GraphicEngine::handleEvents()
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
 					(*it)->onAction(nullptr);
 		}
+		else if (event.type == sf::Event::MouseMoved)
+			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+				(*it)->onHover(event.mouseMove.x, event.mouseMove.y);
+			}
 	}
 }
 
@@ -75,15 +79,16 @@ void GraphicEngine::launch()
 {
 	while (window->isOpen())
 	{
-		handleEvents();
 		if (_timer.ms() >= MS_REFRESH)
 		{
+			handleEvents();
 			window->clear(sf::Color::Black);
 
 			// a mettre dans la callback?
-			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
-				if (IDrawable* drawable = dynamic_cast<IDrawable* >((*it)))
+			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
 					window->draw(drawable->getSprite());
+			}
 			if (call && callbackArg)
 				call(callbackArg);
 			window->display();
@@ -124,7 +129,7 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 
 
 
-void GraphicEngine::createButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
+void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
@@ -143,6 +148,8 @@ void GraphicEngine::createButton(const std::string& txt, const std::string & img
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
 		sprite.setColor(sf::Color(color.getColor()));
+	if (t.hasScale())
+		sprite.setScale(t.getScaleX(), t.getScaleY());
 	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
 }
 
@@ -160,7 +167,8 @@ void GraphicEngine::drawImage(const std::string& name, const Transformation& t, 
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
 		sprite.setColor(sf::Color(color.getColor()));
-	// TODO: crop if asked
+	if (t.hasScale())
+		sprite.setScale(t.getScaleX(), t.getScaleY());
 	window->draw(sprite);
 }
 
@@ -194,6 +202,8 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
 		sprite.setColor(sf::Color(color.getColor()));
+	if (t.hasScale())
+		sprite.setScale(t.getScaleX(), t.getScaleY());
 	window->draw(sprite);
 }
 
@@ -216,6 +226,5 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	if (color.isUsed())
 		textToDraw.setColor(sf::Color(color.getColor()));
 	window->draw(textToDraw);
-
 }
 

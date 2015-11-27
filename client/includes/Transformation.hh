@@ -21,15 +21,19 @@ public:
 	void setPosition(uint16_t x, uint16_t y);
 	void setCrop(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 	void setRotation(uint16_t rotation);
+	void setScale(float x, float y);
 
 	uint16_t getX() const;
 	uint16_t getY() const;
 	const std::map<uint8_t, uint16_t>& getCrop() const;
 	uint16_t getRotation() const;
+	float getScaleX() const;
+	float getScaleY() const;
 
 	bool hasPosition() const;
 	bool hasCrop() const;
 	bool hasRotation() const;
+	bool hasScale() const;
 
 private:
 	uint16_t _posX;
@@ -41,6 +45,10 @@ private:
 
 	uint16_t _rotation;
 	bool _hasRotation;
+
+	float _scaleX;
+	float _scaleY;
+	bool _hasScale;
 
 };
 
