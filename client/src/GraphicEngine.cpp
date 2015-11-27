@@ -34,8 +34,6 @@ GraphicEngine::~GraphicEngine()
 			delete it->second;
 }
 
-IGraphicEngine::~IGraphicEngine() {};
-
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
 {
 
@@ -62,7 +60,7 @@ void GraphicEngine::handleEvents()
 		else if (event.key.code == sf::Keyboard::D)
 			_packager->createMovementPackage(0, 20, 0);
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
+			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
 					(*it)->onAction(nullptr);
 		}
@@ -83,8 +81,9 @@ void GraphicEngine::launch()
 			window->clear(sf::Color::Black);
 
 			// a mettre dans la callback?
-			for (std::list<Button *>::iterator it = buttons.begin(); it != buttons.end(); it++)
-				window->draw((*it)->getSprite());
+			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
+				if (IDrawable* drawable = dynamic_cast<IDrawable* >((*it)))
+					window->draw(drawable->getSprite());
 			if (call && callbackArg)
 				call(callbackArg);
 			window->display();
@@ -127,9 +126,11 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 
 void GraphicEngine::createButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
 {
-	for (Button* b : buttons)
-		if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t & b->getColor() == color && b->getArgs() == arg)
-			return;
+	for (ICallback* element : elements) {
+		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
+			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t & b->getColor() == color)
+				return;
+	}
 	if (cachedImages.find(img) == cachedImages.end() &&
 		!loadImageFromFile(img)) {
 		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
@@ -142,7 +143,7 @@ void GraphicEngine::createButton(const std::string& txt, const std::string & img
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
 		sprite.setColor(sf::Color(color.getColor()));
-	buttons.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
+	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
 }
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)

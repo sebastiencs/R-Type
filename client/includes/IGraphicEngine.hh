@@ -9,7 +9,7 @@ typedef void(*callback)(void*);
 
 class IGraphicEngine {
 public:
-	virtual ~IGraphicEngine();
+	virtual ~IGraphicEngine() {};
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title) = 0;
 	virtual void createButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr) = 0;

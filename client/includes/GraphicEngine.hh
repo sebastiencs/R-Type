@@ -14,8 +14,10 @@
 # include <SFML/Graphics/Text.hpp>
 # include <SFML/Graphics/Texture.hpp>
 # include <SFML/Graphics/Sprite.hpp>
-# include "Paquets.hh"
 # include "IGraphicEngine.hh"
+# include "ICallBack.hh"
+# include "IDrawable.hh"
+# include "Paquets.hh"
 # include "Packager.hh"
 # include "Button.hh"
 # include "Timer.hh"
@@ -27,6 +29,7 @@
 # define MS_REFRESH 33.3
 
 class Button;
+class IDrawable;
 
 class GraphicEngine : public IGraphicEngine {
 
@@ -57,7 +60,7 @@ protected:
 	void* callbackArg;
 
 	sf::RenderWindow* window;
-	std::list<Button *> buttons;
+	std::list<ICallback *> elements;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
@@ -65,4 +68,6 @@ protected:
 	std::map<uint8_t, std::string> shotTypeToSpriteString;
 
 };
+
+
 #endif /*! GRAPHIC_ENGINE_H_ */

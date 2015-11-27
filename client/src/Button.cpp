@@ -10,7 +10,7 @@ Button::~Button()
 {
 }
 
-const bool Button::isPressed(const int x, const int y) const
+bool Button::isPressed(uint32_t x, uint32_t y) const
 {
 	return (x >= _sprite.getPosition().x && x <= (_sprite.getLocalBounds().width + _sprite.getPosition().x) &&
 		y >= _sprite.getPosition().y && y <= (_sprite.getLocalBounds().height + _sprite.getPosition().y));
