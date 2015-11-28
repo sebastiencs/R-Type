@@ -142,7 +142,7 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
-			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t & b->getColor() == color)
+			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t && b->getColor() == color)
 				return;
 	}
 	if (cachedImages.find(img) == cachedImages.end() &&
