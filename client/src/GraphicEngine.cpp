@@ -63,7 +63,7 @@ void GraphicEngine::handleEvents()
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
-					(*it)->onAction(nullptr);
+					(*it)->onAction(/*nullptr*/);
 		}
 		else if (event.type == sf::Event::MouseMoved)
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {

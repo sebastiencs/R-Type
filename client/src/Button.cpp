@@ -51,12 +51,12 @@ const sf::Sprite& Button::getSprite() const
 	return (_sprite);
 }
 
-void Button::onAction(void *arg)
+void Button::onAction(/*void *arg*/)
 {
 	if (_fptr != nullptr) {
 		if (_arg != nullptr)
 			_fptr(_arg);
-		_fptr(arg);
+		//_fptr(arg);
 	}
 }
 

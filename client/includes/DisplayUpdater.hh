@@ -16,7 +16,6 @@ public:
 
 	const Packager *getPackager();
 	const int getCurrentPageMenu() const;
-	int& getCurrentPageMenu();
 	void setCurrentPageMenu(int page);
 
 	IGraphicEngine *getGraphicEngine();
