@@ -2,7 +2,7 @@
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 {
-	packager = packager;
+	this->packager = packager;
 	engine = eng;
 	scrollView = new ScrollView(engine);
 }
