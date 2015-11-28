@@ -6,8 +6,8 @@
 # include "Transformation.hh"
 # include "Color.hh"
 
-typedef void(*callback)(void*);
-
+//typedef void(*callback)(void*);
+typedef std::function<void()> callback;
 
 class IGraphicEngine {
 public:
@@ -22,7 +22,7 @@ public:
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "") = 0;
 
-	virtual void setCallbackFunction(std::function<void(void *)>, void* arg) = 0;
+	virtual void setCallbackFunction(callback, void* arg) = 0;
 
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;

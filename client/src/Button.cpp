@@ -1,7 +1,7 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void(void*)> fptr, void* arg)
+Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, void* arg)
 	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _arg(arg)
 {
 }
@@ -26,7 +26,7 @@ const std::string & Button::getTextureName() const
 	return _textureName;
 }
 
-const std::function<void(void*)>& Button::getCallback() const
+const std::function<void()>& Button::getCallback() const
 {
 	return _fptr;
 }
@@ -54,7 +54,7 @@ const sf::Sprite& Button::getSprite() const
 void Button::onAction(/*void *arg*/)
 {
 	if (_fptr != nullptr) {
-			_fptr(_arg);
+			_fptr();
 		//_fptr(arg);
 	}
 }

@@ -91,14 +91,14 @@ void GraphicEngine::launch()
 					window->draw(drawable->getSprite());
 			}
 			if (call && callbackArg)
-				call(callbackArg);
+				call();
 			window->display();
 			_timer.reset();
 		}
 	}
 }
 
-void GraphicEngine::setCallbackFunction(std::function<void(void *)> fct, void * arg)
+void GraphicEngine::setCallbackFunction(callback fct, void * arg)
 {
 	call = fct;
 	callbackArg = arg;

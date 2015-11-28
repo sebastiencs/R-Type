@@ -9,7 +9,7 @@ public:
 	virtual void onHover(uint32_t x, uint32_t y) = 0;
 	virtual bool isPressed(uint32_t x, uint32_t y) const = 0;
 	virtual const void* getArgs() const = 0;
-	virtual const std::function<void(void *)>& getCallback() const = 0;
+	virtual const std::function<void()>& getCallback() const = 0;
 };
 
 #endif

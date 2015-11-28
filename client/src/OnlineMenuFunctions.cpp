@@ -14,7 +14,7 @@ void onlineMenu(void *arg)
 	Transformation t1(350, 525);
 
 	t1.setScale((float)0.1, (float)0.1);
-	engine->displayButton("Refresh", "Button.png", t1, Color::None, &createRequestPartiesPaquet, arg);
+	//engine->displayButton("Refresh", "Button.png", t1, Color::None, &createRequestPartiesPaquet, arg);
 	t1.setPosition(450, 525);
 	engine->displayButton("Join", "Button.png", t1, Color::None, nullptr);
 	t1.setPosition(550, 525);

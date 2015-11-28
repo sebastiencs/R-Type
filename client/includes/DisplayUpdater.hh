@@ -22,7 +22,7 @@ public:
 
 	IGraphicEngine *getGraphicEngine();
 
-	void mainMenuTest(void *arg);
+	void mainMenu();
 
 private:
 	Packager *packager;
@@ -30,7 +30,7 @@ private:
 	int currentPageMenu;
 };
 
-void mainMenu(void *arg);
+//void mainMenu(void *arg);
 void game(void *arg);
 
 #endif

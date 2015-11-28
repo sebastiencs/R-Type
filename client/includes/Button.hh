@@ -8,7 +8,7 @@ class Button : public IDrawable, public ICallback
 {
 public:
 	Button(const std::string& text, const std::string& img, const sf::Sprite& sprite, const Transformation& t,
-		const Color& color, std::function<void(void *)> fptr, void* arg = nullptr);
+		const Color& color, std::function<void()> fptr, void* arg = nullptr);
 	virtual ~Button();
 
 	// ICallback
@@ -16,7 +16,7 @@ public:
 	void onAction(/*void *arg*/);
 	void onHover(uint32_t x, uint32_t y);
 	const void* getArgs() const;
-	const std::function<void(void *)>& getCallback() const;
+	const std::function<void()>& getCallback() const;
 
 	// IDrawable
 	const std::string& getName() const;
@@ -31,7 +31,7 @@ private:
 	Transformation _t;
 	std::string _text;
 	std::string _textureName;
-	std::function<void(void *)> _fptr;
+	std::function<void()> _fptr;
 	void* _arg;
 };
 
