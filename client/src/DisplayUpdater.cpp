@@ -7,8 +7,8 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	graphicEngine = new GraphicEngine(packager);
 	graphicEngine->createWindow(800, 600, "R-Type");
 	graphicEngine->setCallbackFunction(&mainMenu, this);
-
 	currentPageMenu = 0;
+
 	graphicEngine->launch();
 }
 
@@ -46,16 +46,6 @@ IGraphicEngine * DisplayUpdater::getGraphicEngine()
 	return graphicEngine;
 }
 
-void myexit(void *t)
-{
-	exit(EXIT_SUCCESS);
-}
-
-void setDisplayOnline(void *arg)
-{
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	tmp->setCurrentPageMenu(1);
-}
 
 void mainMenu(void *arg) {
 	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
@@ -64,16 +54,14 @@ void mainMenu(void *arg) {
 
 	engine->drawText("R-Type", Transformation(50, engine->getWindowHeight() / 5), 42, Color::White, "Fipps.otf");
 
-	std::cout << tmp->getCurrentPageMenu() << std::endl;
 	t1.setScale((float)0.35, (float)0.2);
-	engine->displayButton("Online", "Button.png", t1, Color::None, &setDisplayOnline, arg);
-	std::cout << tmp->getCurrentPageMenu() << std::endl;
+	engine->displayButton("Online", "onlineButton.png", t1, Color::None, &setDisplayOnline, arg);
 	t1.setPosition(50, 300);
-	engine->displayButton("Offline", "Button.png", t1, Color::None, &myexit);
+	engine->displayButton("Offline", "offlineButton.png", t1, Color::None, &setDisplayOffline, arg);
 	t1.setPosition(50, 400);
-	engine->displayButton("Option", "Button.png", t1, Color::None, &myexit);
+	engine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption, arg);
 	t1.setPosition(50, 500);
-	engine->displayButton("Exit", "Button.png", t1, Color::None, &myexit);
+	engine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);
 }
 
 

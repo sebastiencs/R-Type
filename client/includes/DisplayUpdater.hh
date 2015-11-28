@@ -5,6 +5,7 @@
 #include "PackageStorage.hh"
 #include "IGraphicEngine.hh"
 #include "GraphicEngine.hh"
+#include "CallbackFunctions.hh"
 
 class DisplayUpdater {
 public:
