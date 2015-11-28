@@ -91,3 +91,10 @@ void			Party::deletePlayer(socket_t socket)
     DEBUG_MSG("Player deleted from party");
   }
 }
+
+bool			Party::isPlayer(const Addr &addr) const
+{
+  auto p = std::find_if(_players.begin(), _players.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
+
+  return ((p != _players.end()) ? (true) : (false));
+}

@@ -39,6 +39,7 @@ public:
   const std::string	&getName() const;
   bool			addPlayer(Player *);
   void			deletePlayer(socket_t);
+  bool			isPlayer(const Addr &) const;
 };
 
 #endif /* !PARTY_H_ */

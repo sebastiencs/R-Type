@@ -212,9 +212,27 @@ void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
   delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetRequestPlayers *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetRequestPlayers *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+  PaquetListPlayers	p;
+
+  DEBUG_MSG(*paquet);
+
+  auto pa = std::find_if(_parties.begin(), _parties.end(), [&addr] (Party *p) { return (p->isPlayer(addr)); });
+
+  if (pa != _parties.end()) {
+    listPlayers list = (*pa)->getPlayers();
+
+    for (auto player : list) {
+      p.addPlayer(player->getName(), player->getID(), player->getLevel());
+    }
+  }
+  else {
+
+  }
+  p.createPaquet();
+  write(p, addr);
+  delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetResponse *paquet UNUSED, const Addr &addr UNUSED)
