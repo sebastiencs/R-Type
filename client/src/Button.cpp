@@ -2,7 +2,7 @@
 
 
 Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void(void*)> fptr, void* arg)
-	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _arg(arg)
+  : _sprite(sprite), _color(color), _t(t), _text(text), _textureName(img), _fptr(fptr), _arg(arg)
 {
 }
 
