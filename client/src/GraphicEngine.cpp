@@ -98,7 +98,7 @@ void GraphicEngine::launch()
 	}
 }
 
-void GraphicEngine::setCallbackFunction(callback fct, void * arg)
+void GraphicEngine::setCallbackFunction(std::function<void(void *)> fct, void * arg)
 {
 	call = fct;
 	callbackArg = arg;
