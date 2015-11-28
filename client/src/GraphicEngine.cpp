@@ -36,7 +36,8 @@ GraphicEngine::~GraphicEngine()
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
 {
-
+	windowHeight = sizeY;
+	windowWidth = sizeX;
 	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title);
 	window->setFramerateLimit(60);
 }
@@ -101,6 +102,16 @@ void GraphicEngine::setCallbackFunction(callback fct, void * arg)
 {
 	call = fct;
 	callbackArg = arg;
+}
+
+const int GraphicEngine::getWindowWidth() const
+{
+	return windowWidth;
+}
+
+const int GraphicEngine::getWindowHeight() const
+{
+	return windowHeight;
 }
 
 bool GraphicEngine::loadImageFromFile(const std::string& file)

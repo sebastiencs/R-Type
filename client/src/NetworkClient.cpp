@@ -22,21 +22,10 @@ int NetworkClient::stop()
   return 0;
 }
 
-int NetworkClient::handleFirst(PaquetFirst first UNUSED) // Enlever unused quand vous l'utliserez
+int NetworkClient::handleFirst(PaquetFirst first)
 {
-  /* Test */
-  PaquetFirst	p;
-
-  p.setVersion(1);
-  p.setName("Alex");
-  p.setLevel(1);
-  p.createPaquet();
-  Buffer buff(p.getData(), p.getSize());
-  /* !Test*/
-
-  _socketTCP->write(buff);
-
-//  DEBUG_MSG(paquet);
+  _socketTCP->write(first);
+  DEBUG_MSG(paquet);
   return 0;
 }
 

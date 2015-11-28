@@ -50,6 +50,9 @@ public:
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
 
+	virtual const int getWindowWidth() const;
+	virtual const int getWindowHeight() const;
+
 protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);
@@ -57,6 +60,8 @@ protected:
 	Packager* _packager;
 	Timer _timer;
 	callback call;
+	int windowWidth;
+	int windowHeight;
 	void* callbackArg;
 
 	sf::RenderWindow* window;

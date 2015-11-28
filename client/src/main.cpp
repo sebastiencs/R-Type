@@ -39,11 +39,11 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 	NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
 	DisplayUpdater updater(packager);
 
-	/*PaquetFirst paquet;
+	PaquetFirst paquet;
 	paquet.setLevel(5);
 	paquet.setName("Alex");
 	paquet.setVersion(0);
-	network->handleFirst(paquet);*/
+	network->handleFirst(paquet);
 
 	/*engine->createWindow(800, 600, "R-Type");
 	engine->launch();*/

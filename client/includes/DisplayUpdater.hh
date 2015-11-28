@@ -15,11 +15,16 @@ public:
 	void inGame();
 
 	const Packager *getPackager();
+	const int getCurrentPageMenu() const;
+	int& getCurrentPageMenu();
+	void setCurrentPageMenu(int page);
+
 	IGraphicEngine *getGraphicEngine();
 
 private:
 	Packager *packager;
 	IGraphicEngine *graphicEngine;
+	int currentPageMenu;
 };
 
 void mainMenu(void *arg);
