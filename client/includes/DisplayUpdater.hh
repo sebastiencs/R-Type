@@ -9,6 +9,7 @@
 #include "OnlineMenuFunctions.hh"
 
 class MainMenu;
+class OnlineMenu;
 
 class DisplayUpdater {
 public:
@@ -28,6 +29,7 @@ private:
 	IGraphicEngine *graphicEngine;
 	Packager *packager;
 	MainMenu *mainmenu;
+	OnlineMenu *onlineMenu;
 };
 
 //void mainMenu(void *arg);

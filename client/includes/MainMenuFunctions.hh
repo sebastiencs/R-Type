@@ -8,11 +8,14 @@ class MainMenu
 public:
 	MainMenu(IGraphicEngine *eng);
 	~MainMenu() {}
+
 	void setDisplayOnline();
 	void setDisplayOffline();
 	void setDisplayOption();
 	void myexit();
 	void changedMenu();
+
+	int getCurrentPage();
 
 private:
 	IGraphicEngine *engine;

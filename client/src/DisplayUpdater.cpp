@@ -6,6 +6,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine);
+	onlineMenu = new OnlineMenu(graphicEngine, packager);
 	graphicEngine->createWindow(800, 600, "R-Type");
 	std::function<void()> fptr = std::bind(&DisplayUpdater::mainMenu, this); 
 	graphicEngine->setCallbackFunction(fptr, this);
@@ -44,26 +45,20 @@ void DisplayUpdater::mainMenu()
 	graphicEngine->drawText("R-Type", Transformation(50, graphicEngine->getWindowHeight() / 5), 42, Color::White, "Fipps.otf");
 
 	t1.setScale((float)0.35, (float)0.2);
-//	std::function<void()> fptr = std::bind(&MainMenu::setDisplayOnline, this);
-//	graphicEngine->displayButton("Online", "onlineButton.png", t1, Color::None, fptr);
-	//t1.setPosition(50, 300);
-	//graphicEngine->displayButton("Offline", "offlineButton.png", t1, Color::None, &setDisplayOffline);
-	//t1.setPosition(50, 400);
-	//graphicEngine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption);
-	//t1.setPosition(50, 500);
-	//graphicEngine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);
-
-	/*t1.setScale((float)0.35, (float)0.2);
-	graphicEngine->displayButton("Online", "onlineButton.png", t1, Color::None, &setDisplayOnline, arg);
+	std::function<void()> fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
+	graphicEngine->displayButton("Online", "onlineButton.png", t1, Color::None, fptr);
 	t1.setPosition(50, 300);
-	graphicEngine->displayButton("Offline", "offlineButton.png", t1, Color::None, &setDisplayOffline, arg);
+	fptr = std::bind(&MainMenu::setDisplayOffline, this->mainmenu);
+	graphicEngine->displayButton("Offline", "offlineButton.png", t1, Color::None, fptr);
 	t1.setPosition(50, 400);
-	graphicEngine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption, arg);
+	fptr = std::bind(&MainMenu::setDisplayOption, this->mainmenu);
+	graphicEngine->displayButton("Option", "optionButton.png", t1, Color::None, fptr);
 	t1.setPosition(50, 500);
-	graphicEngine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);*/
-	/*if (currentPageMenu == 1)
-		onlineMenu(arg);*/
-	//}
+	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
+	graphicEngine->displayButton("Exit", "exitButton.png", t1, Color::None, fptr);
+
+	if (mainmenu->getCurrentPage() == 1)
+		onlineMenu->menu();
 }
 
 

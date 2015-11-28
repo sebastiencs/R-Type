@@ -13,6 +13,11 @@ void MainMenu::changedMenu()
 	engine->eraseButton("Info");
 }
 
+int MainMenu::getCurrentPage()
+{
+	return currentPage;
+}
+
 
 void MainMenu::setDisplayOnline()
 {

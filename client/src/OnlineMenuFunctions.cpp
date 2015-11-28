@@ -1,20 +1,24 @@
 #include "OnlineMenuFunctions.hh"
 
-void createRequestPartiesPaquet(void *arg)
+OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 {
-	Packager *tmp = static_cast<Packager *>(arg);
-	tmp->createGameListPackage();
+	packager = packager;
+	engine = eng;
+}
+
+void OnlineMenu::createRequestPartiesPaquet()
+{
+	packager->createGameListPackage();
 	DEBUG_MSG("Create Request Parties Paquet");
 }
 
-void onlineMenu(void *arg) 
+void OnlineMenu::menu()
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	IGraphicEngine* engine = tmp->getGraphicEngine();
 	Transformation t1(350, 525);
 
 	t1.setScale((float)0.1, (float)0.1);
-	//engine->displayButton("Refresh", "Button.png", t1, Color::None, &createRequestPartiesPaquet, arg);
+	std::function<void()> fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
+	engine->displayButton("Refresh", "Button.png", t1, Color::None, fptr);
 	t1.setPosition(450, 525);
 	engine->displayButton("Join", "Button.png", t1, Color::None, nullptr);
 	t1.setPosition(550, 525);

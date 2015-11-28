@@ -3,8 +3,17 @@
 
 # include "DisplayUpdater.hh"
 
-void onlineMenu(void *arg);
-void createRequestPartiesPaquet(void *arg);
+class OnlineMenu {
+public:
+	OnlineMenu(IGraphicEngine* eng, Packager *packager);
+	~OnlineMenu() {}
 
+	void menu();
+	void createRequestPartiesPaquet();
+
+private:
+	IGraphicEngine *engine;
+	Packager *packager;
+};
 
 #endif // !ONLINE_MENU_FUNCTION_HH_
