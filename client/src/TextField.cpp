@@ -21,8 +21,8 @@ const std::string& TextField::getId() const
 
 const sf::Sprite & TextField::getSprite() const
 {
-	sf::Sprite sprite;
-	return sprite;
+	sf::Sprite *sprite = new sf::Sprite();
+	return *sprite;
 }
 
 void TextField::displayText()
