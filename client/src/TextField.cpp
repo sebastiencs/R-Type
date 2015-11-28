@@ -1,6 +1,6 @@
 #include "TextField.hh"
 
-TextField::TextField(const std::string & _text, const Transformation & _t, uint16_t _size, const std::string & _font, const Color & _color, const std::string& _id, GraphicEngine * _engine) : color(_color)
+TextField::TextField(const std::string & _text, const Transformation & _t, uint16_t _size, const std::string & _font, const Color & _color, const std::string& _id, IGraphicEngine * _engine) : color(_color)
 {
 	text = _text;
 	id = _id;

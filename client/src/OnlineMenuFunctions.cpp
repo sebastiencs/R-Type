@@ -7,6 +7,11 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 	scrollView = new ScrollView(engine);
 }
 
+OnlineMenu::~OnlineMenu()
+{
+	delete(scrollView);
+}
+
 void OnlineMenu::createRequestPartiesPaquet()
 {
 	packager->createGameListPackage();

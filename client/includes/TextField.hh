@@ -9,7 +9,7 @@ class GraphicEngine;
 
 class TextField : public IDrawable {
 public:
-	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, GraphicEngine *_engine);
+	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine *_engine);
 	virtual ~TextField();
 
 	virtual const std::string& getId() const;
@@ -23,7 +23,7 @@ private:
 	Transformation t;
 	std::string font;
 	Color color;
-	GraphicEngine *engine;
+	IGraphicEngine *engine;
 };
 
 #endif

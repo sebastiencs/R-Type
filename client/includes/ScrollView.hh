@@ -8,22 +8,19 @@ class Cell
 {
 public:
 	Cell(const std::string&  id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
-	~Cell() {}
+	virtual ~Cell();
 
 	const std::string& getId() const;
 private:
 	IGraphicEngine *engine;
-	std::string name;
-	std::string id;
-	int nbrPlayers;
-	bool isSelect;
+	std::string _id;
 };
 
 class ScrollView
 {
 public:
 	ScrollView(IGraphicEngine *engine);
-	~ScrollView();
+	virtual ~ScrollView();
 
 	void createCell();
 	void isSelect();
