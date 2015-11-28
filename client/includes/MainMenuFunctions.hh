@@ -3,10 +3,20 @@
 
 # include "DisplayUpdater.hh"
 
-void setDisplayOnline(void *arg);
-void setDisplayOffline(void *arg);
-void setDisplayOption(void *arg);
-void myexit(void *arg);
-void changedMenu(void *arg);
+class MainMenu
+{
+public:
+	MainMenu(IGraphicEngine *eng);
+	~MainMenu() {}
+	void setDisplayOnline();
+	void setDisplayOffline();
+	void setDisplayOption();
+	void myexit();
+	void changedMenu();
 
-#endif // !MAIN_MENU_FUNCTION_HH_
+private:
+	IGraphicEngine *engine;
+	int currentPage;
+};
+
+#endif /* !MAIN_MENU_FUNCTION_HH_ */

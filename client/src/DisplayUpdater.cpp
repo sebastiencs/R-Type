@@ -5,10 +5,10 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 {
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
+	mainmenu = new MainMenu(graphicEngine);
 	graphicEngine->createWindow(800, 600, "R-Type");
 	std::function<void()> fptr = std::bind(&DisplayUpdater::mainMenu, this); 
 	graphicEngine->setCallbackFunction(fptr, this);
-	currentPageMenu = 0;
 
 	graphicEngine->launch();
 }
@@ -32,16 +32,6 @@ const Packager * DisplayUpdater::getPackager()
 	return packager;
 }
 
-int DisplayUpdater::getCurrentPageMenu() const
-{
-	return currentPageMenu;
-}
-
-void DisplayUpdater::setCurrentPageMenu(int page)
-{
-	currentPageMenu = page;
-}
-
 IGraphicEngine * DisplayUpdater::getGraphicEngine()
 {
 	return graphicEngine;
@@ -53,13 +43,14 @@ void DisplayUpdater::mainMenu()
 
 	graphicEngine->drawText("R-Type", Transformation(50, graphicEngine->getWindowHeight() / 5), 42, Color::White, "Fipps.otf");
 
-	/*t1.setScale((float)0.35, (float)0.2);
-	graphicEngine->displayButton("Online", "onlineButton.png", t1, Color::None, &setDisplayOnline);
-	t1.setPosition(50, 300);
-	graphicEngine->displayButton("Offline", "offlineButton.png", t1, Color::None, &setDisplayOffline);
-	t1.setPosition(50, 400);
-	graphicEngine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption);*/
-	t1.setPosition(50, 500);
+	t1.setScale((float)0.35, (float)0.2);
+//	std::function<void()> fptr = std::bind(&MainMenu::setDisplayOnline, this);
+//	graphicEngine->displayButton("Online", "onlineButton.png", t1, Color::None, fptr);
+	//t1.setPosition(50, 300);
+	//graphicEngine->displayButton("Offline", "offlineButton.png", t1, Color::None, &setDisplayOffline);
+	//t1.setPosition(50, 400);
+	//graphicEngine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption);
+	//t1.setPosition(50, 500);
 	//graphicEngine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);
 
 	/*t1.setScale((float)0.35, (float)0.2);
@@ -71,12 +62,7 @@ void DisplayUpdater::mainMenu()
 	t1.setPosition(50, 500);
 	graphicEngine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);*/
 	/*if (currentPageMenu == 1)
-		onlineMenu(arg);
-	else {
-		graphicEngine->eraseButton("t1");
-		graphicEngine->eraseButton("t2");
-		graphicEngine->eraseButton("t3");
-		graphicEngine->eraseButton("t4");*/
+		onlineMenu(arg);*/
 	//}
 }
 

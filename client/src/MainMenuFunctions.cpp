@@ -1,41 +1,42 @@
 #include "MainMenuFunctions.hh"
 
-void changedMenu(void *arg)
+MainMenu::MainMenu(IGraphicEngine *eng)
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	IGraphicEngine* engine = tmp->getGraphicEngine();
+	engine = eng;
+	currentPage = 0;
+}
 
+void MainMenu::changedMenu()
+{
 	engine->eraseButton("Refresh");
 	engine->eraseButton("Join");
 	engine->eraseButton("Info");
 }
 
-void myexit(void *arg)
-{
-	DEBUG_MSG("Exit");
-	exit(EXIT_SUCCESS);
-}
 
-void setDisplayOnline(void *arg)
+void MainMenu::setDisplayOnline()
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	tmp->setCurrentPageMenu(1);
-	changedMenu(arg);
+	currentPage = 1;
+	changedMenu();
 	DEBUG_MSG("Set Current Page to Online");
 }
 
-void setDisplayOffline(void *arg)
+void MainMenu::setDisplayOffline()
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	tmp->setCurrentPageMenu(2);
-	changedMenu(arg);
+	currentPage = 4;
+	changedMenu();
 	DEBUG_MSG("Set Current Page to Offline");
 }
 
-void setDisplayOption(void *arg)
+void MainMenu::setDisplayOption()
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	tmp->setCurrentPageMenu(3);
-	changedMenu(arg);
+	currentPage = 3;
+	changedMenu();
 	DEBUG_MSG("Set Current Page to Option");
+}
+
+void MainMenu::myexit()
+{
+	DEBUG_MSG("Exit");
+	exit(EXIT_SUCCESS);
 }

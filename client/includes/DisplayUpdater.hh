@@ -8,6 +8,8 @@
 #include "MainMenuFunctions.hh"
 #include "OnlineMenuFunctions.hh"
 
+class MainMenu;
+
 class DisplayUpdater {
 public:
 	DisplayUpdater(Packager *_packager);
@@ -17,17 +19,15 @@ public:
 	void inGame();
 
 	const Packager *getPackager();
-	int getCurrentPageMenu() const;
-	void setCurrentPageMenu(int page);
 
 	IGraphicEngine *getGraphicEngine();
 
 	void mainMenu();
 
 private:
-	Packager *packager;
 	IGraphicEngine *graphicEngine;
-	int currentPageMenu;
+	Packager *packager;
+	MainMenu *mainmenu;
 };
 
 //void mainMenu(void *arg);
