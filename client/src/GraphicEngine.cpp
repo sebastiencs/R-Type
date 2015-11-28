@@ -86,10 +86,10 @@ void GraphicEngine::launch()
 			window->clear(sf::Color::Black);
 
 			// a mettre dans la callback?
-			/*for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
 					window->draw(drawable->getSprite());
-			}*/
+			}
 			if (call)
 				call();
 			window->display();
@@ -160,7 +160,6 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	elements.push_front(new Button(txt, img, sprite, t, color, fptr, id));
-	window->draw(sprite);
 }
 
 void GraphicEngine::eraseButton(const std::string & id)
@@ -232,10 +231,15 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
 {
 	for (IDrawable* element : dElements) {
-			if (element->getId() == _id)
-				return;
+		if (element->getId() == _id) {
+			TextField *tf = static_cast<TextField *>(element);
+			tf->displayText();
+			return;
+		}
 	}
-	dElements.push_front(new TextField(_text, t, size, font, color, _id, this));
+	TextField * tf = new TextField(_text, t, size, font, color, _id, this);
+	tf->displayText();
+	dElements.push_front(tf);
 }
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,

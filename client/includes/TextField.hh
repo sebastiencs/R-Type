@@ -9,13 +9,21 @@ class GraphicEngine;
 
 class TextField : public IDrawable {
 public:
-	TextField(const std::string& _text, const Transformation& t, uint16_t size, const std::string& font, const Color& color, const std::string& _id, GraphicEngine *engine);
+	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, GraphicEngine *_engine);
 	virtual ~TextField();
 
 	virtual const std::string& getId() const;
+	virtual const sf::Sprite& getSprite() const;
+
+	void displayText();
 private:
 	std::string text;
 	std::string id;
+	uint16_t size;
+	Transformation t;
+	std::string font;
+	Color color;
+	GraphicEngine *engine;
 };
 
 #endif

@@ -1,10 +1,13 @@
 #include "TextField.hh"
 
-TextField::TextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string& _id, GraphicEngine * engine)
+TextField::TextField(const std::string & _text, const Transformation & _t, uint16_t _size, const std::string & _font, const Color & _color, const std::string& _id, GraphicEngine * _engine) : color(_color)
 {
 	text = _text;
 	id = _id;
-	engine->drawText(_text, t, size, color, font);
+	t = _t;
+	size = _size;
+	font = _font;
+	engine = _engine;
 }
 
 TextField::~TextField()
@@ -14,4 +17,15 @@ TextField::~TextField()
 const std::string& TextField::getId() const
 {
 	return id;
+}
+
+const sf::Sprite & TextField::getSprite() const
+{
+	sf::Sprite sprite;
+	return sprite;
+}
+
+void TextField::displayText()
+{
+	engine->drawText(text, t, size, color, font);
 }
