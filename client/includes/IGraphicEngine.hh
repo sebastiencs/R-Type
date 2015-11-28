@@ -14,7 +14,7 @@ public:
 	virtual ~IGraphicEngine() {};
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title) = 0;
-	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr) = 0;
+	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, uint32_t id = 0) = 0;
 	virtual void eraseButton(const std::string& txt) = 0;
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;

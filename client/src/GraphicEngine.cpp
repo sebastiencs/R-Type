@@ -63,7 +63,7 @@ void GraphicEngine::handleEvents()
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
-					(*it)->onAction(/*nullptr*/);
+					(*it)->onAction();
 		}
 		else if (event.type == sf::Event::MouseMoved)
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
@@ -138,11 +138,11 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	return true;
 }
 
-void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
+void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, uint32_t id)
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
-			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t && b->getColor() == color)
+			if (b->getId() == id)
 				return;
 	}
 	if (cachedImages.find(img) == cachedImages.end() &&
@@ -159,7 +159,7 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 		sprite.setColor(sf::Color(color.getColor()));
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
-	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
+	elements.push_front(new Button(txt, img, sprite, t, color, fptr, id));
 }
 
 void GraphicEngine::eraseButton(const std::string & txt)

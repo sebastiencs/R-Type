@@ -39,19 +39,19 @@ void DisplayUpdater::mainMenu()
 	graphicEngine->drawText("R-Type", Transformation(50, graphicEngine->getWindowHeight() / 5), 42, Color::White, "Fipps.otf");
 
 	fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
-	graphicEngine->displayButton("Online", "onlineButton.png", transformation, Color::None, fptr);
+	graphicEngine->displayButton("Online", "onlineButton.png", transformation, Color::None, fptr, 0);
 
 	transformation.setPosition(50, 300);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this->mainmenu);
-	graphicEngine->displayButton("Offline", "offlineButton.png", transformation, Color::None, fptr);
+	graphicEngine->displayButton("Offline", "offlineButton.png", transformation, Color::None, fptr, 1);
 
 	transformation.setPosition(50, 400);
 	fptr = std::bind(&MainMenu::setDisplayOption, this->mainmenu);
-	graphicEngine->displayButton("Option", "optionButton.png", transformation, Color::None, fptr);
+	graphicEngine->displayButton("Option", "optionButton.png", transformation, Color::None, fptr, 2);
 
 	transformation.setPosition(50, 500);
 	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
-	graphicEngine->displayButton("Exit", "exitButton.png", transformation, Color::None, fptr);
+	graphicEngine->displayButton("Exit", "exitButton.png", transformation, Color::None, fptr, 3);
 
 	if (mainmenu->getCurrentPage() == 1)
 		onlineMenu->menu();

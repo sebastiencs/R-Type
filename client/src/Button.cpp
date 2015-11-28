@@ -1,8 +1,8 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, void* arg)
-	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _arg(arg)
+Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, uint32_t id)
+	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _id(id)
 {
 }
 
@@ -31,11 +31,6 @@ const std::function<void()>& Button::getCallback() const
 	return _fptr;
 }
 
-const void * Button::getArgs() const
-{
-	return _arg;
-}
-
 const Transformation & Button::getTransformation() const
 {
 	return (_t);
@@ -46,17 +41,21 @@ const Color & Button::getColor() const
 	return (_color);
 }
 
+const int Button::getId() const
+{
+	return _id;
+}
+
+
 const sf::Sprite& Button::getSprite() const
 {
 	return (_sprite);
 }
 
-void Button::onAction(/*void *arg*/)
+void Button::onAction()
 {
-	if (_fptr != nullptr) {
-			_fptr();
-		//_fptr(arg);
-	}
+	if (_fptr != nullptr)
+		_fptr();
 }
 
 void Button::onHover(uint32_t x, uint32_t y)

@@ -12,6 +12,7 @@ public:
 	virtual const Transformation& getTransformation() const = 0;
 	virtual const Color& getColor() const = 0;
 	virtual const std::string& getName() const = 0;
+	virtual const int getId() const = 0;
 };
 
 #endif /* !IDRAWABLE_H_ */
