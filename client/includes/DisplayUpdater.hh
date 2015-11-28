@@ -22,6 +22,8 @@ public:
 
 	IGraphicEngine *getGraphicEngine();
 
+	void mainMenuTest(void *arg);
+
 private:
 	Packager *packager;
 	IGraphicEngine *graphicEngine;

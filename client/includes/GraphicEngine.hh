@@ -49,7 +49,7 @@ public:
 	virtual void handleEvents();
 	virtual void repaint();
 	virtual void launch();
-	virtual void setCallbackFunction(callback, void* arg);
+	virtual void setCallbackFunction(std::function<void(void *)>, void* arg);
 
 	virtual const int getWindowWidth() const;
 	virtual const int getWindowHeight() const;
@@ -60,7 +60,8 @@ protected:
 
 	Packager* _packager;
 	Timer _timer;
-	callback call;
+	//callback call;
+	std::function<void(void *)> call;
 	int windowWidth;
 	int windowHeight;
 	void* callbackArg;
