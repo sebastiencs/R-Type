@@ -17,6 +17,7 @@ public:
 	
 	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, const std::string& id = 0) = 0;
 	virtual void eraseButton(const std::string& txt) = 0;
+	virtual void eraseTextField(const std::string & id) = 0;
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;

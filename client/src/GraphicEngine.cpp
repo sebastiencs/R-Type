@@ -180,6 +180,18 @@ void GraphicEngine::eraseButton(const std::string & id)
 	}
 }
 
+void GraphicEngine::eraseTextField(const std::string & id)
+{
+	for (IDrawable* element : dElements) {
+		if (element->getId() == id) {
+			dElements.remove(element);
+			delete(element);
+			return;
+		}
+	}
+
+}
+
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
 	if (cachedImages.find(name) == cachedImages.end() &&

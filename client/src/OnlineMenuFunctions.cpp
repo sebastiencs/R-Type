@@ -4,11 +4,13 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 {
 	packager = packager;
 	engine = eng;
+	scrollView = new ScrollView(engine);
 }
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
 	packager->createGameListPackage();
+	scrollView->createCell();
 	DEBUG_MSG("Create Request Parties Paquet");
 }
 

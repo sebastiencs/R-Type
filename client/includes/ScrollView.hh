@@ -7,14 +7,14 @@
 class Cell
 {
 public:
-	Cell(int id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
+	Cell(const std::string&  id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
 	~Cell() {}
 
+	const std::string& getId() const;
 private:
-
 	IGraphicEngine *engine;
 	std::string name;
-	int id;
+	std::string id;
 	int nbrPlayers;
 	bool isSelect;
 };
@@ -22,12 +22,14 @@ private:
 class ScrollView
 {
 public:
-	ScrollView();
-	~ScrollView() {}
+	ScrollView(IGraphicEngine *engine);
+	~ScrollView();
 
+	void createCell();
 	void isSelect();
 
 private:
+	IGraphicEngine *engine;
 	std::list<Cell *> listCell;
 };
 
