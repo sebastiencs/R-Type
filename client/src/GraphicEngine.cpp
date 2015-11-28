@@ -86,11 +86,11 @@ void GraphicEngine::launch()
 			window->clear(sf::Color::Black);
 
 			// a mettre dans la callback?
-			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+			/*for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
 					window->draw(drawable->getSprite());
-			}
-			if (call && callbackArg)
+			}*/
+			if (call)
 				call();
 			window->display();
 			_timer.reset();
@@ -138,7 +138,7 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	return true;
 }
 
-void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, uint32_t id)
+void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, const std::string& id)
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
@@ -160,13 +160,14 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	elements.push_front(new Button(txt, img, sprite, t, color, fptr, id));
+	window->draw(sprite);
 }
 
-void GraphicEngine::eraseButton(const std::string & txt)
+void GraphicEngine::eraseButton(const std::string & id)
 {
 	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
-			if (b->getName() == txt) {
+			if (b->getId() == id) {
 				elements.remove(*it);
 				return;
 			}
@@ -226,6 +227,15 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	window->draw(sprite);
+}
+
+void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
+{
+	for (IDrawable* element : dElements) {
+			if (element->getId() == _id)
+				return;
+	}
+	dElements.push_front(new TextField(_text, t, size, font, color, _id, this));
 }
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,

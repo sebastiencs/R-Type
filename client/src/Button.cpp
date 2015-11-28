@@ -1,7 +1,7 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, uint32_t id)
+Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, const std::string& id)
 	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _id(id)
 {
 }
@@ -41,7 +41,7 @@ const Color & Button::getColor() const
 	return (_color);
 }
 
-const int Button::getId() const
+const std::string& Button::getId() const
 {
 	return _id;
 }
