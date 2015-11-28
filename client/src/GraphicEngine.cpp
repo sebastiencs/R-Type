@@ -90,6 +90,12 @@ void GraphicEngine::launch()
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
 					window->draw(drawable->getSprite());
 			}
+
+			// temporaire : seulement pour les textfield en attendant de fix l'interface
+			for (IDrawable* element : dElements) {
+					TextField *tf = static_cast<TextField *>(element);
+					tf->displayText();
+			}
 			if (call)
 				call();
 			window->display();
@@ -232,13 +238,10 @@ void GraphicEngine::displayTextField(const std::string & _text, const Transforma
 {
 	for (IDrawable* element : dElements) {
 		if (element->getId() == _id) {
-			TextField *tf = static_cast<TextField *>(element);
-			tf->displayText();
 			return;
 		}
 	}
 	TextField * tf = new TextField(_text, t, size, font, color, _id, this);
-	tf->displayText();
 	dElements.push_front(tf);
 }
 
