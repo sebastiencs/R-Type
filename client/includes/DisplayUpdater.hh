@@ -1,12 +1,12 @@
 #ifndef DISPLAYUPDATER_HH
-#define DISPLAYUPDATER_HH
+# define DISPLAYUPDATER_HH
 
-#include "Packager.hh"
-#include "PackageStorage.hh"
-#include "IGraphicEngine.hh"
-#include "GraphicEngine.hh"
-#include "MainMenuFunctions.hh"
-#include "OnlineMenuFunctions.hh"
+# include "Packager.hh"
+# include "PackageStorage.hh"
+# include "IGraphicEngine.hh"
+# include "GraphicEngine.hh"
+# include "MainMenuFunctions.hh"
+# include "OnlineMenuFunctions.hh"
 
 class MainMenu;
 class OnlineMenu;
@@ -16,14 +16,12 @@ public:
 	DisplayUpdater(Packager *_packager);
 	~DisplayUpdater();
 
-	void inMenu();
-	void inGame();
+	IGraphicEngine *getGraphicEngine();
 
 	const Packager *getPackager();
 
-	IGraphicEngine *getGraphicEngine();
-
 	void mainMenu();
+	void game();
 
 private:
 	IGraphicEngine *graphicEngine;
@@ -32,7 +30,4 @@ private:
 	OnlineMenu *onlineMenu;
 };
 
-//void mainMenu(void *arg);
-void game(void *arg);
-
-#endif
+#endif /* !DISPLAYUPDATER_HH */

@@ -14,13 +14,16 @@ void OnlineMenu::createRequestPartiesPaquet()
 
 void OnlineMenu::menu()
 {
-	Transformation t1(350, 525);
+	std::function<void()> fptr;
+	Transformation transformation(350, 525);
+	transformation.setScale((float)0.1, (float)0.1);
 
-	t1.setScale((float)0.1, (float)0.1);
-	std::function<void()> fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
-	engine->displayButton("Refresh", "Button.png", t1, Color::None, fptr);
-	t1.setPosition(450, 525);
-	engine->displayButton("Join", "Button.png", t1, Color::None, nullptr);
-	t1.setPosition(550, 525);
-	engine->displayButton("Info", "Button.png", t1, Color::None, nullptr);
+	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
+	engine->displayButton("Refresh", "Button.png", transformation, Color::None, fptr);
+
+	transformation.setPosition(450, 525);
+	engine->displayButton("Join", "Button.png", transformation, Color::None, nullptr);
+
+	transformation.setPosition(550, 525);
+	engine->displayButton("Info", "Button.png", transformation, Color::None, nullptr);
 }
