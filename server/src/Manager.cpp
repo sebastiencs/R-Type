@@ -41,7 +41,7 @@ void		Manager::deletePlayer(socket_t socket)
       return ;
     }
   }
-  for (auto party : _parties) {
+  for (auto &party : _parties) {
     party->deletePlayer(socket);
   }
 }
@@ -203,7 +203,7 @@ void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
 {
   PaquetListParties	p;
 
-  for (auto party : _parties) {
+  for (auto &party : _parties) {
     p.addParty(party->getName(), party->getNb());
   }
   p.createPaquet();
