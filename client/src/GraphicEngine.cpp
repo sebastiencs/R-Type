@@ -63,7 +63,7 @@ void GraphicEngine::handleEvents()
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++)
 				if ((*it)->isPressed(event.mouseButton.x, event.mouseButton.y) == true)
-					(*it)->onAction(/*nullptr*/);
+					(*it)->onAction();
 		}
 		else if (event.type == sf::Event::MouseMoved)
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
@@ -90,7 +90,13 @@ void GraphicEngine::launch()
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
 					window->draw(drawable->getSprite());
 			}
-			if (call && callbackArg)
+
+			// temporaire : seulement pour les textfield en attendant de fix l'interface
+			for (IDrawable* element : dElements) {
+					TextField *tf = static_cast<TextField *>(element);
+					tf->displayText();
+			}
+			if (call)
 				call();
 			window->display();
 			_timer.reset();
@@ -138,11 +144,11 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	return true;
 }
 
-void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
+void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, const std::string& id)
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
-			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t && b->getColor() == color)
+			if (b->getId() == id)
 				return;
 	}
 	if (cachedImages.find(img) == cachedImages.end() &&
@@ -159,14 +165,14 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 		sprite.setColor(sf::Color(color.getColor()));
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
-	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
+	elements.push_front(new Button(txt, img, sprite, t, color, fptr, id));
 }
 
-void GraphicEngine::eraseButton(const std::string & txt)
+void GraphicEngine::eraseButton(const std::string & id)
 {
 	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
-			if (b->getName() == txt) {
+			if (b->getId() == id) {
 				elements.remove(*it);
 				return;
 			}
@@ -226,6 +232,17 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	window->draw(sprite);
+}
+
+void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
+{
+	for (IDrawable* element : dElements) {
+		if (element->getId() == _id) {
+			return;
+		}
+	}
+	TextField * tf = new TextField(_text, t, size, font, color, _id, this);
+	dElements.push_front(tf);
 }
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,

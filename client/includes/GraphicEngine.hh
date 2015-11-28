@@ -21,6 +21,7 @@
 # include "Packager.hh"
 # include "Button.hh"
 # include "Timer.hh"
+#include "TextField.hh"
 
 # define RS_PATH "ressources/"
 # define FONT_PATH "ressources/fonts/"
@@ -38,11 +39,14 @@ public:
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
-	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr);
+	
+	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, const std::string& id = 0);
 	virtual void eraseButton(const std::string& txt);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
+	
+	virtual void displayTextField(const std::string& _text, const Transformation& t, uint16_t size, const std::string& font, const Color& color, const std::string& _id);
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
@@ -67,6 +71,7 @@ protected:
 
 	sf::RenderWindow* window;
 	std::list<ICallback *> elements;
+	std::list<IDrawable *> dElements;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
