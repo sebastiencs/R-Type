@@ -162,6 +162,18 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
 }
 
+void GraphicEngine::eraseButton(const std::string & txt)
+{
+	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
+			if (b->getName() == txt) {
+				elements.remove(*it);
+				return;
+			}
+
+	}
+}
+
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
 	if (cachedImages.find(name) == cachedImages.end() &&

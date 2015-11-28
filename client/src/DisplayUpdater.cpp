@@ -62,8 +62,14 @@ void mainMenu(void *arg) {
 	engine->displayButton("Option", "optionButton.png", t1, Color::None, &setDisplayOption, arg);
 	t1.setPosition(50, 500);
 	engine->displayButton("Exit", "exitButton.png", t1, Color::None, &myexit);
-	//if (tmp->getCurrentPageMenu() == 1)
-	//	onlineMenu(arg);
+	if (tmp->getCurrentPageMenu() == 1)
+		onlineMenu(arg);
+	else {
+		engine->eraseButton("t1");
+		engine->eraseButton("t2");
+		engine->eraseButton("t3");
+		engine->eraseButton("t4");
+	}
 }
 
 

@@ -39,6 +39,7 @@ public:
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
 	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr);
+	virtual void eraseButton(const std::string& txt);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
@@ -71,7 +72,6 @@ protected:
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 	std::map<uint8_t, std::string> playerIDToSpriteString;
 	std::map<uint8_t, std::string> shotTypeToSpriteString;
-
 };
 
 
