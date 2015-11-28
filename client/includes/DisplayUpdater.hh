@@ -17,7 +17,7 @@ public:
 	void inGame();
 
 	const Packager *getPackager();
-	const int getCurrentPageMenu() const;
+	int getCurrentPageMenu() const;
 	void setCurrentPageMenu(int page);
 
 	IGraphicEngine *getGraphicEngine();

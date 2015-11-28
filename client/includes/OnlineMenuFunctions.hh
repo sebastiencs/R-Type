@@ -7,4 +7,4 @@ void onlineMenu(void *arg);
 void createRequestPartiesPaquet(void *arg);
 
 
-#endif ONLINE_MENU_FUNCTION_HH_
+#endif // !ONLINE_MENU_FUNCTION_HH_

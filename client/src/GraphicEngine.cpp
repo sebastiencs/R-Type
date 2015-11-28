@@ -104,12 +104,12 @@ void GraphicEngine::setCallbackFunction(callback fct, void * arg)
 	callbackArg = arg;
 }
 
-const int GraphicEngine::getWindowWidth() const
+int GraphicEngine::getWindowWidth() const
 {
 	return windowWidth;
 }
 
-const int GraphicEngine::getWindowHeight() const
+int GraphicEngine::getWindowHeight() const
 {
 	return windowHeight;
 }
@@ -247,4 +247,3 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 		textToDraw.setColor(sf::Color(color.getColor()));
 	window->draw(textToDraw);
 }
-

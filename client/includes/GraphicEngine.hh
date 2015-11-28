@@ -51,8 +51,8 @@ public:
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
 
-	virtual const int getWindowWidth() const;
-	virtual const int getWindowHeight() const;
+	virtual int getWindowWidth() const;
+	virtual int getWindowHeight() const;
 
 protected:
 	bool loadImageFromFile(const std::string& file);

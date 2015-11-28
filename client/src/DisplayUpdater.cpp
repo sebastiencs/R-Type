@@ -32,7 +32,7 @@ const Packager * DisplayUpdater::getPackager()
 	return packager;
 }
 
-const int DisplayUpdater::getCurrentPageMenu() const
+int DisplayUpdater::getCurrentPageMenu() const
 {
 	return currentPageMenu;
 }
@@ -127,4 +127,3 @@ void game(void *arg) {
 		PackageStorage::getInstance().deleteShotsPackage();
 	}*/
 }
-

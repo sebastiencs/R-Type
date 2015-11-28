@@ -28,8 +28,8 @@ public:
 	virtual void launch() = 0;
 	virtual void repaint() = 0;
 
-	virtual const int getWindowWidth() const = 0;
-	virtual const int getWindowHeight() const = 0;
+	virtual int getWindowWidth() const = 0;
+	virtual int getWindowHeight() const = 0;
 };
 
 #endif /* !IGRAPHICENGINE */
