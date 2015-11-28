@@ -142,7 +142,7 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 {
 	for (ICallback* element : elements) {
 		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
-			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t & b->getColor() == color)
+			if (b->getName() == txt && b->getTextureName() == img && b->getTransformation() == t && b->getColor() == color)
 				return;
 	}
 	if (cachedImages.find(img) == cachedImages.end() &&
@@ -160,6 +160,18 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	elements.push_front(new Button(txt, img, sprite, t, color, fptr, arg));
+}
+
+void GraphicEngine::eraseButton(const std::string & txt)
+{
+	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
+			if (b->getName() == txt) {
+				elements.remove(*it);
+				return;
+			}
+
+	}
 }
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)

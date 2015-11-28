@@ -6,6 +6,7 @@
 #include "IGraphicEngine.hh"
 #include "GraphicEngine.hh"
 #include "MainMenuFunctions.hh"
+#include "OnlineMenuFunctions.hh"
 
 class DisplayUpdater {
 public:

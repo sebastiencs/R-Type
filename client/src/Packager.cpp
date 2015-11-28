@@ -29,6 +29,7 @@ void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint8_t _x, u
 
 void Packager::createGameListPackage()
 {
+	std::cout << "Request Create" << std::endl;
 	PaquetRequestParties *request = new PaquetRequestParties();
 	request->createPaquet();
 	PackageStorage::getInstance().storeToSendPackage(request);
