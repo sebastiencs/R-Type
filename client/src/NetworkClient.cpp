@@ -25,7 +25,7 @@ int NetworkClient::stop()
 int NetworkClient::handleFirst(PaquetFirst first)
 {
   _socketTCP->write(first);
-  DEBUG_MSG(paquet);
+  DEBUG_MSG(first);
   return 0;
 }
 

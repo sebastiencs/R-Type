@@ -138,8 +138,6 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	return true;
 }
 
-
-
 void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, void* arg)
 {
 	for (ICallback* element : elements) {
@@ -217,7 +215,6 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 	window->draw(sprite);
 }
-
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	uint16_t size, const Color& color, const std::string& font)
