@@ -51,7 +51,7 @@ void Button::setVisible(bool visible)
 	_visible = visible;
 }
 
-const bool Button::getVisible() const
+bool Button::getVisible() const
 {
 	return _visible;
 }
