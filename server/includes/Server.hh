@@ -14,7 +14,7 @@
 # include <memory>
 # include "Network.hh"
 # include "Manager.hh"
-# include "Signal.hh"
+# include "Signals.hh"
 # include "Debug.hh"
 
 class				Server
