@@ -6,6 +6,7 @@
 # include <chrono>
 # include <map>
 # include <list>
+# include <exception>
 # include <SFML/Window/Window.hpp>
 # include <SFML/Graphics/RenderWindow.hpp>
 # include <SFML/Window/Event.hpp>
@@ -55,6 +56,9 @@ public:
 	virtual void handleEvents();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
+	virtual void setMouseClickCallback(callback);
+	virtual void setMouseMovedCallback(callback);
+
 
 	virtual int getWindowWidth() const;
 	virtual int getWindowHeight() const;
@@ -71,6 +75,8 @@ protected:
 	Packager* _packager;
 	Timer _timer;
 	callback call;
+	callback _mouseClickCall;
+	callback _mouseMoveCall;
 	int windowWidth;
 	int windowHeight;
 	void* callbackArg;

@@ -10,6 +10,11 @@ typedef std::function<void()> callback;
 
 class IGraphicEngine {
 public:
+	enum MouseClick {
+		LEFT = 0,
+		RIGHT
+	};
+
 	virtual ~IGraphicEngine() {};
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title) = 0;
@@ -26,6 +31,8 @@ public:
 		uint16_t size, const Color& color = Color::White, const std::string& font = "") = 0;
 
 	virtual void setCallbackFunction(callback, void* arg) = 0;
+	virtual void setMouseClickCallback(callback) = 0;
+	virtual void setMouseMovedCallback(callback) = 0;
 
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
