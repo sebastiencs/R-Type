@@ -15,7 +15,7 @@ Server::Server(const uint16_t port)
     _network(new Network(_manager.get(), port)),
     _signal(new Signal())
 {
-  _signal->addSignal(SIGINT, [this]() -> void { stop(); });
+  _signal->addSignal(CTRL_C, [this]() -> void { stop(); });
   DEBUG_MSG("Server created");
 }
 

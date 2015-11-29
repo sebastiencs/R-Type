@@ -15,22 +15,25 @@
 # include "Server.hh"
 # include "ISignal.hh"
 
+typedef std::map<int, Handler_t>	listHandler;
+
 class		Server;
 
 class		SignalWin : public ISignal
 {
 private:
-  Server	&_server;
+	listHandler	_listHandler;
 
 public:
-  SignalWin(Server &);
-  virtual ~SignalWin();
+	SignalWin();
+	virtual ~SignalWin();
 
-  virtual void	addSignal(int);
-  virtual void	stopAll();
+	virtual void	addSignal(int, Handler_t);
+	virtual void	callHandler(int sig);
 };
 
 void		sig_handler(int);
-SignalWin	*class_save(int id, SignalWin *ptr_class);
+SignalWin	*class_save(SignalWin *ptr_class);
+
 
 #endif /* !SIGNALWIN_H_ */

@@ -10,34 +10,36 @@
 
 #include "SignalWin.hh"
 
-SignalWin::SignalWin(Server &server)
-	: _server(server)
+SignalWin::SignalWin()
 {
-	DEBUG_MSG("SignalUnix created");
-	class_save(1, this);
+	DEBUG_MSG("SignalWin created");
+	class_save(this);
 }
 
 SignalWin::~SignalWin()
 {
-	DEBUG_MSG("SignalUnix deleted");
+	DEBUG_MSG("SignalWin deleted");
 }
 
-void		SignalWin::addSignal(int sig)
+void		SignalWin::addSignal(int sig, Handler_t handler)
 {
-	(void)sig;
+	//signal(sig, sig_handler);
+	_listHandler[sig] = handler;
 }
 
-void		SignalWin::stopAll()
+void		SignalWin::callHandler(int sig)
 {
-	DEBUG_MSG("SignalUnix received");
-	_server.stop();
+	DEBUG_MSG("SignalWin received");
+	if (_listHandler.find(sig) != _listHandler.end()) {
+		_listHandler[sig]();
+	}
 }
 
-SignalWin		*class_save(int id, SignalWin *ptr_class)
+SignalWin		*class_save(SignalWin *ptr_class = nullptr)
 {
-	static SignalWin	*signal = 0;
+	static SignalWin	*signal = nullptr;
 
-	if (!id) {
+	if (ptr_class == nullptr) {
 		return (signal);
 	}
 	else {
@@ -50,9 +52,9 @@ void		sig_handler(int sig)
 {
 	SignalWin	*signal;
 
-	(void)sig;
-	signal = class_save(0, 0);
+	signal = class_save();
 	if (signal) {
-		signal->stopAll();
+		signal->callHandler(sig);
 	}
 }
+
