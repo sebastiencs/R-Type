@@ -47,9 +47,7 @@ MainMenu::~MainMenu() {
 void MainMenu::changedMenu()
 {
 	// If button exist, erase it
-	engine->eraseButton("Refresh");
-	engine->eraseButton("Join");
-	engine->eraseButton("Info");
+	
 }
 
 int MainMenu::getCurrentPage()

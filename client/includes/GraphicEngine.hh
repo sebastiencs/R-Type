@@ -40,11 +40,6 @@ public:
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
-	
-	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, const std::string& id = 0);
-	virtual void displayTextField(const std::string& _text, const Transformation& t, uint16_t size, const std::string& font, const Color& color, const std::string& _id);
-	virtual void eraseButton(const std::string& txt);
-	virtual void eraseTextField(const std::string & id);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);

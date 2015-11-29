@@ -31,11 +31,11 @@ void OnlineMenu::menu()
 	transformation.setScale((float)0.1, (float)0.1);
 
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
-	engine->displayButton("Refresh", "Button.png", transformation, Color::None, fptr, "Refresh");
+	//engine->displayButton("Refresh", "Button.png", transformation, Color::None, fptr, "Refresh");
 
 	transformation.setPosition(450, 525);
-	engine->displayButton("Join", "Button.png", transformation, Color::None, nullptr, "Join");
+	//engine->displayButton("Join", "Button.png", transformation, Color::None, nullptr, "Join");
 
 	transformation.setPosition(550, 525);
-	engine->displayButton("Info", "Button.png", transformation, Color::None, nullptr, "Info");
+	//engine->displayButton("Info", "Button.png", transformation, Color::None, nullptr, "Info");
 }
