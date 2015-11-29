@@ -25,6 +25,7 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 
 	fptr = std::bind(&MainMenu::draw, this);
 	eng->setCallbackFunction(fptr, this);
+	fptr = std::bind(&MainMenu::onClick, this, 0, 0);
 }
 
 void MainMenu::changedMenu()
