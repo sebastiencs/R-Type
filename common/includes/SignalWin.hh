@@ -11,13 +11,13 @@
 #ifndef SIGNALWIN_H_
 # define SIGNALWIN_H_
 
+
+# include <windows.h>
+# include <map>
 # include "Debug.hh"
-# include "Server.hh"
 # include "ISignal.hh"
 
 typedef std::map<int, Handler_t>	listHandler;
-
-class		Server;
 
 class		SignalWin : public ISignal
 {

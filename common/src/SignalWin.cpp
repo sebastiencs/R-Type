@@ -14,6 +14,7 @@ SignalWin::SignalWin()
 {
 	DEBUG_MSG("SignalWin created");
 	class_save(this);
+	SetConsoleCtrlHandler(reinterpret_cast<PHANDLER_ROUTINE>(sig_handler), TRUE);
 }
 
 SignalWin::~SignalWin()
@@ -23,7 +24,6 @@ SignalWin::~SignalWin()
 
 void		SignalWin::addSignal(int sig, Handler_t handler)
 {
-	//signal(sig, sig_handler);
 	_listHandler[sig] = handler;
 }
 
