@@ -14,13 +14,26 @@
 # include <memory>
 # include "Network.hh"
 # include "Manager.hh"
+# include "ISignal.hh"
+# include "Signals.hh"
 # include "Debug.hh"
+
+# ifdef __unix__
+
+#define CTRL_C SIGINT
+
+# elif defined(_WIN32)
+
+#define CTRL_C CTRL_C_EVENT
+
+# endif
 
 class				Server
 {
 private:
   std::unique_ptr<Manager>	_manager;
   std::unique_ptr<INetwork>	_network;
+  std::unique_ptr<ISignal>	_signal;
 
 public:
   Server(const uint16_t);

@@ -18,6 +18,7 @@ Network::Network(Manager *manager, const uint16_t port)
     _socketUDP(new SocketUDP(SocketUDP::SERVER)),
     _socketTCP(new SocketTCP(SocketTCP::SERVER)),
     _selector(new Selector(manager)),
+    _running(true),
     _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0)),
     _manager(manager)
 {
@@ -31,13 +32,10 @@ Network::Network(Manager *manager, const uint16_t port)
 Network::~Network()
 {
   DEBUG_MSG("Network deleted");
-  _thread->close();
 }
 
 int	Network::run()
 {
-  _running = true;
-
   Pollfd	fds(2);
 
   fds[0].fd = _socketTCP->socket();
@@ -159,7 +157,7 @@ bool	Network::write(const Paquet &paquet, const Addr &addr)
 
 bool	Network::write()
 {
-  for (;;) {
+  while (_running) {
     _sem->wait();
 
     if (_stackPaquet.size()) {

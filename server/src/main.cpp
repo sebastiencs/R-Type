@@ -43,6 +43,8 @@ int				main(int argc, char **argv)
   server.reset(new Server(port));
   server->run();
 
+  return (0);
+
   ISocketUDP *socket = new SocketUDP(SocketUDP::SERVER);
 
 //  char buffer[512];
