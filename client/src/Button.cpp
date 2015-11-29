@@ -46,6 +46,11 @@ const Color & Button::getColor() const
 	return (_color);
 }
 
+void Button::draw()
+{
+	_engine->drawImage(_text, _t, _color);
+}
+
 const std::string& Button::getId() const
 {
 	return _id;

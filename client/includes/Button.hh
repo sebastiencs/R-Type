@@ -19,12 +19,14 @@ public:
 	const callback& getCallback() const;
 
 	// IDrawable
+	virtual void draw();
+	virtual const std::string& getId() const;
+	virtual const sf::Sprite& getSprite() const;
+
 	const std::string& getName() const;
 	const std::string& getTextureName() const;
 	const Transformation& getTransformation() const;
 	const Color& getColor() const;
-	const sf::Sprite& getSprite() const;
-	const std::string& getId() const;
 
 private:
 	GraphicEngine* _engine;
