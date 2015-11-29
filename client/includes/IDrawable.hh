@@ -1,7 +1,8 @@
 #ifndef IDRAWABLE_H_
 # define IDRAWABLE_H_
 
-# include "GraphicEngine.hh"
+//# include "GraphicEngine.hh"
+# include <SFML/Graphics/Sprite.hpp>
 
 class IDrawable
 {

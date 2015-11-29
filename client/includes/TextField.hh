@@ -4,6 +4,7 @@
 #include "Transformation.hh"
 #include "Color.hh"
 #include "GraphicEngine.hh"
+#include "IDrawable.hh"
 
 class GraphicEngine;
 

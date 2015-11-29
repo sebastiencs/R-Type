@@ -7,6 +7,7 @@
 #include "IGraphicEngine.hh"
 #include "ICallBack.hh"
 #include "IDrawable.hh"
+#include "TextField.hh"
 
 class Cell : public IDrawable, public ICallback
 {
@@ -30,7 +31,7 @@ private:
 	std::string _id;
 
 	//draw
-	TextField *textField;
+TextField *textField;
 };
 
 #endif
