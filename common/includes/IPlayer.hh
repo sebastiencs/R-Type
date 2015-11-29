@@ -35,14 +35,14 @@ public:
   virtual const Position	&getPosition() const = 0;
   virtual void			setPosition(const Position &) = 0;
 
-  virtual uint16_t		getLevel() const = 0;
-  virtual void			setLevel(uint16_t) = 0;
+  virtual uint8_t		getLevel() const = 0;
+  virtual void			setLevel(uint8_t) = 0;
 
   virtual int			getLife() const = 0;
   virtual void			setLife(int) = 0;
 
   virtual uint8_t		getID() const = 0;
-  virtual void			setID(uint16_t) = 0;
+  virtual void			setID(uint8_t) = 0;
 
   virtual const std::string	&getName() const = 0;
   virtual void			setName(const std::string &) = 0;
