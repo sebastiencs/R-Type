@@ -22,9 +22,9 @@ Player::Player()
   DEBUG_MSG("Player created");
 }
 
-Player::Player(const std::string &name, uint16_t id,
+Player::Player(const std::string &name, uint8_t id,
 	       const Position &pos = std::make_tuple(1, 1),
-	       uint16_t level = 0, int life = 100)
+	       uint8_t level = 0, int life = 100)
   : _name(name),
     _position(pos),
     _level(level),
@@ -35,7 +35,7 @@ Player::Player(const std::string &name, uint16_t id,
   DEBUG_MSG("Player created");
 }
 
-Player::Player(const std::string &name, uint16_t id, uint16_t level, const Addr &addr)
+Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &addr)
   : _name(name),
     _position(),
     _level(level),
@@ -61,12 +61,12 @@ void			Player::setPosition(const Position &pos)
   _position = pos;
 }
 
-uint16_t		Player::getLevel() const
+uint8_t		Player::getLevel() const
 {
   return (_level);
 }
 
-void			Player::setLevel(uint16_t level)
+void			Player::setLevel(uint8_t level)
 {
   _level = level;
 }
@@ -86,7 +86,7 @@ uint8_t			Player::getID() const
   return (_id);
 }
 
-void			Player::setID(uint16_t id)
+void			Player::setID(uint8_t id)
 {
   _id = id;
 }

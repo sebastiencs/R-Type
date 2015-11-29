@@ -20,28 +20,28 @@ class		Player : public IPlayer
 private:
   std::string	_name;
   Position	_position;
-  uint16_t	_level;
+  uint8_t	_level;
   int		_life;
-  uint16_t	_id;
+  uint8_t	_id;
   Addr		_addr;
 
 public:
   Player();
-  Player(const std::string &, uint16_t, const Position &, uint16_t, int);
-  Player(const std::string &name, uint16_t id, uint16_t level, const Addr &);
+  Player(const std::string &, uint8_t, const Position &, uint8_t, int);
+  Player(const std::string &name, uint8_t id, uint8_t level, const Addr &);
   virtual ~Player();
 
   virtual const Position	&getPosition() const;
   virtual void			setPosition(const Position &);
 
-  virtual uint16_t		getLevel() const;
-  virtual void			setLevel(uint16_t);
+  virtual uint8_t		getLevel() const;
+  virtual void			setLevel(uint8_t);
 
   virtual int			getLife() const;
   virtual void			setLife(int);
 
   virtual uint8_t		getID() const;
-  virtual void			setID(uint16_t);
+  virtual void			setID(uint8_t);
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
