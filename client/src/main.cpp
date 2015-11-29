@@ -27,27 +27,33 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 	}
 #endif // !_WIN32
 
+	try {
+		Packager *packager = new Packager();
+		/*IGraphicEngine* engine = new GraphicEngine(packager);*/
+		NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
+		DisplayUpdater updater(packager);
+
+		PaquetFirst paquet;
+		paquet.setLevel(5);
+		paquet.setName("Alex");
+		paquet.setVersion(0);
+		network->handleFirst(paquet);
+
+		/*engine->createWindow(800, 600, "R-Type");
+		engine->launch();*/
+		//delete engine;
+		delete packager;
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << std::endl;
+#ifdef _WIN32
+		system("pause");
+#endif
+	}
+
 #ifdef _WIN32
 	WSA::clean();
 #endif // !_WIN32
 
-
-
-
-	Packager *packager = new Packager();
-	/*IGraphicEngine* engine = new GraphicEngine(packager);*/
-	NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
-	DisplayUpdater updater(packager);
-
-	PaquetFirst paquet;
-	paquet.setLevel(5);
-	paquet.setName("Alex");
-	paquet.setVersion(0);
-	network->handleFirst(paquet);
-
-	/*engine->createWindow(800, 600, "R-Type");
-	engine->launch();*/
-	//delete engine;
-	delete packager;
 	return (0);
 }

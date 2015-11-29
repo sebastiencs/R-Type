@@ -24,6 +24,7 @@ typedef SOCKET	socket_t;
 # endif
 
 # include <algorithm>
+# include <functional>
 
 class				Addr
 {
@@ -48,7 +49,7 @@ public:
   const struct sockaddr_in	&get() const;
   const socket_t		&getSocket() const;
 
-  bool				operator==(const Addr &);
+  bool				operator==(const Addr &) const;
 
   Addr::TypeAddr		getType() const;
 };

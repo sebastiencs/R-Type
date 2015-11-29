@@ -137,7 +137,7 @@ ssize_t	SocketTCPWin::read(Buffer &buf)
   if ((recvlen = recv(_socket, (char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR)
     DEBUG_MSG("Recv failed: " + WSAGetLastError());
   else {
-    DEBUG_MSG((char *)data);
+//    DEBUG_MSG((char *)buf);
     buf.setSize(recvlen);
   }
   return (recvlen);

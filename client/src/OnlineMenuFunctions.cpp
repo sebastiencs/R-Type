@@ -1,22 +1,41 @@
 #include "OnlineMenuFunctions.hh"
 
-void createRequestPartiesPaquet(void *arg)
+OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 {
-	Packager *tmp = static_cast<Packager *>(arg);
-	tmp->createGameListPackage();
+	this->packager = packager;
+	engine = eng;
+	scrollView = new ScrollView(engine);
+}
+
+OnlineMenu::~OnlineMenu()
+{
+	delete(scrollView);
+}
+
+void OnlineMenu::createRequestPartiesPaquet()
+{
+	packager->createGameListPackage();
+	PaquetListParties *list = new PaquetListParties();
+	list->addParty("First try", 2);
+	list->addParty("Second try", 1);
+	for (PartyNB party : list->getParties()) {
+		scrollView->createCell(std::get<0>(party), std::get<1>(party));
+	}
 	DEBUG_MSG("Create Request Parties Paquet");
 }
 
-void onlineMenu(void *arg) 
+void OnlineMenu::menu()
 {
-	DisplayUpdater *tmp = static_cast<DisplayUpdater *>(arg);
-	IGraphicEngine* engine = tmp->getGraphicEngine();
-	Transformation t1(350, 525);
+	std::function<void()> fptr;
+	Transformation transformation(350, 525);
+	transformation.setScale((float)0.1, (float)0.1);
 
-	t1.setScale((float)0.1, (float)0.1);
-	engine->displayButton("Refresh", "Button.png", t1, Color::None, &createRequestPartiesPaquet, arg);
-	t1.setPosition(450, 525);
-	engine->displayButton("Join", "Button.png", t1, Color::None, nullptr);
-	t1.setPosition(550, 525);
-	engine->displayButton("Info", "Button.png", t1, Color::None, nullptr);
+	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
+	engine->displayButton("Refresh", "Button.png", transformation, Color::None, fptr, "Refresh");
+
+	transformation.setPosition(450, 525);
+	engine->displayButton("Join", "Button.png", transformation, Color::None, nullptr, "Join");
+
+	transformation.setPosition(550, 525);
+	engine->displayButton("Info", "Button.png", transformation, Color::None, nullptr, "Info");
 }

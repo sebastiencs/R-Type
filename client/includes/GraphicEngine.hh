@@ -6,6 +6,7 @@
 # include <chrono>
 # include <map>
 # include <list>
+# include <exception>
 # include <SFML/Window/Window.hpp>
 # include <SFML/Graphics/RenderWindow.hpp>
 # include <SFML/Window/Event.hpp>
@@ -21,6 +22,7 @@
 # include "Packager.hh"
 # include "Button.hh"
 # include "Timer.hh"
+# include "TextField.hh"
 
 # define RS_PATH "ressources/"
 # define FONT_PATH "ressources/fonts/"
@@ -38,21 +40,33 @@ public:
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
-	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, void* arg = nullptr);
+	
+	virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, const std::string& id = 0);
+	virtual void displayTextField(const std::string& _text, const Transformation& t, uint16_t size, const std::string& font, const Color& color, const std::string& _id);
 	virtual void eraseButton(const std::string& txt);
+	virtual void eraseTextField(const std::string & id);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
+	void drawSprite(const sf::Sprite& sprite);
+
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
 	virtual void handleEvents();
-	virtual void repaint();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
+	virtual void setMouseClickCallback(mouseCallback);
+	virtual void setMouseMovedCallback(mouseCallback);
 
-	virtual const int getWindowWidth() const;
-	virtual const int getWindowHeight() const;
+
+	virtual int getWindowWidth() const;
+	virtual int getWindowHeight() const;
+
+	const sf::Texture& loadTexture(const std::string& img);
+	void transformSprite(sf::Sprite&, const Transformation&, const Color& color = Color::None);
+
+	static const sf::Texture* None;
 
 protected:
 	bool loadImageFromFile(const std::string& file);
@@ -61,12 +75,15 @@ protected:
 	Packager* _packager;
 	Timer _timer;
 	callback call;
+	mouseCallback _mouseClickCall;
+	mouseCallback _mouseMoveCall;
 	int windowWidth;
 	int windowHeight;
 	void* callbackArg;
 
 	sf::RenderWindow* window;
 	std::list<ICallback *> elements;
+	std::list<IDrawable *> dElements;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;

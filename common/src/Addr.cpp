@@ -57,13 +57,20 @@ const socket_t			&Addr::getSocket() const
   return (_socket);
 }
 
-bool				Addr::operator==(const Addr &other)
+bool				Addr::operator==(const Addr &other) const
 {
-  struct sockaddr_in	o = other.get();
-  uint8_t		*ptr = reinterpret_cast<uint8_t *>(&_addr);
-  uint8_t		*ptr2 = reinterpret_cast<uint8_t *>(&o);
+  if (_type == Addr::TCP) {
+    return (_socket == other.getSocket());
+  }
+  else {
+    const struct sockaddr_in	&o = other.get();
 
-  return (std::equal(ptr, ptr + sizeof(_addr), ptr2));
+#ifdef __unix__
+    return (_addr.sin_addr.s_addr == o.sin_addr.s_addr && _addr.sin_port == o.sin_port);
+#elif defined(_WIN32)
+    return (_addr.sin_addr.S_un.S_addr == o.sin_addr.S_un.S_addr && _addr.sin_port == o.sin_port);
+#endif
+  }
 }
 
 Addr::TypeAddr			Addr::getType() const {

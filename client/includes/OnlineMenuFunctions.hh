@@ -2,9 +2,20 @@
 # define ONLINE_MENU_FUNCTION_HH_
 
 # include "DisplayUpdater.hh"
+# include "ScrollView.hh"
 
-void onlineMenu(void *arg);
-void createRequestPartiesPaquet(void *arg);
+class OnlineMenu {
+public:
+	OnlineMenu(IGraphicEngine* eng, Packager *packager);
+	~OnlineMenu();
 
+	void menu();
+	void createRequestPartiesPaquet();
 
-#endif ONLINE_MENU_FUNCTION_HH_
+private:
+	IGraphicEngine *engine;
+	Packager *packager;
+	ScrollView *scrollView;
+};
+
+#endif // !ONLINE_MENU_FUNCTION_HH_

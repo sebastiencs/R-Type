@@ -92,7 +92,10 @@ if (${UNIX})
 
 elseif (WIN32)
 
-  add_definitions(-D_SCL_SECURE_NO_WARNINGS)
+  add_definitions(
+    -D_SCL_SECURE_NO_WARNINGS
+    -DDEBUG
+    )
 
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 

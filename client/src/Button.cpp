@@ -1,9 +1,14 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void(void*)> fptr, void* arg)
-	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _arg(arg)
+Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
+	: _text(text), _textureName(img), _fptr(fptr), _t(t), _color(color), _id(id), _engine(dynamic_cast<GraphicEngine* >(engine))
 {
+	if (_engine)
+	{
+		_sprite.setTexture(_engine->loadTexture(_textureName));
+		_engine->transformSprite(_sprite, _t, _color);
+	}
 }
 
 Button::~Button()
@@ -26,14 +31,9 @@ const std::string & Button::getTextureName() const
 	return _textureName;
 }
 
-const std::function<void(void*)>& Button::getCallback() const
+const callback& Button::getCallback() const
 {
 	return _fptr;
-}
-
-const void * Button::getArgs() const
-{
-	return _arg;
 }
 
 const Transformation & Button::getTransformation() const
@@ -46,17 +46,29 @@ const Color & Button::getColor() const
 	return (_color);
 }
 
+void Button::draw()
+{
+	if (_engine)
+		_engine->drawSprite(_sprite);
+	else
+		DEBUG_MSG("No instance of GraphicEngine");
+}
+
+const std::string& Button::getId() const
+{
+	return _id;
+}
+
+
 const sf::Sprite& Button::getSprite() const
 {
 	return (_sprite);
 }
 
-void Button::onAction(/*void *arg*/)
+void Button::onAction()
 {
-	if (_fptr != nullptr) {
-			_fptr(_arg);
-		//_fptr(arg);
-	}
+	if (_fptr != nullptr)
+		_fptr();
 }
 
 void Button::onHover(uint32_t x, uint32_t y)
