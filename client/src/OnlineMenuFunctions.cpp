@@ -3,7 +3,7 @@
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
 	engine = eng;
-	scrollView = new ScrollView(engine);
+	scrollView = new ScrollView(9, engine);
 }
 
 OnlineMenu::~OnlineMenu()
@@ -19,6 +19,15 @@ void OnlineMenu::createRequestPartiesPaquet()
 	list->addParty("Party 2", 4);
 	list->addParty("Party 3", 0);
 	list->addParty("Party 4", 3);
+	list->addParty("Party 0", 2);
+	list->addParty("Party 1", 1);
+	list->addParty("Party 2", 4);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 3", 0);
 	scrollView->emptyCell();
 	for (PartyNB party : list->getParties()) {
 		scrollView->createCell(std::get<0>(party), std::get<1>(party));
@@ -47,6 +56,7 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 	for (Button *b : buttons) {
 		b->onHover(x, y);
 	}
+	scrollView->onHover(x, y);
 }
 
 void OnlineMenu::menu()

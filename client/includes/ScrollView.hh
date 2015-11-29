@@ -9,7 +9,7 @@
 class ScrollView : public IDrawable, public ICallback
 {
 public:
-	ScrollView(IGraphicEngine *engine);
+	ScrollView(int nbrDiplayCell, IGraphicEngine *engine);
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
@@ -30,9 +30,12 @@ private:
 	IGraphicEngine *engine;
 	std::list<Cell *> listCell;
 	std::list<Cell *> displayedCell;
+	Button *up;
+	Button *down;
 	std::string selectedCell;
 	std::string id;
 	int nbrCell;
+	int nbrDiplayCell;
 };
 
 #endif /* !SCROLL_VIEW_HH_ */
