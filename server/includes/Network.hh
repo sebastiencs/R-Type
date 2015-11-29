@@ -41,11 +41,11 @@ private:
   std::unique_ptr<ISocketUDP>	_socketUDP;
   std::unique_ptr<ISocketTCP>	_socketTCP;
   std::unique_ptr<Selector>	_selector;
+  bool				_running;
   std::unique_ptr<IThread>	_thread;
   std::stack<PaquetClient>	_stackPaquet;
   std::list<ISocketTCP *>	_socketClient;
   Manager			*_manager;
-  bool				_running;
   Buffer			_buffer;
 
 public:

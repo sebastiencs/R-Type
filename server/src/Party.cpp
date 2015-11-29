@@ -35,6 +35,7 @@ Party::Party(const std::string &name)
 Party::~Party()
 {
   DEBUG_MSG("Party deleted");
+//  _thread->close();
 }
 
 void			Party::run()

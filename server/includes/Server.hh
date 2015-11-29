@@ -14,6 +14,7 @@
 # include <memory>
 # include "Network.hh"
 # include "Manager.hh"
+# include "Signal.hh"
 # include "Debug.hh"
 
 class				Server
@@ -21,6 +22,7 @@ class				Server
 private:
   std::unique_ptr<Manager>	_manager;
   std::unique_ptr<INetwork>	_network;
+  Signal			_signal;
 
 public:
   Server(const uint16_t);

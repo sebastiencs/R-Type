@@ -23,7 +23,9 @@ ThreadUnix::ThreadUnix(const std::function<void *(void *)> &func, void *arg = 0)
 
 ThreadUnix::~ThreadUnix()
 {
-  close();
+  if (_running) {
+    close();
+  }
 }
 
 bool	ThreadUnix::run(const std::function<void *(void *)> &func, void *arg = 0)
@@ -63,11 +65,15 @@ void	*jump(void *arg)
 
 bool	ThreadUnix::close()
 {
+  if (pthread_detach(_thread)) {
+    DEBUG_MSG("pthread_detach() failed");
+  }
   if (pthread_cancel(_thread)) {
+    DEBUG_MSG("pthread_cancel failed");
     return (join());
   }
   _running = 0;
-  DEBUG_MSG("ThreadUnix ended");
+  DEBUG_MSG("ThreadUnix ended (close)");
   return (true);
 }
 
@@ -78,6 +84,6 @@ bool	ThreadUnix::join()
     return (false);
   }
   _running = 0;
-  DEBUG_MSG("ThreadUnix ended");
+  DEBUG_MSG("ThreadUnix ended (join)");
   return (true);
 }
