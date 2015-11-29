@@ -72,10 +72,6 @@ void GraphicEngine::handleEvents()
 	}
 }
 
-void GraphicEngine::repaint()
-{
-}
-
 void GraphicEngine::launch()
 {
 	while (window->isOpen())
@@ -243,6 +239,11 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	}
 	sf::Sprite sprite(*cachedImages[name], subRect);
 	transformSprite(sprite, t, color);
+	window->draw(sprite);
+}
+
+void GraphicEngine::drawSprite(const sf::Sprite & sprite)
+{
 	window->draw(sprite);
 }
 

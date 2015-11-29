@@ -9,7 +9,7 @@ class GraphicEngine;
 class Button : public IDrawable, public ICallback
 {
 public:
-	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, GraphicEngine* engine);
+	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine* engine);
 	virtual ~Button();
 
 	// ICallback

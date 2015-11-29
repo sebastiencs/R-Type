@@ -1,13 +1,13 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, GraphicEngine* engine)
-	: _text(text), _textureName(img), _fptr(fptr), _t(t), _color(color), _id(id), _engine(engine)
+Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
+	: _text(text), _textureName(img), _fptr(fptr), _t(t), _color(color), _id(id), _engine(dynamic_cast<GraphicEngine* >(engine))
 {
 	if (_engine)
 	{
-		_sprite.setTexture(engine->loadTexture(img));
-		engine->transformSprite(_sprite, t, color);
+		_sprite.setTexture(_engine->loadTexture(_textureName));
+		_engine->transformSprite(_sprite, _t, _color);
 	}
 }
 
@@ -48,7 +48,7 @@ const Color & Button::getColor() const
 
 void Button::draw()
 {
-	_engine->drawImage(_text, _t, _color);
+	_engine->drawSprite(_sprite);
 }
 
 const std::string& Button::getId() const

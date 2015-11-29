@@ -47,12 +47,12 @@ public:
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
-	
+	void drawSprite(const sf::Sprite& sprite);
+
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
 	virtual void handleEvents();
-	virtual void repaint();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
 

@@ -29,7 +29,6 @@ public:
 
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
-	virtual void repaint() = 0;
 
 	virtual int getWindowWidth() const = 0;
 	virtual int getWindowHeight() const = 0;
