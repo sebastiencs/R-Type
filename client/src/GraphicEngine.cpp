@@ -79,18 +79,7 @@ void GraphicEngine::launch()
 			handleEvents();
 			window->clear(sf::Color::Black);
 
-			// a mettre dans la callback?
-			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
-				//if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
-					/*if (drawable->getVisible() == true)*/
-						/*window->draw(drawable->getSprite());*/
-			}
-
-			// temporaire : seulement pour les textfield en attendant de fix l'interface
-			for (IDrawable* element : dElements) {
-					TextField *tf = static_cast<TextField *>(element);
-					tf->displayText();
-			}
+			
 			if (call)
 				call();
 			window->display();
