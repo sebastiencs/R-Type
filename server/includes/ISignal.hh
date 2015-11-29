@@ -11,6 +11,8 @@
 #ifndef ISIGNAL_H_
 # define ISIGNAL_H_
 
+# include <functional>
+
 class		Server;
 
 class		ISignal
@@ -18,8 +20,8 @@ class		ISignal
 public:
   virtual ~ISignal() {};
 
-  virtual void	addSignal(int) = 0;
-  virtual void	stopAll() = 0;
+  virtual void	addSignal(int, std::function<void (void)>) = 0;
+  virtual void	callHandler(int) = 0;
 };
 
 #endif /* !ISIGNAL_H_ */

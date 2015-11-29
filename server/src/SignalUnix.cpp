@@ -14,11 +14,10 @@
 #include "SignalUnix.hh"
 #include "Server.hh"
 
-SignalUnix::SignalUnix(Server &server)
-  : _server(server)
+SignalUnix::SignalUnix()
 {
   DEBUG_MSG("SignalUnix created");
-  class_save(1, this);
+  class_save(this);
 }
 
 SignalUnix::~SignalUnix()
@@ -26,22 +25,25 @@ SignalUnix::~SignalUnix()
   DEBUG_MSG("SignalUnix deleted");
 }
 
-void		SignalUnix::addSignal(int sig)
+void		SignalUnix::addSignal(int sig, Handler_t handler)
 {
   signal(sig, sig_handler);
+  _listHandler[sig] = handler;
 }
 
-void		SignalUnix::stopAll()
+void		SignalUnix::callHandler(int sig)
 {
   DEBUG_MSG("SignalUnix received");
-  _server.stop();
+  if (_listHandler.find(sig) != _listHandler.end()) {
+    _listHandler[sig]();
+  }
 }
 
-SignalUnix		*class_save(int id, SignalUnix *ptr_class)
+SignalUnix		*class_save(SignalUnix *ptr_class = nullptr)
 {
-  static SignalUnix	*signal = 0;
+  static SignalUnix	*signal = nullptr;
 
-  if (!id) {
+  if (ptr_class == nullptr) {
     return (signal);
   }
   else {
@@ -54,9 +56,8 @@ void		sig_handler(int sig)
 {
   SignalUnix	*signal;
 
-  (void)sig;
-  signal = class_save(0, 0);
+  signal = class_save();
   if (signal) {
-    signal->stopAll();
+    signal->callHandler(sig);
   }
 }

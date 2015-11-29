@@ -16,22 +16,25 @@
 # include "ISignal.hh"
 # include <signal.h>
 
+typedef std::function<void (void)>	Handler_t;
+typedef std::map<int, Handler_t>	listHandler;
+
 class		Server;
 
 class		SignalUnix : public ISignal
 {
 private:
-  Server	&_server;
+  listHandler	_listHandler;
 
 public:
-  SignalUnix(Server &);
+  SignalUnix();
   virtual ~SignalUnix();
 
-  virtual void	addSignal(int);
-  virtual void	stopAll();
+  virtual void	addSignal(int, Handler_t);
+  virtual void	callHandler(int sig);
 };
 
 void		sig_handler(int);
-SignalUnix	*class_save(int id, SignalUnix *ptr_class);
+SignalUnix	*class_save(SignalUnix *ptr_class);
 
 #endif /* !SIGNALUNIX_H_ */

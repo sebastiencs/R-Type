@@ -22,7 +22,7 @@ class				Server
 private:
   std::unique_ptr<Manager>	_manager;
   std::unique_ptr<INetwork>	_network;
-  Signal			_signal;
+  std::unique_ptr<ISignal>	_signal;
 
 public:
   Server(const uint16_t);
