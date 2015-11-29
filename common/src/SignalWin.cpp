@@ -27,12 +27,16 @@ void		SignalWin::addSignal(int sig, Handler_t handler)
 	_listHandler[sig] = handler;
 }
 
-void		SignalWin::callHandler(int sig)
+bool		SignalWin::callHandler(int sig)
 {
 	DEBUG_MSG("SignalWin received");
 	if (_listHandler.find(sig) != _listHandler.end()) {
 		_listHandler[sig]();
+    return (true);
 	}
+  else {
+    return (false);
+  }
 }
 
 SignalWin		*class_save(SignalWin *ptr_class = nullptr)
@@ -48,13 +52,14 @@ SignalWin		*class_save(SignalWin *ptr_class = nullptr)
 	}
 }
 
-void		sig_handler(int sig)
+bool		sig_handler(int sig)
 {
 	SignalWin	*signal;
 
 	signal = class_save();
 	if (signal) {
-		signal->callHandler(sig);
+		return (signal->callHandler(sig));
 	}
+  return (false);
 }
 

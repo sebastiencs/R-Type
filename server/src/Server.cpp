@@ -31,10 +31,5 @@ int	Server::run()
 
 int	Server::stop()
 {
-#ifdef __unix__
   return (_network->stop());
-#elif defined(_WIN32)
-  delete this;
-  return (0);
-#endif
 }

@@ -23,7 +23,7 @@ public:
   virtual ~ISignal() {};
 
   virtual void	addSignal(int signal_id, Handler_t handler) = 0;
-  virtual void	callHandler(int) = 0;
+  virtual bool	callHandler(int) = 0;
 };
 
 #endif /* !ISIGNAL_H_ */
