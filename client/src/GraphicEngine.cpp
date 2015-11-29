@@ -72,10 +72,6 @@ void GraphicEngine::handleEvents()
 	}
 }
 
-void GraphicEngine::repaint()
-{
-}
-
 void GraphicEngine::launch()
 {
 	while (window->isOpen())

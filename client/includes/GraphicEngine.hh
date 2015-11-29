@@ -53,7 +53,6 @@ public:
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
 	virtual void handleEvents();
-	virtual void repaint();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
 
