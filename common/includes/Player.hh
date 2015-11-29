@@ -29,7 +29,7 @@ public:
   Player();
   Player(const std::string &, uint16_t, const Position &, uint16_t, int);
   Player(const std::string &name, uint16_t id, uint16_t level, const Addr &);
-virtual ~Player();
+  virtual ~Player();
 
   virtual const Position	&getPosition() const;
   virtual void			setPosition(const Position &);
@@ -45,7 +45,8 @@ virtual ~Player();
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
-  virtual socket_t		socket() const;
+
+  virtual const Addr		&addr() const;
 };
 
 #endif /* !PLAYER_H_ */

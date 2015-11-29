@@ -25,6 +25,7 @@ typedef int	socket_t;
 # include <iostream>
 
 typedef std::tuple<uint16_t, uint16_t>	Position;
+class Addr;
 
 class		IPlayer
 {
@@ -45,7 +46,7 @@ public:
 
   virtual const std::string	&getName() const = 0;
   virtual void			setName(const std::string &) = 0;
-  virtual socket_t		socket() const = 0;
+  virtual const Addr		&addr() const = 0;
 };
 
 #endif /* !IPLAYER_H_ */
