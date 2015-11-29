@@ -16,7 +16,7 @@ ThreadWin::ThreadWin()
 {
 }
 
-ThreadWin::ThreadWin(const std::function<void *(void *)> &func, void *arg = 0)
+ThreadWin::ThreadWin(const Callback_t &func, void *arg = 0)
   : _running(false),
     _thread(nullptr)
 {
@@ -28,7 +28,7 @@ ThreadWin::~ThreadWin()
   close();
 }
 
-bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
+bool	ThreadWin::run(const Callback_t &func, void *arg = 0)
 {
   if (!_running) {
     save_func(func, 1);
@@ -44,9 +44,9 @@ bool	ThreadWin::run(const std::function<void *(void *)> &func, void *arg = 0)
   return (false);
 }
 
-std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &func = 0, int save = 0)
+Callback_t	&save_func(const Callback_t &func = 0, int save = 0)
 {
-  static std::function<void *(void *)> f = [](void *param) -> void * { return (0); };
+  static Callback_t f = [](void *param) -> void * { return (0); };
   if (save)
     f = func;
   return (f);
@@ -59,7 +59,7 @@ void	*unused(void *param)
 
 void	*jump(void *arg)
 {
-  std::function<void *(void *)> f = save_func(unused, 0);
+  Callback_t f = save_func(unused, 0);
   return (f(arg));
 }
 

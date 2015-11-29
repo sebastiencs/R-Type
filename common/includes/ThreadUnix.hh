@@ -22,15 +22,15 @@ private:
 
 public:
   ThreadUnix();
-  ThreadUnix(const std::function<void *(void *)> &, void *);
+  ThreadUnix(const Callback_t &func, void *arg);
   virtual ~ThreadUnix();
 
-  virtual bool	run(const std::function<void *(void *)> &, void *);
+  virtual bool	run(const Callback_t &func, void *arg);
   virtual bool	close();
   virtual bool	join();
 };
 
-std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &, int);
-void				*jump(void *);
+Callback_t	&save_func(const Callback_t &, int);
+void		*jump(void *);
 
 #endif /* !THREADUNIX_H_ */

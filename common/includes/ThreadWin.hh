@@ -22,15 +22,15 @@ private:
 
 public:
   ThreadWin();
-  ThreadWin(const std::function<void *(void *)> &, void *);
+  ThreadWin(const Callback_t &, void *);
   virtual ~ThreadWin();
 
-  virtual bool	run(const std::function<void *(void *)> &, void *);
+  virtual bool	run(const Callback_t &, void *);
   virtual bool	close();
   virtual bool	join();
 };
 
-std::function<void *(void *)>	&save_func(const std::function<void *(void *)> &, int);
-void				*jump(void *);
+Callback_t	&save_func(const Callback_t &, int);
+void		*jump(void *);
 
 #endif /* !THREADWIN_H_ */

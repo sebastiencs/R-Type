@@ -31,6 +31,7 @@ Network::Network(Manager *manager, const uint16_t port)
 
 Network::~Network()
 {
+  _thread->close();
   DEBUG_MSG("Network deleted");
 }
 

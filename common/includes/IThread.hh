@@ -14,12 +14,14 @@
 # include <functional>
 # include "Debug.hh"
 
+typedef std::function<void *(void *)>	Callback_t;
+
 class		IThread
 {
 public:
   virtual ~IThread() {};
 
-  virtual bool	run(const std::function<void *(void *)> &, void *) = 0;
+  virtual bool	run(const Callback_t &func, void *arg) = 0;
   virtual bool	close() = 0;
   virtual bool	join() = 0;
 };
