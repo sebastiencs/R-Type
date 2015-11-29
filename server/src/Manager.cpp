@@ -32,17 +32,17 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
   }
 }
 
-void		Manager::deletePlayer(socket_t socket)
+void		Manager::deletePlayer(const Addr &addr)
 {
   for (PlayerList::iterator it = _pWaiting.begin(); it != _pWaiting.end(); ++it) {
-    if ((*it)->socket() == socket) {
+    if ((*it)->addr() == addr) {
       delete *it;
       _pWaiting.erase(it);
       return ;
     }
   }
   for (auto &party : _parties) {
-    party->deletePlayer(socket);
+    party->deletePlayer(addr);
   }
 }
 
@@ -84,19 +84,18 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
   delete paquet;
 }
 
+# include "Tools.hh"
+
 void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
-  Party		*party = 0;
+  Party		*party;
   Player	*player;
 
   DEBUG_MSG(*paquet);
 
-  auto pa = std::find_if(_parties.begin(), _parties.end(), [&name](Party *p) { return (p->getName() == name); });
-  party = (pa != _parties.end()) ? (*pa) : (0);
-
-  auto pl = std::find_if(_pWaiting.begin(), _pWaiting.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
-  player = (pl != _pWaiting.end()) ? (*pl) : (0);
+  party = Tools::findParty(_parties, name);
+  player = Tools::findPlayer(_pWaiting, addr);
 
   PaquetResponse	p;
 
@@ -128,15 +127,14 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
   Player	*player;
+  Party		*party;
 
-  auto pa = std::find_if(_parties.begin(), _parties.end(), [&name](Party *p) { return (p->getName() == name); });
-
-  auto pl = std::find_if(_pWaiting.begin(), _pWaiting.end(), [&addr] (Player *p) { return (p->socket() == addr.getSocket()); });
-  player = (pl != _pWaiting.end()) ? (*pl) : (0);
+  party = Tools::findParty(_parties, name);
+  player = Tools::findPlayer(_pWaiting, addr);
 
   PaquetResponse	p;
 
-  if (pa != _parties.end() && player) {
+  if (!party && player) {
     Party	*party(new Party(name));
     party->addPlayer(player);
     _pWaiting.remove(player);
@@ -146,7 +144,7 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
   else {
     p.setReturn(3);
 #ifdef DEBUG
-    if (pa == _parties.end()) {
+    if (party) {
       std::cerr << "CreateParty: Party already exist" << std::endl;
     }
     if (!player) {
@@ -218,17 +216,15 @@ void		Manager::handlePaquet(PaquetRequestPlayers *paquet, const Addr &addr)
 
   DEBUG_MSG(*paquet);
 
-  auto pa = std::find_if(_parties.begin(), _parties.end(), [&addr] (Party *p) { return (p->isPlayer(addr)); });
+  auto party = Tools::findIn(_parties, [&addr] (Party *p) { return (p->isPlayer(addr)); });
 
-  if (pa != _parties.end()) {
-    listPlayers list = (*pa)->getPlayers();
+  if (party) {
 
-    for (auto player : list) {
+    const listPlayers &plist = party->getPlayers();
+
+    for (auto &player : plist) {
       p.addPlayer(player->getName(), player->getID(), player->getLevel());
     }
-  }
-  else {
-
   }
   p.createPaquet();
   write(p, addr);
