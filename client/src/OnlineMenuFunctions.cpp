@@ -19,15 +19,15 @@ void OnlineMenu::createRequestPartiesPaquet()
 	list->addParty("Party 2", 4);
 	list->addParty("Party 3", 0);
 	list->addParty("Party 4", 3);
-	list->addParty("Party 0", 2);
-	list->addParty("Party 1", 1);
-	list->addParty("Party 2", 4);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 3", 0);
+	list->addParty("Party 5", 2);
+	list->addParty("Party 6", 1);
+	list->addParty("Party 7", 4);
+	list->addParty("Party 8", 0);
+	list->addParty("Party 9", 0);
+	list->addParty("Party 10", 0);
+	list->addParty("Party 11", 0);
+	list->addParty("Party 12", 0);
+	list->addParty("Party 13", 0);
 	scrollView->emptyCell();
 	for (PartyNB party : list->getParties()) {
 		scrollView->createCell(std::get<0>(party), std::get<1>(party));

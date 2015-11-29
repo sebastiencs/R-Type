@@ -16,6 +16,10 @@ public:
 	void emptyCell();
 	void isSelect();
 
+	void incrBase();
+	void decrBase();
+
+
 	//IDrawable
 	virtual const std::string& getId() const;
 	virtual void draw();
@@ -29,13 +33,14 @@ public:
 private:
 	IGraphicEngine *engine;
 	std::list<Cell *> listCell;
-	std::list<Cell *> displayedCell;
 	Button *up;
 	Button *down;
 	std::string selectedCell;
 	std::string id;
+
 	int nbrCell;
 	int nbrDiplayCell;
+	int base;
 };
 
 #endif /* !SCROLL_VIEW_HH_ */
