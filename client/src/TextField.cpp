@@ -26,7 +26,7 @@ const sf::Sprite & TextField::getSprite() const
 	return *sprite;
 }
 
-const bool TextField::getVisible() const
+bool TextField::getVisible() const
 {
 	return _visible;
 }

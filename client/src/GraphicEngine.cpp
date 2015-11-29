@@ -88,7 +88,7 @@ void GraphicEngine::launch()
 			// a mettre dans la callback?
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
-					if (drawable->getVisible() == true)
+					/*if (drawable->getVisible() == true)*/
 						window->draw(drawable->getSprite());
 			}
 

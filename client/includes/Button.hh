@@ -24,7 +24,7 @@ public:
 	const sf::Sprite& getSprite() const;
 	const std::string& getId() const;
 	void setVisible(bool visible);
-	const bool getVisible() const;
+	bool getVisible() const;
 
 private:
 	bool _visible;
