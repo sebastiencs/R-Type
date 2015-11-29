@@ -37,14 +37,22 @@ void ScrollView::draw()
 
 void ScrollView::onAction()
 {
+
 }
 
 void ScrollView::onHover(uint32_t x, uint32_t y)
 {
+	for (Cell *c : displayedCell) {
+		c->onHover(x, y);
+	}
 }
 
 bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 {
+	for (Cell *c : displayedCell) {
+		if (c->isPressed(x, y) == true)
+			return true;
+	}
 	return false;
 }
 

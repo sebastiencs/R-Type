@@ -31,7 +31,7 @@ private:
 	std::string _id;
 
 	//draw
-TextField *textField;
+	TextField *textField;
 };
 
 #endif

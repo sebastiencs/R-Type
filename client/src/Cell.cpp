@@ -44,6 +44,11 @@ void Cell::onAction()
 
 void Cell::onHover(uint32_t x, uint32_t y)
 {
+	//if (isPressed(x, y)) {
+	//	textField->getSprite().setColor(sf::Color(Color::Darker.getColor()));
+	//}
+	//else
+	//	textField->getSprite().setColor(sf::Color::White);
 }
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const

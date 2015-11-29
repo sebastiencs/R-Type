@@ -3,6 +3,8 @@
 
 # include "DisplayUpdater.hh"
 
+class OnlineMenu;
+
 class MainMenu
 {
 public:
@@ -24,10 +26,10 @@ public:
 
 private:
 	IGraphicEngine *engine;
-	int currentPage;
+	OnlineMenu *onlineMenu;
 
 	std::list<Button* > buttons;
-	//OnlineMenu *onlineMenu;
+	int currentPage;
 };
 
 #endif /* !MAIN_MENU_HH_ */

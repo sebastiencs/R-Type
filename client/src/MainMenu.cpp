@@ -4,6 +4,8 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 {
 	engine = eng;
 	currentPage = 0;
+	onlineMenu = new OnlineMenu(eng);
+	onlineMenu->menu();
 
 	Transformation transformation(50, 200);
 	transformation.setScale((float)0.35, (float)0.2);
@@ -51,8 +53,9 @@ void MainMenu::draw()
 	for (Button* b : buttons)
 		b->draw();
 
-	/*if (currentPage == 1)
-		onlineMenu->menu();*/
+	if (currentPage == 1) {
+		onlineMenu->draw();
+	}
 }
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
@@ -62,12 +65,19 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 			b->onAction();
 		}
 	}
+	if (currentPage == 1) {
+		onlineMenu->onClick(x, y);
+	}
 }
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
 		b->onHover(x, y);
+	}
+
+	if (currentPage == 1) {
+		onlineMenu->onHover(x, y);
 	}
 }
 

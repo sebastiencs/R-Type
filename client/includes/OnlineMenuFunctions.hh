@@ -6,16 +6,22 @@
 
 class OnlineMenu {
 public:
-	OnlineMenu(IGraphicEngine* eng, Packager *packager);
+	OnlineMenu(IGraphicEngine* eng);
 	~OnlineMenu();
 
 	void menu();
 	void createRequestPartiesPaquet();
 
+	void draw();
+
+	void onClick(uint32_t x, uint32_t y);
+	void onHover(uint32_t x, uint32_t y);
+
 private:
 	IGraphicEngine *engine;
-	Packager *packager;
 	ScrollView *scrollView;
+
+	std::list<Button* > buttons;
 };
 
 #endif // !ONLINE_MENU_FUNCTION_HH_

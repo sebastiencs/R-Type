@@ -29,7 +29,7 @@ private:
 	IGraphicEngine *engine;
 	std::list<Cell *> listCell;
 	std::list<Cell *> displayedCell;
-	uint16_t selectedCell;
+	std::string selectedCell;
 	std::string id;
 };
 
