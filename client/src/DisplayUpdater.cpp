@@ -9,8 +9,26 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	onlineMenu = new OnlineMenu(graphicEngine, packager);
 
 	graphicEngine->createWindow(800, 600, "R-Type");
+	
+	Transformation transformation(50, 200);
+	transformation.setScale((float)0.35, (float)0.2);
+	std::function<void()> fptr;
+	fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
+	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", graphicEngine));
+	
+	transformation.setPosition(50, 300);
+	fptr = std::bind(&MainMenu::setDisplayOffline, this->mainmenu);
+	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", graphicEngine));
 
-	std::function<void()> fptr = std::bind(&DisplayUpdater::mainMenu, this); 
+	transformation.setPosition(50, 400);
+	fptr = std::bind(&MainMenu::setDisplayOption, this->mainmenu);
+	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", graphicEngine));
+
+	transformation.setPosition(50, 500);
+	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
+	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", graphicEngine));
+
+	fptr = std::bind(&DisplayUpdater::mainMenu, this); 
 	graphicEngine->setCallbackFunction(fptr, this);
 
 	graphicEngine->launch();
@@ -18,6 +36,9 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 
 DisplayUpdater::~DisplayUpdater()
 {
+	for (Button* b : buttons)
+		delete b;
+	buttons.clear();
 }
 
 const Packager * DisplayUpdater::getPackager()
@@ -32,26 +53,8 @@ IGraphicEngine * DisplayUpdater::getGraphicEngine()
 
 void DisplayUpdater::mainMenu()
 {
-	std::function<void()> fptr;
-	Transformation transformation(50, 200);
-	transformation.setScale((float)0.35, (float)0.2);
-
-	graphicEngine->drawText("R-Type", Transformation(50, graphicEngine->getWindowHeight() / 5), 42, Color::White, "Fipps.otf");
-
-	fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
-	graphicEngine->displayButton("Online", "onlineButton.png", transformation, Color::None, fptr, "Online");
-
-	transformation.setPosition(50, 300);
-	fptr = std::bind(&MainMenu::setDisplayOffline, this->mainmenu);
-	graphicEngine->displayButton("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline");
-
-	transformation.setPosition(50, 400);
-	fptr = std::bind(&MainMenu::setDisplayOption, this->mainmenu);
-	graphicEngine->displayButton("Option", "optionButton.png", transformation, Color::None, fptr, "Option");
-
-	transformation.setPosition(50, 500);
-	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
-	graphicEngine->displayButton("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit");
+	for (Button* b : buttons)
+		b->draw();
 
 	if (mainmenu->getCurrentPage() == 1)
 		onlineMenu->menu();

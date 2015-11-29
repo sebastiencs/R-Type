@@ -28,6 +28,8 @@ private:
 	Packager *packager;
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
+
+	std::list<Button* > buttons;
 };
 
 #endif /* !DISPLAYUPDATER_HH */

@@ -246,6 +246,11 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	window->draw(sprite);
 }
 
+void GraphicEngine::drawSprite(const sf::Sprite & sprite)
+{
+	window->draw(sprite);
+}
+
 void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
 {
 	for (IDrawable* element : dElements) {
