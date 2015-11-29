@@ -76,7 +76,7 @@ void GraphicEngine::handleEvents()
 void GraphicEngine::launch()
 {
 	if (!window)
-		throw std::exception("No window created, use createWindow function before using launch");
+		throw std::runtime_error("No window created, use createWindow function before using launch");
 	while (window->isOpen())
 	{
 		if (_timer.ms() >= MS_REFRESH)
