@@ -7,6 +7,8 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	onlineMenu = new OnlineMenu(eng);
 	onlineMenu->menu();
 
+	rTypeLabel = new TextField("R-Type", Transformation(100, 100), DEFAULT_FONT_SIZE + 10, "Fipps.otf", Color::None, "rtypeLabel", engine);
+
 	Transformation transformation(50, 200);
 	transformation.setScale((float)0.35, (float)0.2);
 	std::function<void()> fptr;
@@ -35,12 +37,19 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	eng->setMouseMovedCallback(fptr2);
 }
 
+MainMenu::~MainMenu() {
+	for (Button* b : buttons)
+		if (b)
+			delete b;
+	buttons.clear();
+	if (rTypeLabel)
+		delete rTypeLabel;
+}
+
 void MainMenu::changedMenu()
 {
 	// If button exist, erase it
-	engine->eraseButton("Refresh");
-	engine->eraseButton("Join");
-	engine->eraseButton("Info");
+	
 }
 
 int MainMenu::getCurrentPage()
@@ -52,7 +61,7 @@ void MainMenu::draw()
 {
 	for (Button* b : buttons)
 		b->draw();
-
+	rTypeLabel->draw();
 	if (currentPage == 1) {
 		onlineMenu->draw();
 	}

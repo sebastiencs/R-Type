@@ -9,7 +9,7 @@ class MainMenu
 {
 public:
 	MainMenu(IGraphicEngine *eng);
-	~MainMenu() {}
+	~MainMenu();
 
 	void setDisplayOnline();
 	void setDisplayOffline();
@@ -28,6 +28,7 @@ private:
 	IGraphicEngine *engine;
 	OnlineMenu *onlineMenu;
 
+	TextField *rTypeLabel;
 	std::list<Button* > buttons;
 	int currentPage;
 };
