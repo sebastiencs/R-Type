@@ -25,7 +25,12 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 
 	fptr = std::bind(&MainMenu::draw, this);
 	eng->setCallbackFunction(fptr, this);
-	fptr = std::bind(&MainMenu::onClick, this, 0, 0);
+
+	mouseCallback fptr2;
+	fptr2 = std::bind(&MainMenu::onClick, this, 0, 0);
+	eng->setMouseClickCallback(fptr2);
+	fptr2 = std::bind(&MainMenu::onHover, this, 0, 0);
+	eng->setMouseMovedCallback(fptr2);
 }
 
 void MainMenu::changedMenu()
