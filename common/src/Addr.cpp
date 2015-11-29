@@ -59,16 +59,16 @@ const socket_t			&Addr::getSocket() const
 
 bool				Addr::operator==(const Addr &other) const
 {
-  struct sockaddr_in	o = other.get();
-
   if (_type == Addr::TCP) {
     return (_socket == other.getSocket());
   }
   else {
+    const struct sockaddr_in	&o = other.get();
+
 #ifdef __unix__
     return (_addr.sin_addr.s_addr == o.sin_addr.s_addr && _addr.sin_port == o.sin_port);
 #elif defined(_WIN32)
-    return (_addr.sin_addr.S_addr == o.sin_addr.S_addr && _addr.sin_port == o.sin_port);
+    return (_addr.sin_addr.S_un.S_addr == o.sin_addr.S_un.S_addr && _addr.sin_port == o.sin_port);
 #endif
   }
 }
