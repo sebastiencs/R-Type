@@ -2,6 +2,7 @@
 
 ScrollView::ScrollView(IGraphicEngine *engine)
 {
+	nbrCell = 0;
 	this->engine = engine;
 }
 
@@ -14,9 +15,20 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	static unsigned int i = 0;
+	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(350, 230 + nbrCell * 32), name, nbr, engine));
+	displayedCell.push_back(new Cell(std::to_string(nbrCell), Transformation(350, 230 + nbrCell * 32), name, nbr, engine));
+	++nbrCell;
+}
 
-	listCell.push_back(new Cell(std::to_string(i), Transformation(350, 230), name, nbr, engine));
+void ScrollView::emptyCell()
+{
+	for (Cell *c : displayedCell)
+		delete(c);
+	for (Cell *c : listCell)
+		delete(c);
+	listCell.clear();
+	displayedCell.clear();
+	nbrCell = 0;
 }
 
 void ScrollView::isSelect()

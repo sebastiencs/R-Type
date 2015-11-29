@@ -14,8 +14,12 @@ OnlineMenu::~OnlineMenu()
 void OnlineMenu::createRequestPartiesPaquet()
 {
 	PaquetListParties *list = new PaquetListParties();
-	list->addParty("First try", 2);
-	list->addParty("Second try", 1);
+	list->addParty("Party 0", 2);
+	list->addParty("Party 1", 1);
+	list->addParty("Party 2", 4);
+	list->addParty("Party 3", 0);
+	list->addParty("Party 4", 3);
+	scrollView->emptyCell();
 	for (PartyNB party : list->getParties()) {
 		scrollView->createCell(std::get<0>(party), std::get<1>(party));
 	}
@@ -26,6 +30,7 @@ void OnlineMenu::draw()
 {
 	for (Button* b : buttons)
 		b->draw();
+	scrollView->draw();
 }
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)

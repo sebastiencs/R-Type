@@ -13,6 +13,7 @@ public:
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
+	void emptyCell();
 	void isSelect();
 
 	//IDrawable
@@ -31,6 +32,7 @@ private:
 	std::list<Cell *> displayedCell;
 	std::string selectedCell;
 	std::string id;
+	int nbrCell;
 };
 
 #endif /* !SCROLL_VIEW_HH_ */
