@@ -49,7 +49,6 @@ MainMenu::~MainMenu() {
 void MainMenu::changedMenu()
 {
 	// If button exist, erase it
-	
 }
 
 int MainMenu::getCurrentPage()

@@ -9,10 +9,10 @@ ScrollView::ScrollView(int nbrDiplayCell, IGraphicEngine *engine)
 	base = 0;
 
 	callback fptr;
-	fptr = std::bind(&ScrollView::incrBase, this);
+	fptr = std::bind(&ScrollView::decrBase, this);
 	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(650, 200), Color::None, fptr, "Up", engine));
 
-	fptr = std::bind(&ScrollView::decrBase, this);
+	fptr = std::bind(&ScrollView::incrBase, this);
 	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(650, 200 + 32 * 9), Color::None, fptr, "Down", engine));
 }
 
