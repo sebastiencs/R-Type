@@ -6,11 +6,11 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine);
-	/*onlineMenu = new OnlineMenu(graphicEngine, packager);
+	//onlineMenu = new OnlineMenu(graphicEngine, packager);
 
 	graphicEngine->createWindow(800, 600, "R-Type");
 	
-	Transformation transformation(50, 200);
+	/*Transformation transformation(50, 200);
 	transformation.setScale((float)0.35, (float)0.2);
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
