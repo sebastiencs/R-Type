@@ -1,5 +1,5 @@
-#ifndef MAIN_MENU_FUNCTION_HH_
-# define MAIN_MENU_FUNCTION_HH_
+#ifndef MAIN_MENU_HH_
+# define MAIN_MENU_HH_
 
 # include "DisplayUpdater.hh"
 
@@ -17,9 +17,14 @@ public:
 
 	int getCurrentPage();
 
+	void draw();
+
 private:
 	IGraphicEngine *engine;
 	int currentPage;
+
+	std::list<Button* > buttons;
+	//OnlineMenu *onlineMenu;
 };
 
-#endif /* !MAIN_MENU_FUNCTION_HH_ */
+#endif /* !MAIN_MENU_HH_ */

@@ -5,7 +5,7 @@
 # include "PackageStorage.hh"
 # include "IGraphicEngine.hh"
 # include "GraphicEngine.hh"
-# include "MainMenuFunctions.hh"
+# include "MainMenu.hh"
 # include "OnlineMenuFunctions.hh"
 
 class MainMenu;

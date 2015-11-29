@@ -6,7 +6,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine);
-	onlineMenu = new OnlineMenu(graphicEngine, packager);
+	/*onlineMenu = new OnlineMenu(graphicEngine, packager);
 
 	graphicEngine->createWindow(800, 600, "R-Type");
 	
@@ -26,10 +26,10 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 
 	transformation.setPosition(50, 500);
 	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
-	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", graphicEngine));
+	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", graphicEngine));*/
 
-	fptr = std::bind(&DisplayUpdater::mainMenu, this); 
-	graphicEngine->setCallbackFunction(fptr, this);
+	/*fptr = std::bind(&DisplayUpdater::mainMenu, this); 
+	graphicEngine->setCallbackFunction(fptr, this);*/
 
 	graphicEngine->launch();
 }
@@ -59,7 +59,6 @@ void DisplayUpdater::mainMenu()
 	if (mainmenu->getCurrentPage() == 1)
 		onlineMenu->menu();
 }
-
 
 void DisplayUpdater::game()
 {
