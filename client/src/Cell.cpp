@@ -23,7 +23,8 @@ Cell::~Cell()
 
 const sf::Sprite & Cell::getSprite() const
 {
-	// TODO: insert return statement here
+	sf::Sprite *sprite = new sf::Sprite();
+	return *sprite;
 }
 
 const std::string& Cell::getId() const
