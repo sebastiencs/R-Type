@@ -38,6 +38,16 @@ void Cell::draw()
 	textField->draw();
 }
 
+const Transformation & Cell::getTransformation() const
+{
+	return textField->getTransformation();
+}
+
+Transformation & Cell::getTransformation()
+{
+	return textField->getTransformation();
+}
+
 void Cell::onAction()
 {
 }

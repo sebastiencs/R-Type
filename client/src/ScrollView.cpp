@@ -1,17 +1,19 @@
 #include <ScrollView.hh>
 
+
 ScrollView::ScrollView(int nbrDiplayCell, IGraphicEngine *engine)
 {
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
-	std::function<void()> fptr;
-	fptr = std::bind(&ScrollView::incrBase, this);
-	up = new Button("Up", "ArrowUp.png", Transformation(650, 200), Color::None, fptr, "Up", engine);
-
-	fptr = std::bind(&ScrollView::decrBase, this);
-	down = new Button("Down", "ArrowDown.png", Transformation(650, 200 + 32 * 9), Color::None, fptr, "Down", engine);
 	nbrCell = 0;
 	base = 0;
+
+	callback fptr;
+	fptr = std::bind(&ScrollView::incrBase, this);
+	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(650, 200), Color::None, fptr, "Up", engine));
+
+	fptr = std::bind(&ScrollView::decrBase, this);
+	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(650, 200 + 32 * 9), Color::None, fptr, "Down", engine));
 }
 
 ScrollView::~ScrollView()
@@ -19,13 +21,13 @@ ScrollView::~ScrollView()
 	for (Cell *cell : listCell) {
 		delete(cell);
 	}
-	delete(up);
-	delete(down);
+	for (Button *b : buttons)
+		delete(b);
 }
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(350, 230 + nbrCell * 32), name, nbr, engine));
+	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(350, 230), name, nbr, engine));
 	++nbrCell;
 }
 
@@ -45,7 +47,7 @@ void ScrollView::isSelect()
 void ScrollView::incrBase()
 {
 	DEBUG_MSG("Increment Base");
-	if (base < (listCell.size() - nbrDiplayCell))
+	if (base < ((int)listCell.size() - nbrDiplayCell))
 		++base;
 }
 
@@ -63,45 +65,52 @@ const std::string & ScrollView::getId() const
 
 void ScrollView::draw()
 {
-	int i = base;
+	int i = 0;
 
 	for (Cell *c : listCell) {
-		if (i < (base + nbrDiplayCell))
+		if (i >= base && i < (base + nbrDiplayCell)) {
+			c->getTransformation().setPosition(350, 230 + (i - base) * 32);
 			c->draw();
+		}
 		++i;
 	}
-	up->draw();
-	down->draw();
+	for (Button *b : buttons)
+		b->draw();
+}
+
+const Transformation & ScrollView::getTransformation() const
+{
+	return Transformation();
 }
 
 void ScrollView::onAction()
 {
-
 }
 
 void ScrollView::onHover(uint32_t x, uint32_t y)
 {
 	int i = 0;
-
 	for (Cell *c : listCell) {
-		if (i < (base + nbrDiplayCell))
+		if (i >= base && i < (base + nbrDiplayCell))
 			c->onHover(x, y);
 		++i;
 	}
-	up->onHover(x, y);
-	down->onHover(x, y);
+	for (Button *b : buttons)
+		b->onHover(x, y);
 }
 
 bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 {
+	int i = 0;
 	for (Cell *c : listCell) {
-		if (c->isPressed(x, y) == true)
-			;
+		if (i >= base && i < (base + nbrDiplayCell))
+			if (c->isPressed(x, y))
+				c->onHover(x, y);
+		++i;
 	}
-	if (up->isPressed(x, y))
-		up->onAction();
-	if (down->isPressed(x, y))
-		down->onAction();
+	for (Button *b : buttons)
+		if (b->isPressed(x, y))
+			b->onAction();
 	return false;
 }
 
