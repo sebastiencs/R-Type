@@ -48,7 +48,10 @@ const Color & Button::getColor() const
 
 void Button::draw()
 {
-	_engine->drawSprite(_sprite);
+	if (_engine)
+		_engine->drawSprite(_sprite);
+	else
+		DEBUG_MSG("No instance of GraphicEngine");
 }
 
 const std::string& Button::getId() const

@@ -110,6 +110,16 @@ void GraphicEngine::setCallbackFunction(callback fct, void * arg)
 	callbackArg = arg;
 }
 
+void GraphicEngine::setMouseClickCallback(mouseCallback call)
+{
+	_mouseClickCall = call;
+}
+
+void GraphicEngine::setMouseMovedCallback(mouseCallback call)
+{
+	_mouseMoveCall = call;
+}
+
 int GraphicEngine::getWindowWidth() const
 {
 	return windowWidth;
