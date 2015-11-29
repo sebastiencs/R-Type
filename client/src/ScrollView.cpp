@@ -22,28 +22,3 @@ void ScrollView::createCell(const std::string& name, int nbr)
 void ScrollView::isSelect()
 {
 }
-
-Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine)
-{
-	_id = id;
-
-	std::string txt = "[";
-	txt += name;
-	txt += "]";
-	txt += "   ";
-	txt += std::to_string(nbrPlayers);
-	txt += "/4";
-	engine->displayTextField(txt, transformation, 22, "Fipps.otf", Color::White, "TextField" + _id);
-}
-
-Cell::~Cell()
-{
-	std::string id;
-	id = "TextField" + _id;
-	engine->eraseTextField(id);
-}
-
-const std::string& Cell::getId() const
-{
-	return _id;
-}
