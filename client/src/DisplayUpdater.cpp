@@ -78,3 +78,4 @@ void DisplayUpdater::game()
 	//	PackageStorage::getInstance().deleteShotsPackage();
 	//}
 }
+

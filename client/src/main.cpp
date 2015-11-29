@@ -27,12 +27,6 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 	}
 #endif // !_WIN32
 
-#ifdef _WIN32
-	WSA::clean();
-#endif // !_WIN32
-
-
-
 	try {
 		Packager *packager = new Packager();
 		/*IGraphicEngine* engine = new GraphicEngine(packager);*/
@@ -56,5 +50,10 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 		system("pause");
 #endif
 	}
+
+#ifdef _WIN32
+	WSA::clean();
+#endif // !_WIN32
+
 	return (0);
 }

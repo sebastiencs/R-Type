@@ -7,6 +7,7 @@
 # include "Color.hh"
 
 typedef std::function<void()> callback;
+typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
 
 class IGraphicEngine {
 public:
