@@ -2,7 +2,7 @@
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng, Packager* packager)
 {
-	packager = packager;
+	this->packager = packager;
 	engine = eng;
 	scrollView = new ScrollView(engine);
 }
@@ -15,7 +15,12 @@ OnlineMenu::~OnlineMenu()
 void OnlineMenu::createRequestPartiesPaquet()
 {
 	packager->createGameListPackage();
-	scrollView->createCell();
+	PaquetListParties *list = new PaquetListParties();
+	list->addParty("First try", 2);
+	list->addParty("Second try", 1);
+	for (PartyNB party : list->getParties()) {
+		scrollView->createCell(std::get<0>(party), std::get<1>(party));
+	}
 	DEBUG_MSG("Create Request Parties Paquet");
 }
 

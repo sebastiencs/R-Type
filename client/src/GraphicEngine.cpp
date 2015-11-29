@@ -88,7 +88,8 @@ void GraphicEngine::launch()
 			// a mettre dans la callback?
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
 				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
-					window->draw(drawable->getSprite());
+					/*if (drawable->getVisible() == true)*/
+						window->draw(drawable->getSprite());
 			}
 
 			// temporaire : seulement pour les textfield en attendant de fix l'interface
