@@ -14,9 +14,12 @@ public:
 
 	virtual const std::string& getId() const;
 	virtual const sf::Sprite& getSprite() const;
+	virtual const bool getVisible() const;
+	virtual void setVisible(bool visible);
 
 	void displayText();
 private:
+	bool _visible;
 	std::string text;
 	std::string id;
 	uint16_t size;

@@ -23,8 +23,11 @@ public:
 	const Color& getColor() const;
 	const sf::Sprite& getSprite() const;
 	const std::string& getId() const;
+	void setVisible(bool visible);
+	const bool getVisible() const;
 
 private:
+	bool _visible;
 	sf::Sprite _sprite;
 	Color _color;
 	std::string _id;

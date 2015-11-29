@@ -12,15 +12,11 @@ ScrollView::~ScrollView()
 	}
 }
 
-void ScrollView::createCell()
+void ScrollView::createCell(const std::string& name, int nbr)
 {
 	static unsigned int i = 0;
 
-	listCell.push_front(new Cell(std::to_string(i), Transformation(350, 230), "La party des Bg", 2, engine));
-	++i;
-	listCell.push_front(new Cell(std::to_string(i), Transformation(350, 260), "Nique Ta mère", 1, engine));
-	++i;
-	listCell.push_front(new Cell(std::to_string(i), Transformation(350, 290), "Boris == Bego", 4, engine));
+	listCell.push_back(new Cell(std::to_string(i), Transformation(350, 230), name, nbr, engine));
 }
 
 void ScrollView::isSelect()

@@ -22,7 +22,7 @@ public:
 	ScrollView(IGraphicEngine *engine);
 	virtual ~ScrollView();
 
-	void createCell();
+	void createCell(const std::string& name, int nbr);
 	void isSelect();
 
 private:
