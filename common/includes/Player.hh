@@ -40,7 +40,7 @@ public:
   virtual int			getLife() const;
   virtual void			setLife(int);
 
-  virtual uint16_t		getID() const;
+  virtual uint8_t		getID() const;
   virtual void			setID(uint16_t);
 
   virtual const std::string	&getName() const;

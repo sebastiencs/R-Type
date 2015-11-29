@@ -81,7 +81,7 @@ void			Player::setLife(int life)
   _life = life;
 }
 
-uint16_t		Player::getID() const
+uint8_t			Player::getID() const
 {
   return (_id);
 }
