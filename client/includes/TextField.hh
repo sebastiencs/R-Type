@@ -16,6 +16,8 @@ public:
 	//IDrawable
 	virtual const std::string& getId() const;
 	virtual const sf::Sprite& getSprite() const;
+	virtual const Transformation& getTransformation() const;
+	virtual Transformation& getTransformation();
 	virtual bool getVisible() const;
 	virtual void setVisible(bool visible);
 	virtual void draw();

@@ -19,6 +19,8 @@ public:
 	virtual const sf::Sprite& getSprite() const;
 	const std::string& getId() const;
 	virtual void draw();
+	const Transformation& getTransformation() const;
+	virtual Transformation & getTransformation();
 
 	//ICallback
 	virtual void onAction();

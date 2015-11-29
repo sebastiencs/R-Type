@@ -26,6 +26,16 @@ const sf::Sprite & TextField::getSprite() const
 	return *sprite;
 }
 
+const Transformation & TextField::getTransformation() const
+{
+	return t;
+}
+
+Transformation & TextField::getTransformation()
+{
+	return t;
+}
+
 bool TextField::getVisible() const
 {
 	return _visible;

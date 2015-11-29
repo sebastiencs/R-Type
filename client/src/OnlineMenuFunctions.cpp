@@ -49,6 +49,8 @@ void OnlineMenu::onClick(uint32_t x, uint32_t y)
 			b->onAction();
 		}
 	}
+	if (scrollView->isPressed(x, y))
+		scrollView->onAction();
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)

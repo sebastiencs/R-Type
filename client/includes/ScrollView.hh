@@ -13,6 +13,7 @@ public:
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
+
 	void emptyCell();
 	void isSelect();
 
@@ -23,6 +24,7 @@ public:
 	//IDrawable
 	virtual const std::string& getId() const;
 	virtual void draw();
+	virtual const Transformation & getTransformation() const;
 
 	//ICallback
 	virtual void onAction();
@@ -33,8 +35,7 @@ public:
 private:
 	IGraphicEngine *engine;
 	std::list<Cell *> listCell;
-	Button *up;
-	Button *down;
+	std::list<Button* > buttons;
 	std::string selectedCell;
 	std::string id;
 
