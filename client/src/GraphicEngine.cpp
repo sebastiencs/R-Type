@@ -136,6 +136,18 @@ void GraphicEngine::transformSprite(sf::Sprite& sprite, const Transformation& t,
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 }
 
+void GraphicEngine::transformSprite(sf::Text& sprite, const Transformation& t, const Color& color)
+{
+	if (t.hasPosition())
+		sprite.setPosition(t.getX(), t.getY());
+	if (t.hasRotation())
+		sprite.rotate(t.getRotation());
+	if (color.isUsed())
+		sprite.setColor(sf::Color(color.getColor()));
+	if (t.hasScale())
+		sprite.setScale(t.getScaleX(), t.getScaleY());
+}
+
 bool GraphicEngine::loadImageFromFile(const std::string& file)
 {
 	if (cachedImages.find(file) != cachedImages.end())
@@ -268,10 +280,7 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	textToDraw.setFont(*cachedFonts[fontName]);
 	textToDraw.setString(text);
 	textToDraw.setCharacterSize(size);
-	if (t.hasPosition())
-		textToDraw.setPosition(t.getX(), t.getY());
-	if (color.isUsed())
-		textToDraw.setColor(sf::Color(color.getColor()));
+	transformSprite(textToDraw, t, color);
 	window->draw(textToDraw);
 }
 

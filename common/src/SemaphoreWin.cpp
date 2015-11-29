@@ -46,9 +46,10 @@ bool	SemaphoreWin::wait()
 
 bool	SemaphoreWin::tryWait()
 {
-  if (!(WaitForSingleObject(_sem, 1) == WAIT_TIMEOUT))) {
+  if ((WaitForSingleObject(_sem, 1)) == WAIT_TIMEOUT) {
     DEBUG_MSG("WaitForSIngleObject() failed");
-    return (false);
+    return (true);
   }
+  DEBUG_MSG("WaitForSIngleObject() failed");
   return (true);
 }

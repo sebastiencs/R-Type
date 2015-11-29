@@ -10,18 +10,30 @@ PackageTranslator::~PackageTranslator()
 {
 }
 
-Paquet * PackageTranslator::BufferToPaquet(const Buffer& buff)
+void PackageTranslator::BufferToPaquet(const Buffer& buff)
 {
-  Paquet*	paquet = new Paquet(buff.get(), buff.size());
-
-  return paquet;
+	Paquet*	paquet = new Paquet(buff.get(), buff.size());
+	PackageStorage::getInstance().storeReceivedPackage(paquet);
 }
 
-Buffer * PackageTranslator::PaquetToBuffer(const Paquet& paquet)
+void PackageTranslator::PaquetToBuffer(const Paquet& paquet)
 {
   Buffer *buf = new Buffer();
   
   buf->set(paquet.getData(), paquet.getSize());
-  return buf;
+//  PackageStorage::getInstance().storeToSendPackage(buf);
 }
 
+Paquet* PackageTranslator::TranslatePaquet(const Buffer& buff)
+{
+	Paquet*	paquet = new Paquet(buff.get(), buff.size());
+	return paquet;
+}
+
+Buffer* PackageTranslator::TranslateBuffer(const Paquet& paquet)
+{
+	Buffer *buf = new Buffer();
+
+	buf->set(paquet.getData(), paquet.getSize());
+	return buf;
+}

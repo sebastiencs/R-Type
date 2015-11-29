@@ -11,7 +11,7 @@
 #ifndef SEMAPHOREWIN_H_
 # define SEMAPHOREWIN_H_
 
-# include <windows.h>
+# include "SocketsWin.hh"
 # include "ISemaphore.hh"
 # include "Debug.hh"
 

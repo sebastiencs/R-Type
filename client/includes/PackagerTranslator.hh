@@ -6,15 +6,14 @@
 #include "Buffer.hh"
 
 class PackageTranslator {
-private:
-  PackageStorage* storage UNUSED; // Enlevez UNUSED quand vous l'utiliserez
-
 public:
   PackageTranslator();
   virtual ~PackageTranslator();
 
-  Paquet* BufferToPaquet(const Buffer& buff);
-  Buffer* PaquetToBuffer(const Paquet& paquet);
+  void BufferToPaquet(const Buffer& buff);
+  void PaquetToBuffer(const Paquet& paquet);
+  Paquet* TranslatePaquet(const Buffer& buff);
+  Buffer* TranslateBuffer(const Paquet& paquet);
 };
 
 #endif /* !PACKAGETRANSLATOR_HH */
