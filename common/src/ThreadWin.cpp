@@ -65,7 +65,7 @@ void	*jump(void *arg)
 
 bool	ThreadWin::close()
 {
-  if (TerminateThread(_thread, EXIT_SUCCESS))
+  if (!TerminateThread(_thread, EXIT_SUCCESS))
     return (join());
   _running = false;
   DEBUG_MSG("ThreadWin ended");

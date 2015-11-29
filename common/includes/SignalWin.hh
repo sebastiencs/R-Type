@@ -17,6 +17,8 @@
 # include "Debug.hh"
 # include "ISignal.hh"
 
+typedef std::map<int, Handler_t>	listHandler;
+
 class		SignalWin : public ISignal
 {
 private:
