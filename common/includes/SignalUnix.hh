@@ -13,8 +13,8 @@
 
 # include <functional>
 # include <map>
-# include "ISignal.hh"
 # include <signal.h>
+# include "ISignal.hh"
 
 typedef std::map<int, Handler_t>	listHandler;
 

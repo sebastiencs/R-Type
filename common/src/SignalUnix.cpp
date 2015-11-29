@@ -12,7 +12,6 @@
 #include <signal.h>
 #include "Debug.hh"
 #include "SignalUnix.hh"
-#include "Server.hh"
 
 SignalUnix::SignalUnix()
 {
