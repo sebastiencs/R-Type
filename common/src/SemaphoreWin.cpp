@@ -36,7 +36,7 @@ bool	SemaphoreWin::post()
 
 bool	SemaphoreWin::wait()
 {
-  //WaitForSingleObject -> flag
+  //WaitForSingleObject//WaitForMultipleObjects
   if (!(WaitForSingleObject(_sem, INFINITE))) {
     DEBUG_MSG("WaitForSIngleObject() failed");
     return (false);
@@ -46,8 +46,7 @@ bool	SemaphoreWin::wait()
 
 bool	SemaphoreWin::tryWait()
 {
-  //WaitForSingleObject -> flag
-  if (!(WaitForSingleObject(_sem, INFINITE))) {
+  if (!(WaitForSingleObject(_sem, 1) == WAIT_TIMEOUT))) {
     DEBUG_MSG("WaitForSIngleObject() failed");
     return (false);
   }
