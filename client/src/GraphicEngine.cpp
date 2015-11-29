@@ -4,6 +4,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
 	callbackArg = nullptr;
 	call = nullptr;
+	window = nullptr;
 	_timer.start();
 	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
@@ -74,6 +75,8 @@ void GraphicEngine::handleEvents()
 
 void GraphicEngine::launch()
 {
+	if (!window)
+		throw std::exception("No window created, use createWindow function before using launch");
 	while (window->isOpen())
 	{
 		if (_timer.ms() >= MS_REFRESH)
