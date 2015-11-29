@@ -16,7 +16,6 @@
 # include "ISignal.hh"
 # include <signal.h>
 
-typedef std::function<void (void)>	Handler_t;
 typedef std::map<int, Handler_t>	listHandler;
 
 class		Server;

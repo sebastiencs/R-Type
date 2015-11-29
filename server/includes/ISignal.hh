@@ -15,12 +15,14 @@
 
 class		Server;
 
+typedef std::function<void (void)>	Handler_t;
+
 class		ISignal
 {
 public:
   virtual ~ISignal() {};
 
-  virtual void	addSignal(int, std::function<void (void)>) = 0;
+  virtual void	addSignal(int signal_id, Handler_t handler) = 0;
   virtual void	callHandler(int) = 0;
 };
 
