@@ -56,8 +56,8 @@ public:
 	virtual void handleEvents();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
-	virtual void setMouseClickCallback(callback);
-	virtual void setMouseMovedCallback(callback);
+	virtual void setMouseClickCallback(mouseCallback);
+	virtual void setMouseMovedCallback(mouseCallback);
 
 
 	virtual int getWindowWidth() const;
@@ -75,8 +75,8 @@ protected:
 	Packager* _packager;
 	Timer _timer;
 	callback call;
-	callback _mouseClickCall;
-	callback _mouseMoveCall;
+	mouseCallback _mouseClickCall;
+	mouseCallback _mouseMoveCall;
 	int windowWidth;
 	int windowHeight;
 	void* callbackArg;
