@@ -12,23 +12,43 @@
 
 SemaphoreWin::SemaphoreWin()
 {
+  if (!(_sem = CreateSemaphore(nullptr, 0, 1000, nullptr))) {
+    DEBUG_MSG("CreateSemaphore() failed");
+  }
 }
 
 SemaphoreWin::~SemaphoreWin()
 {
+  if (!CloseHandle(_sem)) {
+    DEBUG_MSG("CloseHandle() failed");
+  }
 }
 
 bool	SemaphoreWin::post()
 {
+  LONG previousCount;
+  if (!(ReleaseSemaphore(_sem, 1, &previousCount))) {
+    DEBUG_MSG("ReleaseSemaphore() failed");
+    return (false);
+  }
   return (true);
 }
 
 bool	SemaphoreWin::wait()
 {
+  //WaitForSingleObject//WaitForMultipleObjects
+  if (!(WaitForSingleObject(_sem, INFINITE))) {
+    DEBUG_MSG("WaitForSIngleObject() failed");
+    return (false);
+  }
   return (true);
 }
 
 bool	SemaphoreWin::tryWait()
 {
+  if (!(WaitForSingleObject(_sem, 1) == WAIT_TIMEOUT))) {
+    DEBUG_MSG("WaitForSIngleObject() failed");
+    return (false);
+  }
   return (true);
 }

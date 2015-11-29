@@ -11,13 +11,14 @@
 #ifndef SEMAPHOREWIN_H_
 # define SEMAPHOREWIN_H_
 
+# include <windows.h>
 # include "ISemaphore.hh"
 # include "Debug.hh"
 
 class		SemaphoreWin : public ISemaphore
 {
 private:
-  // sem_t		_sem;
+  HANDLE	_sem;
 
 public:
   SemaphoreWin();

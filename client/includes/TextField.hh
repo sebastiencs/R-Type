@@ -20,7 +20,6 @@ public:
 	virtual void setVisible(bool visible);
 	virtual void draw();
 
-	void displayText();
 private:
 	bool _visible;
 	std::string text;

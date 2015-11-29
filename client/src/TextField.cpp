@@ -40,8 +40,3 @@ void TextField::draw()
 {
 	engine->drawText(text, t, size, color, font);
 }
-
-void TextField::displayText()
-{
-	engine->drawText(text, t, size, color, font);
-}
