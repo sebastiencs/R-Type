@@ -10,7 +10,7 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", eng));
-
+	
 	transformation.setPosition(50, 300);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
 	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", eng));
@@ -31,6 +31,17 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	eng->setMouseClickCallback(fptr2);
 	fptr2 = std::bind(&MainMenu::onHover, this, std::placeholders::_1, std::placeholders::_2);
 	eng->setMouseMovedCallback(fptr2);
+
+	rTypeLabel = new TextField("R-Type", Transformation(100, 100), DEFAULT_FONT_SIZE + 10, "Fipps.otf", Color::None, "rtypeLabel", engine);
+}
+
+MainMenu::~MainMenu() {
+	for (Button* b : buttons)
+		if (b)
+			delete b;
+	buttons.clear();
+	if (rTypeLabel)
+		delete rTypeLabel;
 }
 
 void MainMenu::changedMenu()
@@ -50,7 +61,7 @@ void MainMenu::draw()
 {
 	for (Button* b : buttons)
 		b->draw();
-
+	rTypeLabel->draw();
 	/*if (currentPage == 1)
 		onlineMenu->menu();*/
 }
