@@ -87,9 +87,9 @@ void GraphicEngine::launch()
 
 			// a mettre dans la callback?
 			for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
-				if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
-					if (drawable->getVisible() == true)
-						window->draw(drawable->getSprite());
+				//if (IDrawable* drawable = dynamic_cast<IDrawable*>((*it)))
+					/*if (drawable->getVisible() == true)*/
+						/*window->draw(drawable->getSprite());*/
 			}
 
 			// temporaire : seulement pour les textfield en attendant de fix l'interface
@@ -119,6 +119,28 @@ int GraphicEngine::getWindowWidth() const
 int GraphicEngine::getWindowHeight() const
 {
 	return windowHeight;
+}
+
+const sf::Texture& GraphicEngine::loadTexture(const std::string& img)
+{
+	if (cachedImages.find(img) == cachedImages.end() &&
+		!loadImageFromFile(img)) {
+		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
+		return *None;
+	}
+	return *cachedImages[img];
+}
+
+void GraphicEngine::transformSprite(sf::Sprite& sprite, const Transformation& t, const Color& color)
+{
+	if (t.hasPosition())
+		sprite.setPosition(t.getX(), t.getY());
+	if (t.hasRotation())
+		sprite.rotate(t.getRotation());
+	if (color.isUsed())
+		sprite.setColor(sf::Color(color.getColor()));
+	if (t.hasScale())
+		sprite.setScale(t.getScaleX(), t.getScaleY());
 }
 
 bool GraphicEngine::loadImageFromFile(const std::string& file)
@@ -157,16 +179,7 @@ void GraphicEngine::displayButton(const std::string& txt, const std::string & im
 		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
 		return;
 	}
-	sf::Sprite sprite(*cachedImages[img]);
-	if (t.hasPosition())
-		sprite.setPosition(t.getX(), t.getY());
-	if (t.hasRotation())
-		sprite.rotate(t.getRotation());
-	if (color.isUsed())
-		sprite.setColor(sf::Color(color.getColor()));
-	if (t.hasScale())
-		sprite.setScale(t.getScaleX(), t.getScaleY());
-	elements.push_front(new Button(txt, img, sprite, t, color, fptr, id));
+	elements.push_front(new Button(txt, img, t, color, fptr, id, this));
 }
 
 void GraphicEngine::eraseButton(const std::string & id)
@@ -201,14 +214,7 @@ void GraphicEngine::drawImage(const std::string& name, const Transformation& t, 
 		return;
 	}
 	sf::Sprite sprite(*cachedImages[name]);
-	if (t.hasPosition())
-		sprite.setPosition(t.getX(), t.getY());
-	if (t.hasRotation())
-		sprite.rotate(t.getRotation());
-	if (color.isUsed())
-		sprite.setColor(sf::Color(color.getColor()));
-	if (t.hasScale())
-		sprite.setScale(t.getScaleX(), t.getScaleY());
+	transformSprite(sprite, t, color);
 	window->draw(sprite);
 }
 
@@ -236,14 +242,7 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 		subRect.height = cachedImages[name]->getSize().x;
 	}
 	sf::Sprite sprite(*cachedImages[name], subRect);
-	if (t.hasPosition())
-		sprite.setPosition(t.getX(), t.getY());
-	if (t.hasRotation())
-		sprite.rotate(t.getRotation());
-	if (color.isUsed())
-		sprite.setColor(sf::Color(color.getColor()));
-	if (t.hasScale())
-		sprite.setScale(t.getScaleX(), t.getScaleY());
+	transformSprite(sprite, t, color);
 	window->draw(sprite);
 }
 
@@ -277,3 +276,5 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 		textToDraw.setColor(sf::Color(color.getColor()));
 	window->draw(textToDraw);
 }
+
+const sf::Texture* GraphicEngine::None = new sf::Texture();

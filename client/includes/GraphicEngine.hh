@@ -59,6 +59,11 @@ public:
 	virtual int getWindowWidth() const;
 	virtual int getWindowHeight() const;
 
+	const sf::Texture& loadTexture(const std::string& img);
+	void transformSprite(sf::Sprite&, const Transformation&, const Color& color = Color::None);
+
+	static const sf::Texture* None;
+
 protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);

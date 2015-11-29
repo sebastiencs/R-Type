@@ -6,7 +6,6 @@
 # include "Transformation.hh"
 # include "Color.hh"
 
-//typedef void(*callback)(void*);
 typedef std::function<void()> callback;
 
 class IGraphicEngine {

@@ -1,9 +1,14 @@
 #include "Button.hh"
 
 
-Button::Button(const std::string & text, const std::string& img, const sf::Sprite & sprite, const Transformation & t, const Color & color, std::function<void()> fptr, const std::string& id)
-	: _text(text), _textureName(img), _sprite(sprite), _fptr(fptr), _t(t), _color(color), _id(id), _visible(true)
+Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, GraphicEngine* engine)
+	: _text(text), _textureName(img), _fptr(fptr), _t(t), _color(color), _id(id), _engine(engine)
 {
+	if (_engine)
+	{
+		_sprite.setTexture(engine->loadTexture(img));
+		engine->transformSprite(_sprite, t, color);
+	}
 }
 
 Button::~Button()
@@ -26,7 +31,7 @@ const std::string & Button::getTextureName() const
 	return _textureName;
 }
 
-const std::function<void()>& Button::getCallback() const
+const callback& Button::getCallback() const
 {
 	return _fptr;
 }
@@ -41,19 +46,14 @@ const Color & Button::getColor() const
 	return (_color);
 }
 
+void Button::draw()
+{
+	_engine->drawImage(_text, _t, _color);
+}
+
 const std::string& Button::getId() const
 {
 	return _id;
-}
-
-void Button::setVisible(bool visible)
-{
-	_visible = visible;
-}
-
-bool Button::getVisible() const
-{
-	return _visible;
 }
 
 

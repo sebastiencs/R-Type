@@ -4,37 +4,39 @@
 # include "GraphicEngine.hh"
 # include "ICallBack.hh"
 
+class GraphicEngine;
+
 class Button : public IDrawable, public ICallback
 {
 public:
-	Button(const std::string& text, const std::string& img, const sf::Sprite& sprite, const Transformation& t, const Color& color, std::function<void()> fptr, const std::string& id);
+	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, GraphicEngine* engine);
 	virtual ~Button();
 
 	// ICallback
 	bool isPressed(uint32_t x, uint32_t y) const;
 	void onAction();
 	void onHover(uint32_t x, uint32_t y);
-	const std::function<void()>& getCallback() const;
+	const callback& getCallback() const;
 
 	// IDrawable
+	virtual void draw();
+	virtual const std::string& getId() const;
+	virtual const sf::Sprite& getSprite() const;
+
 	const std::string& getName() const;
 	const std::string& getTextureName() const;
 	const Transformation& getTransformation() const;
 	const Color& getColor() const;
-	const sf::Sprite& getSprite() const;
-	const std::string& getId() const;
-	void setVisible(bool visible);
-	bool getVisible() const;
 
 private:
-	bool _visible;
+	GraphicEngine* _engine;
 	sf::Sprite _sprite;
 	Color _color;
 	std::string _id;
 	Transformation _t;
 	std::string _text;
 	std::string _textureName;
-	std::function<void()> _fptr;
+	callback _fptr;
 };
 
 #endif /* BUTTON_H_ */
