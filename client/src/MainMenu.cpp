@@ -49,6 +49,14 @@ void MainMenu::draw()
 		onlineMenu->menu();*/
 }
 
+void MainMenu::onClick(uint32_t x, uint32_t y)
+{
+	for (Button *b : buttons) {
+		if (b->isPressed(x, y)) {
+			b->onAction();
+		}
+	}
+}
 
 void MainMenu::setDisplayOnline()
 {
