@@ -22,3 +22,34 @@ void ScrollView::createCell(const std::string& name, int nbr)
 void ScrollView::isSelect()
 {
 }
+
+const std::string & ScrollView::getId() const
+{
+	return id;
+}
+
+void ScrollView::draw()
+{
+	for (Cell *c : displayedCell) {
+		c->draw();
+	}
+}
+
+void ScrollView::onAction()
+{
+}
+
+void ScrollView::onHover(uint32_t x, uint32_t y)
+{
+}
+
+bool ScrollView::isPressed(uint32_t x, uint32_t y) const
+{
+	return false;
+}
+
+const callback & ScrollView::getCallback() const
+{
+	return nullptr;
+}
+

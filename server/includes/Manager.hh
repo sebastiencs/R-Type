@@ -36,7 +36,7 @@ public:
   Manager();
   virtual ~Manager();
 
-  void		deletePlayer(socket_t);
+  void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
   void		setNetwork(Network *);
   uint8_t	getID() const;

@@ -16,9 +16,10 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 
 Cell::~Cell()
 {
-	std::string id;
+	/*std::string id;
 	id = "TextField" + _id;
-	engine->eraseTextField(id);
+	engine->eraseTextField(id);*/
+	delete textField;
 }
 
 const sf::Sprite & Cell::getSprite() const
