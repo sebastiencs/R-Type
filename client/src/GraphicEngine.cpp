@@ -172,44 +172,44 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	return true;
 }
 
-void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, const std::string& id)
-{
-	for (ICallback* element : elements) {
-		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
-			if (b->getId() == id)
-				return;
-	}
-	if (cachedImages.find(img) == cachedImages.end() &&
-		!loadImageFromFile(img)) {
-		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
-		return;
-	}
-	elements.push_front(new Button(txt, img, t, color, fptr, id, this));
-}
-
-void GraphicEngine::eraseButton(const std::string & id)
-{
-	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
-		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
-			if (b->getId() == id) {
-				elements.remove(*it);
-				return;
-			}
-
-	}
-}
-
-void GraphicEngine::eraseTextField(const std::string & id)
-{
-	for (IDrawable* element : dElements) {
-		if (element->getId() == id) {
-			dElements.remove(element);
-			delete(element);
-			return;
-		}
-	}
-
-}
+//void GraphicEngine::displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr, const std::string& id)
+//{
+//	for (ICallback* element : elements) {
+//		if (IDrawable* b = dynamic_cast<IDrawable* >(element))
+//			if (b->getId() == id)
+//				return;
+//	}
+//	if (cachedImages.find(img) == cachedImages.end() &&
+//		!loadImageFromFile(img)) {
+//		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
+//		return;
+//	}
+//	elements.push_front(new Button(txt, img, t, color, fptr, id, this));
+//}
+//
+//void GraphicEngine::eraseButton(const std::string & id)
+//{
+//	for (std::list<ICallback *>::iterator it = elements.begin(); it != elements.end(); it++) {
+//		if (IDrawable* b = dynamic_cast<IDrawable*>((*it)))
+//			if (b->getId() == id) {
+//				elements.remove(*it);
+//				return;
+//			}
+//
+//	}
+//}
+//
+//void GraphicEngine::eraseTextField(const std::string & id)
+//{
+//	for (IDrawable* element : dElements) {
+//		if (element->getId() == id) {
+//			dElements.remove(element);
+//			delete(element);
+//			return;
+//		}
+//	}
+//
+//}
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
@@ -256,16 +256,16 @@ void GraphicEngine::drawSprite(const sf::Sprite & sprite)
 	window->draw(sprite);
 }
 
-void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
-{
-	for (IDrawable* element : dElements) {
-		if (element->getId() == _id) {
-			return;
-		}
-	}
-	TextField * tf = new TextField(_text, t, size, font, color, _id, this);
-	dElements.push_front(tf);
-}
+//void GraphicEngine::displayTextField(const std::string & _text, const Transformation & t, uint16_t size, const std::string & font, const Color & color, const std::string & _id)
+//{
+//	for (IDrawable* element : dElements) {
+//		if (element->getId() == _id) {
+//			return;
+//		}
+//	}
+//	TextField * tf = new TextField(_text, t, size, font, color, _id, this);
+//	dElements.push_front(tf);
+//}
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	uint16_t size, const Color& color, const std::string& font)
