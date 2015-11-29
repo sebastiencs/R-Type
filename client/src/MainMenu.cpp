@@ -58,6 +58,13 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 	}
 }
 
+void MainMenu::onHover(uint32_t x, uint32_t y)
+{
+	for (Button *b : buttons) {
+		b->onHover(x, y);
+	}
+}
+
 void MainMenu::setDisplayOnline()
 {
 	currentPage = 1;
