@@ -30,12 +30,13 @@ void		SignalUnix::addSignal(int sig, Handler_t handler)
   _listHandler[sig] = handler;
 }
 
-void		SignalUnix::callHandler(int sig)
+bool		SignalUnix::callHandler(int sig)
 {
   DEBUG_MSG("SignalUnix received");
   if (_listHandler.find(sig) != _listHandler.end()) {
     _listHandler[sig]();
   }
+  return (true);
 }
 
 SignalUnix		*class_save(SignalUnix *ptr_class = nullptr)

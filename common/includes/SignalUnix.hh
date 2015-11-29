@@ -30,7 +30,7 @@ public:
   virtual ~SignalUnix();
 
   virtual void	addSignal(int, Handler_t);
-  virtual void	callHandler(int sig);
+  virtual bool	callHandler(int sig);
 };
 
 void		sig_handler(int);
