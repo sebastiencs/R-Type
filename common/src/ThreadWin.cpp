@@ -60,7 +60,7 @@ void	*unused(void *param)
 void	*jump(void *arg)
 {
   std::function<void *(void *)> f = save_func(unused, 0);
-	return (f(arg));
+  return (f(arg));
 }
 
 bool	ThreadWin::close()
