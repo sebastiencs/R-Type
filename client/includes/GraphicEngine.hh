@@ -28,7 +28,7 @@
 # define FONT_PATH "ressources/fonts/"
 # define DEFAULT_FONT "default.ttf"
 # define DEFAULT_FONT_SIZE 12
-# define MS_REFRESH 33.3
+# define MS_REFRESH 33
 
 class Button;
 class IDrawable;

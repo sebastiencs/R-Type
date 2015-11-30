@@ -16,7 +16,7 @@ public:
 	virtual ~Cell();
 
 	const std::string& getNameParty();
-	const int getNbrPlayers();
+	int getNbrPlayers();
 
 	//IDrawable
 	virtual const sf::Sprite& getSprite() const;

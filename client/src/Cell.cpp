@@ -30,7 +30,7 @@ const std::string & Cell::getNameParty()
 	return nameParty;
 }
 
-const int Cell::getNbrPlayers()
+int Cell::getNbrPlayers()
 {
 	return nbrPlayers;
 }
@@ -77,7 +77,7 @@ void Cell::onHover(uint32_t x, uint32_t y)
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const
 {
-	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * strlen(textField->getId().c_str())) &&
+	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * textField->getId().size()) &&
 		y >= textField->getTransformation().getY() && y <= (textField->getTransformation().getY() + 32))
 		return true;
 	return false;
