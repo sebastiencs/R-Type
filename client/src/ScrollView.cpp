@@ -1,19 +1,20 @@
 #include <ScrollView.hh>
 
 
-ScrollView::ScrollView(int nbrDiplayCell, IGraphicEngine *engine)
+ScrollView::ScrollView(Transformation transformation, int nbrDiplayCell, IGraphicEngine *engine)
 {
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
+	this->transformation = transformation;
 	nbrCell = 0;
 	base = 0;
 
 	callback fptr;
 	fptr = std::bind(&ScrollView::decrBase, this);
-	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(650, 200), Color::None, fptr, "Up", engine));
+	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
 
 	fptr = std::bind(&ScrollView::incrBase, this);
-	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(650, 200 + 32 * 9), Color::None, fptr, "Down", engine));
+	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY() + transformation.getHeight()), Color::None, fptr, "Down", engine));
 }
 
 ScrollView::~ScrollView()
@@ -27,7 +28,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(350, 230), name, nbr, engine));
+	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(transformation.getX(), transformation.getY()), name, nbr, engine));
 	++nbrCell;
 }
 
@@ -79,7 +80,7 @@ void ScrollView::draw()
 
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
-			c->getTransformation().setPosition(350, 230 + (i - base) * 32);
+			c->getTransformation().setPosition(transformation.getX(), (transformation.getY() + 50) + (i - base) * 32);
 			c->draw();
 		}
 		++i;

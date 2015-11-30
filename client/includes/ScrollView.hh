@@ -9,7 +9,7 @@
 class ScrollView : public IDrawable, public ICallback
 {
 public:
-	ScrollView(int nbrDiplayCell, IGraphicEngine *engine);
+	ScrollView(Transformation transformation, int nbrDiplayCell, IGraphicEngine *engine);
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
@@ -34,6 +34,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
+	Transformation transformation;
 	std::list<Cell *> listCell;
 	std::list<Button* > buttons;
 	std::string selectedCell;

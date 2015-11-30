@@ -3,7 +3,9 @@
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
 	engine = eng;
-	scrollView = new ScrollView(9, engine);
+	Transformation t(350, 150);
+	t.setBounds(300, 250);
+	scrollView = new ScrollView(t, 9, engine);
 }
 
 OnlineMenu::~OnlineMenu()

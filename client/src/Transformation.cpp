@@ -6,6 +6,7 @@ Transformation::Transformation()
 	_hasCrop = false;
 	_hasRotation = false;
 	_hasScale = false;
+	_hasBounds = false;
 	_posX = 0;
 	_posY = 0;
 	_rotation = 0;
@@ -15,6 +16,8 @@ Transformation::Transformation()
 	crop[SRCHEIGHT] = 0;
 	_scaleX = 1;
 	_scaleY = 1;
+	_width = 0;
+	_height = 0;
 }
 
 Transformation::Transformation(uint16_t x, uint16_t y)
@@ -23,6 +26,7 @@ Transformation::Transformation(uint16_t x, uint16_t y)
 	_hasCrop = false;
 	_hasRotation = false;
 	_hasScale = false;
+	_hasBounds = false;
 	_rotation = 0;
 	crop[SRCX] = 0;
 	crop[SRCY] = 0;
@@ -30,6 +34,8 @@ Transformation::Transformation(uint16_t x, uint16_t y)
 	crop[SRCHEIGHT] = 0;
 	_scaleX = 1;
 	_scaleY = 1;
+	_width = 0;
+	_height = 0;
 }
 
 Transformation::~Transformation()
@@ -65,6 +71,13 @@ void Transformation::setScale(float x, float y)
 	_hasScale = true;
 }
 
+void Transformation::setBounds(uint16_t width, uint16_t height)
+{
+	_hasBounds = true;
+	_width = width;
+	_height = height;
+}
+
 uint16_t Transformation::getX() const
 {
 	return _posX;
@@ -95,6 +108,16 @@ float Transformation::getScaleY() const
 	return _scaleY;
 }
 
+uint16_t Transformation::getWidth() const
+{
+	return _width;
+}
+
+uint16_t Transformation::getHeight() const
+{
+	return _width;
+}
+
 bool Transformation::hasPosition() const
 {
 	return _hasPos;
@@ -115,6 +138,11 @@ bool Transformation::hasScale() const
 	return _hasScale;
 }
 
+bool Transformation::hasBounds() const
+{
+	return _hasBounds;
+}
+
 bool operator==(const Transformation& lhs, const Transformation& rhs) {
 	return ((lhs.hasPosition() == rhs.hasPosition()) &&
 		(lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY()) &&
@@ -124,5 +152,7 @@ bool operator==(const Transformation& lhs, const Transformation& rhs) {
 		(lhs.getCrop().at(Transformation::CROP::SRCX) == rhs.getCrop().at(Transformation::CROP::SRCX) &&
 			lhs.getCrop().at(Transformation::CROP::SRCY) == rhs.getCrop().at(Transformation::CROP::SRCY) &&
 			lhs.getCrop().at(Transformation::CROP::SRCWIDTH) == rhs.getCrop().at(Transformation::CROP::SRCWIDTH) &&
-			lhs.getCrop().at(Transformation::CROP::SRCHEIGHT) == rhs.getCrop().at(Transformation::CROP::SRCHEIGHT))));
+			lhs.getCrop().at(Transformation::CROP::SRCHEIGHT) == rhs.getCrop().at(Transformation::CROP::SRCHEIGHT))) &&
+		lhs.hasBounds() == rhs.hasBounds() &&
+		(lhs.getWidth() == rhs.getWidth() && lhs.getHeight() == rhs.getHeight()));
 }

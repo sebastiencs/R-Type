@@ -22,6 +22,7 @@ public:
 	void setCrop(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 	void setRotation(uint16_t rotation);
 	void setScale(float x, float y);
+	void setBounds(uint16_t width, uint16_t height);
 
 	uint16_t getX() const;
 	uint16_t getY() const;
@@ -29,11 +30,14 @@ public:
 	uint16_t getRotation() const;
 	float getScaleX() const;
 	float getScaleY() const;
+	uint16_t getWidth() const;
+	uint16_t getHeight() const;
 
 	bool hasPosition() const;
 	bool hasCrop() const;
 	bool hasRotation() const;
 	bool hasScale() const;
+	bool hasBounds() const;
 
 private:
 	uint16_t _posX;
@@ -50,6 +54,9 @@ private:
 	float _scaleY;
 	bool _hasScale;
 
+	uint16_t _width;
+	uint16_t _height;
+	bool _hasBounds;
 };
 
 bool operator==(const Transformation& lhs, const Transformation& rhs);
