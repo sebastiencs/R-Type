@@ -5,7 +5,8 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
     _socketTCP(new SocketTCP(SocketTCP::CLIENT))
 {
   _socketTCP->connect(ip, port);
-
+  Callback_t fptr = [this](void *param) {run(); return nullptr; };
+  ThreadWin *thread = new Thread(fptr, nullptr);
   inGame = false;
 }
 
