@@ -19,6 +19,9 @@ public:
 
 	void draw();
 
+	void onClick(uint32_t x, uint32_t y);
+	void onHover(uint32_t x, uint32_t y);
+
 private:
 	TextField *serverName;
 	TextField *error;

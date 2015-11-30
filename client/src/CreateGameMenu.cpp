@@ -38,3 +38,20 @@ void CreateGameMenu::draw()
 	back->draw();
 	ok->draw();
 }
+
+void CreateGameMenu::onClick(uint32_t x, uint32_t y)
+{
+	if (back->isPressed(x, y)) {
+		back->onAction();
+		return;
+	}
+	if (ok->isPressed(x, y)) {
+		ok->onAction();
+	}
+}
+
+void CreateGameMenu::onHover(uint32_t x, uint32_t y)
+{
+	back->onHover(x, y);
+	ok->onHover(x, y);
+}

@@ -6,7 +6,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
-	createGameMenu = new CreateGameMenu(engine, this);
+	createGameMenu = nullptr;
 }
 
 OnlineMenu::~OnlineMenu()
@@ -43,7 +43,8 @@ void OnlineMenu::draw()
 	for (Button* b : buttons)
 		b->draw();
 	scrollView->draw();
-	createGameMenu->draw();
+	if (createGameMenu != nullptr)
+		createGameMenu->draw();
 }
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
@@ -55,6 +56,9 @@ void OnlineMenu::onClick(uint32_t x, uint32_t y)
 	}
 	if (scrollView->isPressed(x, y))
 		scrollView->onAction();
+	if (createGameMenu != nullptr) {
+		createGameMenu->onClick(x, y);
+	}
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)
@@ -63,6 +67,9 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 		b->onHover(x, y);
 	}
 	scrollView->onHover(x, y);
+	if (createGameMenu != nullptr) {
+		createGameMenu->onHover(x, y);
+	}
 }
 
 void OnlineMenu::joinButton()
@@ -78,6 +85,13 @@ void OnlineMenu::joinButton()
 void OnlineMenu::backButton()
 {
 	delete createGameMenu;
+	createGameMenu = nullptr;
+}
+
+void OnlineMenu::createButton()
+{
+	if (createGameMenu == nullptr)
+		createGameMenu = new CreateGameMenu(engine, this);
 }
 
 void OnlineMenu::menu()
@@ -94,5 +108,6 @@ void OnlineMenu::menu()
 	buttons.push_back(new Button("Join", "Button.png", transformation, Color::None, fptr, "Join", engine));
 
 	transformation.setPosition(550, 525);
+	fptr = std::bind(&OnlineMenu::createButton, this);
 	buttons.push_back(new Button("Info", "Button.png", transformation, Color::None, fptr, "Info", engine));
 }

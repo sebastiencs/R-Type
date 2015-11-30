@@ -24,6 +24,7 @@ public:
 	// Join Button
 	void joinButton();
 	void backButton();
+	void createButton();
 
 private:
 	IGraphicEngine *engine;
