@@ -19,6 +19,8 @@ class		ThreadWin : public IThread
 private:
   HANDLE	_thread;
   bool		_running;
+  Callback_t	_callback;
+  void		*_param;
 
 public:
   ThreadWin();
@@ -28,9 +30,11 @@ public:
   virtual bool	run(const Callback_t &, void *);
   virtual bool	close();
   virtual bool	join();
+
+  const Callback_t	&getCallback() const;
+  const void		*getParam() const;
 };
 
-Callback_t	&save_func(const Callback_t &, int);
 void		*jump(void *);
 
 #endif /* !THREADWIN_H_ */

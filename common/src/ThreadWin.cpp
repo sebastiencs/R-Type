@@ -25,14 +25,19 @@ ThreadWin::ThreadWin(const Callback_t &func, void *arg = 0)
 
 ThreadWin::~ThreadWin()
 {
-  close();
+  if (_running) {
+    close();
+  }
 }
 
 bool	ThreadWin::run(const Callback_t &func, void *arg = 0)
 {
   if (!_running) {
-    save_func(func, 1);
-    if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump), arg, 0, nullptr))) {
+
+    _callback = func;
+    _param = arg;
+
+    if (!(_thread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(jump), this, 0, nullptr))) {
       DEBUG_MSG("CreateThread: create thread failed");
       return false;
     }
@@ -44,23 +49,24 @@ bool	ThreadWin::run(const Callback_t &func, void *arg = 0)
   return (false);
 }
 
-Callback_t	&save_func(const Callback_t &func = 0, int save = 0)
+const Callback_t	&ThreadWin::getCallback() const
 {
-  static Callback_t f = [](void *param) -> void * { return (0); };
-  if (save)
-    f = func;
-  return (f);
+  return (_callback);
 }
 
-void	*unused(void *param)
+const void		*ThreadWin::getParam() const
 {
-	return (nullptr);
+  return (_param);
 }
 
 void	*jump(void *arg)
 {
-  Callback_t f = save_func(unused, 0);
-  return (f(arg));
+  ThreadWin	*threadC = static_cast<ThreadWin *>(arg);
+
+  Callback_t f = threadC->getCallback();
+  const void *param = threadC->getParam();
+
+  return (f(const_cast<void *>(param)));
 }
 
 bool	ThreadWin::close()

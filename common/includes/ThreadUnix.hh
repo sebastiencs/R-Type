@@ -35,7 +35,6 @@ public:
   const void		*getParam() const;
 };
 
-Callback_t	&save_func(const Callback_t &, int);
 void		*jump(void *);
 
 #endif /* !THREADUNIX_H_ */
