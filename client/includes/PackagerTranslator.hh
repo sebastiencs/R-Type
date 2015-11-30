@@ -12,8 +12,8 @@ public:
 
   void BufferToPaquet(const Buffer& buff);
   void PaquetToBuffer(const Paquet& paquet);
-  Paquet* TranslatePaquet(const Buffer& buff);
-  Buffer* TranslateBuffer(const Paquet& paquet);
+  static Paquet* TranslatePaquet(const Buffer& buff);
+  static Buffer* TranslateBuffer(const Paquet& paquet);
 };
 
 #endif /* !PACKAGETRANSLATOR_HH */

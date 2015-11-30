@@ -14,7 +14,57 @@ NetworkClient::~NetworkClient()
 
 int NetworkClient::run()
 {
-  return 0;
+	Pollfd	fds(2);
+
+	fds[0].fd = _socketTCP->socket();
+	fds[0].events = POLLIN | POLLOUT;
+	fds[1].fd = _socketUDP->socket();
+	fds[1].events = POLLIN | POLLOUT;
+
+	while (1)
+	{
+		if (IOEvent::poll(fds, 0) > 0)
+		{
+			for (auto fd : fds)
+			{
+				if (fd.revents & POLLOUT)
+				{
+					if (fd.fd == _socketUDP->socket())
+					{
+						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
+						if (paquet != nullptr) {
+							PackageStorage::getInstance().getAnswersPackage();
+							this->writeUDP(*PackageTranslator::TranslateBuffer(*paquet), _socketUDP->getAddr());
+						}
+						break;
+					}
+					else if (fd.fd == _socketTCP->socket())
+					{
+//						handleNewTCP(fds);
+						break;
+					}
+				}
+				else if (fd.revents && POLLIN)
+				{
+					if (fd.fd == _socketUDP->socket())
+					{
+						if (PackageStorage::getInstance().isThereReceivedPackage())
+							PackageStorage::getInstance().getAnswersPackage();
+						break;
+					}
+					else if (fd.fd == _socketTCP->socket())
+					{
+//						handleNewTCP(fds);
+						break;
+					}
+
+				}
+			}
+		}
+		else
+			return (-1);
+	}
+	return (0);
 }
 
 int NetworkClient::stop()
