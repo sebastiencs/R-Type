@@ -26,6 +26,7 @@ public:
 private:
 	TextField *serverName;
 	TextField *error;
+	IGraphicEngine *engine;
 	Button *ok;
 	Button *back;
 	OnlineMenu *superView;

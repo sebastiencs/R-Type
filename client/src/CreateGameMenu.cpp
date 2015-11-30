@@ -8,10 +8,10 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	Transformation t(500,500);
 	Color color(255,0,0,255);
 	superView = _superview;
+	this->engine = engine;
 
 	tptr = std::bind(&CreateGameMenu::getText, this, std::placeholders::_1);
 	engine->setTextEnteredCallback(tptr);
-
 	t.setBounds(200, 30);
 	serverName = new TextField("", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
 
