@@ -10,7 +10,6 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	rTypeLabel = new TextField("R-Type", Transformation(100, 100), DEFAULT_FONT_SIZE + 10, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
 	Transformation transformation(50, 200);
-	transformation.setScale((float)0.35, (float)0.2);
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));

@@ -25,7 +25,6 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	shotTypeToSpriteString[2] = "r-typesheet1.gif";
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
-	sf::View v;
 }
 
 GraphicEngine::~GraphicEngine()
@@ -82,7 +81,6 @@ void GraphicEngine::launch()
 		{
 			handleEvents();
 			window->clear(sf::Color::Black);
-
 
 			if (call)
 				call();
