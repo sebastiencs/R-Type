@@ -17,6 +17,7 @@ private:
 
   ISocketUDP*	_socketUDP;
   ISocketTCP*	_socketTCP;
+  bool inGame;
 
 public:
   NetworkClient(const std::string&, const uint16_t);
@@ -28,6 +29,7 @@ public:
   virtual int	handleFirst(PaquetFirst);
   virtual bool	writeUDP(const Buffer &, const Addr &);
   virtual bool	writeTCP(const Buffer &);
+  void setInGame(bool _inGame);
 };
 
 #endif /* !NETWORKCLIENT_H_ */

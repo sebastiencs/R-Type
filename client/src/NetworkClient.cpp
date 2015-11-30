@@ -5,6 +5,8 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
     _socketTCP(new SocketTCP(SocketTCP::CLIENT))
 {
   _socketTCP->connect(ip, port);
+
+  inGame = false;
 }
 
 NetworkClient::~NetworkClient()
@@ -91,4 +93,9 @@ bool NetworkClient::writeTCP(const Buffer& buf)
   if ((_socketTCP->write(buf)) == 0)
     return true;
   return false;
+}
+
+void NetworkClient::setInGame(bool _inGame)
+{
+	inGame = _inGame;
 }
