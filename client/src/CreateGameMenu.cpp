@@ -30,6 +30,7 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 
 CreateGameMenu::~CreateGameMenu()
 {
+	engine->setTextEnteredCallback(nullptr);
 	delete serverName;
 	delete ok;
 	delete back;
