@@ -4,6 +4,9 @@
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
 # include "Packager.hh"
+#include "CreateGameMenu.hh"
+
+class CreateGameMenu;
 
 class OnlineMenu {
 public:
@@ -20,12 +23,14 @@ public:
 
 	// Join Button
 	void joinButton();
+	void backButton();
 
 private:
 	IGraphicEngine *engine;
 	ScrollView *scrollView;
 
 	std::list<Button* > buttons;
+	CreateGameMenu *createGameMenu;
 };
 
 #endif // !ONLINE_MENU_HH_
