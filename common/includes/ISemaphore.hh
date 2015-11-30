@@ -17,6 +17,7 @@ public:
   virtual ~ISemaphore() {};
 
   virtual bool	post() = 0;
+  virtual bool	tryWait() = 0;
   virtual bool	wait() = 0;
 };
 
