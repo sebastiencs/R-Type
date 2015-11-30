@@ -127,5 +127,5 @@ void MainMenu::setDisplayCredits()
 void MainMenu::myexit()
 {
 	DEBUG_MSG("Exit");
-	exit(EXIT_SUCCESS);
+	engine->closeWindow();
 }

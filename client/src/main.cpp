@@ -43,6 +43,7 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 		engine->launch();*/
 		//delete engine;
 		delete packager;
+		delete network;
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;

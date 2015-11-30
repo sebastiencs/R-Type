@@ -33,7 +33,8 @@ GraphicEngine::~GraphicEngine()
 		delete window;
 	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
 		if (it->second)
-			delete it->second;
+		  delete it->second;
+	delete _timer;
 }
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
@@ -234,6 +235,13 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	textToDraw.setCharacterSize(size);
 	transformSprite(textToDraw, t, color);
 	window->draw(textToDraw);
+}
+
+void GraphicEngine::closeWindow()
+{
+  if (window->isOpen()) {
+    window->close();
+  }
 }
 
 const sf::Texture* GraphicEngine::None = new sf::Texture();

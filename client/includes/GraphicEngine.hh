@@ -62,6 +62,8 @@ public:
 	void transformSprite(sf::Sprite&, const Transformation&, const Color& color = Color::None);
 	void transformSprite(sf::Text&, const Transformation&, const Color& color = Color::None);
 
+	virtual void closeWindow();
+
 	static const sf::Texture* None;
 
 protected:

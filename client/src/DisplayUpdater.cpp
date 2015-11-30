@@ -9,13 +9,13 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	//onlineMenu = new OnlineMenu(graphicEngine, packager);
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
-	
+
 	/*Transformation transformation(50, 200);
 	transformation.setScale((float)0.35, (float)0.2);
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this->mainmenu);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", graphicEngine));
-	
+
 	transformation.setPosition(50, 300);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this->mainmenu);
 	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", graphicEngine));
@@ -28,7 +28,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	fptr = std::bind(&MainMenu::myexit, this->mainmenu);
 	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", graphicEngine));*/
 
-	/*fptr = std::bind(&DisplayUpdater::mainMenu, this); 
+	/*fptr = std::bind(&DisplayUpdater::mainMenu, this);
 	graphicEngine->setCallbackFunction(fptr, this);*/
 
 	graphicEngine->launch();
@@ -36,6 +36,8 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 
 DisplayUpdater::~DisplayUpdater()
 {
+	delete graphicEngine;
+	delete mainmenu;
 	for (Button* b : buttons)
 		delete b;
 	buttons.clear();
@@ -78,4 +80,3 @@ void DisplayUpdater::game()
 	//	PackageStorage::getInstance().deleteShotsPackage();
 	//}
 }
-
