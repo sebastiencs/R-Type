@@ -8,8 +8,8 @@
 // Last update Tue Nov 10 23:31:52 2015 chapui_s
 //
 
-# include "IGraphicEngine.hh"
-# include "GraphicEngine.hh"
+#include "IGraphicEngine.hh"
+#include "GraphicEngine.hh"
 #include "PackageStorage.hh"
 #include "Packager.hh"
 #include "NetworkClient.hh"
@@ -19,8 +19,31 @@
 # include "WSA.hh"
 #endif // !_WIN32
 
-int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous les utiliserez
+bool isNumber(const std::string& s)
 {
+  return (std::find_if(s.begin(), s.end(), [] (char c) { return !std::isdigit(c); }) == s.end());
+}
+
+int		main(int argc, char **argv)
+{
+  uint16_t port(4242);
+  std::string addr("localhost");
+
+  if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
+    std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
+    return (0);
+  }
+
+  if (argc > 2) {
+    addr = argv[1];
+    try {
+      port = std::stoi(argv[2]);
+    }
+    catch (std::out_of_range &) {
+      std::cerr << "Wrong port value. Use port " << port << std::endl;
+    }
+  }
+
 #ifdef _WIN32
 	if (WSA::init()) {
 		return (-1);
@@ -30,7 +53,7 @@ int		main(int argc UNUSED, char **argv UNUSED) // Enlevez les UNUSED quand vous 
 	try {
 		Packager *packager = new Packager();
 		/*IGraphicEngine* engine = new GraphicEngine(packager);*/
-		NetworkClient* network = new NetworkClient("127.0.0.1", 4242);
+		NetworkClient* network = new NetworkClient(addr, port);
 		DisplayUpdater updater(packager);
 
 		PaquetFirst paquet;
