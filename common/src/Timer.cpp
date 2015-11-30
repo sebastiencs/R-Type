@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "Timer.hh"
+#include "IOEvent.hh"
 
 Timer::Timer()
 {
@@ -37,6 +38,23 @@ bool		Timer::ms(long ms)
   std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - _t);
 
   return ((diff.count() >= ms) ? (true) : (false));
+}
+
+bool		Timer::msWait(long ms)
+{
+  std::chrono::high_resolution_clock::time_point	t2;
+  t2 = std::chrono::high_resolution_clock::now();
+
+  std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - _t);
+  int	msWaiting = ms - diff.count();
+
+  if (msWaiting >= 0) {
+    IOEvent::wait(msWaiting);
+  }
+
+  reset();
+
+  return (true);
 }
 
 long		Timer::ms()

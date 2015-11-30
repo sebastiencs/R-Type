@@ -32,6 +32,7 @@ public:
   virtual ~IOEvent();
 
   static int	poll(Pollfd &fds, int timeout);
+  static int	wait(int timeout);
 };
 
 #endif /* !IOEVENT_H_ */

@@ -28,6 +28,7 @@ public:
 
   // Is n milliseconds expired from start() ( or reset() )
   virtual bool		ms(long);
+  virtual bool		msWait(long);
   // return n milliseconds from start() ( or reset() )
   virtual long		ms();
 

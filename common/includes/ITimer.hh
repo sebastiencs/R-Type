@@ -22,6 +22,7 @@ public:
 
   virtual void	start() = 0;
   virtual bool	ms(long) = 0;
+  virtual bool	msWait(long) = 0;
   virtual long	ms() = 0;
   virtual bool	ns(long) = 0;
   virtual long	ns() = 0;
