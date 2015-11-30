@@ -21,7 +21,7 @@
 
 bool isNumber(const std::string& s)
 {
-  return (std::find_if(s.begin(), s.end(), [] (char c) { return !std::isdigit(c); }) == s.end());
+  return (std::find_if(s.begin(), s.end(), [] (char c) { return !(c >= '0' && c <= '9'); }) == s.end());
 }
 
 int		main(int argc, char **argv)
