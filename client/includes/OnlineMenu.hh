@@ -3,6 +3,7 @@
 
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
+# include "Packager.hh"
 
 class OnlineMenu {
 public:
