@@ -4,6 +4,13 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
   : _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
     _socketTCP(new SocketTCP(SocketTCP::CLIENT))
 {
+	PaquetFirst *paquet = new PaquetFirst();
+	paquet->setLevel(5);
+	paquet->setName("Alex");
+	paquet->setVersion(0);
+	paquet->createPaquet();
+	PackageStorage::getInstance().storeToSendPackage(paquet);
+
 	_socketTCP->connect(ip, port);
 	Callback_t fptr = [this](void *param) {run(); return nullptr; };
 	inGame = false;

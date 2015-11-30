@@ -58,13 +58,6 @@ int		main(int argc, char **argv)
 		DisplayUpdater updater(packager);
 		PackageSorter sorter;
 
-		PaquetFirst *paquet = new PaquetFirst();
-		paquet->setLevel(5);
-		paquet->setName("Alex");
-		paquet->setVersion(0);
-		paquet->createPaquet();
-		PackageStorage::getInstance().storeToSendPackage(paquet);
-
 		delete packager;
 		delete network;
 	}
