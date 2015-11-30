@@ -17,6 +17,7 @@ private:
 
   ISocketUDP*	_socketUDP;
   ISocketTCP*	_socketTCP;
+  ThreadWin*	thread;
   bool inGame;
 
 public:

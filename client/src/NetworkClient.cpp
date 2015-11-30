@@ -4,15 +4,17 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
   : _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
     _socketTCP(new SocketTCP(SocketTCP::CLIENT))
 {
-  _socketTCP->connect(ip, port);
-  Callback_t fptr = [this](void *param) {run(); return nullptr; };
-  ThreadWin *thread = new Thread(fptr, nullptr);
-  inGame = false;
+	_socketTCP->connect(ip, port);
+	Callback_t fptr = [this](void *param) {run(); return nullptr; };
+	thread = new Thread(fptr, nullptr);
+	thread->join();
+	inGame = false;
 }
 
 NetworkClient::~NetworkClient()
 {
-  DEBUG_MSG("NetworkClient deleted");
+	thread->close();
+	DEBUG_MSG("NetworkClient deleted");
 }
 
 int NetworkClient::run()
