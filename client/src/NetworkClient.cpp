@@ -36,6 +36,8 @@ NetworkClient::~NetworkClient()
 	}
 	delete threadWrite;
 	delete threadRead;
+	delete _socketTCP;
+	delete _socketUDP;
 	DEBUG_MSG("NetworkClient deleted");
 }
 
