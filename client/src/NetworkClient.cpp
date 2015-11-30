@@ -6,14 +6,14 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 {
 	_socketTCP->connect(ip, port);
 	Callback_t fptr = [this](void *param) {run(); return nullptr; };
-	thread = new Thread(fptr, nullptr);
-	thread->join();
 	inGame = false;
+	thread = new Thread(fptr, nullptr);
 }
 
 NetworkClient::~NetworkClient()
 {
 	thread->close();
+	delete thread;
 	DEBUG_MSG("NetworkClient deleted");
 }
 

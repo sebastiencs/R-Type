@@ -28,7 +28,7 @@ bool isNumber(const std::string& s)
 int		main(int argc, char **argv)
 {
   uint16_t port(4242);
-  std::string addr("localhost");
+  std::string addr("127.0.0.1");
 
   if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
     std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
