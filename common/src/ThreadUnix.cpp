@@ -32,9 +32,10 @@ bool	ThreadUnix::run(const Callback_t &func, void *arg = 0)
 {
   if (!_running) {
 
-    save_func(func, 1);
+    _callback = func;
+    _param = arg;
 
-    if (pthread_create(&_thread, 0, jump, arg)) {
+    if (pthread_create(&_thread, 0, jump, this)) {
       DEBUG_MSG("pthread create failed");
       return (false);
     }
@@ -47,23 +48,27 @@ bool	ThreadUnix::run(const Callback_t &func, void *arg = 0)
   return (false);
 }
 
-Callback_t	&save_func(const Callback_t &func = 0, int save = 0)
+const Callback_t	&ThreadUnix::getCallback() const
 {
-  static Callback_t f = [](void *) -> void * { return (0); };
+  return (_callback);
+}
 
-  if (save) {
-    f = func;
-  }
-  return (f);
+const void		*ThreadUnix::getParam() const
+{
+  return (_param);
 }
 
 void	*jump(void *arg)
 {
-  Callback_t	f = save_func();
+  ThreadUnix	*threadC = static_cast<ThreadUnix *>(arg);
+
+  Callback_t f = threadC->getCallback();
+  const void *param = threadC->getParam();
 
   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
-  return (f(arg));
+
+  return (f(const_cast<void *>(param)));
 }
 
 bool	ThreadUnix::close()

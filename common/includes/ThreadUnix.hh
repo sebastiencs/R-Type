@@ -19,6 +19,8 @@ class		ThreadUnix : public IThread
 private:
   pthread_t	_thread;
   bool		_running;
+  Callback_t	_callback;
+  void		*_param;
 
 public:
   ThreadUnix();
@@ -28,6 +30,9 @@ public:
   virtual bool	run(const Callback_t &func, void *arg);
   virtual bool	close();
   virtual bool	join();
+
+  const Callback_t	&getCallback() const;
+  const void		*getParam() const;
 };
 
 Callback_t	&save_func(const Callback_t &, int);
