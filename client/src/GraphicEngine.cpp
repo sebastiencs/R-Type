@@ -41,7 +41,7 @@ void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::stri
 {
 	windowHeight = sizeY;
 	windowWidth = sizeX;
-	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title);
+	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title, sf::Style::Titlebar | sf::Style::Close);
 	window->setFramerateLimit(60);
 }
 
