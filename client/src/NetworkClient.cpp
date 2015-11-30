@@ -62,22 +62,22 @@ int NetworkClient::run()
 						break;
 					}
 				}
-				else if (fd.revents && POLLIN)
+				else if (fd.revents & POLLIN)
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
 						Buffer *buff = new Buffer();
 						this->_socketUDP->read(*buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						DEBUG_MSG(buff);
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
 						Buffer *buff = new Buffer();
 						this->_socketTCP->read(*buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						DEBUG_MSG(buff);
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						break;
 					}
 
