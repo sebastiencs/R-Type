@@ -17,6 +17,9 @@ public:
 	void onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 
+	// Join Button
+	void joinButton();
+
 private:
 	IGraphicEngine *engine;
 	ScrollView *scrollView;

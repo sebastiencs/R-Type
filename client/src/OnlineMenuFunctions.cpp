@@ -44,6 +44,7 @@ void OnlineMenu::draw()
 	scrollView->draw();
 }
 
+
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
@@ -63,6 +64,21 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 	scrollView->onHover(x, y);
 }
 
+void OnlineMenu::joinButton()
+{
+	for (Cell *c : scrollView->getListCell())
+		if (c->getId() == scrollView->getSelectCell())
+		{
+			PaquetJoinParty *paquet = new PaquetJoinParty();
+			paquet->setName(c->getNameParty());
+			std::cout << paquet->getName() << " -> ";
+			paquet->createPaquet();
+			DEBUG_MSG(paquet);
+			PackageStorage::getInstance().storeToSendPackage(paquet);
+		}
+
+}
+
 void OnlineMenu::menu()
 {
 	std::function<void()> fptr;
@@ -73,7 +89,7 @@ void OnlineMenu::menu()
 	buttons.push_back(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
 	transformation.setPosition(450, 525);
-	fptr = std::bind(&ScrollView::joinButton, this->scrollView);
+	fptr = std::bind(&OnlineMenu::joinButton, this);
 	buttons.push_back(new Button("Join", "Button.png", transformation, Color::None, fptr, "Join", engine));
 
 	transformation.setPosition(550, 525);

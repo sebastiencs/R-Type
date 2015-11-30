@@ -55,18 +55,14 @@ void ScrollView::decrBase()
 		--base;
 }
 
-void ScrollView::joinButton()
+const std::list<Cell*>& ScrollView::getListCell() const
 {
-	for (Cell *c : listCell)
-		if (c->getId() == selectedCell)
-		{
-			PaquetJoinParty *paquet = new PaquetJoinParty();
-			paquet->setName(c->getNameParty());
-			std::cout << paquet->getName() << " -> ";
-			paquet->createPaquet();
-			DEBUG_MSG(paquet);
-			PackageStorage::getInstance().storeToSendPackage(paquet);
-		}
+	return listCell;
+}
+
+const std::string & ScrollView::getSelectCell() const
+{
+	return selectedCell;
 }
 
 const std::string & ScrollView::getId() const

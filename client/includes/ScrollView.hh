@@ -19,7 +19,8 @@ public:
 	void incrBase();
 	void decrBase();
 
-	void joinButton();
+	const std::list<Cell *>& getListCell() const;
+	const std::string& getSelectCell() const;
 
 	//IDrawable
 	virtual const std::string& getId() const;
