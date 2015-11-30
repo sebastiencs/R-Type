@@ -50,19 +50,23 @@ Transformation & Cell::getTransformation()
 
 void Cell::onAction()
 {
+	DEBUG_MSG(textField->getId());
 }
 
 void Cell::onHover(uint32_t x, uint32_t y)
 {
-	//if (isPressed(x, y)) {
-	//	textField->getSprite().setColor(sf::Color(Color::Darker.getColor()));
-	//}
-	//else
-	//	textField->getSprite().setColor(sf::Color::White);
+	if (isPressed(x, y)) {
+		textField->getColor() = Color::Darker;
+	}
+	else
+		textField->getColor() = Color::White;
 }
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const
 {
+	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * strlen(textField->getId().c_str())) &&
+		y >= textField->getTransformation().getY() && y <= (textField->getTransformation().getY() + 32))
+		return true;
 	return false;
 }
 

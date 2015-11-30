@@ -105,7 +105,7 @@ bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell))
 			if (c->isPressed(x, y))
-				c->onHover(x, y);
+				c->onAction();
 		++i;
 	}
 	for (Button *b : buttons)

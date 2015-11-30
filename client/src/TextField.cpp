@@ -8,7 +8,6 @@ TextField::TextField(const std::string & _text, const Transformation & _t, uint1
 	size = _size;
 	font = _font;
 	engine = _engine;
-	_visible = true;
 }
 
 TextField::~TextField()
@@ -26,6 +25,11 @@ const sf::Sprite & TextField::getSprite() const
 	return *sprite;
 }
 
+Color & TextField::getColor()
+{
+	return color;
+}
+
 const Transformation & TextField::getTransformation() const
 {
 	return t;
@@ -34,16 +38,6 @@ const Transformation & TextField::getTransformation() const
 Transformation & TextField::getTransformation()
 {
 	return t;
-}
-
-bool TextField::getVisible() const
-{
-	return _visible;
-}
-
-void TextField::setVisible(bool visible)
-{
-	_visible = visible;
 }
 
 void TextField::draw()
