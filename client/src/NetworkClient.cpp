@@ -42,7 +42,11 @@ int NetworkClient::run()
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-//						handleNewTCP(fds);
+						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
+						if (paquet != nullptr) {
+							PackageStorage::getInstance().getAnswersPackage();
+							this->writeTCP(*PackageTranslator::TranslateBuffer(*paquet));
+						}
 						break;
 					}
 				}
@@ -50,13 +54,16 @@ int NetworkClient::run()
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						if (PackageStorage::getInstance().isThereReceivedPackage())
-							PackageStorage::getInstance().getAnswersPackage();
+						Buffer *buff = new Buffer();
+						this->_socketUDP->read(*buff);
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-//						handleNewTCP(fds);
+						Buffer *buff = new Buffer();
+						this->_socketTCP->read(*buff);
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
 						break;
 					}
 
