@@ -15,6 +15,9 @@ public:
 	Cell(const std::string&  id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
 	virtual ~Cell();
 
+	const std::string& getNameParty();
+	const int getNbrPlayers();
+
 	//IDrawable
 	virtual const sf::Sprite& getSprite() const;
 	const std::string& getId() const;
@@ -31,6 +34,8 @@ public:
 private:
 	IGraphicEngine *engine;
 	std::string _id;
+	int nbrPlayers;
+	std::string nameParty;
 
 	//draw
 	TextField *textField;

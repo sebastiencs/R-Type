@@ -40,10 +40,6 @@ void ScrollView::emptyCell()
 	base = 0;
 }
 
-void ScrollView::isSelect()
-{
-}
-
 void ScrollView::incrBase()
 {
 	DEBUG_MSG("Increment Base");
@@ -56,6 +52,20 @@ void ScrollView::decrBase()
 	DEBUG_MSG("Decrement Base");
 	if (base > 0)
 		--base;
+}
+
+void ScrollView::joinButton()
+{
+	for (Cell *c : listCell)
+		if (c->getId() == selectedCell)
+		{
+			PaquetJoinParty *paquet = new PaquetJoinParty();
+			paquet->setName(c->getNameParty());
+			std::cout << paquet->getName() << " -> ";
+			paquet->createPaquet();
+			DEBUG_MSG(paquet);
+			PackageStorage::getInstance().storeAnswersPackage(paquet);
+		}
 }
 
 const std::string & ScrollView::getId() const
@@ -104,8 +114,10 @@ bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 	int i = 0;
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell))
-			if (c->isPressed(x, y))
+			if (c->isPressed(x, y)) {
 				c->onAction();
+				const_cast<ScrollView *>(this)->selectedCell = c->getId();
+			}
 		++i;
 	}
 	for (Button *b : buttons)

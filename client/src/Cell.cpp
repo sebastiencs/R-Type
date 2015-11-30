@@ -4,6 +4,9 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 {
 	_id = id;
 
+	nameParty = name;
+	this->nbrPlayers = nbrPlayers;
+
 	std::string txt = "[";
 	txt += name;
 	txt += "]";
@@ -20,6 +23,16 @@ Cell::~Cell()
 	id = "TextField" + _id;
 	engine->eraseTextField(id);*/
 	delete textField;
+}
+
+const std::string & Cell::getNameParty()
+{
+	return nameParty;
+}
+
+const int Cell::getNbrPlayers()
+{
+	return nbrPlayers;
 }
 
 const sf::Sprite & Cell::getSprite() const
@@ -50,7 +63,7 @@ Transformation & Cell::getTransformation()
 
 void Cell::onAction()
 {
-	DEBUG_MSG(textField->getId());
+	DEBUG_MSG(textField->getId() + " is selected");
 }
 
 void Cell::onHover(uint32_t x, uint32_t y)

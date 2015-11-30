@@ -15,11 +15,11 @@ public:
 	void createCell(const std::string& name, int nbr);
 
 	void emptyCell();
-	void isSelect();
 
 	void incrBase();
 	void decrBase();
 
+	void joinButton();
 
 	//IDrawable
 	virtual const std::string& getId() const;
