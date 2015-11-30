@@ -48,7 +48,7 @@ int	Network::run()
 
     if (IOEvent::poll(fds, 0) > 0) {
 
-      for (auto fd : fds) {
+      for (auto &fd : fds) {
 	if (fd.revents & POLLIN) {
 
 	  if (fd.fd == _socketUDP->socket()) {
@@ -105,7 +105,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
 
 inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 {
-  for (auto fd_client : _socketClient) {
+  for (auto &fd_client : _socketClient) {
 
     if (fd_client->socket() == socket) {
 
