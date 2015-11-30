@@ -5,7 +5,7 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	//Faut un fond
 	Transformation t(500,500);
 	t.setBounds(200, 30);
-	Color color(255,0,0,1);
+	Color color(255,0,0,255);
 	serverName = new TextField("HEY JE SUIS LA", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
 	t.setPosition(600, 550);
 	t.setBounds(100, 50);
