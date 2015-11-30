@@ -14,6 +14,7 @@
 #include "Packager.hh"
 #include "NetworkClient.hh"
 #include "DisplayUpdater.hh"
+#include "PackageSorter.hh"
 #include "Tools.hh"
 
 #ifdef _WIN32
@@ -55,6 +56,7 @@ int		main(int argc, char **argv)
 		Packager *packager = new Packager();
 		NetworkClient* network = new NetworkClient(addr, port);
 		DisplayUpdater updater(packager);
+		PackageSorter sorter();
 
 		PaquetFirst paquet;
 		paquet.setLevel(5);
