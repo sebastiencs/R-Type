@@ -7,17 +7,17 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	PaquetFirst *paquet = new PaquetFirst();
 	paquet->setLevel(5);
 	paquet->setName("Alex");
-	paquet->setVersion(0);
+	paquet->setVersion(1);
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendPackage(paquet);
 
-	if ((_socketTCP->connect(ip, port)) != -1)
+	if ((_socketTCP->connect(ip, port)) == -1)
 		_isConnect = false;
 	else
 		_isConnect = true;
 
-	Callback_t fptrWrite = [this](void *param) {runWrite(); return nullptr; };
-	Callback_t fptrRead = [this](void *param) {runRead(); return nullptr; };
+	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
+	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
 	inGame = false;
 	threadWrite = new Thread(fptrWrite, nullptr);
 	threadRead = new Thread(fptrRead, nullptr);
