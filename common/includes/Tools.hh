@@ -27,6 +27,13 @@ namespace		Tools
     return ((found != input.end()) ? (*found) : (nullptr));
   }
 
+  template<class U>
+  auto		findIn(const std::string &input, const U &func) -> bool
+  {
+    auto found = std::find_if(input.begin(), input.end(), func);
+
+    return ((found != input.end()) ? (true) : (false));
+  }
 
   template<class T>
   auto		findParty(const T &input, const std::string &name) -> typename T::value_type

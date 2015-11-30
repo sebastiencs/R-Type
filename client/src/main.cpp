@@ -14,6 +14,7 @@
 #include "Packager.hh"
 #include "NetworkClient.hh"
 #include "DisplayUpdater.hh"
+#include "Tools.hh"
 
 #ifdef _WIN32
 # include "WSA.hh"
@@ -21,7 +22,7 @@
 
 bool isNumber(const std::string& s)
 {
-  return (std::find_if(s.begin(), s.end(), [] (char c) { return !(c >= '0' && c <= '9'); }) == s.end());
+  return (Tools::findIn(s, [] (char c) { return !(c >= '0' && c <= '9'); }) == false);
 }
 
 int		main(int argc, char **argv)
