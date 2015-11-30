@@ -6,6 +6,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
+	createGameMenu = new CreateGameMenu(engine, this);
 }
 
 OnlineMenu::~OnlineMenu()
@@ -42,6 +43,7 @@ void OnlineMenu::draw()
 	for (Button* b : buttons)
 		b->draw();
 	scrollView->draw();
+	createGameMenu->draw();
 }
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
@@ -71,6 +73,11 @@ void OnlineMenu::joinButton()
 			Packager::createJoinPartyPackage(c->getNameParty());
 		}
 
+}
+
+void OnlineMenu::backButton()
+{
+	delete createGameMenu;
 }
 
 void OnlineMenu::menu()
