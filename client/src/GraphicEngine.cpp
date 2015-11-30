@@ -51,16 +51,18 @@ void GraphicEngine::handleEvents()
 		// TODO: Trouver quoi faire des positions du joueur
 		if (event.type == sf::Event::Closed)
 			window->close();
-		else if (event.key.code == sf::Keyboard::Space)
-			_packager->createShotPackage(0, 0, 0, 0);
-		else if (event.key.code == sf::Keyboard::Z)
-			_packager->createMovementPackage(0, 0, 0);
-		else if (event.key.code == sf::Keyboard::Q)
-			_packager->createMovementPackage(0, 0, 0);
-		else if (event.key.code == sf::Keyboard::S)
-			_packager->createMovementPackage(0, 0, 20);
-		else if (event.key.code == sf::Keyboard::D)
-			_packager->createMovementPackage(0, 20, 0);
+		else if (event.type == sf::Event::KeyPressed) {
+		  if (event.key.code == sf::Keyboard::Space)
+		    _packager->createShotPackage(0, 0, 0, 0);
+		  else if (event.key.code == sf::Keyboard::Z)
+		    _packager->createMovementPackage(0, 0, 0);
+		  else if (event.key.code == sf::Keyboard::Q)
+		    _packager->createMovementPackage(0, 0, 0);
+		  else if (event.key.code == sf::Keyboard::S)
+		    _packager->createMovementPackage(0, 0, 20);
+		  else if (event.key.code == sf::Keyboard::D)
+		    _packager->createMovementPackage(0, 20, 0);
+		}
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
 		else if (event.type == sf::Event::MouseMoved)
@@ -79,7 +81,7 @@ void GraphicEngine::launch()
 			handleEvents();
 			window->clear(sf::Color::Black);
 
-			
+
 			if (call)
 				call();
 			window->display();
