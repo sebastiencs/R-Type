@@ -2,7 +2,7 @@
 
 
 Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
-	: _text(text), _textureName(img), _fptr(fptr), _t(t), _color(color), _id(id), _engine(dynamic_cast<GraphicEngine* >(engine))
+  : _engine(dynamic_cast<GraphicEngine* >(engine)), _color(color), _id(id), _t(t), _text(text), _textureName(img), _fptr(fptr)
 {
 	if (_engine)
 	{
