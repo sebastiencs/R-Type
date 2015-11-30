@@ -71,6 +71,7 @@ void OnlineMenu::menu()
 	buttons.push_back(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
 	transformation.setPosition(450, 525);
+	fptr = std::bind(&ScrollView::joinButton, this->scrollView);
 	buttons.push_back(new Button("Join", "Button.png", transformation, Color::None, fptr, "Join", engine));
 
 	transformation.setPosition(550, 525);
