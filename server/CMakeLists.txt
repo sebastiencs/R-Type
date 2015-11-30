@@ -14,3 +14,5 @@ set(SERVER_SOURCES
   ${CURRENTSOURCES}
   PARENT_SCOPE
   )
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/doc)

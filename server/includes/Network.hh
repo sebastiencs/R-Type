@@ -24,6 +24,17 @@
 # include "Semaphore.hh"
 # include "IOEvent.hh"
 
+/**
+ * @file   Network.hh
+ * @author Sébastien Chapuis <sebastien@chapuis.co>
+ * @date   Mon Nov 30 04:21:27 2015
+ *
+ * @brief  Network class implementation
+ *
+ *
+ */
+
+
 class	Selector;
 class	Manager;
 
@@ -55,7 +66,15 @@ public:
   virtual int	run();
   virtual int	stop();
 
-  virtual bool	write(const Paquet &, const Addr &);
+  /**
+   * write
+   *
+   * \param paquet : Paquet to send
+   * \param addr : Addr to send
+   * \return bool : is write successed
+   */
+
+  virtual bool	write(const Paquet &paquet, const Addr &addr);
   virtual bool	write();
 
   bool		handleUDP();
