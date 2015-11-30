@@ -17,17 +17,17 @@ public:
 	Packager();
 	virtual ~Packager();
 
-	void createMovementPackage(uint8_t _playerID, uint8_t _x,	uint8_t _y);
-	void createShotPackage(uint8_t _playerID, uint8_t _type, uint8_t _x, uint8_t _y);
+	static void createMovementPackage(uint8_t _playerID, uint8_t _x,	uint8_t _y);
+	static void createShotPackage(uint8_t _playerID, uint8_t _type, uint8_t _x, uint8_t _y);
 	
-	void createGameListPackage();
-	void createPlayerListPackage();
+	static void createGameListPackage();
+	static void createPlayerListPackage();
 
-	void createJoinPartyPackage(std::string	_name);
-	void createCreatePartyPackage(std::string _name);
+	static void createJoinPartyPackage(std::string	_name);
+	static void createCreatePartyPackage(std::string _name);
 
-	void createReadyPackage(uint8_t	_playerID);
-	void createLeavePackage(uint8_t	_playerID);
+	static void createReadyPackage(uint8_t	_playerID);
+	static void createLeavePackage(uint8_t	_playerID);
 };
 
 #endif // !PACKAGER_HH
