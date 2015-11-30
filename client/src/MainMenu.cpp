@@ -26,6 +26,10 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
 
 	transformation.setPosition(baseX, baseY + (offset * 3));
+	fptr = std::bind(&MainMenu::setDisplayCredits, this);
+	buttons.push_back(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
+
+	transformation.setPosition(baseX, baseY + (offset * 4));
 	fptr = std::bind(&MainMenu::myexit, this);
 	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 
@@ -111,6 +115,13 @@ void MainMenu::setDisplayOption()
 	currentPage = 3;
 	changedMenu();
 	DEBUG_MSG("Set Current Page to Option");
+}
+
+void MainMenu::setDisplayCredits()
+{
+	currentPage = 5;
+	changedMenu();
+	DEBUG_MSG("Set Current Page to Credits");
 }
 
 void MainMenu::myexit()

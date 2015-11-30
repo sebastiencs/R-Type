@@ -14,6 +14,7 @@ public:
 	void setDisplayOnline();
 	void setDisplayOffline();
 	void setDisplayOption();
+	void setDisplayCredits();
 	void myexit();
 	void changedMenu();
 
