@@ -6,6 +6,8 @@
 # include "Debug.hh"
 # include "Paquets.hh"
 # include "Thread.hh"
+# include "IOEvent.hh"
+# include "PackageStorage.hh"
 
 
 class				NetworkClient

@@ -19,9 +19,6 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 
 Cell::~Cell()
 {
-	/*std::string id;
-	id = "TextField" + _id;
-	engine->eraseTextField(id);*/
 	delete textField;
 }
 
