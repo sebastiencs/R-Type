@@ -4,7 +4,7 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 {
 	engine = eng;
 	currentPage = 0;
-	onlineMenu = new OnlineMenu(eng);
+	onlineMenu = new OnlineMenu(engine);
 	onlineMenu->menu();
 
 	rTypeLabel = new TextField("R-Type", Transformation(100, 100), DEFAULT_FONT_SIZE + 10, "Fipps.otf", Color::None, "rtypeLabel", engine);
@@ -13,28 +13,28 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	transformation.setScale((float)0.35, (float)0.2);
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", eng));
+	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
 
 	transformation.setPosition(50, 300);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
-	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", eng));
+	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 
 	transformation.setPosition(50, 400);
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
-	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", eng));
+	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
 
 	transformation.setPosition(50, 500);
 	fptr = std::bind(&MainMenu::myexit, this);
-	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", eng));
+	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
-	eng->setCallbackFunction(fptr, this);
+	engine->setCallbackFunction(fptr, this);
 
 	mouseCallback fptr2;
 	fptr2 = std::bind(&MainMenu::onClick, this, std::placeholders::_1, std::placeholders::_2);
-	eng->setMouseClickCallback(fptr2);
+	engine->setMouseClickCallback(fptr2);
 	fptr2 = std::bind(&MainMenu::onHover, this, std::placeholders::_1, std::placeholders::_2);
-	eng->setMouseMovedCallback(fptr2);
+	engine->setMouseMovedCallback(fptr2);
 }
 
 MainMenu::~MainMenu() {
@@ -58,6 +58,7 @@ int MainMenu::getCurrentPage()
 
 void MainMenu::draw()
 {
+	engine->drawImage("menubackground.png", Transformation(0, 0));
 	for (Button* b : buttons)
 		b->draw();
 	rTypeLabel->draw();

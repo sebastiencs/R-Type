@@ -13,6 +13,8 @@ Button::Button(const std::string & text, const std::string& img, const Transform
 
 Button::~Button()
 {
+	//if (textField)
+	//	delete textField;
 }
 
 bool Button::isPressed(uint32_t x, uint32_t y) const
@@ -44,6 +46,34 @@ const Transformation & Button::getTransformation() const
 const Color & Button::getColor() const
 {
 	return (_color);
+}
+
+void Button::centerText()
+{
+	//size_t CharacterSize = Text.GetCharacterSize();
+	//sf::Font Font = Text.GetFont();
+	//std::string String = Text.GetString().ToAnsiString();
+	//bool bold = (Text.GetStyle() & sf::Text::Bold);
+	//size_t MaxHeight = 0;
+
+	//for (size_t x = 0; x<Text.GetString().GetSize(); ++x)
+	//{
+	//	sf::Uint32 Character = String.at(x);
+
+	//	const sf::Glyph& CurrentGlyph = Font.GetGlyph(Character, CharacterSize, bold);
+
+	//	size_t Height = CurrentGlyph.Bounds.Height;
+
+	//	if (MaxHeight < Height)
+	//		MaxHeight = Height;
+	//}
+
+	//sf::FloatRect rect = Text.GetRect();
+
+	//rect.Left = (TextureNormal.GetWidth() / 2.0f) - (rect.Width / 2.0f);
+	//rect.Top = (TextureNormal.GetHeight() / 2.0f) - (MaxHeight / 2.0f) - (rect.Height - MaxHeight) + ((rect.Height - CharacterSize) / 2.0f);
+
+	//Text.SetPosition(rect.Left, rect.Top);
 }
 
 void Button::draw()

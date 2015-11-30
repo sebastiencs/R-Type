@@ -26,8 +26,8 @@ public:
   virtual long	ms() = 0;
   virtual bool	ns(long) = 0;
   virtual long	ns() = 0;
-  virtual bool	min(long) = 0;
-  virtual long	min() = 0;
+  //virtual bool	min(long) = 0;
+  //virtual long	min() = 0;
   virtual void	reset() = 0;
 };
 

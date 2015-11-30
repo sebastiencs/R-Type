@@ -5,6 +5,7 @@
 # include "ICallBack.hh"
 
 class GraphicEngine;
+class TextField;
 
 class Button : public IDrawable, public ICallback
 {
@@ -29,8 +30,11 @@ public:
 	const Color& getColor() const;
 
 private:
+	void centerText();
+
 	GraphicEngine* _engine;
 	sf::Sprite _sprite;
+//	TextField* textField;
 	Color _color;
 	std::string _id;
 	Transformation _t;

@@ -69,7 +69,7 @@ protected:
 	bool loadFontFromFile(const std::string& file);
 
 	Packager* _packager;
-	Timer _timer;
+	ITimer* _timer;
 	callback call;
 	mouseCallback _mouseClickCall;
 	mouseCallback _mouseMoveCall;

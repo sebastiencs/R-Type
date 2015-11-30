@@ -87,22 +87,22 @@ long		Timer::ns()
   return (static_cast<long>(diff.count()));
 }
 
-bool		Timer::min(long ms)
-{
-  std::chrono::high_resolution_clock::time_point	t2;
-  t2 = std::chrono::high_resolution_clock::now();
-
-  std::chrono::minutes diff = std::chrono::duration_cast<std::chrono::minutes>(t2 - _t);
-
-  return ((diff.count() >= ms) ? (true) : (false));
-}
-
-long		Timer::min()
-{
-  std::chrono::high_resolution_clock::time_point	t2;
-  t2 = std::chrono::high_resolution_clock::now();
-
-  std::chrono::minutes diff = std::chrono::duration_cast<std::chrono::minutes>(t2 - _t);
-
-  return (diff.count());
-}
+//bool		Timer::min(long ms)
+//{
+//  std::chrono::high_resolution_clock::time_point	t2;
+//  t2 = std::chrono::high_resolution_clock::now();
+//
+//  std::chrono::minutes diff = std::chrono::duration_cast<std::chrono::minutes>(t2 - _t);
+//
+//  return ((diff.count() >= ms) ? (true) : (false));
+//}
+//
+//long		Timer::min()
+//{
+//  std::chrono::high_resolution_clock::time_point	t2;
+//  t2 = std::chrono::high_resolution_clock::now();
+//
+//  std::chrono::minutes diff = std::chrono::duration_cast<std::chrono::minutes>(t2 - _t);
+//
+//  return (diff.count());
+//}

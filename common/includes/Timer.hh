@@ -37,8 +37,8 @@ public:
   virtual long		ns();
 
   // Same in minutes
-  virtual bool		min(long);
-  virtual long		min();
+  //virtual bool		min(long);
+  //virtual long		min();
 };
 
 #endif /* !TIMER_H_ */

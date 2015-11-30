@@ -8,7 +8,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager)
 	mainmenu = new MainMenu(graphicEngine);
 	//onlineMenu = new OnlineMenu(graphicEngine, packager);
 
-	graphicEngine->createWindow(800, 600, "R-Type");
+	graphicEngine->createWindow(1024, 768, "R-Type");
 	
 	/*Transformation transformation(50, 200);
 	transformation.setScale((float)0.35, (float)0.2);

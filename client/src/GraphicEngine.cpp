@@ -5,7 +5,8 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	callbackArg = nullptr;
 	call = nullptr;
 	window = nullptr;
-	_timer.start();
+	_timer = new Timer();
+	_timer->start();
 	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
@@ -24,6 +25,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	shotTypeToSpriteString[2] = "r-typesheet1.gif";
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
+	sf::View v;
 }
 
 GraphicEngine::~GraphicEngine()
@@ -76,7 +78,7 @@ void GraphicEngine::launch()
 		throw std::runtime_error("No window created, use createWindow function before using launch");
 	while (window->isOpen())
 	{
-		if (_timer.ms() >= MS_REFRESH)
+		if (_timer->msWait(MS_REFRESH))
 		{
 			handleEvents();
 			window->clear(sf::Color::Black);
@@ -85,7 +87,7 @@ void GraphicEngine::launch()
 			if (call)
 				call();
 			window->display();
-			_timer.reset();
+			_timer->reset();
 		}
 	}
 }
