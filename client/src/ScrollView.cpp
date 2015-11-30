@@ -1,7 +1,7 @@
 #include <ScrollView.hh>
 
 
-ScrollView::ScrollView(Transformation transformation, int nbrDiplayCell, IGraphicEngine *engine)
+ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine)
 {
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
