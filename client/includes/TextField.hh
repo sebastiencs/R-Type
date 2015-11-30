@@ -21,6 +21,9 @@ public:
 	virtual Transformation& getTransformation();
 	virtual void draw();
 
+	const std::string& getText() const;
+	void setText(const std::string& txt);
+
 private:
 	std::string text;
 	std::string id;

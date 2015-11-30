@@ -44,3 +44,13 @@ void TextField::draw()
 {
 	engine->drawText(text, t, size, color, font);
 }
+
+const std::string & TextField::getText() const
+{
+	return (text);
+}
+
+void TextField::setText(const std::string & txt)
+{
+	text = txt;
+}
