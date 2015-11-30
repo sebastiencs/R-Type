@@ -65,7 +65,7 @@ void ScrollView::joinButton()
 			std::cout << paquet->getName() << " -> ";
 			paquet->createPaquet();
 			DEBUG_MSG(paquet);
-			PackageStorage::getInstance().storeAnswersPackage(paquet);
+			PackageStorage::getInstance().storeToSendPackage(paquet);
 		}
 }
 

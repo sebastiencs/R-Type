@@ -40,6 +40,7 @@ int NetworkClient::run()
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
 							this->writeUDP(*PackageTranslator::TranslateBuffer(*paquet), _socketUDP->getAddr());
+							PackageStorage::getInstance().deleteToSendPackage();
 						}
 						break;
 					}
@@ -49,6 +50,7 @@ int NetworkClient::run()
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
 							this->writeTCP(*PackageTranslator::TranslateBuffer(*paquet));
+							PackageStorage::getInstance().deleteToSendPackage();
 						}
 						break;
 					}
@@ -60,6 +62,7 @@ int NetworkClient::run()
 						Buffer *buff = new Buffer();
 						this->_socketUDP->read(*buff);
 						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
+						DEBUG_MSG(buff);
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
@@ -67,6 +70,7 @@ int NetworkClient::run()
 						Buffer *buff = new Buffer();
 						this->_socketTCP->read(*buff);
 						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
+						DEBUG_MSG(buff);
 						break;
 					}
 
