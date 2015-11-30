@@ -69,12 +69,7 @@ void OnlineMenu::joinButton()
 	for (Cell *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell())
 		{
-			PaquetJoinParty *paquet = new PaquetJoinParty();
-			paquet->setName(c->getNameParty());
-			std::cout << paquet->getName() << " -> ";
-			paquet->createPaquet();
-			DEBUG_MSG(paquet);
-			PackageStorage::getInstance().storeToSendPackage(paquet);
+			Packager::createJoinPartyPackage(c->getNameParty());
 		}
 
 }
