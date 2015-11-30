@@ -1,4 +1,4 @@
-#include "OnlineMenuFunctions.hh"
+#include "OnlineMenu.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
@@ -43,7 +43,6 @@ void OnlineMenu::draw()
 		b->draw();
 	scrollView->draw();
 }
-
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
 {

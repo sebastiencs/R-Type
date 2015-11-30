@@ -56,7 +56,7 @@ int		main(int argc, char **argv)
 		Packager *packager = new Packager();
 		NetworkClient* network = new NetworkClient(addr, port);
 		DisplayUpdater updater(packager);
-		PackageSorter sorter();
+		PackageSorter sorter;
 
 		PaquetFirst paquet;
 		paquet.setLevel(5);

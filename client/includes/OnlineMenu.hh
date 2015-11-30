@@ -1,5 +1,5 @@
-#ifndef ONLINE_MENU_FUNCTION_HH_
-# define ONLINE_MENU_FUNCTION_HH_
+#ifndef ONLINE_MENU_HH_
+# define ONLINE_MENU_HH_
 
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
@@ -27,4 +27,4 @@ private:
 	std::list<Button* > buttons;
 };
 
-#endif // !ONLINE_MENU_FUNCTION_HH_
+#endif // !ONLINE_MENU_HH_
