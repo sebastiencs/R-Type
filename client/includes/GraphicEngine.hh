@@ -53,6 +53,7 @@ public:
 	virtual void setCallbackFunction(callback, void* arg);
 	virtual void setMouseClickCallback(mouseCallback);
 	virtual void setMouseMovedCallback(mouseCallback);
+	virtual void setTextEnteredCallback(textEnteredCallback);
 
 
 	virtual int getWindowWidth() const;
@@ -73,6 +74,7 @@ protected:
 	Packager* _packager;
 	ITimer* _timer;
 	callback call;
+	textEnteredCallback _textEnteredcallback;
 	mouseCallback _mouseClickCall;
 	mouseCallback _mouseMoveCall;
 	int windowWidth;

@@ -13,13 +13,6 @@
 
 class				NetworkClient
 {
-private:
-
-  ISocketUDP*	_socketUDP;
-  ISocketTCP*	_socketTCP;
-  Thread*	threadWrite;
-  Thread*	threadRead;
-  bool inGame;
 
 public:
   NetworkClient(const std::string&, const uint16_t);
@@ -33,6 +26,17 @@ public:
   virtual bool	writeUDP(const Buffer &, const Addr &);
   virtual bool	writeTCP(const Buffer &);
   void setInGame(bool _inGame);
+
+private:
+
+  ISocketUDP*	_socketUDP;
+  ISocketTCP*	_socketTCP;
+
+  Thread*	threadWrite;
+  Thread*	threadRead;
+
+  bool inGame;
+  bool _isConnect;
 };
 
 #endif /* !NETWORKCLIENT_H_ */

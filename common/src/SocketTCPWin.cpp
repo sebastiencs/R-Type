@@ -52,6 +52,7 @@ int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
   _client.sin_port = htons(port);
   if (::connect(_socket, (struct sockaddr *)&_client, sizeof(_client)) == INVALID_SOCKET) {
     DEBUG_MSG("Connect failed");
+	return (-1);
   }
   return (0);
 }

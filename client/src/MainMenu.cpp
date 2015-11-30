@@ -5,7 +5,6 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	engine = eng;
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
-	onlineMenu->menu();
 
 	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 

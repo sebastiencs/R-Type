@@ -21,6 +21,7 @@ public:
 
 	void onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
+	void getText(const char);
 
 private:
 	TextField *serverName;

@@ -3,21 +3,29 @@
 CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 {
 	//Faut un fond
+	callback fptr;
+	textEnteredCallback tptr;
 	Transformation t(500,500);
-	t.setBounds(200, 30);
 	Color color(255,0,0,255);
-	serverName = new TextField("HEY JE SUIS LA", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
+	superView = _superview;
+
+	tptr = std::bind(&CreateGameMenu::getText, this, std::placeholders::_1);
+	engine->setTextEnteredCallback(tptr);
+
+	t.setBounds(200, 30);
+	serverName = new TextField("", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
+
 	t.setPosition(600, 550);
 	t.setBounds(100, 50);
-	t.setScale(0.3, 0.3);
-	callback fptr = std::bind(&CreateGameMenu::onCreateGame, this);
-	ok = new Button("Create", "Button.png", t, color, fptr, "createServerButton2", engine);
-	superView = _superview;
+	t.setScale((float)0.3, (float)0.3);
+	fptr = std::bind(&CreateGameMenu::onCreateGame, this);
+	ok = new Button("Create", "Button.png", t, Color::None, fptr, "createServerButton2", engine);
+
 	t.setPosition(500, 550);
 	t.setBounds(100, 50);
-	t.setScale(0.3, 0.3);
+	t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&OnlineMenu::backButton, superView);
-	back = new Button("Back", "Button.png", t, color, fptr, "backButton", engine);
+	back = new Button("Back", "Button.png", t, Color::None, fptr, "backButton", engine);
 }
 
 CreateGameMenu::~CreateGameMenu()
@@ -54,4 +62,15 @@ void CreateGameMenu::onHover(uint32_t x, uint32_t y)
 {
 	back->onHover(x, y);
 	ok->onHover(x, y);
+}
+
+void CreateGameMenu::getText(const char c)
+{
+	if (c == 8)
+	{
+		std::string tmp = serverName->getText();
+		serverName->setText(tmp.substr(0, tmp.size() - 1));
+	}
+	else
+		serverName->setText(serverName->getText() + c);
 }

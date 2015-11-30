@@ -5,6 +5,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	callbackArg = nullptr;
 	call = nullptr;
 	window = nullptr;
+	_textEnteredcallback = nullptr;
 	_timer = new Timer();
 	_timer->start();
 	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
@@ -53,6 +54,10 @@ void GraphicEngine::handleEvents()
 		// TODO: Trouver quoi faire des positions du joueur
 		if (event.type == sf::Event::Closed)
 			window->close();
+		else if (event.type == sf::Event::TextEntered) {
+			if (event.text.unicode < 128)
+				_textEnteredcallback(static_cast<char>(event.text.unicode));
+		}
 		else if (event.type == sf::Event::KeyPressed) {
 		  if (event.key.code == sf::Keyboard::Space)
 		    _packager->createShotPackage(0, 0, 0, 0);
@@ -105,6 +110,11 @@ void GraphicEngine::setMouseClickCallback(mouseCallback call)
 void GraphicEngine::setMouseMovedCallback(mouseCallback call)
 {
 	_mouseMoveCall = call;
+}
+
+void GraphicEngine::setTextEnteredCallback(textEnteredCallback call)
+{
+	_textEnteredcallback = call;
 }
 
 int GraphicEngine::getWindowWidth() const

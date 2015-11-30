@@ -7,6 +7,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
 	createGameMenu = nullptr;
+	menu();
 }
 
 OnlineMenu::~OnlineMenu()

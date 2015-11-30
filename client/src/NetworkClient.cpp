@@ -11,20 +11,31 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendPackage(paquet);
 
-	_socketTCP->connect(ip, port);
+	if ((_socketTCP->connect(ip, port)) != -1)
+		_isConnect = false;
+	else
+		_isConnect = true;
+
 	Callback_t fptrWrite = [this](void *param) {runWrite(); return nullptr; };
 	Callback_t fptrRead = [this](void *param) {runRead(); return nullptr; };
 	inGame = false;
 	threadWrite = new Thread(fptrWrite, nullptr);
 	threadRead = new Thread(fptrRead, nullptr);
+	if (!_isConnect)
+	{
+		threadRead->close();
+		threadWrite->close();
+	}
 }
 
 NetworkClient::~NetworkClient()
 {
-	threadRead->close();
-	threadWrite->close();
-	delete threadRead;
+	if (_isConnect) {
+		threadRead->close();
+		threadWrite->close();
+	}
 	delete threadWrite;
+	delete threadRead;
 	DEBUG_MSG("NetworkClient deleted");
 }
 

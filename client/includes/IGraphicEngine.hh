@@ -8,6 +8,7 @@
 
 typedef std::function<void()> callback;
 typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
+typedef std::function<void(const char)> textEnteredCallback;
 
 class IGraphicEngine {
 public:
@@ -29,6 +30,7 @@ public:
 	virtual void setCallbackFunction(callback, void* arg) = 0;
 	virtual void setMouseClickCallback(mouseCallback) = 0;
 	virtual void setMouseMovedCallback(mouseCallback) = 0;
+	virtual void setTextEnteredCallback(textEnteredCallback) = 0;
 
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
