@@ -12,26 +12,30 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	PackageStorage::getInstance().storeToSendPackage(paquet);
 
 	_socketTCP->connect(ip, port);
-	Callback_t fptr = [this](void *param) {run(); return nullptr; };
+	Callback_t fptrWrite = [this](void *param) {runWrite(); return nullptr; };
+	Callback_t fptrRead = [this](void *param) {runRead(); return nullptr; };
 	inGame = false;
-	thread = new Thread(fptr, nullptr);
+	threadWrite = new Thread(fptrWrite, nullptr);
+	threadRead = new Thread(fptrRead, nullptr);
 }
 
 NetworkClient::~NetworkClient()
 {
-	thread->close();
-	delete thread;
+	threadRead->close();
+	threadWrite->close();
+	delete threadRead;
+	delete threadWrite;
 	DEBUG_MSG("NetworkClient deleted");
 }
 
-int NetworkClient::run()
+int NetworkClient::runWrite()
 {
 	Pollfd	fds(2);
 
 	fds[0].fd = _socketTCP->socket();
-	fds[0].events = POLLIN | POLLOUT;
+	fds[0].events = POLLOUT;
 	fds[1].fd = _socketUDP->socket();
-	fds[1].events = POLLIN | POLLOUT;
+	fds[1].events = POLLOUT;
 
 	while (1)
 	{
@@ -62,7 +66,29 @@ int NetworkClient::run()
 						break;
 					}
 				}
-				else if (fd.revents & POLLIN)
+			}
+		}
+	}
+	return (0);
+
+}
+
+int NetworkClient::runRead()
+{
+	Pollfd	fds(2);
+
+	fds[0].fd = _socketTCP->socket();
+	fds[0].events = POLLIN;
+	fds[1].fd = _socketUDP->socket();
+	fds[1].events = POLLIN;
+
+	while (1)
+	{
+		if (IOEvent::poll(fds, 0) > 0)
+		{
+			for (auto fd : fds)
+			{
+				if (fd.revents & POLLIN)
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
@@ -84,8 +110,6 @@ int NetworkClient::run()
 				}
 			}
 		}
-		else
-			return (-1);
 	}
 	return (0);
 }

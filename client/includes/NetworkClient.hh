@@ -17,14 +17,16 @@ private:
 
   ISocketUDP*	_socketUDP;
   ISocketTCP*	_socketTCP;
-  Thread*	thread;
+  Thread*	threadWrite;
+  Thread*	threadRead;
   bool inGame;
 
 public:
   NetworkClient(const std::string&, const uint16_t);
   virtual ~NetworkClient();
 
-  virtual int	run();
+  virtual int	runWrite();
+  virtual int	runRead();
   virtual int	stop();
 
   virtual int	handleFirst(PaquetFirst);
