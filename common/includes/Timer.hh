@@ -14,6 +14,8 @@
 # include <chrono>
 # include "ITimer.hh"
 
+# undef min
+
 class		Timer : public ITimer
 {
 private:
@@ -37,8 +39,8 @@ public:
   virtual long		ns();
 
   // Same in minutes
-  //virtual bool		min(long);
-  //virtual long		min();
+  virtual bool		min(long);
+  virtual long		min();
 };
 
 #endif /* !TIMER_H_ */
