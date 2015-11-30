@@ -26,6 +26,11 @@ const sf::Sprite & TextField::getSprite() const
 	return *sprite;
 }
 
+Color & TextField::getColor()
+{
+	return color;
+}
+
 const Transformation & TextField::getTransformation() const
 {
 	return t;
