@@ -55,7 +55,7 @@ void GraphicEngine::handleEvents()
 		if (event.type == sf::Event::Closed)
 			window->close();
 		else if (event.type == sf::Event::TextEntered) {
-			if (event.text.unicode < 128)
+			if (event.text.unicode < 128 && _textEnteredcallback)
 				_textEnteredcallback(static_cast<char>(event.text.unicode));
 		}
 		else if (event.type == sf::Event::KeyPressed) {
