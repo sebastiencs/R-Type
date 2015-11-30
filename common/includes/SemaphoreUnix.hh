@@ -7,18 +7,23 @@
 // Started on  Wed Nov 18 22:20:32 2015 chapui_s
 // Last update Wed Nov 18 22:20:32 2015 chapui_s
 //
+
 #ifndef SEMAPHOREUNIX_H_
 
 # define SEMAPHOREUNIX_H_
 # include "ISemaphore.hh"
-
 # include <semaphore.h>
 # include "Debug.hh"
+
+/**
+ * @class  SemaphoreUnix
+ * @brief  Implementation de l'interface ISemaphore sous Unix
+ */
 
 class		SemaphoreUnix : public ISemaphore
 {
 private:
-  sem_t		_sem;
+  sem_t		_sem; /**<  Objet qui represente la semaphore et son compteur */
 
 public:
   SemaphoreUnix();

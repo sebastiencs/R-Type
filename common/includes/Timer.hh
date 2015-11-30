@@ -14,10 +14,17 @@
 # include <chrono>
 # include "ITimer.hh"
 
+/**
+ * @class  Timer
+ * @brief  Implementation de l'interface ITimer en utilisant chrono de la STL (C++11)
+ */
+
+typedef std::chrono::high_resolution_clock::time_point	TimePoint_t;
+
 class		Timer : public ITimer
 {
 private:
-  std::chrono::high_resolution_clock::time_point	_t;
+  TimePoint_t	_t; /**< Objet qui permet de mesurer le temps*/
 
 public:
   Timer();
@@ -26,16 +33,12 @@ public:
   virtual void		start();
   virtual void		reset();
 
-  // Is n milliseconds expired from start() ( or reset() )
   virtual bool		ms(long);
-  // return n milliseconds from start() ( or reset() )
   virtual long		ms();
 
-  // Same in nanoseconds
   virtual bool		ns(long);
   virtual long		ns();
 
-  // Same in minutes
   virtual bool		min(long);
   virtual long		min();
 };

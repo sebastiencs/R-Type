@@ -15,10 +15,15 @@
 # include "ISemaphore.hh"
 # include "Debug.hh"
 
+/**
+ * @class  SemaphoreWin
+ * @brief  Implementation de l'interface ISemaphore sous Windows
+ */
+
 class		SemaphoreWin : public ISemaphore
 {
 private:
-  HANDLE	_sem;
+  HANDLE	_sem; /**<  Objet qui represente la semaphore et son compteur */
 
 public:
   SemaphoreWin();

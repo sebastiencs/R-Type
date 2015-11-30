@@ -14,14 +14,31 @@
 # include <pthread.h>
 # include "IThread.hh"
 
+/**
+ * @class  ThreadUnix
+ * @brief  Implementation de l'interface IThread sous Unix
+ * avec la lib pthread
+ */
+
 class		ThreadUnix : public IThread
 {
 private:
-  pthread_t	_thread;
-  bool		_running;
+  pthread_t	_thread;	/**< Identifiant qui permet de stocker les informations
+				   relatives au thread lancé */
+  bool		_running;	/**< booleen qui indique si le thread est lancé ou non */
 
 public:
   ThreadUnix();
+
+  /**
+   * Constructeur qui permet de lancé directement un thread, la methode run() y est appelée
+   *
+   * @param func Fonction executée lors de la creation du thread
+   * @param arg Parametre donné a la fonction appelé
+   *
+   * @return true si le thread a bien été créé. Sinon false
+   */
+
   ThreadUnix(const Callback_t &func, void *arg);
   virtual ~ThreadUnix();
 
