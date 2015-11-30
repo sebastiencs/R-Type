@@ -7,22 +7,25 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	onlineMenu = new OnlineMenu(engine);
 	onlineMenu->menu();
 
-	rTypeLabel = new TextField("R-Type", Transformation(100, 100), DEFAULT_FONT_SIZE + 10, "Fipps.otf", Color::None, "rtypeLabel", engine);
+	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
-	Transformation transformation(50, 200);
+	uint16_t baseX = 50;
+	uint16_t baseY = 500;
+	uint16_t offset = 50;
+	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
 
-	transformation.setPosition(50, 300);
+	transformation.setPosition(baseX, baseY + offset);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
 	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 
-	transformation.setPosition(50, 400);
+	transformation.setPosition(baseX, baseY + (offset * 2));
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
 	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
 
-	transformation.setPosition(50, 500);
+	transformation.setPosition(baseX, baseY + (offset * 3));
 	fptr = std::bind(&MainMenu::myexit, this);
 	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 

@@ -65,10 +65,10 @@ void OnlineMenu::menu()
 {
 	std::function<void()> fptr;
 	Transformation transformation(350, 525);
-	transformation.setScale((float)0.1, (float)0.1);
+	transformation.setScale(0.5, 0.5);
 
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
-	buttons.push_back(new Button("Refresh", "Button.png", transformation, Color::None, fptr, "Refresh", engine));
+	buttons.push_back(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
 	transformation.setPosition(450, 525);
 	buttons.push_back(new Button("Join", "Button.png", transformation, Color::None, fptr, "Join", engine));
