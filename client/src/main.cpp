@@ -53,7 +53,6 @@ int		main(int argc, char **argv)
 
 	try {
 		Packager *packager = new Packager();
-		/*IGraphicEngine* engine = new GraphicEngine(packager);*/
 		NetworkClient* network = new NetworkClient(addr, port);
 		DisplayUpdater updater(packager);
 
@@ -63,9 +62,6 @@ int		main(int argc, char **argv)
 		paquet.setVersion(0);
 		network->handleFirst(paquet);
 
-		/*engine->createWindow(800, 600, "R-Type");
-		engine->launch();*/
-		//delete engine;
 		delete packager;
 		delete network;
 	}

@@ -14,12 +14,17 @@
 # include <iostream>
 # include <functional>
 # include "PackageStorage.hh"
+# include "Thread.hh"
 
 class PackageSorter {
 public:
-  PackageSorter();
-  virtual ~PackageSorter();
-  void sortPaquet();
+	PackageSorter();
+	virtual ~PackageSorter();
+	std::function<void(Paquet *)> tab[13];
+	void sortPaquet();
+
+private:
+	Thread *thread;
 };
 
 #endif /* !PACKAGE_SORTER_HH */
