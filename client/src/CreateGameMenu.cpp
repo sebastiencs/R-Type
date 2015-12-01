@@ -19,13 +19,13 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	t.setBounds(100, 50);
 	t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&CreateGameMenu::onCreateGame, this);
-	ok = new Button("Create", "Button.png", t, Color::None, fptr, "createServerButton2", engine);
+	ok = new Button("Create", "createButton.png", t, Color::None, fptr, "createServerButton2", engine);
 
 	t.setPosition(500, 550);
 	t.setBounds(100, 50);
 	t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&OnlineMenu::backButton, superView);
-	back = new Button("Back", "Button.png", t, Color::None, fptr, "backButton", engine);
+	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 }
 
 CreateGameMenu::~CreateGameMenu()
@@ -73,7 +73,7 @@ void CreateGameMenu::onHover(uint32_t x, uint32_t y)
 
 void CreateGameMenu::getText(const char c)
 {
-	if (c == 8)
+	if (c == '\b')
 	{
 		std::string tmp = serverName->getText();
 		serverName->setText(tmp.substr(0, tmp.size() - 1));
