@@ -110,9 +110,9 @@ void OnlineMenu::menu()
 
 	transformation.setPosition(450, 525);
 	fptr = std::bind(&OnlineMenu::joinButton, this);
-	buttons.push_back(new Button("Join", "Button.png", transformation, Color::None, fptr, "Join", engine));
+	buttons.push_back(new Button("Join", "joinButton.png", transformation, Color::None, fptr, "Join", engine));
 
 	transformation.setPosition(550, 525);
 	fptr = std::bind(&OnlineMenu::createButton, this);
-	buttons.push_back(new Button("Info", "Button.png", transformation, Color::None, fptr, "Info", engine));
+	buttons.push_back(new Button("Info", "infoButton.png", transformation, Color::None, fptr, "Info", engine));
 }

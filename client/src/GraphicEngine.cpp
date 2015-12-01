@@ -131,7 +131,7 @@ const sf::Texture& GraphicEngine::loadTexture(const std::string& img)
 {
 	if (cachedImages.find(img) == cachedImages.end() &&
 		!loadImageFromFile(img)) {
-		std::cerr << "Couldn't open texture file: \"" << img << "\"" << std::endl;
+		DEBUG_MSG("Couldn't open texture file: \"" << img << "\"");
 		return *None;
 	}
 	return *cachedImages[img];
@@ -189,7 +189,7 @@ void GraphicEngine::drawImage(const std::string& name, const Transformation& t, 
 {
 	if (cachedImages.find(name) == cachedImages.end() &&
 		!loadImageFromFile(name)) {
-		std::cerr << "Couldn't open texture file: \"" << name << "\"" << std::endl;
+		DEBUG_MSG("Couldn't open texture file: \"" << name << "\"");
 		return;
 	}
 	sf::Sprite sprite(*cachedImages[name]);
@@ -201,7 +201,7 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 {
 	if (cachedImages.find(name) == cachedImages.end() &&
 		!loadImageFromFile(name)) {
-		std::cerr << "Couldn't open texture file: \"" << name << "\"" << std::endl;
+		DEBUG_MSG("Couldn't open texture file: \"" << name << "\"");
 		return;
 	}
 
@@ -236,7 +236,7 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 	std::string fontName = (font == "" ? DEFAULT_FONT : font);
 	if (cachedFonts.find(fontName) == cachedFonts.end() &&
 		!loadFontFromFile(fontName)) {
-		std::cerr << "Couldn't open font file: \"" << fontName << "\"" << std::endl;
+		DEBUG_MSG("Couldn't open font file: \"" << font << "\"");
 		return;
 	}
 	sf::Text textToDraw;
