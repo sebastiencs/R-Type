@@ -66,7 +66,7 @@ Transformation::Transformation(const Transformation & t)
 		setCrop(crop.at(SRCX), crop.at(SRCY), crop.at(SRCWIDTH), crop.at(SRCHEIGHT));
 	if (t.hasRotation())
 		setRotation(t.getRotation());
-	if (hasScale())
+	if (t.hasScale())
 		setScale(t.getScaleX(), t.getScaleY());
 }
 
@@ -98,7 +98,7 @@ Transformation & Transformation::operator=(const Transformation & t)
 		setCrop(crop.at(SRCX), crop.at(SRCY), crop.at(SRCWIDTH), crop.at(SRCHEIGHT));
 	if (t.hasRotation())
 		setRotation(t.getRotation());
-	if (hasScale())
+	if (t.hasScale())
 		setScale(t.getScaleX(), t.getScaleY());
 	return *this;
 }
