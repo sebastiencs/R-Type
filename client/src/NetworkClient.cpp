@@ -62,7 +62,7 @@ int NetworkClient::runWrite()
 	while (1)
 	{
 		PackageStorage::getInstance().waitForPackage();
-		if (IOEvent::poll(fds, 0) > 0)
+		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
 			for (auto fd : fds)
 			{
@@ -107,7 +107,7 @@ int NetworkClient::runRead()
 
 	while (1)
 	{
-		if (IOEvent::poll(fds, 0) > 0)
+		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
 			for (auto fd : fds)
 			{

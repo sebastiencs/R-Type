@@ -46,11 +46,10 @@ int	Network::run()
 
   while (_running) {
 
-    if (IOEvent::poll(fds, 0) > 0) {
+    if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0) {
 
       for (auto &fd : fds) {
 	if (fd.revents & POLLIN) {
-
 	  if (fd.fd == _socketUDP->socket()) {
 	    handleUDP();
 	    break ;

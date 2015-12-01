@@ -31,6 +31,10 @@ public:
   IOEvent();
   virtual ~IOEvent();
 
+  enum {
+    POLL_WAIT = -1
+  };
+
   static int	poll(Pollfd &fds, int timeout);
   static int	wait(int timeout);
 };
