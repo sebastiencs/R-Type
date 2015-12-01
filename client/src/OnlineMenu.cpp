@@ -18,29 +18,29 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-  PackageStorage &PS = PackageStorage::getInstance();
+	PackageStorage &PS = PackageStorage::getInstance();
 
-  PaquetRequestParties	*paquet = new PaquetRequestParties();
-  paquet->createPaquet();
-  PS.storeToSendPackage(paquet);
+	PaquetRequestParties	*paquet = new PaquetRequestParties();
+	paquet->createPaquet();
+	PS.storeToSendPackage(paquet);
 
-  // TODO: Revoir cette boucle. C'est moche
-  //       Faudrait uniquement envoyer le paquet dans cette fonction
-  //       et gerer la reception du paquet de reponse autre part
-  const Paquet	*tmp;
-  int loop = 0;
-  do {
-    tmp = PS.getGameListPackage();
-  } while (!tmp && !IOEvent::wait(150) && loop < 10);
+	// TODO: Revoir cette boucle. C'est moche
+	//       Faudrait uniquement envoyer le paquet dans cette fonction
+	//       et gerer la reception du paquet de reponse autre part
+	const Paquet	*tmp;
+	int loop = 0;
+	do {
+		tmp = PS.getGameListPackage();
+	} while (!tmp && !IOEvent::wait(150) && loop < 10);
 
-  if (tmp) {
-    PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
+	if (tmp) {
+		PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 
-    scrollView->emptyCell();
-    for (auto &party : paquetList.getParties()) {
-      scrollView->createCell(std::get<0>(party), std::get<1>(party));
-    }
-  }
+		scrollView->emptyCell();
+		for (auto &party : paquetList.getParties()) {
+			scrollView->createCell(std::get<0>(party), std::get<1>(party));
+		}
+	}
 }
 
 void OnlineMenu::draw()
