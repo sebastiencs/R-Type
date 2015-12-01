@@ -13,6 +13,7 @@
 
 # include <iostream>
 # include <functional>
+# include <map>
 # include "PackageStorage.hh"
 # include "Thread.hh"
 
@@ -20,11 +21,12 @@ class PackageSorter {
 public:
 	PackageSorter();
 	virtual ~PackageSorter();
-	std::function<void(Paquet *)> tab[13];
 	void sortPaquet();
 
 private:
 	Thread *thread;
+
+  std::map<uint8_t, std::function<void(Paquet*)>>	_tab;
 };
 
 #endif /* !PACKAGE_SORTER_HH */
