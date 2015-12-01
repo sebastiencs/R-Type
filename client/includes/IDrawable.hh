@@ -3,6 +3,8 @@
 
 # include "IGraphicEngine.hh"
 
+#include "Transformation.hh"
+
 class IDrawable
 {
 public:
