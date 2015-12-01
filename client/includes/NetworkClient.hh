@@ -22,6 +22,8 @@ public:
   virtual int	runRead();
   virtual int	stop();
 
+  int reconnect();
+
   virtual int	handleFirst(PaquetFirst);
 
   template <class T>
@@ -42,11 +44,14 @@ public:
 
 private:
 
-  ISocketUDP*	_socketUDP;
-  ISocketTCP*	_socketTCP;
+  std::unique_ptr<ISocketUDP>	_socketUDP;
+  std::unique_ptr<ISocketTCP>	_socketTCP;
 
   Thread*	threadWrite;
   Thread*	threadRead;
+
+  std::string _ip;
+  int _port;
 
   bool inGame;
   bool _isConnect;

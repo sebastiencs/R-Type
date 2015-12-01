@@ -16,6 +16,8 @@ public:
 
 	Transformation();
 	Transformation(uint16_t x, uint16_t y);
+	Transformation(const Transformation& t);
+	Transformation& operator=(const Transformation& t);
 	~Transformation();
 
 	void setPosition(uint16_t x, uint16_t y);

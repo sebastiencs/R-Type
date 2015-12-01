@@ -11,25 +11,22 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendPackage(paquet);
 
-	if ((_socketTCP->connect(ip, port)) == -1)
+	_ip = ip;
+	_port = port;
+
+	if ((_socketTCP->connect(ip, port)) == -1) {
 		_isConnect = false;
-	else
-		_isConnect = true;
+		_socketTCP.reset(nullptr);
+		_socketUDP.reset(nullptr);
+		return;
+	}
+	_isConnect = true;
 
 	inGame = false;
 	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
 	threadWrite = new Thread(fptrWrite, this);
 	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
 	threadRead = new Thread(fptrRead, this);
-	if (!_isConnect)
-	{
-		threadRead->close();
-		threadWrite->close();
-		delete threadWrite;
-		DEBUG_MSG("ThreadWrite deleted");
-		delete threadRead;
-		DEBUG_MSG("ThreadRead deleted");
-	}
 }
 
 NetworkClient::~NetworkClient()
@@ -44,9 +41,9 @@ NetworkClient::~NetworkClient()
 		delete threadRead;
 		DEBUG_MSG("ThreadRead deleted");
 	}
-	delete _socketTCP;
+	_socketTCP.reset(nullptr);
 	DEBUG_MSG("SocketTCP deleted");
-	delete _socketUDP;
+	_socketUDP.reset(nullptr);
 	DEBUG_MSG("SocketUDP deleted");
 }
 
@@ -125,6 +122,21 @@ int NetworkClient::runRead()
 					{
 						Buffer buff;
 						this->_socketTCP->read(buff);
+
+						if (!buff.size()) {
+
+						  DEBUG_MSG("Disconnected");
+
+						  _isConnect = false;
+						  inGame = false;
+						  threadWrite->close();
+						  _socketTCP.reset(nullptr);
+						  _socketUDP.reset(nullptr);
+						  threadRead->close();
+						  return (0);
+
+						}
+
 						DEBUG_MSG(buff);
 						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buff));
 						break;
@@ -140,6 +152,32 @@ int NetworkClient::runRead()
 int NetworkClient::stop()
 {
   return 0;
+}
+
+int NetworkClient::reconnect()
+{
+	_socketTCP.reset(new SocketTCP(SocketTCP::CLIENT));
+	_socketUDP.reset(new SocketUDP(SocketUDP::CLIENT));
+
+	PaquetFirst *paquet = new PaquetFirst();
+	paquet->setLevel(5);
+	paquet->setName("Alex");
+	paquet->setVersion(1);
+	paquet->createPaquet();
+	PackageStorage::getInstance().storeToSendPackage(paquet);
+
+	if ((_socketTCP->connect(_ip, _port)) == -1)
+	{
+		_isConnect = false;
+		return (-1);
+	}
+		_isConnect = true;
+	inGame = false;
+	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
+	threadWrite = new Thread(fptrWrite, this);
+	Callback_t fptrRead = [this](void *) {runRead(); return nullptr; };
+	threadRead = new Thread(fptrRead, this);
+	return (1);
 }
 
 int NetworkClient::handleFirst(PaquetFirst first)

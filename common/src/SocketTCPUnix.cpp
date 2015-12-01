@@ -78,6 +78,7 @@ int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
     _error = 1;
     return (-1);
   }
+  _error = 0;
   return (0);
 }
 

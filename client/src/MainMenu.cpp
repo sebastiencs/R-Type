@@ -15,6 +15,7 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	uint16_t offset = 50;
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
+
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
 
@@ -33,6 +34,10 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	transformation.setPosition(baseX, baseY + (offset * 4));
 	fptr = std::bind(&MainMenu::myexit, this);
 	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+
+	transformation.setPosition(800, 75);
+	fptr = std::bind(&NetworkClient::reconnect, this->net);
+	buttons.push_back(new Button("Reconnect", "exitButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);
@@ -70,7 +75,13 @@ void MainMenu::draw()
 		engine->drawText("You are not connected", Transformation(750, 50), 12, Color::Red, "Fipps.otf");
 
 	for (Button* b : buttons)
-		b->draw();
+		if (b->getId() == "Reconnect") {
+			if (!net->getIsConnect())
+				b->draw();
+		}
+		else
+			b->draw();
+
 	rTypeLabel->draw();
 	if (currentPage == 1)
 		onlineMenu->draw();
@@ -82,9 +93,15 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
 		if (b->isPressed(x, y)) {
-			b->onAction();
+			if (b->getId() == "Reconnect") {
+				if (!net->getIsConnect())
+					b->onAction();
+			}
+			else
+				b->onAction();
 		}
 	}
+
 	if (currentPage == 1)
 		onlineMenu->onClick(x, y);
 }
@@ -92,7 +109,12 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
-		b->onHover(x, y);
+		if (b->getId() == "Reconnect") {
+			if (!net->getIsConnect())
+				b->onHover(x, y);
+		}
+		else
+			b->onHover(x, y);
 	}
 
 	if (currentPage == 1)
