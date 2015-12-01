@@ -3,6 +3,7 @@
 
 //# include "GraphicEngine.hh"
 # include <SFML/Graphics/Sprite.hpp>
+# include "Transformation.hh"
 
 class IDrawable
 {
