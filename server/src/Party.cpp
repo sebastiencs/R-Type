@@ -9,10 +9,7 @@
 //
 
 #include "Party.hh"
-
-#ifdef __unix__
-# include <unistd.h>
-#endif
+#include "IOEvent.hh"
 
 Party::Party()
   : _sem(new Semaphore()),
@@ -43,11 +40,7 @@ void			Party::run()
   for (;;) {
     std::cerr << "A party is running" << std::endl;
 
-#ifdef __unix__
-    sleep(2);
-#elif defined(_WIN32)
-    Sleep(2);
-#endif
+    IOEvent::wait(6000);
   }
 }
 
