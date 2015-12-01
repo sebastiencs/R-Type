@@ -40,20 +40,30 @@ Transformation::Transformation(uint32_t x, uint32_t y)
 
 Transformation::Transformation(const Transformation & t)
 {
-	setPosition(t.getX(), t.getY());
-	setBounds(t.getWidth(), t.getHeight());
-	setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
-	setRotation(t.getRotation());
-	setScale(t.getScaleX(), t.getScaleY());
+	if (t.hasPosition())
+		setPosition(t.getX(), t.getY());
+	if (t.hasBounds())
+		setBounds(t.getWidth(), t.getHeight());
+	if (t.hasCrop())
+		setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+	if (t.hasRotation())
+		setRotation(t.getRotation());
+	if (hasScale())
+		setScale(t.getScaleX(), t.getScaleY());
 }
 
 Transformation & Transformation::operator=(const Transformation & t)
 {
-	setPosition(t.getX(), t.getY());
-	setBounds(t.getWidth(), t.getHeight());
-	setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
-	setRotation(t.getRotation());
-	setScale(t.getScaleX(), t.getScaleY());
+	if (t.hasPosition())
+		setPosition(t.getX(), t.getY());
+	if (t.hasBounds())
+		setBounds(t.getWidth(), t.getHeight());
+	if (t.hasCrop())
+		setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+	if (t.hasRotation())
+		setRotation(t.getRotation());
+	if (hasScale())
+		setScale(t.getScaleX(), t.getScaleY());
 	return *this;
 }
 
