@@ -2,7 +2,6 @@
 
 CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 {
-	//Faut un fond
 	callback fptr;
 	textEnteredCallback tptr;
 	Color color(255, 255, 255, 255);
@@ -17,13 +16,11 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 
 	t.setPosition(600, 500);
 	t.setBounds(100, 50);
-	//t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&OnlineMenu::onCreateGame, superView);
 	ok = new Button("Create", "createButton.png", t, Color::None, fptr, "createServerButton2", engine);
 
 	t.setPosition(400, 500);
 	t.setBounds(100, 50);
-//	t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&OnlineMenu::backButton, superView);
 	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 }

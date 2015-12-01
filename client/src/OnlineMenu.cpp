@@ -24,6 +24,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 	paquet->createPaquet();
 	PS.storeToSendPackage(paquet);
 
+	scrollView->emptyCell();
 	// TODO: Revoir cette boucle. C'est moche
 	//       Faudrait uniquement envoyer le paquet dans cette fonction
 	//       et gerer la reception du paquet de reponse autre part
