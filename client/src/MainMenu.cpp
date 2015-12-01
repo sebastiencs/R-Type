@@ -15,6 +15,7 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	uint16_t offset = 50;
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
+
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
 
@@ -33,6 +34,10 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	transformation.setPosition(baseX, baseY + (offset * 4));
 	fptr = std::bind(&MainMenu::myexit, this);
 	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+
+	transformation.setPosition(800, 75);
+	fptr = std::bind(&NetworkClient::reconnect, this->net);
+	buttons.push_back(new Button("Reconnect", "exitButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);

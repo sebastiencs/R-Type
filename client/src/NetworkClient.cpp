@@ -11,6 +11,9 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendPackage(paquet);
 
+	_ip = ip;
+	_port = port;
+
 	if ((_socketTCP->connect(ip, port)) == -1)
 		_isConnect = false;
 	else
@@ -140,6 +143,30 @@ int NetworkClient::runRead()
 int NetworkClient::stop()
 {
   return 0;
+}
+
+int NetworkClient::reconnect()
+{
+	PaquetFirst *paquet = new PaquetFirst();
+	paquet->setLevel(5);
+	paquet->setName("Alex");
+	paquet->setVersion(1);
+	paquet->createPaquet();
+	PackageStorage::getInstance().storeToSendPackage(paquet);
+
+	if ((_socketTCP->connect(_ip, _port)) == -1)
+	{
+		_isConnect = false;
+		return (-1);
+	}
+	else
+		_isConnect = true;
+	inGame = false;
+	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
+	threadWrite = new Thread(fptrWrite, this);
+	Callback_t fptrRead = [this](void *) {runRead(); return nullptr; };
+	threadRead = new Thread(fptrRead, this);
+	return (1);
 }
 
 int NetworkClient::handleFirst(PaquetFirst first)

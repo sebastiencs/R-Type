@@ -22,6 +22,8 @@ public:
   virtual int	runRead();
   virtual int	stop();
 
+  int reconnect();
+
   virtual int	handleFirst(PaquetFirst);
 
   template <class T>
@@ -47,6 +49,9 @@ private:
 
   Thread*	threadWrite;
   Thread*	threadRead;
+
+  std::string _ip;
+  int _port;
 
   bool inGame;
   bool _isConnect;
