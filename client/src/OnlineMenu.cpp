@@ -32,7 +32,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 	int loop = 0;
 	do {
 		tmp = PS.getGameListPackage();
-	} while (!tmp && !IOEvent::wait(150) && loop < 10);
+	} while (!tmp && !IOEvent::wait(150) && ++loop < 10);
 
 	if (tmp) {
 		PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
