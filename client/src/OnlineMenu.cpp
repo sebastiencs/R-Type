@@ -107,6 +107,7 @@ void OnlineMenu::onCreateGame()
 	PS.storeToSendPackage(paquet);
 	delete createGameMenu;
 	createGameMenu = nullptr;
+	createRequestPartiesPaquet();
 }
 
 void OnlineMenu::createButton()
