@@ -16,28 +16,41 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
 
+	mainChoiceBox = new Box(Orientation::vertical, transformation, "mainBox");
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
-
-	transformation.setPosition(baseX, baseY + offset);
+	mainChoiceBox->addDrawable(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
-	buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
-
-	transformation.setPosition(baseX, baseY + (offset * 2));
+	mainChoiceBox->addDrawable(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
-	buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
-
-	transformation.setPosition(baseX, baseY + (offset * 3));
+	mainChoiceBox->addDrawable(new Button("Options", "optionButton.png", transformation, Color::None, fptr, "Options", engine));
 	fptr = std::bind(&MainMenu::setDisplayCredits, this);
-	buttons.push_back(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
-
-	transformation.setPosition(baseX, baseY + (offset * 4));
+	mainChoiceBox->addDrawable(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
 	fptr = std::bind(&MainMenu::myexit, this);
-	buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+	mainChoiceBox->addDrawable(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+	elements.push_back(mainChoiceBox);
 
-	transformation.setPosition(800, 75);
-	fptr = std::bind(&NetworkClient::reconnect, this->net);
-	buttons.push_back(new Button("Reconnect", "exitButton.png", transformation, Color::None, fptr, "Reconnect", engine));
+	//fptr = std::bind(&MainMenu::setDisplayOnline, this);
+	//buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
+
+	//transformation.setPosition(baseX, baseY + offset);
+	//fptr = std::bind(&MainMenu::setDisplayOffline, this);
+	//buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
+
+	//transformation.setPosition(baseX, baseY + (offset * 2));
+	//fptr = std::bind(&MainMenu::setDisplayOption, this);
+	//buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
+
+	//transformation.setPosition(baseX, baseY + (offset * 3));
+	//fptr = std::bind(&MainMenu::setDisplayCredits, this);
+	//buttons.push_back(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
+
+	//transformation.setPosition(baseX, baseY + (offset * 4));
+	//fptr = std::bind(&MainMenu::myexit, this);
+	//buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+
+	//transformation.setPosition(800, 75);
+	//fptr = std::bind(&NetworkClient::reconnect, this->net);
+	//buttons.push_back(new Button("Reconnect", "exitButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);
@@ -50,10 +63,10 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 }
 
 MainMenu::~MainMenu() {
-	for (Button* b : buttons)
+	for (Drawable* b : elements)
 		if (b)
 			delete b;
-	buttons.clear();
+	elements.clear();
 	if (rTypeLabel)
 		delete rTypeLabel;
 }
@@ -74,7 +87,7 @@ void MainMenu::draw()
 	if (!net->getIsConnect())
 		engine->drawText("You are not connected", Transformation(750, 50), 12, Color::Red, "Fipps.otf");
 
-	for (Button* b : buttons)
+	for (Drawable* b : elements)
 		if (b->getId() == "Reconnect") {
 			if (!net->getIsConnect())
 				b->draw();
@@ -91,15 +104,16 @@ void MainMenu::draw()
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
 {
-	for (Button *b : buttons) {
-		if (b->isPressed(x, y)) {
-			if (b->getId() == "Reconnect") {
-				if (!net->getIsConnect())
+	for (Drawable *d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d))
+			if (b->isPressed(x, y)) {
+				if (d->getId() == "Reconnect") {
+					if (!net->getIsConnect())
+						b->onAction();
+				}
+				else
 					b->onAction();
 			}
-			else
-				b->onAction();
-		}
 	}
 
 	if (currentPage == 1)
@@ -108,13 +122,14 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
-	for (Button *b : buttons) {
-		if (b->getId() == "Reconnect") {
-			if (!net->getIsConnect())
+	for (Drawable *d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d))
+			if (d->getId() == "Reconnect") {
+				if (!net->getIsConnect())
+					b->onHover(x, y);
+			}
+			else
 				b->onHover(x, y);
-		}
-		else
-			b->onHover(x, y);
 	}
 
 	if (currentPage == 1)

@@ -40,12 +40,30 @@ Transformation::Transformation(uint32_t x, uint32_t y)
 
 Transformation::Transformation(const Transformation & t)
 {
+	_hasPos = false;
+	_hasCrop = false;
+	_hasRotation = false;
+	_hasScale = false;
+	_hasBounds = false;
+	_posX = 0;
+	_posY = 0;
+	_rotation = 0;
+	crop[SRCX] = 0;
+	crop[SRCY] = 0;
+	crop[SRCWIDTH] = 0;
+	crop[SRCHEIGHT] = 0;
+	_scaleX = 1;
+	_scaleY = 1;
+	_width = 0;
+	_height = 0;
+
+	std::map<uint8_t, uint16_t> crop = t.getCrop();
 	if (t.hasPosition())
 		setPosition(t.getX(), t.getY());
 	if (t.hasBounds())
 		setBounds(t.getWidth(), t.getHeight());
 	if (t.hasCrop())
-		setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+		setCrop(crop.at(SRCX), crop.at(SRCY), crop.at(SRCWIDTH), crop.at(SRCHEIGHT));
 	if (t.hasRotation())
 		setRotation(t.getRotation());
 	if (hasScale())
@@ -54,12 +72,30 @@ Transformation::Transformation(const Transformation & t)
 
 Transformation & Transformation::operator=(const Transformation & t)
 {
+	_hasPos = false;
+	_hasCrop = false;
+	_hasRotation = false;
+	_hasScale = false;
+	_hasBounds = false;
+	_posX = 0;
+	_posY = 0;
+	_rotation = 0;
+	crop[SRCX] = 0;
+	crop[SRCY] = 0;
+	crop[SRCWIDTH] = 0;
+	crop[SRCHEIGHT] = 0;
+	_scaleX = 1;
+	_scaleY = 1;
+	_width = 0;
+	_height = 0;
+
+	std::map<uint8_t, uint16_t> crop = t.getCrop();
 	if (t.hasPosition())
 		setPosition(t.getX(), t.getY());
 	if (t.hasBounds())
 		setBounds(t.getWidth(), t.getHeight());
 	if (t.hasCrop())
-		setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+		setCrop(crop.at(SRCX), crop.at(SRCY), crop.at(SRCWIDTH), crop.at(SRCHEIGHT));
 	if (t.hasRotation())
 		setRotation(t.getRotation());
 	if (hasScale())

@@ -2,6 +2,7 @@
 # define MAIN_MENU_HH_
 
 # include "DisplayUpdater.hh"
+# include "Box.hh"
 
 class OnlineMenu;
 class Credits;
@@ -32,8 +33,9 @@ private:
 	OnlineMenu *onlineMenu;
 	Credits *creditsMenu;
 
+	Box* mainChoiceBox;
 	TextField *rTypeLabel;
-	std::list<Button* > buttons;
+	std::list<Drawable* > elements;
 	int currentPage;
 };
 

@@ -11,6 +11,7 @@ Button::Button(const std::string & text, const std::string& img, const Transform
 		_sprite.setTexture(_engine->loadTexture(_textureName));
 		_engine->transformSprite(_sprite, _transformation, _color);
 	}
+	_transformation.setBounds(_sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height);
 }
 
 Button::~Button()
@@ -41,6 +42,12 @@ const callback& Button::getCallback() const
 const Color & Button::getColor() const
 {
 	return (_color);
+}
+
+void Button::setTransformation(const Transformation & t)
+{
+	_transformation = t;
+	_engine->transformSprite(_sprite, _transformation);
 }
 
 void Button::draw()
