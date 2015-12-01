@@ -18,7 +18,6 @@ PackageSorter::PackageSorter()
 	_tab[1] = [this](Paquet *paquet UNUSED) {};
 	_tab[2] = [this](Paquet *paquet) {
 		PaquetListParties *store = new PaquetListParties((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storeGameListPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
@@ -27,25 +26,21 @@ PackageSorter::PackageSorter()
 	_tab[5] = [this](Paquet *paquet UNUSED) {};
 	_tab[6] = [this](Paquet *paquet UNUSED) {
 		PaquetListPlayers *store = new PaquetListPlayers((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storePlayerListPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[7] = [this](Paquet *paquet) {
 		PaquetPlayerCoord *store = new PaquetPlayerCoord((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storePlayersPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[8] = [this](Paquet *paquet) {
 		PaquetPlayerShot *store = new PaquetPlayerShot((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storeShotsPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[9] = [this](Paquet *paquet) {
 		PaquetObstacle *store = new PaquetObstacle((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storeObstaclesPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
@@ -54,7 +49,6 @@ PackageSorter::PackageSorter()
 	_tab[12] = [this](Paquet *paquet UNUSED) {};
 	_tab[0xFF] = [this](Paquet *paquet) {
 		PaquetResponse *store = new PaquetResponse((void *)paquet->getData(), paquet->getSize());
-		delete paquet;
 		PackageStorage::getInstance().storeAnswersPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
