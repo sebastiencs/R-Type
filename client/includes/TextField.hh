@@ -13,21 +13,20 @@ public:
 	virtual ~TextField();
 
 	//Drawable
-	virtual const sf::Sprite& getSprite() const;
-	virtual Color& getColor();
 	virtual void draw();
 
+	Color& getColor();
+	const sf::Sprite& getSprite() const;
 	const std::string& getText() const;
 	void setText(const std::string& txt);
 
 private:
-	std::string text;
-	std::string id;
-	uint16_t size;
-	Transformation t;
-	std::string font;
-	Color color;
 	IGraphicEngine *engine;
+	Color color;
+	uint16_t size;
+
+	std::string font;
+	std::string text;
 };
 
-#endif
+#endif /* !TEXTFIELD_HH */

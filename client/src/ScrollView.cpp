@@ -5,7 +5,7 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 {
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
-	this->transformation = transformation;
+	_transformation = transformation;
 	nbrCell = 0;
 	base = 0;
 
@@ -28,7 +28,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(transformation.getX(), transformation.getY()), name, nbr, engine));
+	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
 	++nbrCell;
 }
 
@@ -72,7 +72,7 @@ void ScrollView::draw()
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
 			Transformation t;
-			t.setPosition(transformation.getX(), (transformation.getY() + 50) + (i - base) * 32);
+			t.setPosition(_transformation.getX(), (_transformation.getY() + 50) + (i - base) * 32);
 			c->setTransformation(t);
 			c->draw();
 		}

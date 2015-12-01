@@ -24,12 +24,14 @@ public:
 	void getText(const char);
 
 private:
+	IGraphicEngine *engine;
+	OnlineMenu *superView;
+
 	TextField *serverName;
 	TextField *error;
-	IGraphicEngine *engine;
+	
 	Button *ok;
 	Button *back;
-	OnlineMenu *superView;
 };
 
 #endif

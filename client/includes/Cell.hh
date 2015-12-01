@@ -14,9 +14,9 @@ public:
 
 	const std::string& getNameParty();
 	int getNbrPlayers();
+	const sf::Sprite& getSprite() const;
 
 	//Drawable
-	virtual const sf::Sprite& getSprite() const;
 	virtual void draw();
 
 	//ICallback
@@ -27,12 +27,10 @@ public:
 
 private:
 	IGraphicEngine *engine;
-	std::string _id;
-	int nbrPlayers;
-	std::string nameParty;
-
-	//draw
 	TextField *textField;
+
+	std::string nameParty;
+	int nbrPlayers;
 };
 
 #endif
