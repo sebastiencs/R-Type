@@ -47,8 +47,9 @@ void OnlineMenu::createRequestPartiesPaquet()
 
 void OnlineMenu::draw()
 {
-	for (Button* b : buttons)
-		b->draw();
+//	for (Button* b : buttons)
+//		b->draw();
+	onlineChoiseBox->draw();
 	scrollView->draw();
 	if (createGameMenu != nullptr)
 		createGameMenu->draw();
@@ -86,7 +87,6 @@ void OnlineMenu::joinButton()
 		{
 			Packager::createJoinPartyPackage(c->getNameParty());
 		}
-
 }
 
 void OnlineMenu::backButton()
@@ -122,14 +122,14 @@ void OnlineMenu::menu()
 	Transformation transformation(350, 525);
 	transformation.setScale(0.5, 0.5);
 
+	onlineChoiseBox = new Box(Orientation::horizontal, transformation, "onlineBox");
+
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
-	buttons.push_back(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
+	onlineChoiseBox->addDrawable(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
-	transformation.setPosition(450, 525);
 	fptr = std::bind(&OnlineMenu::joinButton, this);
-	buttons.push_back(new Button("Join", "joinButton.png", transformation, Color::None, fptr, "Join", engine));
+	onlineChoiseBox->addDrawable(new Button("Join", "joinButton.png", transformation, Color::None, fptr, "Join", engine));
 
-	transformation.setPosition(550, 525);
 	fptr = std::bind(&OnlineMenu::createButton, this);
-	buttons.push_back(new Button("Info", "infoButton.png", transformation, Color::None, fptr, "Info", engine));
+	onlineChoiseBox->addDrawable(new Button("Info", "infoButton.png", transformation, Color::None, fptr, "Info", engine));
 }

@@ -32,7 +32,7 @@ GraphicEngine::~GraphicEngine()
 {
 	if (window)
 		delete window;
-	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
+	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages .begin(); it != cachedImages.end(); ++it)
 		if (it->second)
 		  delete it->second;
 	delete _timer;

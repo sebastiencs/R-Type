@@ -4,7 +4,8 @@
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
 # include "Packager.hh"
-#include "CreateGameMenu.hh"
+# include "Box.hh"
+# include "CreateGameMenu.hh"
 
 class CreateGameMenu;
 
@@ -29,6 +30,7 @@ public:
 private:
 	IGraphicEngine *engine;
 	ScrollView *scrollView;
+	Box *onlineChoiseBox;
 
 	std::list<Button* > buttons;
 	CreateGameMenu *createGameMenu;
