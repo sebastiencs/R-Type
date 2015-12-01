@@ -140,7 +140,7 @@ const sf::Texture& GraphicEngine::loadTexture(const std::string& img)
 void GraphicEngine::transformSprite(sf::Sprite& sprite, const Transformation& t, const Color& color)
 {
 	if (t.hasPosition())
-		sprite.setPosition(t.getX(), t.getY());
+		sprite.setPosition((float)t.getX(), (float)t.getY());
 	if (t.hasRotation())
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
@@ -152,7 +152,7 @@ void GraphicEngine::transformSprite(sf::Sprite& sprite, const Transformation& t,
 void GraphicEngine::transformSprite(sf::Text& sprite, const Transformation& t, const Color& color)
 {
 	if (t.hasPosition())
-		sprite.setPosition(t.getX(), t.getY());
+		sprite.setPosition((float)t.getX(), (float)t.getY());
 	if (t.hasRotation())
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
