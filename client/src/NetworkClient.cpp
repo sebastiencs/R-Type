@@ -18,9 +18,9 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 
 	inGame = false;
 	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
-	threadWrite = new Thread(fptrWrite, nullptr);
+	threadWrite = new Thread(fptrWrite, this);
 	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
-	threadRead = new Thread(fptrRead, nullptr);
+	threadRead = new Thread(fptrRead, this);
 	if (!_isConnect)
 	{
 		threadRead->close();

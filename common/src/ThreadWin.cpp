@@ -80,8 +80,8 @@ bool	ThreadWin::close()
 
 bool	ThreadWin::join()
 {
-  if (!WaitForSingleObject(_thread, INFINITE)) {
-    DEBUG_MSG("WaitForSIngleObject: join failed");
+  if (WaitForSingleObject(_thread, INFINITE) == WAIT_FAILED) {
+	  DEBUG_MSG(GetLastError());
     return (false);
   }
   _running = false;
