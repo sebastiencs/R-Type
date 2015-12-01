@@ -84,6 +84,11 @@ void			Party::deletePlayer(const Addr &addr)
     _players.erase(p);
     DEBUG_MSG("Player deleted from party");
   }
+
+  if (!_players.size()) {
+    _thread->close();
+    DEBUG_MSG("No more players.. Party killed");
+  }
 }
 
 bool			Party::isPlayer(const Addr &addr) const

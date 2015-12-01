@@ -43,6 +43,11 @@ void		Manager::deletePlayer(const Addr &addr)
   }
   for (auto &party : _parties) {
     party->deletePlayer(addr);
+    if (!party->getPlayers().size()) {
+      _parties.remove(party);
+      DEBUG_MSG("Party remove from Manager");
+      break ;
+    }
   }
 }
 
