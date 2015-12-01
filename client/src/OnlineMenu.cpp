@@ -41,6 +41,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 		for (auto &party : paquetList.getParties()) {
 			scrollView->createCell(std::get<0>(party), std::get<1>(party));
 		}
+		PS.deleteGameListPackage();
 	}
 }
 
