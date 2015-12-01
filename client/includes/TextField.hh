@@ -1,24 +1,20 @@
 #ifndef TEXTFIELD_HH
-#define TEXTFIELD_HH
+# define TEXTFIELD_HH
 
-#include "Transformation.hh"
-#include "Color.hh"
-#include "GraphicEngine.hh"
-#include "IDrawable.hh"
+# include "Transformation.hh"
+# include "Color.hh"
+# include "GraphicEngine.hh"
 
 class GraphicEngine;
 
-class TextField : public IDrawable {
+class TextField : public Drawable {
 public:
 	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine *_engine);
 	virtual ~TextField();
 
-	//IDrawable
-	virtual const std::string& getId() const;
+	//Drawable
 	virtual const sf::Sprite& getSprite() const;
 	virtual Color& getColor();
-	virtual const Transformation& getTransformation() const;
-	virtual Transformation& getTransformation();
 	virtual void draw();
 
 	const std::string& getText() const;

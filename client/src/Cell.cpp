@@ -38,24 +38,9 @@ const sf::Sprite & Cell::getSprite() const
 	return *sprite;
 }
 
-const std::string& Cell::getId() const
-{
-	return _id;
-}
-
 void Cell::draw()
 {
 	textField->draw();
-}
-
-const Transformation & Cell::getTransformation() const
-{
-	return textField->getTransformation();
-}
-
-Transformation & Cell::getTransformation()
-{
-	return textField->getTransformation();
 }
 
 void Cell::onAction()

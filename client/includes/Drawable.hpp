@@ -1,7 +1,6 @@
 #ifndef DRAWABLE_HPP_
 # define DRAWABLE_HPP_
 
-# include "IGraphicEngine.hh"
 # include "IDrawable.hh"
 
 class Drawable : public IDrawable
