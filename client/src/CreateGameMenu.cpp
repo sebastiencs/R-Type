@@ -5,11 +5,11 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	//Faut un fond
 	callback fptr;
 	textEnteredCallback tptr;
-	Transformation t(500,500);
 	Color color(255, 255, 255, 255);
 	superView = _superview;
 	this->engine = engine;
 
+	Transformation t(340, 360);
 	tptr = std::bind(&CreateGameMenu::getText, this, std::placeholders::_1);
 	engine->setTextEnteredCallback(tptr);
 	t.setBounds(200, 30);
@@ -49,6 +49,9 @@ void CreateGameMenu::onCreateGame()
 
 void CreateGameMenu::draw()
 {
+	Transformation t(300, 330);
+	t.setScale((float)1.3, (float)1.3);
+	engine->drawImage("defaultTextZone.png", t);
 	serverName->draw();
 	back->draw();
 	ok->draw();
@@ -78,6 +81,8 @@ void CreateGameMenu::getText(const char c)
 		std::string tmp = serverName->getText();
 		serverName->setText(tmp.substr(0, tmp.size() - 1));
 	}
-	else
+	else if (c == '\n' || c == '\r')
+		onCreateGame();
+	else if (serverName->getText().size() < 20)
 		serverName->setText(serverName->getText() + c);
 }
