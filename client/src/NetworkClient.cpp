@@ -16,15 +16,19 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	else
 		_isConnect = true;
 
-	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
-	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
 	inGame = false;
+	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
 	threadWrite = new Thread(fptrWrite, nullptr);
+	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
 	threadRead = new Thread(fptrRead, nullptr);
 	if (!_isConnect)
 	{
 		threadRead->close();
 		threadWrite->close();
+		delete threadWrite;
+		DEBUG_MSG("ThreadWrite deleted");
+		delete threadRead;
+		DEBUG_MSG("ThreadRead deleted");
 	}
 }
 
@@ -32,13 +36,18 @@ NetworkClient::~NetworkClient()
 {
 	if (_isConnect) {
 		threadRead->close();
+		DEBUG_MSG("ThreadRead close");
 		threadWrite->close();
+		DEBUG_MSG("ThreadWrite close");
+		delete threadWrite;
+		DEBUG_MSG("ThreadWrite deleted");
+		delete threadRead;
+		DEBUG_MSG("ThreadRead deleted");
 	}
-	delete threadWrite;
-	delete threadRead;
 	delete _socketTCP;
+	DEBUG_MSG("SocketTCP deleted");
 	delete _socketUDP;
-	DEBUG_MSG("NetworkClient deleted");
+	DEBUG_MSG("SocketUDP deleted");
 }
 
 int NetworkClient::runWrite()

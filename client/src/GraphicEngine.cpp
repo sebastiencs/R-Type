@@ -249,9 +249,9 @@ void GraphicEngine::drawText(const std::string& text, const Transformation& t,
 
 void GraphicEngine::closeWindow()
 {
-  if (window->isOpen()) {
-    window->close();
-  }
+	if (window->isOpen()) {
+		window->close();
+	}
 }
 
 const sf::Texture* GraphicEngine::None = new sf::Texture();
