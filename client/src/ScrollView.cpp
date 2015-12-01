@@ -43,14 +43,12 @@ void ScrollView::emptyCell()
 
 void ScrollView::incrBase()
 {
-	DEBUG_MSG("Increment Base");
 	if (base < ((int)listCell.size() - nbrDiplayCell))
 		++base;
 }
 
 void ScrollView::decrBase()
 {
-	DEBUG_MSG("Decrement Base");
 	if (base > 0)
 		--base;
 }
@@ -87,7 +85,7 @@ void ScrollView::draw()
 
 const Transformation & ScrollView::getTransformation() const
 {
-	return Transformation();
+	return *(new Transformation());
 }
 
 void ScrollView::onAction()
@@ -125,6 +123,6 @@ bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 
 const callback & ScrollView::getCallback() const
 {
-	return nullptr;
+	return *(new callback());
 }
 
