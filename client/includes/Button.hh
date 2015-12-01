@@ -7,7 +7,7 @@
 class GraphicEngine;
 class TextField;
 
-class Button : public IDrawable, public ICallback
+class Button : public Drawable, public ICallback
 {
 public:
 	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine* engine);

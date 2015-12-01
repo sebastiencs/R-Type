@@ -14,10 +14,6 @@ TextField::~TextField()
 {
 }
 
-const std::string& TextField::getId() const
-{
-	return id;
-}
 
 const sf::Sprite & TextField::getSprite() const
 {
@@ -28,16 +24,6 @@ const sf::Sprite & TextField::getSprite() const
 Color & TextField::getColor()
 {
 	return color;
-}
-
-const Transformation & TextField::getTransformation() const
-{
-	return t;
-}
-
-Transformation & TextField::getTransformation()
-{
-	return t;
 }
 
 void TextField::draw()

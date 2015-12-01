@@ -17,21 +17,15 @@
 # include <SFML/Graphics/Sprite.hpp>
 # include "IGraphicEngine.hh"
 # include "ICallBack.hh"
-# include "IDrawable.hh"
+# include "Drawable.hpp"
 # include "Paquets.hh"
 # include "Packager.hh"
 # include "Button.hh"
 # include "Timer.hh"
 # include "TextField.hh"
 
-# define RS_PATH "ressources/"
-# define FONT_PATH "ressources/fonts/"
-# define DEFAULT_FONT "default.ttf"
-# define DEFAULT_FONT_SIZE 12
-# define MS_REFRESH 33
-
 class Button;
-class IDrawable;
+class Drawable;
 
 class GraphicEngine : public IGraphicEngine {
 

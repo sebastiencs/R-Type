@@ -3,10 +3,9 @@
 
 #include <list>
 #include "IGraphicEngine.hh"
-#include "ICallBack.hh"
 #include "Cell.hh"
 
-class ScrollView : public IDrawable, public ICallback
+class ScrollView : public Drawable, public ICallback
 {
 public:
 	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine);
@@ -22,10 +21,8 @@ public:
 	const std::list<Cell *>& getListCell() const;
 	const std::string& getSelectCell() const;
 
-	//IDrawable
-	virtual const std::string& getId() const;
+	//Drawable
 	virtual void draw();
-	virtual const Transformation & getTransformation() const;
 
 	//ICallback
 	virtual void onAction();

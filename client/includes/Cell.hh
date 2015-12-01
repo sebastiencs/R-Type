@@ -1,15 +1,12 @@
 #ifndef CELL_HH
-#define CELL_HH
+# define CELL_HH
 
-#include <iostream>
-#include <string>
-#include "Transformation.hh"
-#include "IGraphicEngine.hh"
-#include "ICallBack.hh"
-#include "IDrawable.hh"
-#include "TextField.hh"
+# include <iostream>
+# include <string>
+# include "IGraphicEngine.hh"
+# include "TextField.hh"
 
-class Cell : public IDrawable, public ICallback
+class Cell : public Drawable, public ICallback
 {
 public:
 	Cell(const std::string&  id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
@@ -18,12 +15,9 @@ public:
 	const std::string& getNameParty();
 	int getNbrPlayers();
 
-	//IDrawable
+	//Drawable
 	virtual const sf::Sprite& getSprite() const;
-	const std::string& getId() const;
 	virtual void draw();
-	const Transformation& getTransformation() const;
-	virtual Transformation & getTransformation();
 
 	//ICallback
 	virtual void onAction();

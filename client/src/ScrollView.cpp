@@ -63,11 +63,6 @@ const std::string & ScrollView::getSelectCell() const
 	return selectedCell;
 }
 
-const std::string & ScrollView::getId() const
-{
-	return id;
-}
-
 void ScrollView::draw()
 {
 	int i = 0;
@@ -76,16 +71,13 @@ void ScrollView::draw()
 		b->draw();
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
-			c->getTransformation().setPosition(transformation.getX(), (transformation.getY() + 50) + (i - base) * 32);
+			Transformation t;
+			t.setPosition(transformation.getX(), (transformation.getY() + 50) + (i - base) * 32);
+			c->setTransformation(t);
 			c->draw();
 		}
 		++i;
 	}
-}
-
-const Transformation & ScrollView::getTransformation() const
-{
-	return *(new Transformation());
 }
 
 void ScrollView::onAction()

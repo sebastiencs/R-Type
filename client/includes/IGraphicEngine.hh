@@ -1,10 +1,17 @@
 #ifndef IGRAPHICENGINE_H_
 # define IGRAPHICENGINE_H_
 
+
 # include <iostream>
-#include <functional>
+# include <functional>
 # include "Transformation.hh"
 # include "Color.hh"
+
+# define RS_PATH "ressources/"
+# define FONT_PATH "ressources/fonts/"
+# define DEFAULT_FONT "default.ttf"
+# define DEFAULT_FONT_SIZE 12
+# define MS_REFRESH 33
 
 typedef std::function<void()> callback;
 typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
@@ -15,11 +22,6 @@ public:
 	virtual ~IGraphicEngine() {};
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title) = 0;
-
-	/*virtual void displayButton(const std::string& txt, const std::string & img, const Transformation & t, const Color & color, callback fptr = nullptr, const std::string& id = 0) = 0;
-	virtual void displayTextField(const std::string& _text, const Transformation& t, uint16_t size, const std::string& font, const Color& color, const std::string& _id) = 0;
-	virtual void eraseButton(const std::string& txt) = 0;
-	virtual void eraseTextField(const std::string & id) = 0;*/
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;
