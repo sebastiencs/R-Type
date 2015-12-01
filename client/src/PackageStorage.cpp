@@ -122,51 +122,62 @@ void PackageStorage::storeLaunchPackage(PaquetLaunch * package)
 
 void PackageStorage::deleteReceivedPackage()
 {
+	delete received.front();
 	received.erase(received.begin());
+
 }
 
 void PackageStorage::deletePlayersPackage()
 {
+	delete players.front();
 	players.erase(players.begin());
 }
 
 void PackageStorage::deleteEnemiesPackage()
 {
+	delete enemies.front();
 	enemies.erase(enemies.begin());
 }
 
 void PackageStorage::deleteObstaclesPackage()
 {
+	delete obstacles.front();
 	obstacles.erase(obstacles.begin());
 }
 
 void PackageStorage::deleteShotsPackage()
 {
+	delete shots.front();
 	shots.erase(shots.begin());
 }
 
 void PackageStorage::deleteToSendPackage()
 {
+	delete toSend.front();
 	toSend.erase(toSend.begin());
 }
 
 void PackageStorage::deleteGameListPackage()
 {
+	delete gameList.front();
 	gameList.erase(gameList.begin());
 }
 
 void PackageStorage::deletePlayerListPackage()
 {
+	delete playerList.front();
 	playerList.erase(playerList.begin());
 }
 
 void PackageStorage::deleteAnswersPackage()
 {
+	delete answers.front();
 	answers.erase(answers.begin());
 }
 
 void PackageStorage::deleteLaunchPackage()
 {
+	delete launch.front();
 	launch.erase(launch.begin());
 }
 
