@@ -20,7 +20,7 @@ Transformation::Transformation()
 	_height = 0;
 }
 
-Transformation::Transformation(uint16_t x, uint16_t y)
+Transformation::Transformation(uint32_t x, uint32_t y)
 {
 	setPosition(x, y);
 	_hasCrop = false;
@@ -61,14 +61,14 @@ Transformation::~Transformation()
 {
 }
 
-void Transformation::setPosition(uint16_t x, uint16_t y)
+void Transformation::setPosition(uint32_t x, uint32_t y)
 {
 	_hasPos = true;
 	_posX = x;
 	_posY = y;
 }
 
-void Transformation::setCrop(uint16_t x, uint16_t y, uint16_t width, uint16_t height)
+void Transformation::setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t height)
 {
 	_hasCrop = true;
 	crop[SRCX] = x;
@@ -97,12 +97,12 @@ void Transformation::setBounds(uint16_t width, uint16_t height)
 	_height = height;
 }
 
-uint16_t Transformation::getX() const
+uint32_t Transformation::getX() const
 {
 	return _posX;
 }
 
-uint16_t Transformation::getY() const
+uint32_t Transformation::getY() const
 {
 	return _posY;
 }
