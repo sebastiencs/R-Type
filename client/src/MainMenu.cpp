@@ -48,9 +48,9 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	//fptr = std::bind(&MainMenu::myexit, this);
 	//buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 
-	//transformation.setPosition(800, 75);
-	//fptr = std::bind(&NetworkClient::reconnect, this->net);
-	//buttons.push_back(new Button("Reconnect", "exitButton.png", transformation, Color::None, fptr, "Reconnect", engine));
+	transformation.setPosition(800, 75);
+	fptr = std::bind(&NetworkClient::reconnect, this->net);
+	elements.push_back(new Button("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);
