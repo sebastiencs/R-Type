@@ -140,6 +140,10 @@ int NetworkClient::stop()
 
 int NetworkClient::reconnect()
 {
+	if (_isConnect) {
+	  return (1);
+	}
+
 	PaquetFirst *paquet = new PaquetFirst();
 	paquet->setLevel(5);
 	paquet->setName("Alex");
@@ -154,6 +158,7 @@ int NetworkClient::reconnect()
 	}
 	else
 		_isConnect = true;
+
 	inGame = false;
 	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
 	threadWrite = new Thread(fptrWrite, this);
