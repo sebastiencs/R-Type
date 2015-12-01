@@ -15,10 +15,10 @@ public:
 	CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superView);
 	virtual ~CreateGameMenu();
 
-	void onCreateGame();
 
+	const TextField* CreateGameMenu::getServerName() const;
+	
 	void draw();
-
 	void onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 	void getText(const char);

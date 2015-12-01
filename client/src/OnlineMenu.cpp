@@ -54,6 +54,9 @@ void OnlineMenu::draw()
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
 {
+	if (createGameMenu != nullptr) {
+		createGameMenu->onClick(x, y);
+	}
 	for (Button *b : buttons) {
 		if (b->isPressed(x, y)) {
 			b->onAction();
@@ -61,9 +64,6 @@ void OnlineMenu::onClick(uint32_t x, uint32_t y)
 	}
 	if (scrollView->isPressed(x, y))
 		scrollView->onAction();
-	if (createGameMenu != nullptr) {
-		createGameMenu->onClick(x, y);
-	}
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)
@@ -89,6 +89,20 @@ void OnlineMenu::joinButton()
 
 void OnlineMenu::backButton()
 {
+	delete createGameMenu;
+	createGameMenu = nullptr;
+}
+
+void OnlineMenu::onCreateGame()
+{
+	PackageStorage &PS = PackageStorage::getInstance();
+
+	PaquetCreateParty	*paquet = new PaquetCreateParty();
+
+	paquet->setName(createGameMenu->getServerName()->getText());
+	paquet->createPaquet();
+	DEBUG_MSG("Create party : " + createGameMenu->getServerName()->getText());
+	PS.storeToSendPackage(paquet);
 	delete createGameMenu;
 	createGameMenu = nullptr;
 }

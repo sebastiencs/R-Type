@@ -15,15 +15,15 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	t.setBounds(200, 30);
 	serverName = new TextField("", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
 
-	t.setPosition(600, 550);
+	t.setPosition(600, 500);
 	t.setBounds(100, 50);
-	t.setScale((float)0.3, (float)0.3);
-	fptr = std::bind(&CreateGameMenu::onCreateGame, this);
+	//t.setScale((float)0.3, (float)0.3);
+	fptr = std::bind(&OnlineMenu::onCreateGame, superView);
 	ok = new Button("Create", "createButton.png", t, Color::None, fptr, "createServerButton2", engine);
 
-	t.setPosition(500, 550);
+	t.setPosition(400, 500);
 	t.setBounds(100, 50);
-	t.setScale((float)0.3, (float)0.3);
+//	t.setScale((float)0.3, (float)0.3);
 	fptr = std::bind(&OnlineMenu::backButton, superView);
 	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 }
@@ -36,20 +36,16 @@ CreateGameMenu::~CreateGameMenu()
 	delete back;
 }
 
-void CreateGameMenu::onCreateGame()
+const TextField* CreateGameMenu::getServerName() const
 {
-	PackageStorage &PS = PackageStorage::getInstance();
-
-	PaquetCreateParty	*paquet = new PaquetCreateParty();
-
-	paquet->setName(serverName->getText());
-	paquet->createPaquet();
-	PS.storeToSendPackage(paquet);
+	return serverName;
 }
 
 void CreateGameMenu::draw()
 {
 	Transformation t(300, 330);
+	t.setScale((float)1.3, (float)4.5);
+	engine->drawImage("backgroundButton.png", t);
 	t.setScale((float)1.3, (float)1.3);
 	engine->drawImage("defaultTextZone.png", t);
 	serverName->draw();
@@ -65,6 +61,7 @@ void CreateGameMenu::onClick(uint32_t x, uint32_t y)
 	}
 	if (ok->isPressed(x, y)) {
 		ok->onAction();
+		return;
 	}
 }
 
@@ -82,7 +79,7 @@ void CreateGameMenu::getText(const char c)
 		serverName->setText(tmp.substr(0, tmp.size() - 1));
 	}
 	else if (c == '\n' || c == '\r')
-		onCreateGame();
+		superView->onCreateGame();
 	else if (serverName->getText().size() < 20)
 		serverName->setText(serverName->getText() + c);
 }
