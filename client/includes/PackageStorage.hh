@@ -21,7 +21,8 @@ private:
 	std::list<Paquet *> answers;
 	std::list<Paquet * > launch;
 
-  std::unique_ptr<ISemaphore>	_sem;
+  std::unique_ptr<ISemaphore>	_semOut;
+  std::unique_ptr<ISemaphore>	_semIn;
 
 	PackageStorage();
 
@@ -64,6 +65,7 @@ public:
 	void deleteAnswersPackage();
 	void deleteLaunchPackage();
 
+	void waitForReceivedPackage();
 	bool isThereReceivedPackage();
 	void waitForPackage();
 	/*bool deletePlayersPackage();

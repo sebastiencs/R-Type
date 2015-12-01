@@ -13,7 +13,8 @@ PackageStorage & PackageStorage::getInstance()
 }
 
 PackageStorage::PackageStorage()
-  : _sem(new Semaphore())
+  : _semOut(new Semaphore()),
+    _semIn(new Semaphore())
 {
 }
 
@@ -70,6 +71,7 @@ const PaquetLaunch * PackageStorage::getLaunchPackage() const
 void PackageStorage::storeReceivedPackage(Paquet * package)
 {
 	received.push_back(package);
+	_semIn->post();
 }
 
 void PackageStorage::storePlayersPackage(Paquet * package)
@@ -95,7 +97,7 @@ void PackageStorage::storeShotsPackage(Paquet * package)
 void PackageStorage::storeToSendPackage(Paquet * package)
 {
 	toSend.push_back(package);
-	_sem->post();
+	_semOut->post();
 }
 
 void PackageStorage::storeGameListPackage(Paquet * package)
@@ -173,7 +175,12 @@ bool PackageStorage::isThereReceivedPackage()
 	return !received.empty();
 }
 
+void PackageStorage::waitForReceivedPackage()
+{
+  _semIn->wait();
+}
+
 void PackageStorage::waitForPackage()
 {
-  _sem->wait();
+  _semOut->wait();
 }

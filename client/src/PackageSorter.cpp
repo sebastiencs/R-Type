@@ -60,17 +60,17 @@ void PackageSorter::sortPaquet()
 {
   while (1)
   {
-    if (PackageStorage::getInstance().isThereReceivedPackage()) {
-      const Paquet *paquet = PackageStorage::getInstance().getReceivedPackage();
+    PackageStorage::getInstance().waitForReceivedPackage();
 
-      auto it = _tab.find(paquet->getData()[0]);
+    const Paquet *paquet = PackageStorage::getInstance().getReceivedPackage();
 
-      if (it != _tab.end()) {
-	it->second(const_cast<Paquet*>(paquet));
-      }
-      else {
-	std::cerr << "Unknown paquet" << std::endl;
-      }
+    auto it = _tab.find(paquet->getData()[0]);
+
+    if (it != _tab.end()) {
+      it->second(const_cast<Paquet*>(paquet));
+    }
+    else {
+      std::cerr << "Unknown paquet" << std::endl;
     }
   }
 }
