@@ -3,6 +3,7 @@
 Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine)
 {
 	_id = id;
+	_transformation = transformation;
 
 	nameParty = name;
 	this->nbrPlayers = nbrPlayers;
@@ -14,7 +15,7 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 	txt += std::to_string(nbrPlayers);
 	txt += "/4";
 
-	textField = new TextField(txt, transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
+	textField = new TextField(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
 }
 
 Cell::~Cell()

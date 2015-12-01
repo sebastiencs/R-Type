@@ -32,11 +32,11 @@ public:
 
 private:
 	IGraphicEngine *engine;
-	Transformation transformation;
+
 	std::list<Cell *> listCell;
 	std::list<Button* > buttons;
+
 	std::string selectedCell;
-	std::string id;
 
 	int nbrCell;
 	int nbrDiplayCell;

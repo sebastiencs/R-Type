@@ -19,28 +19,22 @@ public:
 	void onHover(uint32_t x, uint32_t y);
 	const callback& getCallback() const;
 
-	// IDrawable
+	// Drawable
 	virtual void draw();
-	virtual const std::string& getId() const;
-	virtual const sf::Sprite& getSprite() const;
 
+	virtual const sf::Sprite& getSprite() const;
 	const std::string& getName() const;
 	const std::string& getTextureName() const;
-	const Transformation& getTransformation() const;
 	const Color& getColor() const;
 
 private:
-	void centerText();
-
 	GraphicEngine* _engine;
-	sf::Sprite _sprite;
-//	TextField* textField;
 	Color _color;
-	std::string _id;
-	Transformation _t;
+	callback _fptr;
+	sf::Sprite _sprite;
+
 	std::string _text;
 	std::string _textureName;
-	callback _fptr;
 };
 
 #endif /* BUTTON_H_ */
