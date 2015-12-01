@@ -23,8 +23,20 @@ public:
   virtual int	stop();
 
   virtual int	handleFirst(PaquetFirst);
-  virtual bool	writeUDP(const Buffer &, const Addr &);
-  virtual bool	writeTCP(const Buffer &);
+
+  template <class T>
+  bool	writeUDP(const T &input, const Addr &addr) {
+    if ((_socketUDP->write(input, addr)) == 0)
+      return true;
+    return false;
+  }
+
+  template <class T>
+  bool	writeTCP(const T &input) {
+    if ((_socketTCP->write(input)) == 0)
+      return true;
+    return false;
+  }
   void setInGame(bool _inGame);
 
 private:

@@ -64,7 +64,7 @@ int NetworkClient::runWrite()
 						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
-							this->writeUDP(*PackageTranslator::TranslateBuffer(*paquet), _socketUDP->getAddr());
+							this->writeUDP(*paquet, _socketUDP->getAddr());
 							PackageStorage::getInstance().deleteToSendPackage();
 						}
 						break;
@@ -74,7 +74,7 @@ int NetworkClient::runWrite()
 						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
-							this->writeTCP(*PackageTranslator::TranslateBuffer(*paquet));
+							this->writeTCP(*paquet);
 							PackageStorage::getInstance().deleteToSendPackage();
 						}
 						break;
@@ -106,18 +106,18 @@ int NetworkClient::runRead()
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						Buffer *buff = new Buffer();
-						this->_socketUDP->read(*buff);
+						Buffer buff;
+						this->_socketUDP->read(buff);
 						DEBUG_MSG(buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buff));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						Buffer *buff = new Buffer();
-						this->_socketTCP->read(*buff);
+						Buffer buff;
+						this->_socketTCP->read(buff);
 						DEBUG_MSG(buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(*buff));
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buff));
 						break;
 					}
 
@@ -138,20 +138,6 @@ int NetworkClient::handleFirst(PaquetFirst first)
   _socketTCP->write(first);
   DEBUG_MSG(first);
   return 0;
-}
-
-bool NetworkClient::writeUDP(const Buffer& buf, const Addr& addr)
-{
-  if ((_socketUDP->write(buf, addr)) == 0)
-    return true;
-  return false;
-}
-
-bool NetworkClient::writeTCP(const Buffer& buf)
-{
-  if ((_socketTCP->write(buf)) == 0)
-    return true;
-  return false;
 }
 
 void NetworkClient::setInGame(bool _inGame)

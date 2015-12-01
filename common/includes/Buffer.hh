@@ -43,4 +43,6 @@ public:
   const Buffer	&operator=(const Buffer &);
 };
 
+std::ostream	&operator<<(std::ostream &, const Buffer &);
+
 #endif /* !BUFFER_H_ */

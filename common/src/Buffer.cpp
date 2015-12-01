@@ -83,3 +83,17 @@ const Buffer	&Buffer::operator=(const Buffer &buf)
   set(buf.get(), buf.size());
   return (*this);
 }
+
+std::ostream	&operator<<(std::ostream &os, const Buffer &b)
+{
+  unsigned char	*data;
+
+  data = b.get();
+  os << "Buffer = { ";
+  os << std::hex << std::uppercase;
+  for (size_t i = 0; i < b.size(); i += 1) {
+    os << (int)((unsigned char)data[i]) << " ";
+  }
+  os << std::dec << "}; ";
+  return (os);
+}
