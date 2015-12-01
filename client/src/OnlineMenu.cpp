@@ -47,8 +47,6 @@ void OnlineMenu::createRequestPartiesPaquet()
 
 void OnlineMenu::draw()
 {
-//	for (Button* b : buttons)
-//		b->draw();
 	onlineChoiseBox->draw();
 	scrollView->draw();
 	if (createGameMenu != nullptr)
@@ -60,20 +58,23 @@ void OnlineMenu::onClick(uint32_t x, uint32_t y)
 	if (createGameMenu != nullptr) {
 		createGameMenu->onClick(x, y);
 	}
-	for (Button *b : buttons) {
-		if (b->isPressed(x, y)) {
-			b->onAction();
-		}
-	}
+	//for (Button *b : buttons) {
+	//	if (b->isPressed(x, y)) {
+	//		b->onAction();
+	//	}
+	//}
+	if (onlineChoiseBox->isPressed(x, y))
+		onlineChoiseBox->onAction();
 	if (scrollView->isPressed(x, y))
 		scrollView->onAction();
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)
 {
-	for (Button *b : buttons) {
-		b->onHover(x, y);
-	}
+	//for (Button *b : buttons) {
+	//	b->onHover(x, y);
+	//}
+	onlineChoiseBox->onHover(x, y);
 	scrollView->onHover(x, y);
 	if (createGameMenu != nullptr) {
 		createGameMenu->onHover(x, y);
@@ -120,7 +121,6 @@ void OnlineMenu::menu()
 {
 	std::function<void()> fptr;
 	Transformation transformation(350, 525);
-	transformation.setScale(0.5, 0.5);
 
 	onlineChoiseBox = new Box(Orientation::horizontal, transformation, "onlineBox");
 
