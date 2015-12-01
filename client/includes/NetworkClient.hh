@@ -44,8 +44,8 @@ public:
 
 private:
 
-  ISocketUDP*	_socketUDP;
-  ISocketTCP*	_socketTCP;
+  std::unique_ptr<ISocketUDP>	_socketUDP;
+  std::unique_ptr<ISocketTCP>	_socketTCP;
 
   Thread*	threadWrite;
   Thread*	threadRead;
