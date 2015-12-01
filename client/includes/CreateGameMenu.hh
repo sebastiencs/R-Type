@@ -16,7 +16,7 @@ public:
 	virtual ~CreateGameMenu();
 
 
-	const TextField* CreateGameMenu::getServerName() const;
+	const TextField* getServerName() const;
 	
 	void draw();
 	void onClick(uint32_t x, uint32_t y);
