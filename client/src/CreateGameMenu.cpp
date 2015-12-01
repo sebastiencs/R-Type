@@ -6,7 +6,7 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	callback fptr;
 	textEnteredCallback tptr;
 	Transformation t(500,500);
-	Color color(255,0,0,255);
+	Color color(255, 255, 255, 255);
 	superView = _superview;
 	this->engine = engine;
 
@@ -38,7 +38,13 @@ CreateGameMenu::~CreateGameMenu()
 
 void CreateGameMenu::onCreateGame()
 {
+	PackageStorage &PS = PackageStorage::getInstance();
 
+	PaquetCreateParty	*paquet = new PaquetCreateParty();
+
+	paquet->setName(serverName->getText());
+	paquet->createPaquet();
+	PS.storeToSendPackage(paquet);
 }
 
 void CreateGameMenu::draw()
