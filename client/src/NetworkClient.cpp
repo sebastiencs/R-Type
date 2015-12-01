@@ -14,8 +14,10 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	_ip = ip;
 	_port = port;
 
-	if ((_socketTCP->connect(ip, port)) == -1)
+	if ((_socketTCP->connect(ip, port)) == -1) {
 		_isConnect = false;
+		return;
+	}
 	else
 		_isConnect = true;
 
@@ -24,15 +26,6 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	threadWrite = new Thread(fptrWrite, this);
 	Callback_t fptrRead = [this] (void *) {runRead(); return nullptr; };
 	threadRead = new Thread(fptrRead, this);
-	if (!_isConnect)
-	{
-		threadRead->close();
-		threadWrite->close();
-		delete threadWrite;
-		DEBUG_MSG("ThreadWrite deleted");
-		delete threadRead;
-		DEBUG_MSG("ThreadRead deleted");
-	}
 }
 
 NetworkClient::~NetworkClient()
