@@ -4,6 +4,7 @@
 # include "DisplayUpdater.hh"
 
 class OnlineMenu;
+class Credits;
 
 class MainMenu
 {
@@ -28,6 +29,7 @@ public:
 private:
 	IGraphicEngine *engine;
 	OnlineMenu *onlineMenu;
+	Credits *creditsMenu;
 
 	TextField *rTypeLabel;
 	std::list<Button* > buttons;

@@ -6,6 +6,7 @@
 # include "IGraphicEngine.hh"
 # include "GraphicEngine.hh"
 # include "MainMenu.hh"
+# include "Credits.hh"
 # include "OnlineMenu.hh"
 
 class MainMenu;

@@ -115,7 +115,7 @@ uint16_t Transformation::getWidth() const
 
 uint16_t Transformation::getHeight() const
 {
-	return _width;
+	return _height;
 }
 
 bool Transformation::hasPosition() const

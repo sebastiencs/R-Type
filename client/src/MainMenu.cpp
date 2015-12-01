@@ -5,6 +5,7 @@ MainMenu::MainMenu(IGraphicEngine *eng)
 	engine = eng;
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
+	creditsMenu = new Credits(engine);
 
 	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
@@ -67,9 +68,10 @@ void MainMenu::draw()
 	for (Button* b : buttons)
 		b->draw();
 	rTypeLabel->draw();
-	if (currentPage == 1) {
+	if (currentPage == 1)
 		onlineMenu->draw();
-	}
+	if (currentPage == 4)
+		creditsMenu->draw();
 }
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
@@ -79,9 +81,8 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 			b->onAction();
 		}
 	}
-	if (currentPage == 1) {
+	if (currentPage == 1)
 		onlineMenu->onClick(x, y);
-	}
 }
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
@@ -90,9 +91,8 @@ void MainMenu::onHover(uint32_t x, uint32_t y)
 		b->onHover(x, y);
 	}
 
-	if (currentPage == 1) {
+	if (currentPage == 1)
 		onlineMenu->onHover(x, y);
-	}
 }
 
 void MainMenu::setDisplayOnline()
@@ -104,7 +104,7 @@ void MainMenu::setDisplayOnline()
 
 void MainMenu::setDisplayOffline()
 {
-	currentPage = 4;
+	currentPage = 2;
 	changedMenu();
 	DEBUG_MSG("Set Current Page to Offline");
 }
@@ -118,7 +118,7 @@ void MainMenu::setDisplayOption()
 
 void MainMenu::setDisplayCredits()
 {
-	currentPage = 5;
+	currentPage = 4;
 	changedMenu();
 	DEBUG_MSG("Set Current Page to Credits");
 }

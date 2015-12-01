@@ -72,6 +72,8 @@ void ScrollView::draw()
 {
 	int i = 0;
 
+	for (Button *b : buttons)
+		b->draw();
 	for (Cell *c : listCell) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
 			c->getTransformation().setPosition(transformation.getX(), (transformation.getY() + 50) + (i - base) * 32);
@@ -79,8 +81,6 @@ void ScrollView::draw()
 		}
 		++i;
 	}
-	for (Button *b : buttons)
-		b->draw();
 }
 
 const Transformation & ScrollView::getTransformation() const
