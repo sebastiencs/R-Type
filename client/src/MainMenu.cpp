@@ -75,7 +75,13 @@ void MainMenu::draw()
 		engine->drawText("You are not connected", Transformation(750, 50), 12, Color::Red, "Fipps.otf");
 
 	for (Button* b : buttons)
-		b->draw();
+		if (b->getId() == "Reconnect") {
+			if (!net->getIsConnect())
+				b->draw();
+		}
+		else
+			b->draw();
+
 	rTypeLabel->draw();
 	if (currentPage == 1)
 		onlineMenu->draw();
@@ -87,9 +93,15 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
 		if (b->isPressed(x, y)) {
-			b->onAction();
+			if (b->getId() == "Reconnect") {
+				if (!net->getIsConnect())
+					b->onAction();
+			}
+			else
+				b->onAction();
 		}
 	}
+
 	if (currentPage == 1)
 		onlineMenu->onClick(x, y);
 }
@@ -97,7 +109,12 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
 	for (Button *b : buttons) {
-		b->onHover(x, y);
+		if (b->getId() == "Reconnect") {
+			if (!net->getIsConnect())
+				b->onHover(x, y);
+		}
+		else
+			b->onHover(x, y);
 	}
 
 	if (currentPage == 1)

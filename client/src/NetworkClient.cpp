@@ -18,8 +18,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 		_isConnect = false;
 		return;
 	}
-	else
-		_isConnect = true;
+	_isConnect = true;
 
 	inGame = false;
 	Callback_t fptrWrite = [this] (void *) {runWrite(); return nullptr; };
@@ -152,8 +151,7 @@ int NetworkClient::reconnect()
 		_isConnect = false;
 		return (-1);
 	}
-	else
-		_isConnect = true;
+	_isConnect = true;
 	inGame = false;
 	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
 	threadWrite = new Thread(fptrWrite, this);
