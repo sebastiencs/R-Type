@@ -27,45 +27,45 @@ const Paquet *PackageStorage::getReceivedPackage() const {
 }
 
 const PaquetPlayerCoord *PackageStorage::getPlayersPackage() const {
-	return players.empty() ? nullptr : (const PaquetPlayerCoord *)players.front();
+	return players.empty() ? nullptr : players.front();
 }
 
 const PaquetPlayerCoord *PackageStorage::getEnemiesPackage() const {
-	return enemies.empty() ? nullptr : (const PaquetPlayerCoord *)enemies.front();
+	return enemies.empty() ? nullptr : enemies.front();
 }
 
 const PaquetObstacle *PackageStorage::getObstaclesPackage() const {
-	return obstacles.empty() ? nullptr : (const PaquetObstacle *)obstacles.front();
+	return obstacles.empty() ? nullptr : obstacles.front();
 }
 
 const PaquetPlayerShot * PackageStorage::getShotsPackage() const
 {
-	return shots.empty() ? nullptr : (const PaquetPlayerShot *)shots.front();
+	return shots.empty() ? nullptr : shots.front();
 }
 
 const Paquet * PackageStorage::getToSendPackage() const
 {
-	return toSend.empty() ? nullptr : (const Paquet *)toSend.front();
+	return toSend.empty() ? nullptr : toSend.front();
 }
 
 const PaquetListParties * PackageStorage::getGameListPackage() const
 {
-	return gameList.empty() ? nullptr : (const PaquetListParties *)gameList.front();
+	return gameList.empty() ? nullptr : gameList.front();
 }
 
 const PaquetListPlayers * PackageStorage::getPlayerListPackage() const
 {
-	return playerList.empty() ? nullptr : (const PaquetListPlayers *)playerList.front();
+	return playerList.empty() ? nullptr : playerList.front();
 }
 
 const PaquetResponse * PackageStorage::getAnswersPackage() const
 {
-	return answers.empty() ? nullptr : (const PaquetResponse *)answers.front();
+	return answers.empty() ? nullptr : answers.front();
 }
 
 const PaquetLaunch * PackageStorage::getLaunchPackage() const
 {
-	return launch.empty() ? nullptr : (const PaquetLaunch *)launch.front();
+	return launch.empty() ? nullptr : launch.front();
 }
 
 void PackageStorage::storeReceivedPackage(Paquet * package)
@@ -74,22 +74,22 @@ void PackageStorage::storeReceivedPackage(Paquet * package)
 	_semIn->post();
 }
 
-void PackageStorage::storePlayersPackage(Paquet * package)
+void PackageStorage::storePlayersPackage(PaquetPlayerCoord * package)
 {
 	players.push_back(package);
 }
 
-void PackageStorage::storeEnemiesPackage(Paquet * package)
+void PackageStorage::storeEnemiesPackage(PaquetPlayerCoord * package)
 {
 	enemies.push_back(package);
 }
 
-void PackageStorage::storeObstaclesPackage(Paquet * package)
+void PackageStorage::storeObstaclesPackage(PaquetObstacle * package)
 {
 	obstacles.push_back(package);
 }
 
-void PackageStorage::storeShotsPackage(Paquet * package)
+void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
 {
 	shots.push_back(package);
 }
@@ -100,22 +100,22 @@ void PackageStorage::storeToSendPackage(Paquet * package)
 	_semOut->post();
 }
 
-void PackageStorage::storeGameListPackage(Paquet * package)
+void PackageStorage::storeGameListPackage(PaquetListParties * package)
 {
 	gameList.push_back(package);
 }
 
-void PackageStorage::storePlayerListPackage(Paquet * package)
+void PackageStorage::storePlayerListPackage(PaquetListPlayers * package)
 {
 	playerList.push_back(package);
 }
 
-void PackageStorage::storeAnswersPackage(Paquet * package)
+void PackageStorage::storeAnswersPackage(PaquetResponse * package)
 {
 	answers.push_back(package);
 }
 
-void PackageStorage::storeLaunchPackage(Paquet * package)
+void PackageStorage::storeLaunchPackage(PaquetLaunch * package)
 {
 	launch.push_back(package);
 }

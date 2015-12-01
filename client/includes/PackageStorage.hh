@@ -12,14 +12,14 @@ private:
 
 	std::list<Paquet *> received;
 	std::list<Paquet *> toSend;
-	std::list<Paquet *> players;
+	std::list<PaquetPlayerCoord *> players;
 	std::list<Paquet *> enemies;
-	std::list<Paquet *> obstacles;
-	std::list<Paquet *> shots;
-	std::list<Paquet *> gameList;
-	std::list<Paquet *> playerList;
-	std::list<Paquet *> answers;
-	std::list<Paquet * > launch;
+	std::list<PaquetObstacle *> obstacles;
+	std::list<PaquetPlayerShot *> shots;
+	std::list<PaquetListParties *> gameList;
+	std::list<PaquetListPlayers *> playerList;
+	std::list<PaquetResponse *> answers;
+	std::list<PaquetLaunch * > launch;
 
   std::unique_ptr<ISemaphore>	_semOut;
   std::unique_ptr<ISemaphore>	_semIn;
@@ -44,15 +44,15 @@ public:
 	const PaquetLaunch *getLaunchPackage() const;
 
 	void storeReceivedPackage(Paquet *package);
-	void storePlayersPackage(Paquet *package);
-	void storeEnemiesPackage(Paquet *package);
-	void storeObstaclesPackage(Paquet *package);
-	void storeShotsPackage(Paquet *package);
+	void storePlayersPackage(PaquetPlayerCoord *package);
+	void storeEnemiesPackage(PaquetPlayerCoord *package);
+	void storeObstaclesPackage(PaquetObstacle *package);
+	void storeShotsPackage(PaquetPlayerShot *package);
 	void storeToSendPackage(Paquet *package);
-	void storeGameListPackage(Paquet *package);
-	void storePlayerListPackage(Paquet *package);
-	void storeAnswersPackage(Paquet *package);
-	void storeLaunchPackage(Paquet *package);
+	void storeGameListPackage(PaquetListParties *package);
+	void storePlayerListPackage(PaquetListPlayers *package);
+	void storeAnswersPackage(PaquetResponse *package);
+	void storeLaunchPackage(PaquetLaunch *package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
