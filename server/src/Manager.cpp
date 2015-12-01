@@ -153,7 +153,7 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
       std::cerr << "CreateParty: Party already exist" << std::endl;
     }
     if (!player) {
-      std::cerr << "JoinParty: Can't find player" << std::endl;
+      std::cerr << "CreateParty: Can't find player. Already in Game ?" << std::endl;
     }
 #endif // !DEBUG
   }
