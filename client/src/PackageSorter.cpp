@@ -41,7 +41,10 @@ PackageSorter::PackageSorter()
 	_tab[10] = [this](Paquet *paquet UNUSED) {};
 	_tab[11] = [this](Paquet *paquet UNUSED) {};
 	_tab[12] = [this](Paquet *paquet UNUSED) {};
-	_tab[0xFF] = [this](Paquet *paquet UNUSED) {};
+	_tab[0xFF] = [this](Paquet *paquet) {
+		PackageStorage::getInstance().storeAnswersPackage(paquet);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
 
 	Callback_t fptr = [this](void *arg) {this->sortPaquet(); return nullptr; };
 	thread = new Thread(fptr, nullptr);
