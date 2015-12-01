@@ -13,7 +13,7 @@ private:
 	std::list<Paquet *> received;
 	std::list<Paquet *> toSend;
 	std::list<PaquetPlayerCoord *> players;
-	std::list<Paquet *> enemies;
+	std::list<PaquetPlayerCoord *> enemies;
 	std::list<PaquetObstacle *> obstacles;
 	std::list<PaquetPlayerShot *> shots;
 	std::list<PaquetListParties *> gameList;
