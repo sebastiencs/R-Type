@@ -38,6 +38,25 @@ Transformation::Transformation(uint16_t x, uint16_t y)
 	_height = 0;
 }
 
+Transformation::Transformation(const Transformation & t)
+{
+	setPosition(t.getX(), t.getY());
+	setBounds(t.getWidth(), t.getHeight());
+	setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+	setRotation(t.getRotation());
+	setScale(t.getScaleX(), t.getScaleY());
+}
+
+Transformation & Transformation::operator=(const Transformation & t)
+{
+	setPosition(t.getX(), t.getY());
+	setBounds(t.getWidth(), t.getHeight());
+	setCrop(t.getCrop().at(SRCX), t.getCrop().at(SRCY), t.getCrop().at(SRCWIDTH), t.getCrop().at(SRCHEIGHT));
+	setRotation(t.getRotation());
+	setScale(t.getScaleX(), t.getScaleY());
+	return *this;
+}
+
 Transformation::~Transformation()
 {
 }
