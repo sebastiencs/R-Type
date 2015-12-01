@@ -9,6 +9,7 @@
 //
 
 #include "PackageSorter.hh"
+#include "Paquets.hh"
 #include "Debug.hh"
 
 PackageSorter::PackageSorter()
@@ -16,25 +17,35 @@ PackageSorter::PackageSorter()
 	_tab[0] = [this](Paquet *paquet UNUSED) {};
 	_tab[1] = [this](Paquet *paquet UNUSED) {};
 	_tab[2] = [this](Paquet *paquet) {
-		PackageStorage::getInstance().storeGameListPackage(paquet);
+		PaquetListParties *store = new PaquetListParties((void *)paquet->getData(), paquet->getSize());
+		delete paquet;
+		PackageStorage::getInstance().storeGameListPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[3] = [this](Paquet *paquet UNUSED) {};
 	_tab[4] = [this](Paquet *paquet UNUSED) {};
 	_tab[5] = [this](Paquet *paquet UNUSED) {};
 	_tab[6] = [this](Paquet *paquet UNUSED) {
-		PackageStorage::getInstance().storePlayerListPackage(paquet);
+		PaquetListPlayers *store = new PaquetListPlayers((void *)paquet->getData(), paquet->getSize());
+		delete paquet;
+		PackageStorage::getInstance().storePlayerListPackage(store);
 		PackageStorage::getInstance().deletePlayerListPackage();
 	};
 	_tab[7] = [this](Paquet *paquet) {
-		PackageStorage::getInstance().storePlayersPackage(paquet);
+		PaquetPlayerCoord *store = new PaquetPlayerCoord((void *)paquet->getData(), paquet->getSize());
+		delete paquet;
+		PackageStorage::getInstance().storePlayersPackage(store);
 		PackageStorage::getInstance().deletePlayerListPackage();
 	};
 	_tab[8] = [this](Paquet *paquet) {
-		PackageStorage::getInstance().storeShotsPackage(paquet);
+		PaquetPlayerShot *store = new PaquetPlayerShot((void *)paquet->getData(), paquet->getSize());
+		delete paquet;
+		PackageStorage::getInstance().storeShotsPackage(store);
 		PackageStorage::getInstance().deletePlayerListPackage();
 	};
 	_tab[9] = [this](Paquet *paquet) {
+		PaquetObstacle *store = new PaquetObstacle((void *)paquet->getData(), paquet->getSize());
+		delete paquet;
 		PackageStorage::getInstance().storeObstaclesPackage(paquet);
 		PackageStorage::getInstance().deletePlayerListPackage();
 	};
