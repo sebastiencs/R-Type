@@ -63,7 +63,7 @@ int MainMenu::getCurrentPage()
 
 void MainMenu::draw()
 {
-	engine->drawImage("menubackground.png", Transformation(0, 0));
+	engine->drawImage("menubackground8bit.png", Transformation(0, 0));
 	for (Button* b : buttons)
 		b->draw();
 	rTypeLabel->draw();
