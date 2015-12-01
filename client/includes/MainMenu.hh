@@ -9,7 +9,7 @@ class Credits;
 class MainMenu
 {
 public:
-	MainMenu(IGraphicEngine *eng);
+	MainMenu(IGraphicEngine *eng, NetworkClient *net);
 	~MainMenu();
 
 	void setDisplayOnline();
@@ -28,6 +28,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
+	NetworkClient *net;
 	OnlineMenu *onlineMenu;
 	Credits *creditsMenu;
 

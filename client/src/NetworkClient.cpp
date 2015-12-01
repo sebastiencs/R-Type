@@ -153,3 +153,8 @@ void NetworkClient::setInGame(bool _inGame)
 {
 	inGame = _inGame;
 }
+
+bool NetworkClient::getIsConnect()
+{
+	return _isConnect;
+}

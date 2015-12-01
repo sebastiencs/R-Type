@@ -2,6 +2,7 @@
 # define DISPLAYUPDATER_HH
 
 # include "Packager.hh"
+# include "NetworkClient.hh"
 # include "PackageStorage.hh"
 # include "IGraphicEngine.hh"
 # include "GraphicEngine.hh"
@@ -11,10 +12,11 @@
 
 class MainMenu;
 class OnlineMenu;
+class NetworkClient;
 
 class DisplayUpdater {
 public:
-	DisplayUpdater(Packager *_packager);
+	DisplayUpdater(Packager *_packager, NetworkClient *net);
 	~DisplayUpdater();
 
 	IGraphicEngine *getGraphicEngine();
@@ -26,6 +28,7 @@ public:
 
 private:
 	IGraphicEngine *graphicEngine;
+	NetworkClient *net;
 	Packager *packager;
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;

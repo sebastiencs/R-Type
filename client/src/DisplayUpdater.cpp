@@ -1,11 +1,12 @@
 #include "DisplayUpdater.hh"
 
 
-DisplayUpdater::DisplayUpdater(Packager * _packager)
+DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 {
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
-	mainmenu = new MainMenu(graphicEngine);
+	mainmenu = new MainMenu(graphicEngine, net);
+	this->net = net;
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
@@ -37,6 +38,9 @@ void DisplayUpdater::mainMenu()
 
 	if (mainmenu->getCurrentPage() == 1)
 		onlineMenu->menu();
+
+	if (!net->getIsConnect())
+		graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
 }
 
 void DisplayUpdater::game()

@@ -1,8 +1,9 @@
 #include "MainMenu.hh"
 
-MainMenu::MainMenu(IGraphicEngine *eng)
+MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 {
 	engine = eng;
+	this->net = net;
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
 	creditsMenu = new Credits(engine);
@@ -65,6 +66,9 @@ int MainMenu::getCurrentPage()
 void MainMenu::draw()
 {
 	engine->drawImage("menubackground8bit.png", Transformation(0, 0));
+	if (!net->getIsConnect())
+		engine->drawText("You are not connected", Transformation(750, 50), 12, Color::Red, "Fipps.otf");
+
 	for (Button* b : buttons)
 		b->draw();
 	rTypeLabel->draw();

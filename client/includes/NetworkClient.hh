@@ -37,6 +37,7 @@ public:
       return true;
     return false;
   }
+  bool getIsConnect();
   void setInGame(bool _inGame);
 
 private:
