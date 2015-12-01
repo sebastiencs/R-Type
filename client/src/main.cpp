@@ -55,8 +55,8 @@ int		main(int argc, char **argv)
 	try {
 		Packager *packager = new Packager();
 		NetworkClient* network = new NetworkClient(addr, port);
-		DisplayUpdater updater(packager);
 		PackageSorter sorter;
+		DisplayUpdater updater(packager);
 
 		delete packager;
 		delete network;

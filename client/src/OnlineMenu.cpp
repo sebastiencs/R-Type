@@ -1,4 +1,5 @@
 #include "OnlineMenu.hh"
+#include "IOEvent.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
@@ -17,26 +18,29 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-	PaquetListParties *list = new PaquetListParties();
-	list->addParty("Party 0", 2);
-	list->addParty("Party 1", 1);
-	list->addParty("Party 2", 4);
-	list->addParty("Party 3", 0);
-	list->addParty("Party 4", 3);
-	list->addParty("Party 5", 2);
-	list->addParty("Party 6", 1);
-	list->addParty("Party 7", 4);
-	list->addParty("Party 8", 0);
-	list->addParty("Party 9", 0);
-	list->addParty("Party 10", 0);
-	list->addParty("Party 11", 0);
-	list->addParty("Party 12", 0);
-	list->addParty("Party 13", 0);
-	scrollView->emptyCell();
-	for (PartyNB party : list->getParties()) {
-		scrollView->createCell(std::get<0>(party), std::get<1>(party));
-	}
-	DEBUG_MSG("Create Request Parties Paquet");
+  PackageStorage &PS = PackageStorage::getInstance();
+
+  PaquetRequestParties	*paquet = new PaquetRequestParties();
+  paquet->createPaquet();
+  PS.storeToSendPackage(paquet);
+
+  // TODO: Revoir cette boucle. C'est moche
+  //       Faudrait uniquement envoyer le paquet dans cette fonction
+  //       et gerer la reception du paquet de reponse autre part
+  const Paquet	*tmp;
+  int loop = 0;
+  do {
+    tmp = PS.getGameListPackage();
+  } while (!tmp && !IOEvent::wait(150) && loop < 10);
+
+  if (tmp) {
+    PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
+
+    scrollView->emptyCell();
+    for (auto &party : paquetList.getParties()) {
+      scrollView->createCell(std::get<0>(party), std::get<1>(party));
+    }
+  }
 }
 
 void OnlineMenu::draw()

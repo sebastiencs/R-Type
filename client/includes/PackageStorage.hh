@@ -5,6 +5,7 @@
 #include <list>
 #include "Paquets.hh"
 #include "Paquet.hh"
+#include "Semaphore.hh"
 
 class PackageStorage {
 private:
@@ -20,6 +21,8 @@ private:
 	std::list<Paquet *> answers;
 	std::list<Paquet * > launch;
 
+  std::unique_ptr<ISemaphore>	_sem;
+
 	PackageStorage();
 
 public:
@@ -27,7 +30,7 @@ public:
 	static PackageStorage& getInstance();
 
 	virtual ~PackageStorage();
-	
+
 	const Paquet *getReceivedPackage() const;
 	const PaquetPlayerCoord *getPlayersPackage() const;
 	const PaquetPlayerCoord *getEnemiesPackage() const;
@@ -62,6 +65,7 @@ public:
 	void deleteLaunchPackage();
 
 	bool isThereReceivedPackage();
+	void waitForPackage();
 	/*bool deletePlayersPackage();
 	bool deleteEnemiesPackage();
 	bool deleteObstaclesPackage();

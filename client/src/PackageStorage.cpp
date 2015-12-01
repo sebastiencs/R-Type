@@ -13,6 +13,7 @@ PackageStorage & PackageStorage::getInstance()
 }
 
 PackageStorage::PackageStorage()
+  : _sem(new Semaphore())
 {
 }
 
@@ -94,6 +95,7 @@ void PackageStorage::storeShotsPackage(Paquet * package)
 void PackageStorage::storeToSendPackage(Paquet * package)
 {
 	toSend.push_back(package);
+	_sem->post();
 }
 
 void PackageStorage::storeGameListPackage(Paquet * package)
@@ -169,4 +171,9 @@ void PackageStorage::deleteLaunchPackage()
 bool PackageStorage::isThereReceivedPackage()
 {
 	return !received.empty();
+}
+
+void PackageStorage::waitForPackage()
+{
+  _sem->wait();
 }

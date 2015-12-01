@@ -52,6 +52,7 @@ int NetworkClient::runWrite()
 
 	while (1)
 	{
+		PackageStorage::getInstance().waitForPackage();
 		if (IOEvent::poll(fds, 0) > 0)
 		{
 			for (auto fd : fds)
