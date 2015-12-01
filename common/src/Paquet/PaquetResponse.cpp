@@ -11,7 +11,9 @@
 #include "PaquetResponse.hh"
 
 PaquetResponse::PaquetResponse()
-  : _id(Paquet::RESPONSE)
+  : _id(Paquet::RESPONSE),
+    _return(0),
+    _data(0)
 {
 }
 
