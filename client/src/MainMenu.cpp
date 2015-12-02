@@ -15,7 +15,6 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 
 	uint16_t baseX = 50;
 	uint16_t baseY = 500;
-	uint16_t offset = 50;
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
 
