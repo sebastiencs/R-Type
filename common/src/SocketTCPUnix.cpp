@@ -17,17 +17,17 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
     _addr(),
     _type(type)
 {
-  _fd = ::socket(AF_INET, SOCK_STREAM, 0);
+  _socket = ::socket(AF_INET, SOCK_STREAM, 0);
 
-  if (_fd >= 0 && type == SocketTCPUnix::SERVER) {
+  if (_socket >= 0 && type == SocketTCPUnix::SERVER) {
     int unused = 0;
-    if (setsockopt(_fd, SOL_SOCKET, SO_REUSEADDR, &unused, sizeof unused)) {
+    if (setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &unused, sizeof unused)) {
       DEBUG_MSG("setsockopt error");
       perror("->");
     }
   }
 
-  if (_fd < 0) {
+  if (_socket < 0) {
     DEBUG_MSG("Couldn't create socket");
     _error = 1;
   }
@@ -38,7 +38,7 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
 
 SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type,
 			     socket_t fd)
-  : _fd(fd),
+  : _socket(fd),
     _error(0),
     _addr(),
     _type(type)
@@ -49,12 +49,12 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type,
 SocketTCPUnix::~SocketTCPUnix()
 {
   DEBUG_MSG("SocketTCPUnix deleted");
-  close(_fd);
+  close(_socket);
 }
 
 socket_t	SocketTCPUnix::socket() const
 {
-  return (_fd);
+  return (_socket);
 }
 
 int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
@@ -73,7 +73,7 @@ int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
   _addr.sin_addr = *reinterpret_cast<struct in_addr *>(h->h_addr_list[0]);
   _addr.sin_family = AF_INET;
   _addr.sin_port = htons(port);
-  if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
+  if (::connect(_socket, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
     DEBUG_MSG("connect failed");
     _error = 1;
     return (-1);
@@ -93,7 +93,7 @@ ISocketTCP	*SocketTCPUnix::accept()
   }
 
   size = sizeof(c_addr);
-  newfd = ::accept(_fd,
+  newfd = ::accept(_socket,
 		   reinterpret_cast<struct sockaddr *>(&c_addr),
 		   reinterpret_cast<socklen_t *>(&size));
   if (newfd >= 0)
@@ -120,7 +120,7 @@ int	SocketTCPUnix::bind(uint16_t port)
   _addr.sin_family = AF_INET;
   _addr.sin_addr.s_addr = INADDR_ANY;
   _addr.sin_port = htons(port);
-  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
+  if (::bind(_socket, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
     DEBUG_MSG("bind() failed");
     perror("->");
     _error = 1;
@@ -135,7 +135,7 @@ int	SocketTCPUnix::listen(int max)
     throw std::runtime_error("Try to listen on a socket with a client");
   }
 
-  if (::listen(_fd, max) == -1) {
+  if (::listen(_socket, max) == -1) {
     DEBUG_MSG("listen() failed");
     return (-1);
   }
@@ -149,7 +149,7 @@ ssize_t	SocketTCPUnix::write(const Buffer &buf)
     return (-1);
   }
 
-  return (::write(_fd, buf.get(), buf.size()));
+  return (::write(_socket, buf.get(), buf.size()));
 }
 
 ssize_t	SocketTCPUnix::write(const Buffer &buf, const Addr &addr)
@@ -169,7 +169,7 @@ ssize_t	SocketTCPUnix::write(const Paquet &paquet)
     return (-1);
   }
 
-  return (::write(_fd, paquet.getData(), paquet.getSize()));
+  return (::write(_socket, paquet.getData(), paquet.getSize()));
 }
 
 ssize_t	SocketTCPUnix::write(const Paquet &paquet, const Addr &addr)
@@ -192,7 +192,7 @@ ssize_t	SocketTCPUnix::read(Buffer &buf)
     return (-1);
   }
 
-  n = ::read(_fd, buf.get(), buf.size());
+  n = ::read(_socket, buf.get(), buf.size());
 
   if (n < 0) {
     DEBUG_MSG("read() failed");
@@ -206,5 +206,5 @@ ssize_t	SocketTCPUnix::read(Buffer &buf)
 
 const Addr	SocketTCPUnix::getAddr() const
 {
-  return (Addr(_fd));
+  return (Addr(_socket));
 }

@@ -21,7 +21,7 @@ public:
 
   typedef enum { SERVER = 2, CLIENT = 4 } CONNECTION_TYPE;
 
-private:
+protected:
 
   socket_t  _socket;
   sockaddr_in _server;

@@ -61,7 +61,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
   if (_start == true) {
 
     uint8_t	id;
-    n = ::read(_fd, &id, sizeof(id));
+    n = ::read(_socket, &id, sizeof(id));
     if (n > 0) {
       if (_pSize.count(id)) {
 	_idPaquet = id;
@@ -85,7 +85,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
     if (_idPaquet == Paquet::LIST_PARTIES) {
 
       uint16_t nb;
-      n = ::read(_fd, &nb, sizeof(nb));
+      n = ::read(_socket, &nb, sizeof(nb));
       if (n == 2) {
 	_sizeCurrent += 2;
 	_sizePaquet = 3 + nb * 17;
@@ -106,7 +106,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
     else if (_idPaquet == Paquet::LIST_PLAYERS) {
 
       uint8_t	nb;
-      n = ::read(_fd, &nb, sizeof(nb));
+      n = ::read(_socket, &nb, sizeof(nb));
       if (n == 1) {
 	_sizeCurrent += 1;
 	_sizePaquet = 2 + nb * 18;
@@ -128,7 +128,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 
     _bufferTMP->reset();
 
-    n = ::read(_fd, _bufferTMP->get(), left);
+    n = ::read(_socket, _bufferTMP->get(), left);
 
     if (n > 0) {
       _sizeCurrent += n;
