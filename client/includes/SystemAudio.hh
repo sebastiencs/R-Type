@@ -16,6 +16,8 @@
 # include <list>
 # include "ISystemAudio.hh"
 
+# define RS_PATH "ressources/"
+
 typedef struct {
   int id;
   std::unique_ptr<sf::Music> music;

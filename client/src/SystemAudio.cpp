@@ -36,7 +36,7 @@ void	SystemAudio::loadMusic(const std::string &file, int id)
 
   sf::Music *sfmusic = new sf::Music();
 
-  if (sfmusic->openFromFile(file)) {
+  if (sfmusic->openFromFile(RS_PATH + file)) {
 
     Music	*music = new Music;
 
@@ -62,7 +62,7 @@ void	SystemAudio::loadSound(const std::string &file, int id)
 
   sf::SoundBuffer *buffer = new sf::SoundBuffer;
 
-  if (buffer->loadFromFile(file)) {
+  if (buffer->loadFromFile(RS_PATH + file)) {
 
     sf::Sound *sfsound = new sf::Sound();
 
@@ -118,7 +118,7 @@ void	SystemAudio::playMusicRandom()
   stopMusic();
 
   int	i = 0;
-  int	n = Tools::getRandom(0, _musics.size() - 1);
+  int	n = Tools::random(0, _musics.size() - 1);
 
   for (auto &music : _musics) {
     if (i == n) {
