@@ -29,25 +29,6 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	mainChoiceBox->addDrawable(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 	elements.push_back(mainChoiceBox);
 
-	//fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	//buttons.push_back(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
-
-	//transformation.setPosition(baseX, baseY + offset);
-	//fptr = std::bind(&MainMenu::setDisplayOffline, this);
-	//buttons.push_back(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
-
-	//transformation.setPosition(baseX, baseY + (offset * 2));
-	//fptr = std::bind(&MainMenu::setDisplayOption, this);
-	//buttons.push_back(new Button("Option", "optionButton.png", transformation, Color::None, fptr, "Option", engine));
-
-	//transformation.setPosition(baseX, baseY + (offset * 3));
-	//fptr = std::bind(&MainMenu::setDisplayCredits, this);
-	//buttons.push_back(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
-
-	//transformation.setPosition(baseX, baseY + (offset * 4));
-	//fptr = std::bind(&MainMenu::myexit, this);
-	//buttons.push_back(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
-
 	transformation.setPosition(800, 75);
 	fptr = std::bind(&NetworkClient::reconnect, this->net);
 	elements.push_back(new Button("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));

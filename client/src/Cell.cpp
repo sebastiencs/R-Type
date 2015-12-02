@@ -8,6 +8,7 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 	nameParty = name;
 	this->nbrPlayers = nbrPlayers;
 
+
 	std::string txt = "[";
 	txt += name;
 	txt += "]";
@@ -15,6 +16,7 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 	txt += std::to_string(nbrPlayers);
 	txt += "/4";
 
+	_transformation.setBounds(_transformation.getX() + 22 * txt.size(), _transformation.getY() + 32);
 	textField = new TextField(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
 }
 
@@ -60,7 +62,7 @@ void Cell::onHover(uint32_t x, uint32_t y)
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const
 {
-	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * textField->getId().size()) &&
+	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * textField->getText().size()) &&
 		y >= textField->getTransformation().getY() && y <= (textField->getTransformation().getY() + 32))
 		return true;
 	return false;

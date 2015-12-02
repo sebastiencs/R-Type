@@ -22,6 +22,7 @@ public:
 	void setOrientation(Orientation orientation);
 
 	Drawable* getElement(const std::string& id);
+	const std::list<Drawable *> getElements() const;
 	void clearElements();
 
 	// IDrawable

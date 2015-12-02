@@ -12,7 +12,6 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 
 	nbrCell = 0;
 	base = 0;
-	_transformation.setBounds(400, 400);
 	boxCells = new Box(Orientation::vertical, _transformation, _id);
 
 	fptr = std::bind(&ScrollView::decrBase, this);
@@ -25,13 +24,14 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 ScrollView::~ScrollView()
 {
 	boxCells->clearElements();
+	delete boxCells;
 	for (Button *b : buttons)
 		delete(b);
 }
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
+	boxCells->addDrawable(new Cell(std::to_string(nbrCell), _transformation, name, nbr, engine));
 	++nbrCell;
 }
 
@@ -44,7 +44,7 @@ void ScrollView::emptyCell()
 
 void ScrollView::incrBase()
 {
-	if (base < ((int)listCell.size() - nbrDiplayCell))
+	if (base < ((int)boxCells->getElements().size() - nbrDiplayCell))
 		++base;
 }
 

@@ -48,13 +48,18 @@ Drawable* Box::getElement(const std::string & id)
 	for (Drawable *b : elementsList)
 		if (b->getId() == id)
 			return (b);
-	return (nullptr);
+	return nullptr;
+}
+
+const std::list<Drawable*> Box::getElements() const
+{
+	return elementsList;
 }
 
 void Box::clearElements()
 {
 	for (Drawable *b : elementsList) {
-		elementsList.pop_front();
+		elementsList.remove(b);
 		delete b;
 	}
 	elementsList.clear();

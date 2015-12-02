@@ -16,7 +16,6 @@ public:
 	virtual void draw();
 
 	Color& getColor();
-	const sf::Sprite& getSprite() const;
 	const std::string& getText() const;
 	void setText(const std::string& txt);
 
