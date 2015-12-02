@@ -97,7 +97,7 @@ const callback & Box::getCallback() const
 
 void Box::updateTransformation()
 {
-	if (isUpdated)
+	if (isUpdated || elementsList.empty())
 		return;
 	Transformation lastItemT = _transformation;
 	bool first = true;
