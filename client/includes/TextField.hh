@@ -4,6 +4,7 @@
 # include "Transformation.hh"
 # include "Color.hh"
 # include "GraphicEngine.hh"
+# include "Text.hh"
 
 class GraphicEngine;
 
@@ -14,6 +15,7 @@ public:
 
 	//Drawable
 	virtual void draw();
+	virtual void setTransformation(const Transformation& t);
 
 	Color& getColor();
 	const std::string& getText() const;
@@ -21,11 +23,11 @@ public:
 
 private:
 	IGraphicEngine *engine;
+	Text text;
 	Color color;
 	uint16_t size;
 
 	std::string font;
-	std::string text;
 };
 
 #endif /* !TEXTFIELD_HH */

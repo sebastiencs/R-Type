@@ -137,6 +137,15 @@ const sf::Texture& GraphicEngine::loadTexture(const std::string& img)
 	return *cachedImages[img];
 }
 
+const sf::Font& GraphicEngine::loadFont(const std::string & font)
+{
+	if (cachedFonts.find(font) == cachedFonts.end() && !loadFontFromFile(FONT_PATH + font)) {
+		DEBUG_MSG("Couldn't open font file: \"" << font << "\"");
+		return *NoneFont;
+	}
+	return *cachedFonts[font];
+}
+
 void GraphicEngine::transformSprite(sf::Sprite& sprite, const Transformation& t, const Color& color)
 {
 	if (t.hasPosition())
@@ -167,8 +176,10 @@ bool GraphicEngine::loadImageFromFile(const std::string& file)
 		return true;
 
 	sf::Texture* texture = new sf::Texture();
-	if (!texture->loadFromFile(RS_PATH + file))
+	if (!texture->loadFromFile(RS_PATH + file)) {
+		delete texture;
 		return false;
+	}
 	cachedImages[file] = texture;
 	return true;
 }
@@ -179,11 +190,15 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 		return true;
 
 	sf::Font* font = new sf::Font();
-	if (!font->loadFromFile(FONT_PATH + file))
+	if (!font->loadFromFile(FONT_PATH + file)) {
+		delete font;
 		return false;
+	}
 	cachedFonts[file] = font;
 	return true;
 }
+
+
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
@@ -225,9 +240,23 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	window->draw(sprite);
 }
 
+void GraphicEngine::drawSprite(const Sprite& sprite)
+{
+	drawImage(sprite.getImage(), sprite.getTransformation(), sprite.getColor());
+}
+
 void GraphicEngine::drawSprite(const sf::Sprite & sprite)
 {
 	window->draw(sprite);
+}
+
+void GraphicEngine::drawText(const Text& text)
+{
+	drawText(text.getText(), text.getTransformation(), text.get)
+}
+void GraphicEngine::drawText(const sf::Text & text)
+{
+	window->draw(text);
 }
 
 void GraphicEngine::drawText(const std::string& text, const Transformation& t,
@@ -255,3 +284,4 @@ void GraphicEngine::closeWindow()
 }
 
 const sf::Texture* GraphicEngine::None = new sf::Texture();
+const sf::Font* GraphicEngine::NoneFont = new sf::Font();

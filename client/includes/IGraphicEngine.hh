@@ -6,6 +6,8 @@
 # include <functional>
 # include "Transformation.hh"
 # include "Color.hh"
+# include "Text.hh"
+# include "Sprite.hh"
 
 # define RS_PATH "ressources/"
 # define FONT_PATH "ressources/fonts/"
@@ -26,6 +28,8 @@ public:
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;
 
+	virtual void drawSprite(const Sprite& sprite) = 0;
+	virtual void drawText(const Text& text) = 0;
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "") = 0;
 

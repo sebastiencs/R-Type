@@ -26,6 +26,8 @@
 
 class Button;
 class Drawable;
+class Text;
+class Sprite;
 
 class GraphicEngine : public IGraphicEngine {
 
@@ -37,8 +39,11 @@ public:
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
+	virtual void drawSprite(const Sprite& sprite);
 	void drawSprite(const sf::Sprite& sprite);
 
+	virtual void drawText(const Text& text);
+	void drawText(const sf::Text& text);
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
@@ -54,12 +59,14 @@ public:
 	virtual int getWindowHeight() const;
 
 	const sf::Texture& loadTexture(const std::string& img);
+	const sf::Font& loadFont(const std::string& font);
 	void transformSprite(sf::Sprite&, const Transformation&, const Color& color = Color::None);
 	void transformSprite(sf::Text&, const Transformation&, const Color& color = Color::None);
 
 	virtual void closeWindow();
 
 	static const sf::Texture* None;
+	static const sf::Font* NoneFont;
 
 protected:
 	bool loadImageFromFile(const std::string& file);
