@@ -68,7 +68,8 @@ void ScrollView::draw()
 {
 	int i = 0;
 
-	boxCells->draw();
+	if (nbrCell > 0)
+		boxCells->draw();
 	for (Button *b : buttons)
 		b->draw();
 }
