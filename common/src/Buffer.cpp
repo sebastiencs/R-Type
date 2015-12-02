@@ -12,29 +12,15 @@
 
 Buffer::Buffer()
   : _buffer(new Data[Buffer::DEFAULT_SIZE]),
-    _size(Buffer::DEFAULT_SIZE)
+    _size(Buffer::DEFAULT_SIZE),
+    _ptr(0)
 {
-  DEBUG_MSG("Buffer created");
-}
-
-Buffer::Buffer(const Data *data, Size len)
-{
-  _buffer.reset(new Data[len]);
-  std::copy(data, data + len, _buffer.get());
-  _size = len;
   DEBUG_MSG("Buffer created");
 }
 
 Buffer::~Buffer()
 {
   DEBUG_MSG("Buffer deleted");
-}
-
-void		Buffer::set(const Data *data, Size len)
-{
-  _buffer.reset(new Data[len]);
-  std::copy(data, data + len, _buffer.get());
-  _size = len;
 }
 
 Data		*Buffer::get() const
@@ -59,6 +45,8 @@ void		Buffer::setSize(Size size)
     _buffer.reset(new Data[size]);
     std::copy(tmp, tmp + size, _buffer.get());
     _size = size;
+
+    delete[] tmp;
   }
 }
 
@@ -66,6 +54,7 @@ void		Buffer::reset()
 {
   _buffer.reset(new Data[Buffer::DEFAULT_SIZE]);
   _size = Buffer::DEFAULT_SIZE;
+  _ptr = 0;
 }
 
 const Data	&Buffer::operator[](Size id) const
@@ -84,6 +73,12 @@ const Buffer	&Buffer::operator=(const Buffer &buf)
   return (*this);
 }
 
+const Buffer	&Buffer::operator=(const Buffer *buf)
+{
+  set(buf->get(), buf->size());
+  return (*this);
+}
+
 std::ostream	&operator<<(std::ostream &os, const Buffer &b)
 {
   unsigned char	*data;
@@ -92,7 +87,7 @@ std::ostream	&operator<<(std::ostream &os, const Buffer &b)
   os << "Buffer = { ";
   os << std::hex << std::uppercase;
   for (size_t i = 0; i < b.size(); i += 1) {
-    os << (int)((unsigned char)data[i]) << " ";
+    os << static_cast<int>(data[i]) << " ";
   }
   os << std::dec << "}; ";
   return (os);

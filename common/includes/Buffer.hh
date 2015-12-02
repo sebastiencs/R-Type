@@ -27,13 +27,12 @@ private:
 
   buffer_t	_buffer;
   Size		_size;
+  size_t	_ptr;
 
 public:
   Buffer();
-  Buffer(const Data *data, Size len);
   virtual ~Buffer();
 
-  void		set(const Data *data, Size len);
   Data		*get() const;
   Size		size() const;
   void		setSize(Size size);
@@ -41,6 +40,58 @@ public:
 
   const Data	&operator[](Size id) const;
   const Buffer	&operator=(const Buffer &);
+  const Buffer	&operator=(const Buffer *);
+
+  template <typename T>
+  Buffer(const T *ptr, Size len) {
+
+    const Data	*data = reinterpret_cast<const Data *>(ptr);
+
+    _buffer.reset(new Data[len]);
+    std::copy(data, data + len, _buffer.get());
+    _size = len;
+    _ptr = len;
+    DEBUG_MSG("Buffer created");
+  }
+
+  template <typename T>
+  void		set(const T *ptr, Size len) {
+
+    const Data	*data = reinterpret_cast<const Data *>(ptr);
+
+    _buffer.reset(new Data[len]);
+    std::copy(data, data + len, _buffer.get());
+    _size = len;
+    _ptr = len;
+  }
+
+  template <typename T>
+  void		append(const T *ptr, Size len) {
+
+    const Data	*data = reinterpret_cast<const Data *>(ptr);
+
+    if (_ptr + len < _size) {
+
+      std::copy(data, data + len, _buffer.get() + _ptr);
+      _ptr += len;
+
+    }
+    else {
+
+      Data *tmp = new Data[_size + len];
+
+      std::copy(_buffer.get(), _buffer.get() + _size, tmp);
+      std::copy(data, data + len, tmp + _size);
+
+      _buffer.reset(new Data[_size + len]);
+
+      std::copy(tmp, tmp + _size + len, _buffer.get());
+      _ptr += len;
+
+      delete[] tmp;
+
+    }
+  }
 };
 
 std::ostream	&operator<<(std::ostream &, const Buffer &);
