@@ -19,7 +19,7 @@ public:
 
 	void draw();
 	void onCreateGame();
-	void onClick(uint32_t x, uint32_t y);
+	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 
 	// Join Button

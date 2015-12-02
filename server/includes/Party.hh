@@ -17,6 +17,7 @@
 # include "Thread.hh"
 # include "Debug.hh"
 # include "Player.hh"
+# include "PlayerCoord.hh"
 
 class	Manager;
 
@@ -43,6 +44,7 @@ public:
   bool			addPlayer(Player *);
   void			deletePlayer(const Addr &);
   bool			isPlayer(const Addr &) const;
+  void			setCoordPlayer(PlayerCoord *pc);
 };
 
 #endif /* !PARTY_H_ */

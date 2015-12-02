@@ -87,20 +87,23 @@ void MainMenu::draw()
 void MainMenu::onClick(uint32_t x, uint32_t y)
 {
 	for (Drawable *d : elements) {
-	  if (ICallback* b = dynamic_cast<ICallback*>(d)) {
-			if (b->isPressed(x, y)) {
-				if (d->getId() == "Reconnect") {
-					if (!net->getIsConnect())
-						b->onAction();
-				}
-				else
-					b->onAction();
+		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+			if (d->getId() == "Reconnect") {
+				if (!net->getIsConnect())
+					if (b->onAction(x, y))
+						return;
 			}
-	  }
+			else
+				if (b->onAction(x, y)) {
+					return;
+				}
+
+		}
 	}
 
 	if (currentPage == 1)
-		onlineMenu->onClick(x, y);
+		if (onlineMenu->onClick(x, y))
+			return;
 }
 
 void MainMenu::onHover(uint32_t x, uint32_t y)

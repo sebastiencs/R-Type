@@ -31,7 +31,7 @@ public:
 	virtual void draw();
 
 	// ICallback
-	virtual void onAction();
+	virtual bool onAction(uint32_t x, uint32_t y);
 	virtual void onHover(uint32_t x, uint32_t y);
 	virtual bool isPressed(uint32_t x, uint32_t y) const;
 	virtual const callback& getCallback() const;

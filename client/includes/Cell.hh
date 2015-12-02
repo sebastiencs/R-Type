@@ -8,6 +8,7 @@
 # include "Drawable.hpp"
 # include "ICallBack.hh"
 # include "SFML/Graphics/Sprite.hpp"
+#include "ScrollView.hh"
 
 class IGraphicEngine;
 class TextField;
@@ -15,7 +16,9 @@ class TextField;
 class Cell : public Drawable, public ICallback
 {
 public:
-	Cell(const std::string&  id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine);
+	Cell(const std::string&  id, const Transformation& transformation,
+		const std::string& name, const int nbrPlayers, IGraphicEngine *engine,
+		ScrollView *_superView);
 	virtual ~Cell();
 
 	const std::string& getNameParty();
@@ -28,7 +31,7 @@ public:
 
 
 	//ICallback
-	virtual void onAction();
+	virtual bool onAction(uint32_t x, uint32_t y);
 	virtual void onHover(uint32_t x, uint32_t y);
 	virtual bool isPressed(uint32_t x, uint32_t y) const;
 	virtual const callback& getCallback() const;
@@ -39,6 +42,7 @@ private:
 
 	std::string nameParty;
 	int nbrPlayers;
+	ScrollView *superView;
 };
 
 #endif

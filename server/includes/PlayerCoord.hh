@@ -14,24 +14,24 @@
 # include <iostream>
 # include "Debug.hh"
 
-class		PlayerCoord
+class			PlayerCoord
 {
 public:
   PlayerCoord();
-  PlayerCoord(uint16_t x, uint16_t y, uint8_t id);
+  PlayerCoord(const uint16_t &x, const uint16_t &y, const uint8_t &id);
   virtual ~PlayerCoord();
   
-  void		setX(uint16_t x);
-  void		setY(uint16_t y);
-  void		setID(uint8_t id);
-  uint16_t	getX() const;
-  uint16_t	getY() const;
-  uint8_t	getID() const;
+  void			setX(const uint16_t &x);
+  void			setY(const uint16_t &y);
+  void			setID(const uint8_t &id);
+  const uint16_t	&getX() const;
+  const uint16_t	&getY() const;
+  const uint8_t		&getID() const;
 
 private:
-  uint16_t	_x;
-  uint16_t	_y;
-  uint8_t	_id;
+  uint16_t		_x;
+  uint16_t		_y;
+  uint8_t		_id;
 };
 
 #endif /* !PLAYERCOORD_H_ */

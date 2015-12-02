@@ -10,6 +10,7 @@
 
 #include "Manager.hh"
 #include "Network.hh"
+#include "Tools.hh"
 
 Manager::Manager()
   : _network()
@@ -94,8 +95,6 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
   delete paquet;
 }
 
-# include "Tools.hh"
-
 void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
@@ -146,6 +145,7 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 
   if (!party && player) {
     Party	*party(new Party(shared_from_this(), name));
+
     party->addPlayer(player);
     _pWaiting.remove(player);
     _parties.push_back(party);
@@ -192,9 +192,17 @@ void		Manager::handlePaquet(PaquetObstacle *paquet UNUSED, const Addr &addr UNUS
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetPlayerCoord *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+  // std::string	name = paquet->getName(); //getName existe pas dans PaquetPlayerCoord
+  // Party		*party;
+  // PlayerCoord	*pc;
+  
+  // party = Tools::findParty(_parties, name);
+  // pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
+  // if (party && pc) {
+  //   party->setCoordPlayer(pc);
+  // }
 }
 
 void		Manager::handlePaquet(PaquetPlayerShot *paquet UNUSED, const Addr &addr UNUSED)
