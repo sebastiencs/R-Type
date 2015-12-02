@@ -12,6 +12,7 @@
 # define MANAGER_H_
 
 # include <list>
+# include <memory>
 # include "Party.hh"
 # include "Semaphore.hh"
 # include "Paquets.hh"
@@ -23,22 +24,24 @@ typedef std::list<Player *>	PlayerList;
 
 class		Network;
 
-class		Manager
+class		Manager : public std::enable_shared_from_this<Manager>
 {
 private:
 
-  PartyList	_parties;
-  PlayerList	_pWaiting;
-  Semaphore	_sem;
-  Network	*_network;
+  PartyList			_parties;
+  PlayerList			_pWaiting;
+  Semaphore			_sem;
+  std::weak_ptr<Network>	_network;
 
 public:
   Manager();
   virtual ~Manager();
 
+  std::shared_ptr<Manager>	getPtr();
+
   void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
-  void		setNetwork(Network *);
+  void		setNetwork(std::shared_ptr<Network>);
   uint8_t	getID() const;
 
   void		handlePaquet(PaquetFirst *, const Addr &);

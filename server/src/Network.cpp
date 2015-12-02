@@ -14,7 +14,7 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 
-Network::Network(Manager *manager, const uint16_t port)
+Network::Network(std::shared_ptr<Manager> manager, const uint16_t port)
   : _sem(new Semaphore),
     _socketUDP(new SocketUDP(SocketUDP::SERVER)),
     _socketTCP(new SocketTCP(SocketTCP::SERVER)),
@@ -27,7 +27,7 @@ Network::Network(Manager *manager, const uint16_t port)
   _socketUDP->bind(port);
   _socketTCP->bind(port);
   _socketTCP->listen(0x200);
-  _manager->setNetwork(this);
+  (_manager.lock())->setNetwork(shared_from_this());
 }
 
 Network::~Network()
@@ -117,7 +117,7 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
   else {
     std::cerr << "Client disconnect\n";
 
-    _manager->deletePlayer(socket);
+    (_manager.lock())->deletePlayer(socket);
 
     auto it = Tools::findIt(fds, [&socket] (const _pollfd &fd) { return (fd.fd == socket); });
     if (it != fds.end()) {

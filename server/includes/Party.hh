@@ -18,18 +18,21 @@
 # include "Debug.hh"
 # include "Player.hh"
 
+class	Manager;
+
 typedef std::list<Player *>	listPlayers;
 
 class		Party
 {
   std::unique_ptr<Semaphore>	_sem;
   std::unique_ptr<Thread>	_thread;
+  std::weak_ptr<Manager>	_manager;
   std::string	_name;
   listPlayers	_players;
 
 public:
-  Party();
-  Party(const std::string &);
+  Party(std::shared_ptr<Manager>);
+  Party(std::shared_ptr<Manager>, const std::string &);
   virtual ~Party();
 
   void			run();

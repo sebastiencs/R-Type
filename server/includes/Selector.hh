@@ -23,7 +23,7 @@ typedef std::map<uint8_t, std::function<void (const Buffer &, const Addr &)>>	li
 class		Selector
 {
 private:
-  Manager	*_manager;
+  std::weak_ptr<Manager>	_manager;
 
   listFunc	_selectorFunc;
 
@@ -33,7 +33,7 @@ private:
 
 public:
 
-  Selector(Manager *manager);
+  Selector(std::shared_ptr<Manager> manager);
 
   virtual ~Selector();
 

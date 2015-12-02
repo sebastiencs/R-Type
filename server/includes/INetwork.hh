@@ -19,6 +19,8 @@
 
 # endif
 
+class	Addr;
+
 class		INetwork
 {
 public:
