@@ -58,11 +58,9 @@ const std::list<Drawable*> Box::getElements() const
 
 void Box::clearElements()
 {
-	for (Drawable *b : elementsList) {
-		elementsList.remove(b);
-		delete b;
-	}
-	elementsList.clear();
+  auto clearFunc = [] (Drawable *elem) { delete elem; return (true); };
+
+  elementsList.remove_if(clearFunc);
 }
 
 void Box::draw()
