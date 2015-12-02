@@ -17,6 +17,7 @@
 # include "Paquets.hh"
 # include "Player.hh"
 # include "Addr.hh"
+# include "PlayerCoord.hh"
 
 typedef std::list<Party *>	PartyList;
 typedef std::list<Player *>	PlayerList;

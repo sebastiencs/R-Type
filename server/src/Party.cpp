@@ -97,3 +97,7 @@ bool			Party::isPlayer(const Addr &addr) const
 
   return ((p != _players.end()) ? (true) : (false));
 }
+
+void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
+{
+}
