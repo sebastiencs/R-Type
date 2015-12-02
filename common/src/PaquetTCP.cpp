@@ -9,7 +9,6 @@
 //
 
 #include "PaquetTCP.hh"
-#include "Paquet.hh"
 
 PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type)
   : SocketTCP(type),

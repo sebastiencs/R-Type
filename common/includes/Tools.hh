@@ -57,18 +57,7 @@ namespace		Tools
     return (findIn(input, [&addr] (typename T::value_type p) { return (p->addr() == addr); }));
   };
 
-  int		getRandom(int min, int max)
-  {
-    static int	done = 0;
-
-    if (!done) {
-      std::srand(std::time(0));
-    }
-
-    max += 1;
-    int num = std::rand() % (max - min) + min;
-    return (num);
-  };
+  int		random(int min, int max);
 
 };
 
