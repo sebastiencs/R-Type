@@ -61,8 +61,12 @@ ssize_t		PaquetTCP::read(Buffer &buf)
   if (_start == true) {
 
     uint8_t	id;
-    n = ::read(_socket, &id, sizeof(id));
-    if (n > 0) {
+# ifdef __unix__
+	n = ::read(_socket, &id, sizeof(id));
+# elif defined(_WIN32)
+	n = _read(_socket, &id, sizeof(id));
+#endif
+	if (n > 0) {
       if (_pSize.count(id)) {
 	_idPaquet = id;
 	_sizeCurrent = 1;
@@ -85,8 +89,12 @@ ssize_t		PaquetTCP::read(Buffer &buf)
     if (_idPaquet == Paquet::LIST_PARTIES) {
 
       uint16_t nb;
-      n = ::read(_socket, &nb, sizeof(nb));
-      if (n == 2) {
+# ifdef __unix__
+	  n = ::read(_socket, &nb, sizeof(nb));
+# elif defined(_WIN32)
+	  n = _read(_socket, &nb, sizeof(nb));
+#endif
+	  if (n == 2) {
 	_sizeCurrent += 2;
 	_sizePaquet = 3 + nb * 17;
 	_buffer->append(&nb, sizeof(nb));
@@ -106,7 +114,11 @@ ssize_t		PaquetTCP::read(Buffer &buf)
     else if (_idPaquet == Paquet::LIST_PLAYERS) {
 
       uint8_t	nb;
-      n = ::read(_socket, &nb, sizeof(nb));
+# ifdef __unix__
+	  n = ::read(_socket, &nb, sizeof(nb));
+# elif defined(_WIN32)
+	  n = _read(_socket, &nb, sizeof(nb));
+#endif 
       if (n == 1) {
 	_sizeCurrent += 1;
 	_sizePaquet = 2 + nb * 18;
@@ -128,7 +140,11 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 
     _bufferTMP->reset();
 
-    n = ::read(_socket, _bufferTMP->get(), left);
+# ifdef __unix__
+	n = ::read(_socket, _bufferTMP->get(), left);
+# elif defined(_WIN32)
+	n = _read(_socket, _bufferTMP->get(), left);
+#endif
 
     if (n > 0) {
       _sizeCurrent += n;

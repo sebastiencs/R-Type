@@ -19,6 +19,7 @@
 
 # include <Ws2tcpip.h>
 # include <winsock2.h>
+# include <io.h>
 
 # pragma comment(lib, "ws2_32.lib")
 
