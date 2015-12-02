@@ -252,7 +252,7 @@ void GraphicEngine::drawSprite(const sf::Sprite & sprite)
 
 void GraphicEngine::drawText(const Text& text)
 {
-	drawText(text.getText(), text.getTransformation(), text.get)
+	drawText(text.getText(), text.getTransformation(), text.getSize(), text.getColor(), text.getFont());
 }
 void GraphicEngine::drawText(const sf::Text & text)
 {

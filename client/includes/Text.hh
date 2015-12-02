@@ -23,7 +23,9 @@ public:
 	const std::string& getText() const;
 	const uint32_t getSize() const;
 	const Color& getColor() const;
+	const std::string& getFont() const;
 private:
+	std::string font;
 	sf::Text text;
 	Color color;
 	GraphicEngine* engine;

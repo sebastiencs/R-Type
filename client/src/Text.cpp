@@ -6,6 +6,7 @@ Text::Text(const std::string & text, const std::string & font, uint16_t size, co
 	if (!engine)
 		throw std::runtime_error("GraphicEngine is not set");
 	_transformation = t;
+	this->font = font;
 	this->text = sf::Text(text, engine->loadFont(font));
 	this->text.setCharacterSize(size);
 	transform(t, color);
@@ -61,4 +62,9 @@ const uint32_t Text::getSize() const
 const Color & Text::getColor() const
 {
 	return color;
+}
+
+const std::string & Text::getFont() const
+{
+	return font;
 }
