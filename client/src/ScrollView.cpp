@@ -106,8 +106,11 @@ bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 	for (Drawable *c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell))
 			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
-				if (tmp->isPressed(x, y))
+				if (tmp->isPressed(x, y)) {
 					tmp->onAction();
+					if (Cell *p = dynamic_cast<Cell *>(c))
+						const_cast<ScrollView *>(this)->selectedCell = c->getId();
+				}
 		++i;
 	}
 	for (Button *b : buttons)
