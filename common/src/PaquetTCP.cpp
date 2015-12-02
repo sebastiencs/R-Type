@@ -63,7 +63,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 # ifdef __unix__
 	n = ::read(_socket, &id, sizeof(id));
 # elif defined(_WIN32)
-	n = _read(_socket, &id, sizeof(id));
+	n = recv(_socket, &id, sizeof(id), 0);
 #endif
 	if (n > 0) {
       if (_pSize.count(id)) {
@@ -91,7 +91,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 # ifdef __unix__
 	  n = ::read(_socket, &nb, sizeof(nb));
 # elif defined(_WIN32)
-	  n = _read(_socket, &nb, sizeof(nb));
+	  n = recv(_socket, &nb, sizeof(nb), 0);
 #endif
 	  if (n == 2) {
 	_sizeCurrent += 2;
@@ -116,8 +116,8 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 # ifdef __unix__
 	  n = ::read(_socket, &nb, sizeof(nb));
 # elif defined(_WIN32)
-	  n = _read(_socket, &nb, sizeof(nb));
-#endif 
+	  n = recv(_socket, &nb, sizeof(nb), 0);
+#endif
       if (n == 1) {
 	_sizeCurrent += 1;
 	_sizePaquet = 2 + nb * 18;
@@ -142,7 +142,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 # ifdef __unix__
 	n = ::read(_socket, _bufferTMP->get(), left);
 # elif defined(_WIN32)
-	n = _read(_socket, _bufferTMP->get(), left);
+	n = recv(_socket, _bufferTMP->get(), left, 0);
 #endif
 
     if (n > 0) {
