@@ -9,17 +9,14 @@ TextField::TextField(const std::string & _text, const Transformation & t, uint16
 	size = _size;
 	font = _font;
 	engine = _engine;
-	//sfText = new sf::Text(text, _engine->loadFont(font));
-	//sfText->setString(_text);
-	//sfText->setCharacterSize(_size);
-	//engine->transformSprite(*sfText, _transformation, color);
-
-	// text = Text(_text, _font, _size, t, _engine, color);
-	// _transformation.setBounds(text.getTransformation().getWidth(), text.getTransformation().getHeight());
+	 text = new Text(_text, _font, _size, t, _engine, color);
+	 _transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }
 
 TextField::~TextField()
 {
+	if (text)
+		delete text;
 }
 
 Color & TextField::getColor()
@@ -29,23 +26,23 @@ Color & TextField::getColor()
 
 void TextField::draw()
 {
-//	engine->drawText(text);
+	engine->drawText(*text);
 }
 
 void TextField::setTransformation(const Transformation & t)
 {
-	// _transformation = t;
-	// text.setTransformation(t);
-	// _transformation.setBounds(text.getTransformation().getWidth(), text.getTransformation().getHeight());
+	 _transformation = t;
+	 text->setTransformation(t);
+	 _transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }
 
 const std::string & TextField::getText() const
 {
-	// return (text.getText());
+	 return (text->getText());
 }
 
 void TextField::setText(const std::string & txt)
 {
-	// text.setText(txt);
-	// _transformation.setBounds(text.getTransformation().getWidth(), text.getTransformation().getHeight());
+	 text->setText(txt);
+	 _transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }

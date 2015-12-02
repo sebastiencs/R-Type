@@ -143,7 +143,7 @@ const sf::Texture& GraphicEngine::loadTexture(const std::string& img)
 
 const sf::Font& GraphicEngine::loadFont(const std::string & font)
 {
-	if (cachedFonts.find(font) == cachedFonts.end() && !loadFontFromFile(FONT_PATH + font)) {
+	if (cachedFonts.find(font) == cachedFonts.end() && !loadFontFromFile(font)) {
 		DEBUG_MSG("Couldn't open font file: \"" << font << "\"");
 		return *NoneFont;
 	}

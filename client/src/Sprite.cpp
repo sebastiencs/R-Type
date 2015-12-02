@@ -4,6 +4,7 @@ Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine
 {
 	_transformation = t;
 	_id = img;
+	this->img = img;
 	this->engine = dynamic_cast<GraphicEngine* >(engine);
 	if (!engine)
 		throw std::runtime_error("GraphicEngine not set");

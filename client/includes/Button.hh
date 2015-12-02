@@ -1,13 +1,12 @@
 #ifndef BUTTON_H_
 # define BUTTON_H_
 
-# include "GraphicEngine.hh"
 # include "ICallBack.hh"
 # include "Drawable.hpp"
+# include "Sprite.hh"
 
 class GraphicEngine;
 class TextField;
-//class Drawable;
 
 class Button : public Drawable, public ICallback
 {
@@ -24,17 +23,17 @@ public:
 	// Drawable
 	virtual void draw();
 
-	virtual const sf::Sprite& getSprite() const;
+	virtual const Sprite& getSprite() const;
 	const std::string& getName() const;
 	const std::string& getTextureName() const;
 	const Color& getColor() const;
 	virtual void setTransformation(const Transformation& t);
 
 private:
-	GraphicEngine* _engine;
+	IGraphicEngine* _engine;
 	Color _color;
 	callback _fptr;
-	sf::Sprite _sprite;
+	Sprite* _sprite;
 
 	std::string _text;
 	std::string _textureName;

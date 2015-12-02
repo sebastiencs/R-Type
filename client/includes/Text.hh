@@ -12,6 +12,7 @@ class GraphicEngine;
 class Text : public Drawable {
 public:
 	Text(const std::string& text, const std::string& font, uint16_t size, const Transformation& t, IGraphicEngine* gengine, const Color& color = Color::None);
+	~Text() {};
 
 	// Drawable
 	virtual void draw();
@@ -26,6 +27,7 @@ public:
 	const Color& getColor() const;
 	const std::string& getFont() const;
 private:
+	std::string textString;
 	std::string font;
 	sf::Text text;
 	Color color;
