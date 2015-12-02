@@ -31,8 +31,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-		boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
-//	boxCells->addDrawable(new TextField(name, Transformation(_transformation.getX(), _transformation.getY()), 22, "Fipps.otf", Color::Red, std::to_string(nbrCell), engine));
+	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
 	++nbrCell;
 }
 
@@ -68,9 +67,14 @@ const std::string & ScrollView::getSelectCell() const
 void ScrollView::draw()
 {
 	int i = 0;
-
-	if (nbrCell > 0)
-		boxCells->draw();
+	
+	boxCells->updateTransformation();
+	for (Drawable *c : boxCells->getElements()) {
+		if (i >= base && i < (base + nbrDiplayCell)) {
+			c->draw();
+		}
+		++i;
+	}
 	for (Button *b : buttons)
 		b->draw();
 }
@@ -82,9 +86,12 @@ void ScrollView::onAction()
 void ScrollView::onHover(uint32_t x, uint32_t y)
 {
 	int i = 0;
-	for (Cell *c : listCell) {
+
+	boxCells->updateTransformation();
+	for (Drawable *c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell))
-			c->onHover(x, y);
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+				tmp->onHover(x, y);
 		++i;
 	}
 	for (Button *b : buttons)
@@ -94,12 +101,13 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 {
 	int i = 0;
-	for (Cell *c : listCell) {
+
+	boxCells->updateTransformation();
+	for (Drawable *c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell))
-			if (c->isPressed(x, y)) {
-				c->onAction();
-				const_cast<ScrollView *>(this)->selectedCell = c->getId();
-			}
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+				if (tmp->isPressed(x, y))
+					tmp->onAction();
 		++i;
 	}
 	for (Button *b : buttons)
