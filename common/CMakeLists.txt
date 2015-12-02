@@ -13,6 +13,7 @@ file (GLOB
   src/Player.cpp
   src/IOEvent.cpp
   src/PaquetTCP.cpp
+  src/Tools.cpp
   )
 
 file (GLOB

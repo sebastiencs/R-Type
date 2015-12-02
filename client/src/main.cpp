@@ -21,6 +21,8 @@
 # include "WSA.hh"
 #endif // !_WIN32
 
+#include "SystemAudio.hh"
+
 bool isNumber(const std::string& s)
 {
   return (Tools::findIn(s, [] (char c) { return !(c >= '0' && c <= '9'); }) == false);
@@ -28,6 +30,7 @@ bool isNumber(const std::string& s)
 
 int		main(int argc, char **argv)
 {
+
   uint16_t port(4242);
   std::string addr("127.0.0.1");
 
@@ -51,6 +54,15 @@ int		main(int argc, char **argv)
 		return (-1);
 	}
 #endif // !_WIN32
+
+	std::unique_ptr<ISystemAudio> audio(new SystemAudio());
+
+	audio->loadMusic("test.ogg", 1);
+	audio->loadMusic("crazyfrog.ogg", 2);
+	audio->loadMusic("eiffel65.ogg", 3);
+	audio->loadMusic("booba.ogg", 4);
+	audio->loadMusic("tupac.ogg", 5);
+	audio->playMusicRandom();
 
 	try {
 		Packager *packager = new Packager();
