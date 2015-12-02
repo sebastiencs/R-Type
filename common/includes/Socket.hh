@@ -31,4 +31,6 @@ typedef SocketUDPWin SocketUDP;
 
 # endif
 
+# include "Disconnected.hh"
+
 #endif /* !SOCKET_H_ */
