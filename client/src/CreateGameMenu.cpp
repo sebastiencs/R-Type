@@ -70,6 +70,10 @@ void CreateGameMenu::onHover(uint32_t x, uint32_t y)
 
 void CreateGameMenu::getText(const char c)
 {
+	static auto validChar = [] (const char c) -> bool {
+	  return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ');
+	};
+
 	if (c == '\b')
 	{
 		std::string tmp = serverName->getText();
@@ -77,6 +81,6 @@ void CreateGameMenu::getText(const char c)
 	}
 	else if (c == '\n' || c == '\r')
 		superView->onCreateGame();
-	else if (serverName->getText().size() < 20)
+	else if (validChar(c) && serverName->getText().size() < 20)
 		serverName->setText(serverName->getText() + c);
 }
