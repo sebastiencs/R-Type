@@ -1,4 +1,5 @@
 #include "MainMenu.hh"
+#include "OnlineMenu.hh"
 
 MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 {

@@ -6,8 +6,11 @@
 # include <functional>
 # include "Transformation.hh"
 # include "Color.hh"
-# include "Text.hh"
-# include "Sprite.hh"
+//# include "Text.hh"
+//# include "Sprite.hh"
+
+class Text;
+class Sprite;
 
 # define RS_PATH "ressources/"
 # define FONT_PATH "ressources/fonts/"

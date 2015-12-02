@@ -1,10 +1,12 @@
 #include <ScrollView.hh>
-
+#include "Cell.hh"
+#include "Button.hh"
+#include "Box.hh"
 
 ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine)
 {
 	callback fptr;
-	
+
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
 	this->_transformation = transformation;
@@ -67,7 +69,7 @@ const std::string & ScrollView::getSelectCell() const
 void ScrollView::draw()
 {
 	int i = 0;
-	
+
 	boxCells->updateTransformation();
 	for (Drawable *c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
@@ -123,4 +125,3 @@ const callback & ScrollView::getCallback() const
 {
 	return *(new callback());
 }
-

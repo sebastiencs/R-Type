@@ -1,4 +1,6 @@
 #include "Cell.hh"
+#include "TextField.hh"
+#include "Debug.hh"
 
 Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine)
 {

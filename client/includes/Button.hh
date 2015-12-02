@@ -3,9 +3,11 @@
 
 # include "GraphicEngine.hh"
 # include "ICallBack.hh"
+# include "Drawable.hpp"
 
 class GraphicEngine;
 class TextField;
+//class Drawable;
 
 class Button : public Drawable, public ICallback
 {

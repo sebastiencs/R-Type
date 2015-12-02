@@ -1,5 +1,6 @@
 #include "OnlineMenu.hh"
 #include "IOEvent.hh"
+#include "Cell.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {

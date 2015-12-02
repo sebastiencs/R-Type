@@ -1,11 +1,18 @@
 #ifndef MAIN_MENU_HH_
 # define MAIN_MENU_HH_
 
-# include "DisplayUpdater.hh"
-# include "Box.hh"
+//# include "DisplayUpdater.hh"
+//# include "Box.hh"
+#include <iostream>
+#include <list>
 
 class OnlineMenu;
 class Credits;
+class TextField;
+class IGraphicEngine;
+class NetworkClient;
+class Box;
+class Drawable;
 
 class MainMenu
 {

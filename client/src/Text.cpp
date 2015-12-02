@@ -1,4 +1,5 @@
-#include "..\includes\Text.hh"
+#include "Text.hh"
+#include "GraphicEngine.hh"
 
 Text::Text(const std::string & text, const std::string & font, uint16_t size, const Transformation& t, IGraphicEngine * gengine, const Color& color) : color(color)
 {
@@ -51,10 +52,15 @@ void Text::transform(const Transformation & t, const Color & color)
 
 const std::string & Text::getText() const
 {
-	return text.getString();
+  // Cette ligne me fait:
+  // CMakeFiles/Client.dir/client/src/Text.cpp.o: dans la fonction « Text::getText() const »:
+  // /home/sebastien/travaux/R-Type/build/../client/src/Text.cpp:55: référence indéfinie vers « sf::String::operator std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >() const »
+
+//	return text.getString();
+  return nullptr;
 }
 
-const uint32_t Text::getSize() const
+uint32_t Text::getSize() const
 {
 	text.getCharacterSize();
 }

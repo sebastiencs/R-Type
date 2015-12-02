@@ -1,7 +1,7 @@
 #ifndef IDRAWABLE_H_
 # define IDRAWABLE_H_
 
-# include "IGraphicEngine.hh"
+//# include "IGraphicEngine.hh"
 
 #include "Transformation.hh"
 

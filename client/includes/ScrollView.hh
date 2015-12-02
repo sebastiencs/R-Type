@@ -3,8 +3,14 @@
 
 # include <list>
 # include "IGraphicEngine.hh"
-# include "Cell.hh"
-# include "Box.hh"
+# include "Drawable.hpp"
+# include "ICallBack.hh"
+//# include "Cell.hh"
+//# include "Box.hh"
+
+class Cell;
+class Box;
+class Button;
 
 class ScrollView : public Drawable, public ICallback
 {

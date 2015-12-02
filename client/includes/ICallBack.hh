@@ -1,6 +1,12 @@
 #ifndef ICALLBACK_H_
 # define ICALLBACK_H_
-	
+
+# include <iostream>
+# include <functional>
+
+typedef std::function<void()> callback;
+//class callback;
+
 class ICallback
 {
 public:

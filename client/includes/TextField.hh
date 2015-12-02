@@ -4,9 +4,11 @@
 # include "Transformation.hh"
 # include "Color.hh"
 # include "GraphicEngine.hh"
-# include "Text.hh"
+# include "Drawable.hpp"
+//# include "Text.hh"
 
 class GraphicEngine;
+class Text;
 
 class TextField : public Drawable {
 public:
@@ -23,7 +25,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
-	Text text;
+	Text *text;
 	Color color;
 	uint16_t size;
 

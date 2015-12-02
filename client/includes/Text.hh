@@ -2,8 +2,9 @@
 # define TEXT_HH_
 
 # include <SFML/Graphics/Text.hpp>
-# include "GraphicEngine.hh"
+//# include "GraphicEngine.hh"
 # include "Drawable.hpp"
+# include "Color.hh"
 
 class IGraphicEngine;
 class GraphicEngine;
@@ -21,7 +22,7 @@ public:
 	void transform(const Transformation& t, const Color& color = Color::None);
 
 	const std::string& getText() const;
-	const uint32_t getSize() const;
+	uint32_t getSize() const;
 	const Color& getColor() const;
 	const std::string& getFont() const;
 private:

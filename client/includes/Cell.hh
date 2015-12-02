@@ -3,8 +3,14 @@
 
 # include <iostream>
 # include <string>
-# include "IGraphicEngine.hh"
-# include "TextField.hh"
+//# include "IGraphicEngine.hh"
+//# include "TextField.hh"
+# include "Drawable.hpp"
+# include "ICallBack.hh"
+# include "SFML/Graphics/Sprite.hpp"
+
+class IGraphicEngine;
+class TextField;
 
 class Cell : public Drawable, public ICallback
 {

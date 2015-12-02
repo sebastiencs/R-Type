@@ -1,4 +1,8 @@
 #include "GraphicEngine.hh"
+#include "Timer.hh"
+#include "Packager.hh"
+#include "Sprite.hh"
+#include "Text.hh"
 
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
