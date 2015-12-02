@@ -1,8 +1,9 @@
 #include <NetworkClient.hh>
+#include "PaquetTCP.hh"
 
 NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
   : _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
-    _socketTCP(new SocketTCP(SocketTCP::CLIENT))
+    _socketTCP(new PaquetTCP(SocketTCP::CLIENT))
 {
 	PaquetFirst *paquet = new PaquetFirst();
 	paquet->setLevel(5);
@@ -95,6 +96,7 @@ int NetworkClient::runWrite()
 
 int NetworkClient::runRead()
 {
+	Buffer buffer;
 	Pollfd	fds(2);
 
 	fds[0].fd = _socketTCP->socket();
@@ -112,18 +114,19 @@ int NetworkClient::runRead()
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						Buffer buff;
-						this->_socketUDP->read(buff);
-						DEBUG_MSG(buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buff));
+						this->_socketUDP->read(buffer);
+						DEBUG_MSG(buffer);
+						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						Buffer buff;
-						this->_socketTCP->read(buff);
+						ssize_t n;
 
-						if (!buff.size()) {
+						try {
+						  n = this->_socketTCP->read(buffer);
+						}
+						catch (Disconnected &) {
 
 						  DEBUG_MSG("Disconnected");
 
@@ -137,8 +140,10 @@ int NetworkClient::runRead()
 
 						}
 
-						DEBUG_MSG(buff);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buff));
+						if (n > 0) {
+						  DEBUG_MSG(buffer);
+						  PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
+						}
 						break;
 					}
 
