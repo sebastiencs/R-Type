@@ -10,7 +10,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->setName("Alex");
 	paquet->setVersion(1);
 	paquet->createPaquet();
-	PackageStorage::getInstance().storeToSendPackage(paquet);
+	PackageStorage::getInstance().storeToSendTCPPackage(paquet);
 
 	_ip = ip;
 	_port = port;
@@ -68,21 +68,21 @@ int NetworkClient::runWrite()
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
+						const Paquet *paquet = PackageStorage::getInstance().getToSendUDPPackage();
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
 							this->writeUDP(*paquet, _socketUDP->getAddr());
-							PackageStorage::getInstance().deleteToSendPackage();
+							PackageStorage::getInstance().deleteToSendUDPPackage();
 						}
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						const Paquet *paquet = PackageStorage::getInstance().getToSendPackage();
+						const Paquet *paquet = PackageStorage::getInstance().getToSendTCPPackage();
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
 							this->writeTCP(*paquet);
-							PackageStorage::getInstance().deleteToSendPackage();
+							PackageStorage::getInstance().deleteToSendTCPPackage();
 						}
 						break;
 					}
@@ -169,7 +169,7 @@ int NetworkClient::reconnect()
 	paquet->setName("Alex");
 	paquet->setVersion(1);
 	paquet->createPaquet();
-	PackageStorage::getInstance().storeToSendPackage(paquet);
+	PackageStorage::getInstance().storeToSendTCPPackage(paquet);
 
 	if ((_socketTCP->connect(_ip, _port)) == -1)
 	{

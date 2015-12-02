@@ -23,7 +23,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 
 	PaquetRequestParties	*paquet = new PaquetRequestParties();
 	paquet->createPaquet();
-	PS.storeToSendPackage(paquet);
+	PS.storeToSendTCPPackage(paquet);
 
 	scrollView->emptyCell();
 	// TODO: Revoir cette boucle. C'est moche
@@ -97,7 +97,7 @@ void OnlineMenu::onCreateGame()
 	paquet->setName(createGameMenu->getServerName()->getText());
 	paquet->createPaquet();
 	DEBUG_MSG("Create party : " + createGameMenu->getServerName()->getText());
-	PS.storeToSendPackage(paquet);
+	PS.storeToSendTCPPackage(paquet);
 	delete createGameMenu;
 	createGameMenu = nullptr;
 	createRequestPartiesPaquet();
