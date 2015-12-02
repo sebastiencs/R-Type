@@ -57,11 +57,16 @@ int		main(int argc, char **argv)
 
 	std::unique_ptr<ISystemAudio> audio(new SystemAudio());
 
-	audio->loadMusic("test.ogg", 1);
-	audio->loadMusic("crazyfrog.ogg", 2);
-	audio->loadMusic("eiffel65.ogg", 3);
-	audio->loadMusic("booba.ogg", 4);
-	audio->loadMusic("tupac.ogg", 5);
+	try {
+	  audio->loadMusic("test.ogg", 1);
+	  audio->loadMusic("crazyfrog.ogg", 2);
+	  audio->loadMusic("eiffel65.ogg", 3);
+	  audio->loadMusic("booba.ogg", 4);
+	  audio->loadMusic("tupac.ogg", 5);
+	}
+	catch (ErrorLoadingFile &) {
+	  DEBUG_MSG("Can't load music");
+	}
 	audio->playMusicRandom();
 
 	try {
