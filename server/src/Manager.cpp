@@ -192,17 +192,17 @@ void		Manager::handlePaquet(PaquetObstacle *paquet UNUSED, const Addr &addr UNUS
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr)
+void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
 {
-  // std::string	name = paquet->getName(); //getName existe pas dans PaquetPlayerCoord
-  // Party		*party;
-  // PlayerCoord	*pc;
-  
-  // party = Tools::findParty(_parties, name);
-  // pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
-  // if (party && pc) {
-  //   party->setCoordPlayer(pc);
-  // }
+  uint8_t	id = paquet->getPlayerID();
+  Party		*party;
+  PlayerCoord	*pc;
+
+  party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+  pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
+  if (party && pc) {
+    party->setCoordPlayer(pc);
+  }
 }
 
 void		Manager::handlePaquet(PaquetPlayerShot *paquet UNUSED, const Addr &addr UNUSED)

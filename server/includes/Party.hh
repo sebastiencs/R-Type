@@ -44,6 +44,7 @@ public:
   bool			addPlayer(Player *);
   void			deletePlayer(const Addr &);
   bool			isPlayer(const Addr &) const;
+  bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);
 };
 

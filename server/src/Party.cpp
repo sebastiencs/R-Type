@@ -10,6 +10,7 @@
 
 #include "Party.hh"
 #include "IOEvent.hh"
+#include "Tools.hh"
 
 Party::Party(std::shared_ptr<Manager> manager)
   : _sem(new Semaphore()),
@@ -97,6 +98,11 @@ bool			Party::isPlayer(const Addr &addr) const
   auto p = std::find_if(_players.begin(), _players.end(), [&addr] (Player *p) { return (p->addr() == addr); });
 
   return ((p != _players.end()) ? (true) : (false));
+}
+
+bool			Party::isPlayer(uint8_t id) const
+{
+  return (Tools::findIn(_players, [id] (Player *p) { return (p->getID() == id); }) != nullptr);
 }
 
 void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
