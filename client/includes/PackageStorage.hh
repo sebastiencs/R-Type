@@ -11,7 +11,8 @@ class PackageStorage {
 private:
 
 	std::list<Paquet *> received;
-	std::list<Paquet *> toSend;
+	std::list<Paquet *> toSendUDP;
+	std::list<Paquet *> toSendTCP;
 	std::list<PaquetPlayerCoord *> players;
 	std::list<PaquetPlayerCoord *> enemies;
 	std::list<PaquetObstacle *> obstacles;
@@ -21,8 +22,8 @@ private:
 	std::list<PaquetResponse *> answers;
 	std::list<PaquetLaunch * > launch;
 
-  std::unique_ptr<ISemaphore>	_semOut;
-  std::unique_ptr<ISemaphore>	_semIn;
+	std::unique_ptr<ISemaphore>	_semOut;
+	std::unique_ptr<ISemaphore>	_semIn;
 
 	PackageStorage();
 
@@ -37,7 +38,8 @@ public:
 	const PaquetPlayerCoord *getEnemiesPackage() const;
 	const PaquetObstacle *getObstaclesPackage() const;
 	const PaquetPlayerShot *getShotsPackage() const;
-	const Paquet *getToSendPackage() const;
+	const Paquet *getToSendUDPPackage() const;
+	const Paquet *getToSendTCPPackage() const;
 	const PaquetListParties *getGameListPackage() const;
 	const PaquetListPlayers *getPlayerListPackage() const;
 	const PaquetResponse *getAnswersPackage() const;
@@ -48,7 +50,8 @@ public:
 	void storeEnemiesPackage(PaquetPlayerCoord *package);
 	void storeObstaclesPackage(PaquetObstacle *package);
 	void storeShotsPackage(PaquetPlayerShot *package);
-	void storeToSendPackage(Paquet *package);
+	void storeToSendUDPPackage(Paquet *package);
+	void storeToSendTCPPackage(Paquet *package);
 	void storeGameListPackage(PaquetListParties *package);
 	void storePlayerListPackage(PaquetListPlayers *package);
 	void storeAnswersPackage(PaquetResponse *package);
@@ -59,7 +62,8 @@ public:
 	void deleteEnemiesPackage();
 	void deleteObstaclesPackage();
 	void deleteShotsPackage();
-	void deleteToSendPackage();
+	void deleteToSendUDPPackage();
+	void deleteToSendTCPPackage();
 	void deleteGameListPackage();
 	void deletePlayerListPackage();
 	void deleteAnswersPackage();

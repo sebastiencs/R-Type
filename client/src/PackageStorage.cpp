@@ -43,9 +43,14 @@ const PaquetPlayerShot * PackageStorage::getShotsPackage() const
 	return shots.empty() ? nullptr : shots.front();
 }
 
-const Paquet * PackageStorage::getToSendPackage() const
+const Paquet * PackageStorage::getToSendUDPPackage() const
 {
-	return toSend.empty() ? nullptr : toSend.front();
+	return toSendUDP.empty() ? nullptr : toSendUDP.front();
+}
+
+const Paquet * PackageStorage::getToSendTCPPackage() const
+{
+	return toSendTCP.empty() ? nullptr : toSendTCP.front();
 }
 
 const PaquetListParties * PackageStorage::getGameListPackage() const
@@ -94,9 +99,15 @@ void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
 	shots.push_back(package);
 }
 
-void PackageStorage::storeToSendPackage(Paquet * package)
+void PackageStorage::storeToSendUDPPackage(Paquet * package)
 {
-	toSend.push_back(package);
+	toSendUDP.push_back(package);
+	_semOut->post();
+}
+
+void PackageStorage::storeToSendTCPPackage(Paquet * package)
+{
+	toSendTCP.push_back(package);
 	_semOut->post();
 }
 
@@ -151,10 +162,16 @@ void PackageStorage::deleteShotsPackage()
 	shots.erase(shots.begin());
 }
 
-void PackageStorage::deleteToSendPackage()
+void PackageStorage::deleteToSendUDPPackage()
 {
-	delete toSend.front();
-	toSend.erase(toSend.begin());
+	delete toSendUDP.front();
+	toSendUDP.erase(toSendUDP.begin());
+}
+
+void PackageStorage::deleteToSendTCPPackage()
+{
+	delete toSendTCP.front();
+	toSendTCP.erase(toSendTCP.begin());
 }
 
 void PackageStorage::deleteGameListPackage()
