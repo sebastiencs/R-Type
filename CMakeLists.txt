@@ -88,6 +88,7 @@ if (${UNIX})
     sfml-graphics
     sfml-window
     sfml-system
+    sfml-audio
     )
 
 elseif (WIN32)

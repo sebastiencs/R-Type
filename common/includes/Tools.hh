@@ -13,6 +13,8 @@
 
 # include <algorithm>
 # include <functional>
+# include <cstdlib>
+# include <ctime>
 
 class Addr;
 class Party;
@@ -53,7 +55,20 @@ namespace		Tools
   auto		findPlayer(const T &input, const Addr &addr) -> typename T::value_type
   {
     return (findIn(input, [&addr] (typename T::value_type p) { return (p->addr() == addr); }));
-  }
+  };
+
+  int		getRandom(int min, int max)
+  {
+    static int	done = 0;
+
+    if (!done) {
+      std::srand(std::time(0));
+    }
+
+    max += 1;
+    int num = std::rand() % (max - min) + min;
+    return (num);
+  };
 
 };
 
