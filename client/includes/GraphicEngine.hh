@@ -16,13 +16,6 @@
 # include <SFML/Graphics/Texture.hpp>
 # include <SFML/Graphics/Sprite.hpp>
 # include "IGraphicEngine.hh"
-// # include "ICallBack.hh"
-// # include "Drawable.hpp"
-// # include "Paquets.hh"
-// # include "Packager.hh"
-// # include "Button.hh"
-// # include "Timer.hh"
-// # include "TextField.hh"
 
 class Button;
 class Drawable;

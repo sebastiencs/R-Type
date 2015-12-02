@@ -113,9 +113,10 @@ void OnlineMenu::menu()
 {
 	std::function<void()> fptr;
 	Transformation transformation(350, 525);
+	transformation.setScale((float)0.8, (float)0.8);
 
 	onlineChoiseBox = new Box(Orientation::horizontal, transformation, "onlineBox");
-
+	onlineChoiseBox->setSpacing(25);
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
 	onlineChoiseBox->addDrawable(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
