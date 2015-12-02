@@ -18,6 +18,8 @@ public:
 
 	//Drawable
 	virtual void draw();
+	virtual void setTransformation(const Transformation& t);
+
 
 	//ICallback
 	virtual void onAction();

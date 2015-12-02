@@ -9,12 +9,12 @@ Box::Box(Orientation orientation, const Transformation& transformation, const st
 	spacing = 0;
 }
 
-void Box::addDrawable(Drawable* drawable, uint32_t pos)
+void Box::addDrawable(Drawable* drawable, int32_t pos)
 {
 	isUpdated = false;
 	std::list<Drawable* >::iterator it = elementsList.begin();
 	if (pos != -1) {
-		for (uint32_t tmp = 0; tmp < pos; ++tmp)
+		for (int32_t tmp = 0; tmp < pos; ++tmp)
 			++it;
 		elementsList.insert(it, drawable);
 	}
@@ -44,7 +44,7 @@ void Box::setOrientation(Orientation orientation)
 
 Drawable* Box::getElement(const std::string & id)
 {
-  return (Tools::findIn(elementsList, [&id] (Drawable *b) { return (b->getId() == id); }));
+	return (Tools::findIn(elementsList, [&id] (Drawable *b) { return (b->getId() == id); }));
 }
 
 const std::list<Drawable*> Box::getElements() const
@@ -54,10 +54,10 @@ const std::list<Drawable*> Box::getElements() const
 
 void Box::clearElements()
 {
-  auto clearFunc = [] (Drawable *elem) { delete elem; return (true); };
+	auto clearFunc = [] (Drawable *elem) { delete elem; return (true); };
 
-  elementsList.remove_if(clearFunc);
-  isUpdated = false;
+	elementsList.remove_if(clearFunc);
+	isUpdated = false;
 }
 
 void Box::draw()
@@ -97,6 +97,8 @@ const callback & Box::getCallback() const
 
 void Box::updateTransformation()
 {
+	if (isUpdated)
+		return;
 	Transformation lastItemT = _transformation;
 	bool first = true;
 	for (Drawable* d : elementsList) {

@@ -12,7 +12,7 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 
 	nbrCell = 0;
 	base = 0;
-	boxCells = new Box(Orientation::vertical, _transformation, _id);
+	boxCells = new Box(Orientation::vertical, _transformation, _id + "Box");
 
 	fptr = std::bind(&ScrollView::decrBase, this);
 	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
