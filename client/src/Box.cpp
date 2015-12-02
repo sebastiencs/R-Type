@@ -1,4 +1,5 @@
 #include "Box.hh"
+#include "Tools.hh"
 
 Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id)
 	: orientation(orientation), isUpdated(false)
@@ -24,11 +25,9 @@ void Box::addDrawable(Drawable* drawable, uint32_t pos)
 void Box::removeDrawable(Drawable * drawable)
 {
 	isUpdated = false;
-	for (Drawable* id : elementsList)
-		if (id == drawable) {
-			elementsList.remove(drawable);
-			break;
-		}
+
+	auto func = [&drawable] (Drawable *id) { return (id == drawable); };
+	elementsList.remove_if(func);
 }
 
 void Box::setSpacing(uint16_t spacing)
@@ -45,10 +44,7 @@ void Box::setOrientation(Orientation orientation)
 
 Drawable* Box::getElement(const std::string & id)
 {
-	for (Drawable *b : elementsList)
-		if (b->getId() == id)
-			return (b);
-	return nullptr;
+  return (Tools::findIn(elementsList, [&id] (Drawable *b) { return (b->getId() == id); }));
 }
 
 const std::list<Drawable*> Box::getElements() const
