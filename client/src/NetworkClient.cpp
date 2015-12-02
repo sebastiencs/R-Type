@@ -62,7 +62,7 @@ int NetworkClient::runWrite()
 		PackageStorage::getInstance().waitForPackage();
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
-			for (auto fd : fds)
+			for (auto &fd : fds)
 			{
 				if (fd.revents & POLLOUT)
 				{
@@ -108,7 +108,7 @@ int NetworkClient::runRead()
 	{
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
-			for (auto fd : fds)
+			for (auto &fd : fds)
 			{
 				if (fd.revents & POLLIN)
 				{
