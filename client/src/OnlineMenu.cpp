@@ -54,16 +54,18 @@ void OnlineMenu::draw()
 		createGameMenu->draw();
 }
 
-void OnlineMenu::onClick(uint32_t x, uint32_t y)
+bool OnlineMenu::onClick(uint32_t x, uint32_t y)
 {
-	if (onlineChoiseBox->isPressed(x, y))
-		onlineChoiseBox->onAction();
-
+	if (onlineChoiseBox->onAction(x, y))
+		return true;
 	else if (createGameMenu != nullptr) {
-		createGameMenu->onClick(x, y);
+		if (createGameMenu->onClick(x, y))
+			return true;
 	}
-	else if (scrollView->isPressed(x, y))
-		scrollView->onAction();
+	if (scrollView->onAction(x, y)) {
+		return true;
+	}
+	return false;
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)

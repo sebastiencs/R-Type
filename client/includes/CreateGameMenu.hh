@@ -19,7 +19,7 @@ public:
 	const TextField* getServerName() const;
 	
 	void draw();
-	void onClick(uint32_t x, uint32_t y);
+	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 	void getText(const char);
 

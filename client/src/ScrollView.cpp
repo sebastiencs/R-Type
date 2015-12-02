@@ -33,7 +33,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
+	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, this));
 	++nbrCell;
 }
 
@@ -66,6 +66,11 @@ const std::string & ScrollView::getSelectCell() const
 	return selectedCell;
 }
 
+void ScrollView::setSelectedCell(const std::string & id)
+{
+	selectedCell = id;
+}
+
 void ScrollView::draw()
 {
 	int i = 0;
@@ -81,8 +86,24 @@ void ScrollView::draw()
 		b->draw();
 }
 
-void ScrollView::onAction()
+bool ScrollView::onAction(uint32_t x, uint32_t y)
 {
+	int i = 0;
+
+	boxCells->updateTransformation();
+	for (Drawable *c : boxCells->getElements()) {
+		if (i >= base && i < (base + nbrDiplayCell))
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+				if (tmp->onAction(x, y)) {
+					return true;
+				}
+		++i;
+	}
+	for (Button *b : buttons)
+		if (b->onAction(x, y)) {
+			return true;
+		}
+	return false;
 }
 
 void ScrollView::onHover(uint32_t x, uint32_t y)
@@ -102,23 +123,12 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 
 bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 {
-	int i = 0;
-
-	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
-		if (i >= base && i < (base + nbrDiplayCell))
-			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
-				if (tmp->isPressed(x, y)) {
-					tmp->onAction();
-					if (Cell *p = dynamic_cast<Cell *>(c))
-						const_cast<ScrollView *>(this)->selectedCell = c->getId();
-				}
-		++i;
-	}
-	for (Button *b : buttons)
-		if (b->isPressed(x, y))
-			b->onAction();
-	return false;
+	uint32_t mx = _transformation.getX();
+	uint32_t my = _transformation.getY();
+	uint32_t mwidth = _transformation.getWidth();
+	uint32_t mheight = _transformation.getHeight();
+	return (x >= mx && x <= (mx + mwidth) &&
+		y >= my && y <= (my + mheight));
 }
 
 const callback & ScrollView::getCallback() const

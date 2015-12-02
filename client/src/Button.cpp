@@ -68,10 +68,14 @@ const Sprite& Button::getSprite() const
 	return (*_sprite);
 }
 
-void Button::onAction()
+bool Button::onAction(uint32_t x, uint32_t y)
 {
-	if (_fptr != nullptr)
+	if (_fptr != nullptr && isPressed(x, y))
+	{
 		_fptr();
+		return true;
+	}
+	return false;
 }
 
 void Button::onHover(uint32_t x, uint32_t y)

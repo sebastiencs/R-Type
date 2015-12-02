@@ -16,7 +16,7 @@ public:
 
 	// ICallback
 	bool isPressed(uint32_t x, uint32_t y) const;
-	void onAction();
+	bool onAction(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 	const callback& getCallback() const;
 

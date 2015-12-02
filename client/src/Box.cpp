@@ -68,8 +68,16 @@ void Box::draw()
 		d->draw();
 }
 
-void Box::onAction()
+bool Box::onAction(uint32_t x, uint32_t y)
 {
+	if (isPressed(x, y)) {
+		for (Drawable* d : elementsList)
+			if (ICallback* dc = dynamic_cast<ICallback*>(d))
+				if (dc->onAction(x, y)) {
+					return true;
+				}
+	}
+	return false;
 }
 
 void Box::onHover(uint32_t x, uint32_t y)
@@ -81,13 +89,12 @@ void Box::onHover(uint32_t x, uint32_t y)
 
 bool Box::isPressed(uint32_t x, uint32_t y) const
 {
-	for (Drawable* d : elementsList)
-		if (ICallback* dc = dynamic_cast<ICallback*>(d))
-			if (dc->isPressed(x, y)) {
-				dc->onAction();
-				return true;
-			}
-	return false;
+	uint32_t mx = _transformation.getX();
+	uint32_t my = _transformation.getY();
+	uint32_t mwidth = _transformation.getWidth();
+	uint32_t mheight = _transformation.getHeight();
+	return (x >= mx && x <= (mx + mwidth) &&
+		y >= my && y <= (my + mheight));
 }
 
 const callback & Box::getCallback() const

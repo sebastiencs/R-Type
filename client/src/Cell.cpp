@@ -2,13 +2,14 @@
 #include "TextField.hh"
 #include "Debug.hh"
 
-Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine)
+Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine, ScrollView *_superView)
 {
 	_id = id;
 	_transformation = transformation;
 
 	nameParty = name;
 	this->nbrPlayers = nbrPlayers;
+	superView = _superView;
 
 	std::string txt = '[' + name + ']' + "\t\t" + std::to_string(nbrPlayers) + "/4";
 
@@ -47,9 +48,14 @@ void Cell::draw()
 	textField->draw();
 }
 
-void Cell::onAction()
+bool Cell::onAction(uint32_t x, uint32_t y)
 {
-	DEBUG_MSG(textField->getId() + " is selected");
+	if (isPressed(x, y)) {
+		superView->setSelectedCell(_id);
+		DEBUG_MSG(textField->getId() + " is selected");
+		return true;
+	}
+	return false;
 }
 
 void Cell::onHover(uint32_t x, uint32_t y)
@@ -63,10 +69,16 @@ void Cell::onHover(uint32_t x, uint32_t y)
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const
 {
-	if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * textField->getText().size()) &&
-		y >= textField->getTransformation().getY() && y <= (textField->getTransformation().getY() + 32))
-		return true;
-	return false;
+	uint32_t mx = _transformation.getX();
+	uint32_t my = _transformation.getY();
+	uint32_t mwidth = _transformation.getWidth();
+	uint32_t mheight = _transformation.getHeight();
+	return (x >= mx && x <= (mx + mwidth) &&
+		y >= my && y <= (my + mheight));
+	//if (x >= textField->getTransformation().getX() && x <= (textField->getTransformation().getX() + 22 * textField->getText().size()) &&
+	//	y >= textField->getTransformation().getY() && y <= (textField->getTransformation().getY() + 32))
+	//	return true;
+	//return false;
 }
 
 const callback& Cell::getCallback() const
