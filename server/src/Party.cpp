@@ -11,18 +11,20 @@
 #include "Party.hh"
 #include "IOEvent.hh"
 
-Party::Party()
+Party::Party(std::shared_ptr<Manager> manager)
   : _sem(new Semaphore()),
     _thread(new Thread()),
+    _manager(manager),
     _name("Unknwon")
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
 }
 
-Party::Party(const std::string &name)
+Party::Party(std::shared_ptr<Manager> manager, const std::string &name)
   : _sem(new Semaphore()),
     _thread(new Thread()),
+    _manager(manager),
     _name(name)
 {
   DEBUG_MSG("Party created");
@@ -32,7 +34,6 @@ Party::Party(const std::string &name)
 Party::~Party()
 {
   DEBUG_MSG("Party deleted");
-//  _thread->close();
 }
 
 void			Party::run()

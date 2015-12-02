@@ -33,7 +33,9 @@ typedef struct	s_paquet_client
   Addr		addr;
 }		PaquetClient;
 
-class				Network : public INetwork
+class				Network
+  : public INetwork,
+    public std::enable_shared_from_this<Network>
 {
 private:
 
@@ -45,11 +47,11 @@ private:
   std::unique_ptr<IThread>	_thread;
   std::stack<PaquetClient>	_stackPaquet;
   std::list<ISocketTCP *>	_socketClient;
-  Manager			*_manager;
+  std::weak_ptr<Manager>	_manager;
   Buffer			_buffer;
 
 public:
-  Network(Manager *, const uint16_t);
+  Network(std::shared_ptr<Manager>, const uint16_t);
   virtual ~Network();
 
   virtual int	run();

@@ -12,7 +12,7 @@
 
 Server::Server(const uint16_t port)
   : _manager(new Manager()),
-    _network(new Network(_manager.get(), port)),
+    _network(new Network(_manager->getPtr(), port)),
     _signal(new Signal())
 {
   _signal->addSignal(CTRL_C, [this]() -> void { stop(); });

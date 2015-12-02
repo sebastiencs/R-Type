@@ -31,8 +31,8 @@
 class				Server
 {
 private:
-  std::unique_ptr<Manager>	_manager;
-  std::unique_ptr<INetwork>	_network;
+  std::shared_ptr<Manager>	_manager;
+  std::shared_ptr<INetwork>	_network;
   std::unique_ptr<ISignal>	_signal;
 
 public:

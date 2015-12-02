@@ -13,7 +13,7 @@
 #include "Tools.hh"
 
 Manager::Manager()
-  : _network(0)
+  : _network()
 {
   DEBUG_MSG("Manager created");
 }
@@ -23,10 +23,15 @@ Manager::~Manager()
   DEBUG_MSG("Manager deleted");
 }
 
+std::shared_ptr<Manager>	Manager::getPtr()
+{
+  return (shared_from_this());
+}
+
 void		Manager::write(const Paquet &paquet, const Addr &addr)
 {
-  if (_network) {
-    _network->write(paquet, addr);
+  if (_network.use_count()) {
+    (_network.lock())->write(paquet, addr);
   }
   else {
     DEBUG_MSG("Try to send on null network");
@@ -52,7 +57,7 @@ void		Manager::deletePlayer(const Addr &addr)
   }
 }
 
-void		Manager::setNetwork(Network *network)
+void		Manager::setNetwork(std::shared_ptr<Network> network)
 {
   _network = network;
 }
@@ -139,7 +144,7 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
   PaquetResponse	p;
 
   if (!party && player) {
-    Party	*party(new Party(name));
+    Party	*party(new Party(shared_from_this(), name));
 
     party->addPlayer(player);
     _pWaiting.remove(player);
