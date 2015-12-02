@@ -7,6 +7,7 @@
 #include <list>
 
 class OnlineMenu;
+class LobbyMenu;
 class Credits;
 class TextField;
 class IGraphicEngine;
@@ -38,6 +39,7 @@ private:
 	IGraphicEngine *engine;
 	NetworkClient *net;
 	OnlineMenu *onlineMenu;
+	LobbyMenu* lobbyMenu;
 	Credits *creditsMenu;
 
 	Box* mainChoiceBox;

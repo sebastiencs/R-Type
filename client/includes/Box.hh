@@ -29,6 +29,7 @@ public:
 
 	// IDrawable
 	virtual void draw();
+	virtual void setTransformation(const Transformation& t);
 
 	// ICallback
 	virtual bool onAction(uint32_t x, uint32_t y);

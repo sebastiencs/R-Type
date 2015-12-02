@@ -1,5 +1,6 @@
 #include "MainMenu.hh"
 #include "OnlineMenu.hh"
+#include "LobbyMenu.hh"
 
 MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 {
@@ -8,6 +9,7 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
 	creditsMenu = new Credits(engine);
+	lobbyMenu = new LobbyMenu(engine);
 
 	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
@@ -80,6 +82,8 @@ void MainMenu::draw()
 	rTypeLabel->draw();
 	if (currentPage == 1)
 		onlineMenu->draw();
+	if (currentPage == 3)
+		lobbyMenu->draw();
 	if (currentPage == 4)
 		creditsMenu->draw();
 }
@@ -104,6 +108,9 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 	if (currentPage == 1)
 		if (onlineMenu->onClick(x, y))
 			return;
+	if (currentPage == 3)
+		if (lobbyMenu->onClick(x, y))
+			return;
 }
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
@@ -121,6 +128,8 @@ void MainMenu::onHover(uint32_t x, uint32_t y)
 
 	if (currentPage == 1)
 		onlineMenu->onHover(x, y);
+	if (currentPage == 3)
+		lobbyMenu->onHover(x, y);
 }
 
 void MainMenu::setDisplayOnline()

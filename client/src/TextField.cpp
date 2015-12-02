@@ -36,6 +36,12 @@ void TextField::setTransformation(const Transformation & t)
 	 _transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }
 
+void TextField::setColor(const Color& c)
+{
+	color = c;
+	text->setColor(c);
+}
+
 const std::string & TextField::getText() const
 {
 	 return (text->getText());

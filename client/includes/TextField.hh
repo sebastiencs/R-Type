@@ -18,6 +18,7 @@ public:
 	//Drawable
 	virtual void draw();
 	virtual void setTransformation(const Transformation& t);
+	virtual void setColor(const Color& c);
 
 	Color& getColor();
 	const std::string& getText() const;
