@@ -34,8 +34,7 @@ typedef struct	s_paquet_client
 }		PaquetClient;
 
 class				Network
-  : public INetwork,
-    public std::enable_shared_from_this<Network>
+  : public INetwork
 {
 private:
 

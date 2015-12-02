@@ -27,7 +27,6 @@ Network::Network(std::shared_ptr<Manager> manager, const uint16_t port)
   _socketUDP->bind(port);
   _socketTCP->bind(port);
   _socketTCP->listen(0x200);
-  (_manager.lock())->setNetwork(shared_from_this());
 }
 
 Network::~Network()
@@ -39,6 +38,8 @@ Network::~Network()
 int	Network::run()
 {
   Pollfd	fds(2);
+
+  (_manager.lock())->setNetwork(shared_from_this());
 
   fds[0].fd = _socketTCP->socket();
   fds[0].events = POLLIN;

@@ -11,17 +11,12 @@
 #ifndef INETWORK_H_
 # define INETWORK_H_
 
-# include "Paquets.hh"
+# include <memory>
 
-# ifdef __unix__
-
-#  include <poll.h>
-
-# endif
-
+class	Paquet;
 class	Addr;
 
-class		INetwork
+class		INetwork :     public std::enable_shared_from_this<INetwork>
 {
 public:
   virtual ~INetwork() {};

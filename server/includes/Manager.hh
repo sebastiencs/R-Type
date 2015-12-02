@@ -22,7 +22,7 @@
 typedef std::list<Party *>	PartyList;
 typedef std::list<Player *>	PlayerList;
 
-class		Network;
+class		INetwork;
 
 class		Manager : public std::enable_shared_from_this<Manager>
 {
@@ -31,7 +31,7 @@ private:
   PartyList			_parties;
   PlayerList			_pWaiting;
   Semaphore			_sem;
-  std::weak_ptr<Network>	_network;
+  std::weak_ptr<INetwork>	_network;
 
 public:
   Manager();
@@ -41,7 +41,7 @@ public:
 
   void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
-  void		setNetwork(std::shared_ptr<Network>);
+  void		setNetwork(std::shared_ptr<INetwork>);
   uint8_t	getID() const;
 
   void		handlePaquet(PaquetFirst *, const Addr &);

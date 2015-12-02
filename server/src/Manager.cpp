@@ -56,7 +56,7 @@ void		Manager::deletePlayer(const Addr &addr)
   }
 }
 
-void		Manager::setNetwork(std::shared_ptr<Network> network)
+void		Manager::setNetwork(std::shared_ptr<INetwork> network)
 {
   _network = network;
 }
