@@ -21,6 +21,9 @@ public:
 	void setSpacing(uint16_t spacing);
 	void setOrientation(Orientation orientation);
 
+	Drawable* getElement(const std::string& id);
+	void clearElements();
+
 	// IDrawable
 	virtual void draw();
 

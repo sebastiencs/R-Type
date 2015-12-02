@@ -1,9 +1,10 @@
 #ifndef SCROLL_VIEW_HH_
 # define SCROLL_VIEW_HH_
 
-#include <list>
-#include "IGraphicEngine.hh"
-#include "Cell.hh"
+# include <list>
+# include "IGraphicEngine.hh"
+# include "Cell.hh"
+# include "Box.hh"
 
 class ScrollView : public Drawable, public ICallback
 {
@@ -32,6 +33,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
+	Box *boxCells;
 
 	std::list<Cell *> listCell;
 	std::list<Button* > buttons;

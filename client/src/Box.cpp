@@ -43,6 +43,23 @@ void Box::setOrientation(Orientation orientation)
 	this->orientation = orientation;
 }
 
+Drawable* Box::getElement(const std::string & id)
+{
+	for (Drawable *b : elementsList)
+		if (b->getId() == id)
+			return (b);
+	return (nullptr);
+}
+
+void Box::clearElements()
+{
+	for (Drawable *b : elementsList) {
+		elementsList.pop_front();
+		delete b;
+	}
+	elementsList.clear();
+}
+
 void Box::draw()
 {
 	if (!isUpdated)

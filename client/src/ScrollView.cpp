@@ -3,13 +3,18 @@
 
 ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine)
 {
+	callback fptr;
+	
 	this->nbrDiplayCell = nbrDiplayCell;
 	this->engine = engine;
-	_transformation = transformation;
+	this->_transformation = transformation;
+	this->_id = "ScrollView";
+
 	nbrCell = 0;
 	base = 0;
+	_transformation.setBounds(400, 400);
+	boxCells = new Box(Orientation::vertical, _transformation, _id);
 
-	callback fptr;
 	fptr = std::bind(&ScrollView::decrBase, this);
 	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
 
@@ -19,24 +24,20 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 
 ScrollView::~ScrollView()
 {
-	for (Cell *cell : listCell) {
-		delete(cell);
-	}
+	boxCells->clearElements();
 	for (Button *b : buttons)
 		delete(b);
 }
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	listCell.push_back(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
+	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
 	++nbrCell;
 }
 
 void ScrollView::emptyCell()
 {
-	for (Cell *c : listCell)
-		delete(c);
-	listCell.clear();
+	boxCells->clearElements();
 	nbrCell = 0;
 	base = 0;
 }
@@ -67,17 +68,9 @@ void ScrollView::draw()
 {
 	int i = 0;
 
+	boxCells->draw();
 	for (Button *b : buttons)
 		b->draw();
-	for (Cell *c : listCell) {
-		if (i >= base && i < (base + nbrDiplayCell)) {
-			Transformation t;
-			t.setPosition(_transformation.getX(), (_transformation.getY() + 50) + (i - base) * 32);
-			c->setTransformation(t);
-			c->draw();
-		}
-		++i;
-	}
 }
 
 void ScrollView::onAction()
