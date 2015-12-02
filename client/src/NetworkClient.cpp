@@ -164,13 +164,6 @@ int NetworkClient::reconnect()
 	_socketTCP.reset(new SocketTCP(SocketTCP::CLIENT));
 	_socketUDP.reset(new SocketUDP(SocketUDP::CLIENT));
 
-	PaquetFirst *paquet = new PaquetFirst();
-	paquet->setLevel(5);
-	paquet->setName("Alex");
-	paquet->setVersion(1);
-	paquet->createPaquet();
-	PackageStorage::getInstance().storeToSendTCPPackage(paquet);
-
 	if ((_socketTCP->connect(_ip, _port)) == -1)
 	{
 		_isConnect = false;
