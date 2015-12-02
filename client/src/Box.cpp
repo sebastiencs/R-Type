@@ -57,6 +57,7 @@ void Box::clearElements()
   auto clearFunc = [] (Drawable *elem) { delete elem; return (true); };
 
   elementsList.remove_if(clearFunc);
+  isUpdated = false;
 }
 
 void Box::draw()

@@ -8,7 +8,7 @@ TextField::TextField(const std::string & _text, const Transformation & t, uint16
 	size = _size;
 	font = _font;
 	engine = _engine;
-	_transformation.setBounds(_transformation.getX() + _size * _text.size(), _transformation.getY() + _size + 10);
+	_transformation.setBounds(_size * _text.size(), _size + 10);
 }
 
 TextField::~TextField()
@@ -33,5 +33,5 @@ const std::string & TextField::getText() const
 void TextField::setText(const std::string & txt)
 {
 	text = txt;
-	_transformation.setBounds(_transformation.getX() + size * text.size(), _transformation.getY() + size + 10);
+	_transformation.setBounds(size * text.size(), size + 10);
 }

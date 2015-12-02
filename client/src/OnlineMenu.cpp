@@ -55,11 +55,11 @@ void OnlineMenu::draw()
 
 void OnlineMenu::onClick(uint32_t x, uint32_t y)
 {
+	if (onlineChoiseBox->isPressed(x, y))
+		onlineChoiseBox->onAction();
 	if (createGameMenu != nullptr) {
 		createGameMenu->onClick(x, y);
 	}
-	if (onlineChoiseBox->isPressed(x, y))
-		onlineChoiseBox->onAction();
 	if (scrollView->isPressed(x, y))
 		scrollView->onAction();
 }

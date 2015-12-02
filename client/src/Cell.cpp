@@ -8,16 +8,10 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 	nameParty = name;
 	this->nbrPlayers = nbrPlayers;
 
+	std::string txt = '[' + name + ']' + "   " + std::to_string(nbrPlayers) + "/4";
 
-	std::string txt = "[";
-	txt += name;
-	txt += "]";
-	txt += "   ";
-	txt += std::to_string(nbrPlayers);
-	txt += "/4";
-
-	_transformation.setBounds(_transformation.getX() + 22 * txt.size(), _transformation.getY() + 32);
 	textField = new TextField(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
+	_transformation.setBounds(22 * txt.size(), 22 + 10);
 }
 
 Cell::~Cell()

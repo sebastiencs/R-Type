@@ -31,7 +31,8 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	boxCells->addDrawable(new Cell(std::to_string(nbrCell), _transformation, name, nbr, engine));
+		boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine));
+//	boxCells->addDrawable(new TextField(name, Transformation(_transformation.getX(), _transformation.getY()), 22, "Fipps.otf", Color::Red, std::to_string(nbrCell), engine));
 	++nbrCell;
 }
 
