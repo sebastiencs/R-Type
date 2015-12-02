@@ -25,7 +25,15 @@ namespace		Tools
     auto found = std::find_if(input.begin(), input.end(), func);
 
     return ((found != input.end()) ? (*found) : (nullptr));
-  }
+  };
+
+  template<class T, class U>
+  auto		findIt(const T &input, const U &func) -> decltype(input.begin())
+  {
+    auto found = std::find_if(input.begin(), input.end(), func);
+
+    return (found);
+  };
 
   template<class U>
   auto		findIn(const std::string &input, const U &func) -> bool

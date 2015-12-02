@@ -16,14 +16,16 @@
 # ifdef __unix__
 
 # include <poll.h>
-typedef std::vector<struct pollfd>	Pollfd;
+typedef struct pollfd	_pollfd;
 
 # elif defined(_WIN32)
 
 # include "SocketsWin.hh"
-typedef std::vector<WSAPOLLFD>		Pollfd;
+typedef WSAPOLLFD	_pollfd;
 
 # endif
+
+typedef std::vector<_pollfd>	Pollfd;
 
 class		IOEvent
 {

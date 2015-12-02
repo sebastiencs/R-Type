@@ -12,6 +12,7 @@
 #include "Selector.hh"
 #include "Manager.hh"
 #include "IOEvent.hh"
+#include "Tools.hh"
 
 Network::Network(Manager *manager, const uint16_t port)
   : _sem(new Semaphore),
@@ -104,35 +105,26 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
 
 inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 {
-  for (auto &fd_client : _socketClient) {
 
-    if (fd_client->socket() == socket) {
+  auto sock = Tools::findIn(_socketClient, [&socket] (ISocketTCP *sock) { return (sock->socket() == socket); });
 
-      ssize_t	size;
-      size = fd_client->read(_buffer);
+  ssize_t size = sock->read(_buffer);
 
-      std::cout << "SIZE: " << (int)size << std::endl;
+  if (size > 0) {
+    DEBUG_MSG(_buffer);
+    _selector->execFunc(_buffer, sock->getAddr());
+  }
+  else {
+    std::cerr << "Client disconnect\n";
 
-      if (size > 0) {
-	_selector->execFunc(_buffer, fd_client->getAddr());
-      }
-      else {
+    _manager->deletePlayer(socket);
 
-	std::cerr << "Client disconnect\n";
-
-	socket_t fdc = socket;
-
-	_manager->deletePlayer(fdc);
-	for (auto it = fds.cbegin(); it != fds.cend(); ++it) {
-	  if ((*it).fd == fdc) {
-	    fds.erase(it);
-	    break ;
-	  }
-	}
-	_socketClient.remove(fd_client);
-	break ;
-      }
+    auto it = Tools::findIt(fds, [&socket] (const _pollfd &fd) { return (fd.fd == socket); });
+    if (it != fds.end()) {
+      fds.erase(it);
     }
+
+    _socketClient.remove(sock);
   }
   return (true);
 }
