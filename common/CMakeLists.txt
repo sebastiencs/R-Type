@@ -12,6 +12,7 @@ file (GLOB
   src/Buffer.cpp
   src/Player.cpp
   src/IOEvent.cpp
+  src/PaquetTCP.cpp
   )
 
 file (GLOB
@@ -23,6 +24,8 @@ file (GLOB
   includes/Player.hh
   includes/Timer.hh
   includes/Addr.hh
+  includes/PaquetTCP.hh
+  includes/Disconnected.hh
   )
 
 file(GLOB
