@@ -1,6 +1,4 @@
 #include "OnlineMenu.hh"
-#include "IOEvent.hh"
-#include "Cell.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
@@ -8,6 +6,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
+	lobby = new LobbyMenu(engine);
 	createGameMenu = nullptr;
 	menu();
 }
@@ -24,18 +23,15 @@ void OnlineMenu::createRequestPartiesPaquet()
 	PaquetRequestParties	*paquet = new PaquetRequestParties();
 	paquet->createPaquet();
 	PS.storeToSendTCPPackage(paquet);
+	DEBUG_MSG("Request send");
+}
 
-	scrollView->emptyCell();
-	// TODO: Revoir cette boucle. C'est moche
-	//       Faudrait uniquement envoyer le paquet dans cette fonction
-	//       et gerer la reception du paquet de reponse autre part
+void OnlineMenu::draw()
+{
+	PackageStorage &PS = PackageStorage::getInstance();
 	const Paquet	*tmp;
-	int loop = 0;
-	do {
-		tmp = PS.getGameListPackage();
-	} while (!tmp && !IOEvent::wait(150) && ++loop < 10);
 
-	if (tmp) {
+	if (tmp = PS.getGameListPackage()) {
 		PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 
 		scrollView->emptyCell();
@@ -43,15 +39,13 @@ void OnlineMenu::createRequestPartiesPaquet()
 			scrollView->createCell(std::get<0>(party), std::get<1>(party));
 		}
 		PS.deleteGameListPackage();
+		DEBUG_MSG("Request received");
 	}
-}
-
-void OnlineMenu::draw()
-{
 	onlineChoiseBox->draw();
 	scrollView->draw();
 	if (createGameMenu != nullptr)
 		createGameMenu->draw();
+
 }
 
 bool OnlineMenu::onClick(uint32_t x, uint32_t y)
