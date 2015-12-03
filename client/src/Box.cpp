@@ -61,8 +61,28 @@ void Box::clearElements()
 	isUpdated = false;
 }
 
+void Box::setElementVisibility(const std::string & id, bool v)
+{
+	Drawable* d = Tools::findIn(elementsList, [&id](Drawable *b) { return (b->getId() == id); });
+	if (d) {
+		d->setVisible(v);
+		isUpdated = false;
+	}
+}
+
+void Box::setElementVisibility(Drawable * toFind, bool v)
+{
+	Drawable* d = Tools::findIn(elementsList, [toFind](Drawable *b) { return (b == toFind); });
+	if (d) {
+		d->setVisible(v);
+		isUpdated = false;
+	}
+}
+
 void Box::draw()
 {
+	if (!_visible)
+		return;
 	if (!isUpdated)
 		updateTransformation();
 	for (IDrawable* d : elementsList)
@@ -102,7 +122,7 @@ bool Box::isPressed(uint32_t x, uint32_t y) const
 	uint32_t mwidth = _transformation.getWidth();
 	uint32_t mheight = _transformation.getHeight();
 	return (x >= mx && x <= (mx + mwidth) &&
-		y >= my && y <= (my + mheight));
+		y >= my && y <= (my + mheight) && _visible);
 }
 
 const callback & Box::getCallback() const
@@ -119,22 +139,24 @@ void Box::updateTransformation()
 	uint16_t boundHeight = 0;
 	bool first = true;
 	for (Drawable* d : elementsList) {
-		if (first) {
-			Transformation newT(d->getTransformation());
-			newT.setPosition(_transformation.getX(), _transformation.getY());
-			d->setTransformation(newT);
-			first = false;
+		if (d->isVisible()) {
+			if (first) {
+				Transformation newT(d->getTransformation());
+				newT.setPosition(_transformation.getX(), _transformation.getY());
+				d->setTransformation(newT);
+				first = false;
+			}
+			else {
+				uint16_t offsetX = (orientation == Orientation::horizontal ? lastItemT.getWidth() + spacing : 0);
+				uint16_t offsetY = (orientation == Orientation::vertical ? lastItemT.getHeight() + spacing : 0);
+				Transformation newT(d->getTransformation());
+				newT.setPosition(lastItemT.getX() + offsetX, lastItemT.getY() + offsetY);
+				d->setTransformation(newT);
+			}
+			boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : std::max(boundWidth, d->getTransformation().getWidth()));
+			boundHeight = (orientation == Orientation::horizontal ? std::max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
+			lastItemT = d->getTransformation();
 		}
-		else {
-			uint16_t offsetX = (orientation == Orientation::horizontal ? lastItemT.getWidth() + spacing : 0);
-			uint16_t offsetY = (orientation == Orientation::vertical ? lastItemT.getHeight() + spacing : 0);
-			Transformation newT(d->getTransformation());
-			newT.setPosition(lastItemT.getX() + offsetX, lastItemT.getY() + offsetY);
-			d->setTransformation(newT);
-		}
-		boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : std::max(boundWidth, d->getTransformation().getWidth()));
-		boundHeight = (orientation == Orientation::horizontal ? std::max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
-		lastItemT = d->getTransformation();
 	}
 	if (orientation == Orientation::horizontal) {
 		_transformation.setBounds(boundWidth - spacing, boundHeight);

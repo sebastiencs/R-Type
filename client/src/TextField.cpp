@@ -6,6 +6,8 @@ TextField::TextField(const std::string & _text, const Transformation & t, uint16
 {
 	_id = id;
 	_transformation = t;
+	_visible = true;
+
 	size = _size;
 	font = _font;
 	engine = _engine;
@@ -26,7 +28,8 @@ Color & TextField::getColor()
 
 void TextField::draw()
 {
-	engine->drawText(*text);
+	if (_visible)
+		engine->drawText(*text);
 }
 
 void TextField::setTransformation(const Transformation & t)

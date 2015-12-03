@@ -39,4 +39,4 @@ private:
 	std::string _textureName;
 };
 
-#endif /* BUTTON_H_ */
+#endif /* !BUTTON_H_ */

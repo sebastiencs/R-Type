@@ -6,6 +6,7 @@ Button::Button(const std::string & text, const std::string& img, const Transform
 {
 	_transformation = t;
 	_id = id;
+	_visible = true;
 	_sprite = new Sprite(img, t, engine, color);
 	_transformation.setBounds(_sprite->getTransformation().getWidth(), _sprite->getTransformation().getHeight());
 }
@@ -23,7 +24,7 @@ bool Button::isPressed(uint32_t x, uint32_t y) const
 	uint32_t mwidth = _transformation.getWidth();
 	uint32_t mheight = _transformation.getHeight();
 	return (x >= mx && x <= (mx + mwidth) &&
-		y >= my && y <= (my + mheight));
+		y >= my && y <= (my + mheight) && _visible);
 }
 
 const std::string& Button::getName() const
@@ -56,8 +57,10 @@ void Button::setTransformation(const Transformation & t)
 
 void Button::draw()
 {
-	if (_engine)
-		_engine->drawSprite(*_sprite);
+	if (_engine) {
+		if (_visible)
+			_engine->drawSprite(*_sprite);
+	}
 	else
 		DEBUG_MSG("No instance of GraphicEngine");
 }

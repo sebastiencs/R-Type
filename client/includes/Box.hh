@@ -24,6 +24,8 @@ public:
 	Drawable* getElement(const std::string& id);
 	const std::list<Drawable *> getElements() const;
 	void clearElements();
+	void setElementVisibility(const std::string& id, bool);
+	void setElementVisibility(Drawable*, bool);
 
 	void updateTransformation();
 

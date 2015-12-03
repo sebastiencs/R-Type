@@ -7,6 +7,8 @@ Text::Text(const std::string & text, const std::string & font, uint16_t size, co
 	if (!engine)
 		throw std::runtime_error("GraphicEngine is not set");
 	_transformation = t;
+	_visible = true;
+
 	this->font = font;
 	this->text = sf::Text(text, engine->loadFont(font));
 	this->text.setCharacterSize(size);
@@ -16,7 +18,8 @@ Text::Text(const std::string & text, const std::string & font, uint16_t size, co
 
 void Text::draw()
 {
-	engine->drawText(text);
+	if (_visible)
+		engine->drawText(text);
 }
 
 void Text::setTransformation(const Transformation & t)

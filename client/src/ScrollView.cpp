@@ -11,6 +11,7 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 	this->engine = engine;
 	this->_transformation = transformation;
 	this->_id = "ScrollView";
+	this->_visible = true;
 
 	nbrCell = 0;
 	base = 0;
@@ -128,7 +129,7 @@ bool ScrollView::isPressed(uint32_t x, uint32_t y) const
 	uint32_t mwidth = _transformation.getWidth();
 	uint32_t mheight = _transformation.getHeight();
 	return (x >= mx && x <= (mx + mwidth) &&
-		y >= my && y <= (my + mheight));
+		y >= my && y <= (my + mheight) && _visible);
 }
 
 const callback & ScrollView::getCallback() const

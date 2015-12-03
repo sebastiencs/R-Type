@@ -4,13 +4,15 @@ Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine
 {
 	_transformation = t;
 	_id = img;
+	_visible = true;
+
 	this->img = img;
 	this->engine = dynamic_cast<GraphicEngine* >(engine);
 	if (!engine)
 		throw std::runtime_error("GraphicEngine not set");
 	sprite = sf::Sprite(this->engine->loadTexture(img));
 	transform(_transformation, color);
-	_transformation.setBounds(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
+	_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
 }
 
 void Sprite::setTransformation(const Transformation & t)
@@ -21,7 +23,8 @@ void Sprite::setTransformation(const Transformation & t)
 
 void Sprite::draw()
 {
-	engine->drawSprite(sprite);
+	if (_visible)
+		engine->drawSprite(sprite);
 }
 
 void Sprite::setColor(const Color & newColor)
@@ -41,7 +44,7 @@ void Sprite::transform(const Transformation & t, const Color & color)
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 
-	_transformation.setBounds(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);
+	_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
 }
 
 const std::string & Sprite::getImage() const
