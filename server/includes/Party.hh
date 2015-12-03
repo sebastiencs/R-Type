@@ -44,8 +44,9 @@ public:
   const listPlayers	&getPlayers() const;
   uint8_t		getNb() const;
   const std::string	&getName() const;
-  bool			addPlayer(Player *);
+  bool			addPlayer(Player_SharedPtr);
   void			deletePlayer(const Addr &);
+  Player_SharedPtr	playerLeave(uint8_t id);
   bool			isPlayer(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);

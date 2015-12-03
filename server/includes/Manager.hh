@@ -21,7 +21,7 @@
 # include "PlayerCoord.hh"
 
 typedef std::list<Party *>	PartyList;
-typedef std::list<Player *>	PlayerList;
+typedef std::list<Player_SharedPtr>	PlayerList;
 
 class	INetwork;
 

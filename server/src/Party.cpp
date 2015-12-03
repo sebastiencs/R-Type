@@ -67,10 +67,10 @@ const std::string	&Party::getName() const
   return (_name);
 }
 
-bool			Party::addPlayer(Player *player)
+bool			Party::addPlayer(Player_SharedPtr player)
 {
   if (_players.size() < 4) {
-    _players.push_back(std::shared_ptr<Player>(player));
+    _players.push_back(player);
     return (true);
   }
   else {
@@ -91,6 +91,19 @@ void			Party::deletePlayer(const Addr &addr)
     DEBUG_MSG("No more players.. Party killed");
     _thread->close();
   }
+}
+
+Player_SharedPtr	Party::playerLeave(uint8_t id)
+{
+  auto p = Tools::findIn(_players, [id] (std::shared_ptr<Player> const &p) { return (p->getID() == id); });
+
+  if (p != nullptr) {
+    Player_SharedPtr player = p;
+    _players.remove(p);
+    DEBUG_MSG("Player deleted from party");
+    return (player);
+  }
+  return (nullptr);
 }
 
 bool			Party::isPlayer(const Addr &addr) const

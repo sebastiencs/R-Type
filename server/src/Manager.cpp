@@ -42,7 +42,7 @@ void		Manager::deletePlayer(const Addr &addr)
 {
   for (PlayerList::iterator it = _pWaiting.begin(); it != _pWaiting.end(); ++it) {
     if ((*it)->addr() == addr) {
-      delete *it;
+      // delete *it;
       _pWaiting.erase(it);
       return ;
     }
@@ -83,7 +83,8 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 
     uint8_t id = getID();
 
-    _pWaiting.push_back(new Player(paquet->getName(), id, paquet->getLevel(), addr));
+    _pWaiting.push_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr));
+    // _pWaiting.push_back(new Player(paquet->getName(), id, paquet->getLevel(), addr));
     p.setReturn(2);
     p.setData(id);
   }
@@ -99,7 +100,7 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
   Party		*party;
-  Player	*player;
+  Player_SharedPtr player;
 
   DEBUG_MSG(*paquet);
 
@@ -135,7 +136,7 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
-  Player	*player;
+  Player_SharedPtr player;
   Party		*party;
 
   party = Tools::findParty(_parties, name);
@@ -174,6 +175,16 @@ void		Manager::handlePaquet(PaquetLaunch *paquet UNUSED, const Addr &addr UNUSED
 
 void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
 {
+  uint8_t	id = paquet->getID();
+  Party		*party;
+
+  party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+
+  Player_SharedPtr p = party->playerLeave(id);
+
+  if (p) {
+    _pWaiting.emplace_back(p);
+  }
   // DEBUG_MSG(paquet);
 }
 
