@@ -13,7 +13,7 @@
 #include "Tools.hh"
 
 Manager::Manager()
-  : _network()
+ : _network()
 {
   DEBUG_MSG("Manager created");
 }
@@ -57,9 +57,9 @@ void		Manager::deletePlayer(const Addr &addr)
   }
 }
 
-void		Manager::setNetwork(const INetwork_SharedPtr &network)
+void		Manager::setNetwork(INetwork_SharedPtr &&network)
 {
-  _network = network;
+  _network = std::move(network);
 }
 
 uint8_t		Manager::getID() const

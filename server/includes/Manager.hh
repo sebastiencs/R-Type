@@ -49,7 +49,7 @@ public:
 
   void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
-  void		setNetwork(const INetwork_SharedPtr &);
+  void		setNetwork(INetwork_SharedPtr &&);
   uint8_t	getID() const;
 
   void		handlePaquet(PaquetFirst *, const Addr &);
