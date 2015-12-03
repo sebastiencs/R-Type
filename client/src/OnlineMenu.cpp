@@ -79,9 +79,9 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 
 void OnlineMenu::joinButton()
 {
-	for (Cell *c : scrollView->getListCell())
+	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell())
-			Packager::createJoinPartyPackage(c->getNameParty());
+			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
 }
 
 void OnlineMenu::backButton()

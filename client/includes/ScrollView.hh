@@ -25,7 +25,7 @@ public:
 	void incrBase();
 	void decrBase();
 
-	const std::list<Cell *>& getListCell() const;
+	const std::list<Drawable*>& getListCell() const;
 	const std::string& getSelectCell() const;
 
 	void setSelectedCell(const std::string& id);
@@ -43,7 +43,6 @@ private:
 	IGraphicEngine *engine;
 	Box *boxCells;
 
-	std::list<Cell *> listCell;
 	std::list<Button* > buttons;
 
 	std::string selectedCell;
