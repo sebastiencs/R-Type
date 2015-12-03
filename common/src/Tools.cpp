@@ -16,7 +16,7 @@ int		Tools::random(int min, int max)
   static int	done = 0;
 
   if (!done) {
-    std::srand(std::time(0));
+    std::srand(static_cast<unsigned int>(std::time(0)));
   }
 
   max += 1;
