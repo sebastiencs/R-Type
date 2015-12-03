@@ -7,6 +7,8 @@ Box::Box(Orientation orientation, const Transformation& transformation, const st
 {
 	_transformation = transformation;
 	_id = id;
+	_visible = true;
+
 	spacing = 0;
 }
 
