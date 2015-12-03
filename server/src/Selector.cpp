@@ -11,7 +11,7 @@
 #include "Selector.hh"
 #include "Manager.hh"
 
-Selector::Selector(std::shared_ptr<Manager> manager) {
+Selector::Selector(const Manager_SharedPtr &manager) {
   _manager = manager;
 
   _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf, const Addr &addr) {

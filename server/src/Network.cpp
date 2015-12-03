@@ -14,7 +14,7 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 
-Network::Network(std::shared_ptr<Manager> manager, const uint16_t port)
+Network::Network(const Manager_SharedPtr &manager, const uint16_t port)
   : _sem(new Semaphore),
     _socketUDP(new SocketUDP(SocketUDP::SERVER)),
     _socketTCP(new SocketTCP(SocketTCP::SERVER)),

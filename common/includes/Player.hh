@@ -49,4 +49,9 @@ public:
   virtual const Addr		&addr() const;
 };
 
+#include <memory>
+typedef std::shared_ptr<Player>	Player_SharedPtr;
+typedef std::unique_ptr<Player>	Player_UniquePtr;
+typedef std::weak_ptr<Player>	Player_WeakPtr;
+
 #endif /* !PLAYER_H_ */

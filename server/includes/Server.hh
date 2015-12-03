@@ -31,9 +31,9 @@
 class				Server
 {
 private:
-  std::shared_ptr<Manager>	_manager;
-  std::shared_ptr<INetwork>	_network;
-  std::unique_ptr<ISignal>	_signal;
+  Manager_SharedPtr	_manager;
+  INetwork_SharedPtr	_network;
+  ISignal_UniquePtr	_signal;
 
 public:
   Server(const uint16_t);

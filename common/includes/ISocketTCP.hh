@@ -53,4 +53,9 @@ public:
   virtual const Addr	getAddr() const = 0;
 };
 
+#include <memory>
+typedef std::shared_ptr<ISocketTCP>	ISocketTCP_SharedPtr;
+typedef std::unique_ptr<ISocketTCP>	ISocketTCP_UniquePtr;
+typedef std::weak_ptr<ISocketTCP>	ISocketTCP_WeakPtr;
+
 #endif /* !ISOCKETTCP_H_ */

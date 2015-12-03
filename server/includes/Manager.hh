@@ -23,26 +23,33 @@
 typedef std::list<Party *>	PartyList;
 typedef std::list<Player *>	PlayerList;
 
-class		INetwork;
+class	INetwork;
+
+typedef std::shared_ptr<INetwork>	INetwork_SharedPtr;
+typedef std::weak_ptr<INetwork>		INetwork_WeakPtr;
+
+typedef std::shared_ptr<Manager>	Manager_SharedPtr;
+typedef std::unique_ptr<Manager>	Manager_UniquePtr;
+typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
 class		Manager : public std::enable_shared_from_this<Manager>
 {
 private:
 
-  PartyList			_parties;
-  PlayerList			_pWaiting;
-  Semaphore			_sem;
-  std::weak_ptr<INetwork>	_network;
+  PartyList		_parties;
+  PlayerList		_pWaiting;
+  Semaphore		_sem;
+  INetwork_WeakPtr	_network;
 
 public:
   Manager();
   virtual ~Manager();
 
-  std::shared_ptr<Manager>	getPtr();
+  Manager_SharedPtr	getPtr();
 
   void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
-  void		setNetwork(std::shared_ptr<INetwork>);
+  void		setNetwork(const INetwork_SharedPtr &);
   uint8_t	getID() const;
 
   void		handlePaquet(PaquetFirst *, const Addr &);

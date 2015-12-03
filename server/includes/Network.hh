@@ -27,6 +27,11 @@
 class	Selector;
 class	Manager;
 
+typedef std::unique_ptr<Selector>	Selector_UniquePtr;
+
+typedef std::weak_ptr<Manager>		Manager_WeakPtr;
+typedef std::shared_ptr<Manager>	Manager_SharedPtr;
+
 typedef struct	s_paquet_client
 {
   Paquet	paquet;
@@ -38,19 +43,19 @@ class				Network
 {
 private:
 
-  std::unique_ptr<Semaphore>	_sem;
-  std::unique_ptr<ISocketUDP>	_socketUDP;
-  std::unique_ptr<ISocketTCP>	_socketTCP;
-  std::unique_ptr<Selector>	_selector;
+  ISemaphore_UniquePtr		_sem;
+  ISocketUDP_UniquePtr		_socketUDP;
+  ISocketTCP_UniquePtr		_socketTCP;
+  Selector_UniquePtr		_selector;
   bool				_running;
-  std::unique_ptr<IThread>	_thread;
+  IThread_UniquePtr		_thread;
   std::stack<PaquetClient>	_stackPaquet;
   std::list<ISocketTCP *>	_socketClient;
-  std::weak_ptr<Manager>	_manager;
+  Manager_WeakPtr		_manager;
   Buffer			_buffer;
 
 public:
-  Network(std::shared_ptr<Manager>, const uint16_t);
+  Network(const Manager_SharedPtr &, const uint16_t);
   virtual ~Network();
 
   virtual int	run();

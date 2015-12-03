@@ -12,7 +12,7 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 
-Party::Party(std::shared_ptr<Manager> manager)
+Party::Party(const Manager_SharedPtr &manager)
   : _sem(new Semaphore()),
     _thread(new Thread()),
     _manager(manager),
@@ -22,7 +22,7 @@ Party::Party(std::shared_ptr<Manager> manager)
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
 }
 
-Party::Party(std::shared_ptr<Manager> manager, const std::string &name)
+Party::Party(const Manager_SharedPtr &manager, const std::string &name)
   : _sem(new Semaphore()),
     _thread(new Thread()),
     _manager(manager),

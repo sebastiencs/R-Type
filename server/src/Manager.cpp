@@ -23,7 +23,7 @@ Manager::~Manager()
   DEBUG_MSG("Manager deleted");
 }
 
-std::shared_ptr<Manager>	Manager::getPtr()
+Manager_SharedPtr	Manager::getPtr()
 {
   return (shared_from_this());
 }
@@ -57,7 +57,7 @@ void		Manager::deletePlayer(const Addr &addr)
   }
 }
 
-void		Manager::setNetwork(std::shared_ptr<INetwork> network)
+void		Manager::setNetwork(const INetwork_SharedPtr &network)
 {
   _network = network;
 }

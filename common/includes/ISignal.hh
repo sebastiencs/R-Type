@@ -26,4 +26,9 @@ public:
   virtual bool	callHandler(int) = 0;
 };
 
+#include <memory>
+typedef std::shared_ptr<ISignal>	ISignal_SharedPtr;
+typedef std::unique_ptr<ISignal>	ISignal_UniquePtr;
+typedef std::weak_ptr<ISignal>		ISignal_WeakPtr;
+
 #endif /* !ISIGNAL_H_ */

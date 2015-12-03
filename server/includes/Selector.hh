@@ -18,14 +18,18 @@
 
 class		Manager;
 
+typedef std::shared_ptr<Manager>	Manager_SharedPtr;
+typedef std::weak_ptr<Manager>		Manager_WeakPtr;
+
 typedef std::map<uint8_t, std::function<void (const Buffer &, const Addr &)>>	listFunc;
 
-class		Selector
+
+class			Selector
 {
 private:
-  std::weak_ptr<Manager>	_manager;
+  Manager_WeakPtr	_manager;
 
-  listFunc	_selectorFunc;
+  listFunc		_selectorFunc;
 
   template<class Arg>
   auto resolver(void (Manager::*func)(Arg, const Addr &)) -> decltype(func)
@@ -33,7 +37,7 @@ private:
 
 public:
 
-  Selector(std::shared_ptr<Manager> manager);
+  Selector(const Manager_SharedPtr &manager);
 
   virtual ~Selector();
 

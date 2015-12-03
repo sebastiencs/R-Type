@@ -26,4 +26,9 @@ public:
   virtual bool	join() = 0;
 };
 
+#include <memory>
+typedef std::shared_ptr<IThread>	IThread_SharedPtr;
+typedef std::unique_ptr<IThread>	IThread_UniquePtr;
+typedef std::weak_ptr<IThread>		IThread_WeakPtr;
+
 #endif /* !ITHREAD_H_ */

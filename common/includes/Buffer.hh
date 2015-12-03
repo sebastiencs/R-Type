@@ -96,4 +96,9 @@ public:
 
 std::ostream	&operator<<(std::ostream &, const Buffer &);
 
+#include <memory>
+typedef std::shared_ptr<Buffer>	Buffer_SharedPtr;
+typedef std::unique_ptr<Buffer>	Buffer_UniquePtr;
+typedef std::weak_ptr<Buffer>	Buffer_WeakPtr;
+
 #endif /* !BUFFER_H_ */

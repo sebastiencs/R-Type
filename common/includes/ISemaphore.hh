@@ -21,4 +21,9 @@ public:
   virtual bool	wait() = 0;
 };
 
+#include <memory>
+typedef std::shared_ptr<ISemaphore>	ISemaphore_SharedPtr;
+typedef std::unique_ptr<ISemaphore>	ISemaphore_UniquePtr;
+typedef std::weak_ptr<ISemaphore>	ISemaphore_WeakPtr;
+
 #endif /* !ISEMAPHORE_H_ */

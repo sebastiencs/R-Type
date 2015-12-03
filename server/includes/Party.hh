@@ -21,19 +21,22 @@
 
 class	Manager;
 
-typedef std::list<std::shared_ptr<Player>>	listPlayers;
+typedef std::shared_ptr<Manager>	Manager_SharedPtr;
+typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
-class		Party
+typedef std::list<Player_SharedPtr>	listPlayers;
+
+class			Party
 {
-  std::unique_ptr<Semaphore>	_sem;
-  std::unique_ptr<Thread>	_thread;
-  std::weak_ptr<Manager>	_manager;
-  std::string	_name;
-  listPlayers	_players;
+  ISemaphore_UniquePtr	_sem;
+  IThread_UniquePtr	_thread;
+  Manager_WeakPtr	_manager;
+  std::string		_name;
+  listPlayers		_players;
 
 public:
-  Party(std::shared_ptr<Manager>);
-  Party(std::shared_ptr<Manager>, const std::string &);
+  Party(const Manager_SharedPtr &);
+  Party(const Manager_SharedPtr &, const std::string &);
   virtual ~Party();
 
   void			run();

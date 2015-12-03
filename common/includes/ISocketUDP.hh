@@ -52,4 +52,9 @@ public:
   virtual const Addr	getAddr() const = 0;
 };
 
+#include <memory>
+typedef std::shared_ptr<ISocketUDP>	ISocketUDP_SharedPtr;
+typedef std::unique_ptr<ISocketUDP>	ISocketUDP_UniquePtr;
+typedef std::weak_ptr<ISocketUDP>	ISocketUDP_WeakPtr;
+
 #endif /* !ISOCKETUDP_H_ */
