@@ -4,8 +4,11 @@
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
 # include "Packager.hh"
-# include "Box.hh"
+# include "LobbyMenu.hh"
+# include "IOEvent.hh"
 # include "CreateGameMenu.hh"
+# include "Box.hh"
+# include "Cell.hh"
 
 class CreateGameMenu;
 
@@ -29,6 +32,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
+	LobbyMenu *lobby;
 	ScrollView *scrollView;
 	Box *onlineChoiseBox;
 

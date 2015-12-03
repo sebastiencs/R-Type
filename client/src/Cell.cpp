@@ -34,12 +34,6 @@ int Cell::getNbrPlayers()
 	return nbrPlayers;
 }
 
-const sf::Sprite & Cell::getSprite() const
-{
-	sf::Sprite *sprite = new sf::Sprite();
-	return *sprite;
-}
-
 void Cell::setTransformation(const Transformation& t) {
 	_transformation = t;
 	textField->setTransformation(t);
@@ -64,10 +58,10 @@ bool Cell::onAction(uint32_t x, uint32_t y)
 void Cell::onHover(uint32_t x, uint32_t y)
 {
 	if (isPressed(x, y)) {
-		textField->getColor() = Color::Darker;
+		textField->setColor(Color::Darker);
 	}
 	else
-		textField->getColor() = Color::White;
+		textField->setColor(Color::White);
 }
 
 bool Cell::isPressed(uint32_t x, uint32_t y) const

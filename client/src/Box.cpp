@@ -50,7 +50,7 @@ Drawable* Box::getElement(const std::string & id)
 	return (Tools::findIn(elementsList, [&id] (Drawable *b) { return (b->getId() == id); }));
 }
 
-const std::list<Drawable*> Box::getElements() const
+const std::list<Drawable*>& Box::getElements() const
 {
 	return elementsList;
 }

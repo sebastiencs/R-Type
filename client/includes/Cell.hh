@@ -23,7 +23,6 @@ public:
 
 	const std::string& getNameParty();
 	int getNbrPlayers();
-	const sf::Sprite& getSprite() const;
 
 	//Drawable
 	virtual void draw();

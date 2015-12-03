@@ -57,9 +57,9 @@ void ScrollView::decrBase()
 		--base;
 }
 
-const std::list<Cell*>& ScrollView::getListCell() const
+const std::list<Drawable*>& ScrollView::getListCell() const
 {
-	return listCell;
+	return boxCells->getElements();
 }
 
 const std::string & ScrollView::getSelectCell() const
@@ -79,6 +79,7 @@ void ScrollView::draw()
 	boxCells->updateTransformation();
 	for (Drawable *c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
+			c->setVisible(true);
 			c->draw();
 		}
 		++i;
@@ -113,9 +114,10 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 
 	boxCells->updateTransformation();
 	for (Drawable *c : boxCells->getElements()) {
-		if (i >= base && i < (base + nbrDiplayCell))
+		if (i >= base && i < (base + nbrDiplayCell)) {
 			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
 				tmp->onHover(x, y);
+		}
 		++i;
 	}
 	for (Button *b : buttons)
