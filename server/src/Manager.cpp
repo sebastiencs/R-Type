@@ -83,8 +83,7 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 
     uint8_t id = getID();
 
-    _pWaiting.push_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr));
-    // _pWaiting.push_back(new Player(paquet->getName(), id, paquet->getLevel(), addr));
+    _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr));
     p.setReturn(2);
     p.setData(id);
   }
@@ -180,10 +179,14 @@ void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
 
   party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
 
-  Player_SharedPtr p = party->playerLeave(id);
-
-  if (p) {
-    _pWaiting.emplace_back(p);
+  if (party) {
+    Player_SharedPtr p = party->playerLeave(id);
+    if (p) {
+      _pWaiting.emplace_back(p);
+    }
+  }
+  else {
+    std::cout << "Can't find party (PaquetLeave)" << std::endl;
   }
   // DEBUG_MSG(paquet);
 }

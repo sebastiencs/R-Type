@@ -70,7 +70,7 @@ const std::string	&Party::getName() const
 bool			Party::addPlayer(Player_SharedPtr player)
 {
   if (_players.size() < 4) {
-    _players.push_back(player);
+    _players.emplace_back(player);
     return (true);
   }
   else {
