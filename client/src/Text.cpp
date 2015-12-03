@@ -32,7 +32,7 @@ void Text::setText(const std::string & txt)
 {
 	textString = txt;
 	text.setString(txt);
-	_transformation.setBounds(text.getGlobalBounds().width, text.getGlobalBounds().height);
+	_transformation.setBounds(static_cast<uint16_t>(text.getGlobalBounds().width), static_cast<uint16_t>(text.getGlobalBounds().height));
 }
 
 void Text::setColor(const Color & newColor)
@@ -52,7 +52,7 @@ void Text::transform(const Transformation & t, const Color & color)
 	if (t.hasScale())
 		text.setScale(t.getScaleX(), t.getScaleY());
 
-	_transformation.setBounds(text.getGlobalBounds().width, text.getGlobalBounds().height);
+	_transformation.setBounds(static_cast<uint16_t>(text.getGlobalBounds().width), static_cast<uint16_t>(text.getGlobalBounds().height));
 }
 
 const std::string & Text::getText() const

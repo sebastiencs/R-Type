@@ -146,7 +146,7 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 #endif
 
     if (n > 0) {
-      _sizeCurrent += n;
+      _sizeCurrent += static_cast<uint16_t>(n);
       _buffer->append(_bufferTMP->get(), n);
       if (_sizeCurrent == _sizePaquet) {
 	// Fin de lecture du paquet
