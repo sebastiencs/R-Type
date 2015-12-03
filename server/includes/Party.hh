@@ -21,7 +21,7 @@
 
 class	Manager;
 
-typedef std::list<Player *>	listPlayers;
+typedef std::list<std::shared_ptr<Player>>	listPlayers;
 
 class		Party
 {

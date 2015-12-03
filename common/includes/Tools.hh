@@ -15,6 +15,7 @@
 # include <functional>
 # include <cstdlib>
 # include <ctime>
+# include <memory>
 
 class Addr;
 class Party;

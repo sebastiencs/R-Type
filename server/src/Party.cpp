@@ -69,7 +69,7 @@ const std::string	&Party::getName() const
 bool			Party::addPlayer(Player *player)
 {
   if (_players.size() < 4) {
-    _players.push_back(player);
+    _players.push_back(std::shared_ptr<Player>(player));
     return (true);
   }
   else {
@@ -79,30 +79,27 @@ bool			Party::addPlayer(Player *player)
 
 void			Party::deletePlayer(const Addr &addr)
 {
-  auto p = std::find_if(_players.begin(), _players.end(), [&addr] (Player *p) { return (p->addr() == addr); });
+  auto p = Tools::findIn(_players, [&addr] (std::shared_ptr<Player> const &p) { return (p->addr() == addr); });
 
-  if (p != _players.end()) {
-    delete *p;
-    _players.erase(p);
+  if (p != nullptr) {
+    _players.remove(p);
     DEBUG_MSG("Player deleted from party");
   }
 
   if (!_players.size()) {
-    _thread->close();
     DEBUG_MSG("No more players.. Party killed");
+    _thread->close();
   }
 }
 
 bool			Party::isPlayer(const Addr &addr) const
 {
-  auto p = std::find_if(_players.begin(), _players.end(), [&addr] (Player *p) { return (p->addr() == addr); });
-
-  return ((p != _players.end()) ? (true) : (false));
+  return (Tools::findIn(_players, [&addr] (std::shared_ptr<Player> const &p) { return (p->addr() == addr); }) != nullptr);
 }
 
 bool			Party::isPlayer(uint8_t id) const
 {
-  return (Tools::findIn(_players, [id] (Player *p) { return (p->getID() == id); }) != nullptr);
+  return (Tools::findIn(_players, [id] (std::shared_ptr<Player> const &p) { return (p->getID() == id); }) != nullptr);
 }
 
 void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
