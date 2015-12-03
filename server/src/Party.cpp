@@ -12,20 +12,20 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 
-Party::Party(const Manager_SharedPtr &manager)
-  : _sem(new Semaphore()),
-    _thread(new Thread()),
-    _manager(manager),
+Party::Party(const Manager_SharedPtr &&manager)
+  : _sem(std::make_unique<Semaphore>()),
+    _thread(std::make_unique<Thread>()),
+    _manager(std::move(manager)),
     _name("Unknwon")
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
 }
 
-Party::Party(const Manager_SharedPtr &manager, const std::string &name)
-  : _sem(new Semaphore()),
-    _thread(new Thread()),
-    _manager(manager),
+Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
+  : _sem(std::make_unique<Semaphore>()),
+    _thread(std::make_unique<Thread>()),
+    _manager(std::move(manager)),
     _name(name)
 {
   DEBUG_MSG("Party created");
@@ -34,6 +34,7 @@ Party::Party(const Manager_SharedPtr &manager, const std::string &name)
 
 Party::~Party()
 {
+  _players.clear();
   DEBUG_MSG("Party deleted");
 }
 

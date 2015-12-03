@@ -37,7 +37,7 @@ private:
 
 public:
 
-  Selector(const Manager_SharedPtr &manager);
+  Selector(const Manager_SharedPtr &&manager);
 
   virtual ~Selector();
 

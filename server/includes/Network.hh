@@ -55,7 +55,7 @@ private:
   Buffer			_buffer;
 
 public:
-  Network(const Manager_SharedPtr &, const uint16_t);
+  Network(const Manager_SharedPtr &&, const uint16_t);
   virtual ~Network();
 
   virtual int	run();

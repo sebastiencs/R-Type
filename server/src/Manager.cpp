@@ -30,7 +30,7 @@ Manager_SharedPtr	Manager::getPtr()
 
 void		Manager::write(const Paquet &paquet, const Addr &addr)
 {
-  if (_network.use_count()) {
+  if (!_network.expired()) {
     (_network.lock())->write(paquet, addr);
   }
   else {

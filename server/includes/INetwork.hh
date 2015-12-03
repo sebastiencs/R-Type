@@ -16,7 +16,7 @@
 class	Paquet;
 class	Addr;
 
-class		INetwork :     public std::enable_shared_from_this<INetwork>
+class		INetwork : public std::enable_shared_from_this<INetwork>
 {
 public:
   virtual ~INetwork() {};

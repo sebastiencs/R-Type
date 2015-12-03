@@ -14,14 +14,14 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 
-Network::Network(const Manager_SharedPtr &manager, const uint16_t port)
-  : _sem(new Semaphore),
-    _socketUDP(new SocketUDP(SocketUDP::SERVER)),
-    _socketTCP(new SocketTCP(SocketTCP::SERVER)),
-    _selector(new Selector(manager)),
+Network::Network(const Manager_SharedPtr &&manager, const uint16_t port)
+  : _sem(std::make_unique<Semaphore>()),
+    _socketUDP(std::make_unique<SocketUDP>(SocketUDP::SERVER)),
+    _socketTCP(std::make_unique<SocketTCP>(SocketTCP::SERVER)),
+    _selector(std::make_unique<Selector>(std::move(manager))),
     _running(true),
-    _thread(new Thread([this](void *) -> void * { write(); return (0);}, 0)),
-    _manager(manager)
+    _thread(std::make_unique<Thread>([this](void *) -> void * { write(); return (0);}, nullptr)),
+    _manager(std::move(manager))
 {
   DEBUG_MSG("Network created");
   _socketUDP->bind(port);
@@ -37,9 +37,9 @@ Network::~Network()
 
 int	Network::run()
 {
-  Pollfd	fds(2);
-
   (_manager.lock())->setNetwork(shared_from_this());
+
+  Pollfd	fds(2);
 
   fds[0].fd = _socketTCP->socket();
   fds[0].events = POLLIN;

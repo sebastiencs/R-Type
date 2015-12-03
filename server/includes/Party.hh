@@ -35,8 +35,8 @@ class			Party
   listPlayers		_players;
 
 public:
-  Party(const Manager_SharedPtr &);
-  Party(const Manager_SharedPtr &, const std::string &);
+  Party(const Manager_SharedPtr &&);
+  Party(const Manager_SharedPtr &&, const std::string &);
   virtual ~Party();
 
   void			run();
