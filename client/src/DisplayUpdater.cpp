@@ -45,6 +45,11 @@ void DisplayUpdater::mainMenu()
 
 void DisplayUpdater::game()
 {
+	Transformation t;
+	t.setBounds(1024, 768);
+	t.setPosition(0, 0);
+	Sprite *bg = new Sprite("", t, graphicEngine, Color::Red);
+	bg->draw();
 	//while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
 	//	const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
 	//	graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));

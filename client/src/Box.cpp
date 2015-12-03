@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Box.hh"
 #include "Tools.hh"
 
@@ -20,7 +21,6 @@ void Box::addDrawable(Drawable* drawable, int32_t pos)
 	}
 	else
 		elementsList.push_back(drawable);
-	updateTransformation();
 }
 
 void Box::removeDrawable(Drawable * drawable)
@@ -29,21 +29,18 @@ void Box::removeDrawable(Drawable * drawable)
 
 	auto func = [&drawable] (Drawable *id) { return (id == drawable); };
 	elementsList.remove_if(func);
-	updateTransformation();
 }
 
 void Box::setSpacing(uint16_t spacing)
 {
 	isUpdated = false;
 	this->spacing = spacing;
-	updateTransformation();
 }
 
 void Box::setOrientation(Orientation orientation)
 {
 	isUpdated = false;
 	this->orientation = orientation;
-	updateTransformation();
 }
 
 Drawable* Box::getElement(const std::string & id)
@@ -62,7 +59,6 @@ void Box::clearElements()
 
 	elementsList.remove_if(clearFunc);
 	isUpdated = false;
-	updateTransformation();
 }
 
 void Box::draw()
@@ -111,16 +107,16 @@ bool Box::isPressed(uint32_t x, uint32_t y) const
 
 const callback & Box::getCallback() const
 {
-	return nullptr;
+	return *(new callback);
 }
 
 void Box::updateTransformation()
 {
-	if (_id == "leftBox")
-		_id = _id;
 	if (isUpdated || elementsList.empty())
 		return;
 	Transformation lastItemT = _transformation;
+	uint16_t boundWidth = 0;
+	uint16_t boundHeight = 0;
 	bool first = true;
 	for (Drawable* d : elementsList) {
 		if (first) {
@@ -136,10 +132,14 @@ void Box::updateTransformation()
 			newT.setPosition(lastItemT.getX() + offsetX, lastItemT.getY() + offsetY);
 			d->setTransformation(newT);
 		}
+		boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : std::max(boundWidth, d->getTransformation().getWidth()));
+		boundHeight = (orientation == Orientation::horizontal ? std::max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
 		lastItemT = d->getTransformation();
 	}
-	uint16_t boundX = (elementsList.back()->getTransformation().getX() + elementsList.back()->getTransformation().getWidth()) - _transformation.getX();
-	uint16_t boundY = (elementsList.back()->getTransformation().getY() + elementsList.back()->getTransformation().getHeight()) - _transformation.getY();
-	_transformation.setBounds(boundX, boundY);
+	if (orientation == Orientation::horizontal) {
+		_transformation.setBounds(boundWidth - spacing, boundHeight);
+	} else {
+		_transformation.setBounds(boundWidth, boundHeight - spacing);
+	}
 	isUpdated = true;
 }

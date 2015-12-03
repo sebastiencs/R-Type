@@ -97,7 +97,7 @@ void LobbyMenu::ready()
 	}
 	else {
 		ready->setText("Ready");
-		ready->setColor(Color::White);
+		ready->setColor(Color::Green);
 		commands->removeDrawable(unReadyb);
 		commands->addDrawable(readyb);
 	}
