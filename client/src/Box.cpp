@@ -20,6 +20,7 @@ void Box::addDrawable(Drawable* drawable, int32_t pos)
 	}
 	else
 		elementsList.push_back(drawable);
+	updateTransformation();
 }
 
 void Box::removeDrawable(Drawable * drawable)
@@ -28,18 +29,21 @@ void Box::removeDrawable(Drawable * drawable)
 
 	auto func = [&drawable] (Drawable *id) { return (id == drawable); };
 	elementsList.remove_if(func);
+	updateTransformation();
 }
 
 void Box::setSpacing(uint16_t spacing)
 {
 	isUpdated = false;
 	this->spacing = spacing;
+	updateTransformation();
 }
 
 void Box::setOrientation(Orientation orientation)
 {
 	isUpdated = false;
 	this->orientation = orientation;
+	updateTransformation();
 }
 
 Drawable* Box::getElement(const std::string & id)
@@ -58,6 +62,7 @@ void Box::clearElements()
 
 	elementsList.remove_if(clearFunc);
 	isUpdated = false;
+	updateTransformation();
 }
 
 void Box::draw()
@@ -66,6 +71,13 @@ void Box::draw()
 		updateTransformation();
 	for (IDrawable* d : elementsList)
 		d->draw();
+}
+
+void Box::setTransformation(const Transformation & t)
+{
+	_transformation = t;
+	isUpdated = false;
+	updateTransformation();
 }
 
 bool Box::onAction(uint32_t x, uint32_t y)
@@ -104,6 +116,8 @@ const callback & Box::getCallback() const
 
 void Box::updateTransformation()
 {
+	if (_id == "leftBox")
+		_id = _id;
 	if (isUpdated || elementsList.empty())
 		return;
 	Transformation lastItemT = _transformation;

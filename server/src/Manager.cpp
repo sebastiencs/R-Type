@@ -203,6 +203,14 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
   if (party && pc) {
     party->setCoordPlayer(pc);
   }
+  else {
+#ifdef DEBUG
+    if (!party) {
+      std::cerr << "Can't find party" << std::endl;
+    }
+#endif // !DEBUG
+  }
+  delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetPlayerShot *paquet UNUSED, const Addr &addr UNUSED)
