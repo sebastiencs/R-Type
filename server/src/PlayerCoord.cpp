@@ -18,7 +18,7 @@ PlayerCoord::PlayerCoord()
   DEBUG_MSG("PlayerCoord created");
 }
 
-PlayerCoord::PlayerCoord(const uint16_t &x, const uint16_t &y, const uint8_t &id)
+PlayerCoord::PlayerCoord(const uint16_t x, const uint16_t y, const uint8_t id)
   : _x(x),
     _y(y),
     _id(id)
@@ -30,26 +30,26 @@ PlayerCoord::~PlayerCoord() {
   DEBUG_MSG("PlayerCoord deleted");
 }
 
-void		PlayerCoord::setX(const uint16_t &x) {
+void		PlayerCoord::setX(const uint16_t x) {
   _x = x;
 }
 
-void		PlayerCoord::setY(const uint16_t &y) {
+void		PlayerCoord::setY(const uint16_t y) {
   _y = y;
 }
 
-void		PlayerCoord::setID(const uint8_t &id) {
+void		PlayerCoord::setID(const uint8_t id) {
   _id = id;
 }
 
-const uint16_t	&PlayerCoord::getX() const {
+uint16_t	PlayerCoord::getX() const {
   return _x;
 }
 
-const uint16_t	&PlayerCoord::getY() const {
+uint16_t	PlayerCoord::getY() const {
   return _y;
 }
 
-const uint8_t	&PlayerCoord::getID() const {
+uint8_t	PlayerCoord::getID() const {
   return _id;
 }
