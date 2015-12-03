@@ -69,7 +69,7 @@ if (${UNIX})
 
   add_definitions(
     -fdiagnostics-color=always
-    -std=c++11
+    -std=c++1y
     -ggdb
     -Wall -Wextra
     -DDEBUG

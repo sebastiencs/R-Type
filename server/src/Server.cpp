@@ -11,9 +11,9 @@
 #include "Server.hh"
 
 Server::Server(const uint16_t port)
-  : _manager(new Manager()),
-    _network(new Network(_manager->getPtr(), port)),
-    _signal(new Signal())
+  : _manager(std::make_shared<Manager>()),
+    _network(std::make_shared<Network>(_manager->getPtr(), port)),
+    _signal(std::make_unique<Signal>())
 {
   _signal->addSignal(CTRL_C, [this]() -> void { stop(); });
   DEBUG_MSG("Server created");
