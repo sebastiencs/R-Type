@@ -26,10 +26,6 @@ Selector::Selector(const Manager_SharedPtr &&manager) {
     if (!_manager.expired())
       ((_manager.lock()).get()->*resolver<PaquetJoinParty *>(&Manager::handlePaquet))(new PaquetJoinParty(buf), addr);
   };
-  _selectorFunc[Paquet::LAUNCH] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetLaunch *>(&Manager::handlePaquet))(new PaquetLaunch(buf), addr);
-  };
   _selectorFunc[Paquet::LEAVE] = [this](const Buffer &buf, const Addr &addr) {
     if (!_manager.expired())
       ((_manager.lock()).get()->*resolver<PaquetLeave *>(&Manager::handlePaquet))(new PaquetLeave(buf), addr);

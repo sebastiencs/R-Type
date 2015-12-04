@@ -55,7 +55,6 @@ public:
   void		handlePaquet(PaquetFirst *, const Addr &);
   void		handlePaquet(PaquetJoinParty *, const Addr &);
   void		handlePaquet(PaquetCreateParty *, const Addr &);
-  void		handlePaquet(PaquetLaunch *, const Addr &);
   void		handlePaquet(PaquetLeave *, const Addr &);
   void		handlePaquet(PaquetListParties *, const Addr &);
   void		handlePaquet(PaquetListPlayers *, const Addr &);

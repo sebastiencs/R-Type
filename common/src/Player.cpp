@@ -53,7 +53,7 @@ Player::~Player()
   DEBUG_MSG("Player deleted");
 }
 
-const Position		&Player::getPosition() const
+const Position	&Player::getPosition() const
 {
   return (_position);
 }
@@ -63,7 +63,7 @@ void			Player::setPosition(const Position &pos)
   _position = pos;
 }
 
-uint8_t		Player::getLevel() const
+uint8_t			Player::getLevel() const
 {
   return (_level);
 }
@@ -73,7 +73,7 @@ void			Player::setLevel(uint8_t level)
   _level = level;
 }
 
-int			Player::getLife() const
+int				Player::getLife() const
 {
   return (_life);
 }

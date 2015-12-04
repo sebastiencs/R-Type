@@ -50,6 +50,7 @@ public:
   bool			isPlayer(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);
+  void			setReady(Player_SharedPtr player);
 };
 
 #endif /* !PARTY_H_ */

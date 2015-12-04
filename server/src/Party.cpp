@@ -119,3 +119,10 @@ bool			Party::isPlayer(uint8_t id) const
 void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
 {
 }
+
+void			Party::setReady(Player_SharedPtr player)
+{
+	if (player) {
+		player->setReady(true);
+	}
+}
