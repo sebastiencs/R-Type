@@ -3,7 +3,7 @@
 #include "Tools.hh"
 
 Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id)
-	: orientation(orientation), isUpdated(false), spacing(0)
+	: isUpdated(false), orientation(orientation), spacing(0)
 {
 	_transformation = transformation;
 	_id = id;

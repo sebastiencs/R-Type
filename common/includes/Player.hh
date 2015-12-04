@@ -28,7 +28,7 @@ private:
 public:
   Player();
   Player(const std::string &, uint8_t, const Position &, uint8_t, int);
-  Player(const std::string &name, uint8_t id, uint8_t level, const Addr &);
+  Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0);
   virtual ~Player();
 
   virtual const Position	&getPosition() const;

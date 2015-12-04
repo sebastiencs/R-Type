@@ -2,7 +2,7 @@
 #include "Debug.hh"
 
 Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
-	: _engine(engine), _color(color), _text(text), _textureName(img), _fptr(fptr)
+  : _engine(engine), _color(color), _fptr(fptr), _text(text), _textureName(img)
 {
 	_transformation = t;
 	_id = id;

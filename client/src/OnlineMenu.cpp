@@ -27,7 +27,7 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-	Callback_t fptr = [this](void *arg) {
+	Callback_t fptr = [this](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
 		const Paquet	*tmp = nullptr;
 
@@ -107,7 +107,7 @@ void OnlineMenu::joinButton()
 	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
-			
+
 			inLobby = true;
 			if (lobby == nullptr) {
 				if (threadReceivedParties) {

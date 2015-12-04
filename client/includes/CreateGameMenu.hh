@@ -17,7 +17,7 @@ public:
 
 
 	const TextField* getServerName() const;
-	
+
 	void draw();
 	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
@@ -28,8 +28,7 @@ private:
 	OnlineMenu *superView;
 
 	TextField *serverName;
-	TextField *error;
-	
+
 	Button *ok;
 	Button *back;
 };

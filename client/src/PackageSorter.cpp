@@ -53,7 +53,7 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 
-	Callback_t fptr = [this](void *arg) {this->sortPaquet(); return nullptr; };
+	Callback_t fptr = [this](void *) {this->sortPaquet(); return nullptr; };
 	thread = new Thread(fptr, nullptr);
 }
 

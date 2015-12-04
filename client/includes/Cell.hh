@@ -36,7 +36,6 @@ public:
 	virtual const callback& getCallback() const;
 
 private:
-	IGraphicEngine *engine;
 	TextField *textField;
 
 	std::string nameParty;
