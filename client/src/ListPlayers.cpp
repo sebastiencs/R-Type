@@ -6,11 +6,8 @@ ListPlayers & ListPlayers::getInstance()
 	static ListPlayers *instance = nullptr;
 	if (instance == nullptr) {
 		instance = new ListPlayers();
-		return *instance;
 	}
-	else {
-		return *instance;
-	}
+	return *instance;
 }
 
 ListPlayers::ListPlayers()

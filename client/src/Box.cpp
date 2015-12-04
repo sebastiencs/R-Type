@@ -3,13 +3,11 @@
 #include "Tools.hh"
 
 Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id)
-	: orientation(orientation), isUpdated(false)
+	: orientation(orientation), isUpdated(false), spacing(0)
 {
 	_transformation = transformation;
 	_id = id;
 	_visible = true;
-
-	spacing = 0;
 }
 
 void Box::addDrawable(Drawable* drawable, int32_t pos)

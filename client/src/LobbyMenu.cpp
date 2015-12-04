@@ -76,7 +76,8 @@ bool LobbyMenu::onClick(uint32_t x, uint32_t y)
 void LobbyMenu::ready()
 {
 	// TODO: savoir quel # on est, pour l'instant 0
-	Box* player = static_cast<Box* >(left->getElement("Player" + std::to_string(0) + "Box"));
+	ListPlayers &list = ListPlayers::getInstance();
+	Box* player = static_cast<Box* >(left->getElement("Player" + std::to_string(list.getId()) + "Box"));
 	if (!player)
 		return;
 	TextField* ready = static_cast<TextField*>(player->getElement("Ready"));
@@ -87,20 +88,12 @@ void LobbyMenu::ready()
 		ready->setColor(Color::Red);
 		commands->removeDrawable(readyb);
 		commands->addDrawable(unReadyb);
-		ListPlayers &list = ListPlayers::getInstance();
-		PaquetReady *ready = new PaquetReady();
-		ready->setID(list.getId());
-		ready->createPaquet();
-		PackageStorage::getInstance().storeToSendTCPPackage(ready);
 	}
 	else {
 		ready->setText("Ready");
 		ready->setColor(Color::Green);
 		commands->removeDrawable(unReadyb);
 		commands->addDrawable(readyb);
-		PaquetReady *ready = new PaquetReady();
-		ready->setID(ListPlayers::getInstance().getId());
-		ready->createPaquet();
-		PackageStorage::getInstance().storeToSendTCPPackage(ready);
+		Packager::createReadyPackage(list.getId());
 	}
 }
