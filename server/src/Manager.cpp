@@ -177,6 +177,8 @@ void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getID();
 
+  DEBUG_MSG(*paquet);
+
   auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
 
   if (party) {
@@ -210,6 +212,8 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getPlayerID();
 
+  DEBUG_MSG(*paquet);
+
   auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
   auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
   if (party && pc) {
@@ -238,6 +242,8 @@ void		Manager::handlePaquet(PaquetReady *paquet UNUSED, const Addr &addr UNUSED)
 void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
 {
   PaquetListParties	p;
+
+  DEBUG_MSG(*paquet);
 
   for (auto &party : _parties) {
     p.addParty(party->getName(), party->getNb());
