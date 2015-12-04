@@ -86,8 +86,8 @@ void MainMenu::draw()
 	PackageStorage& PC = PackageStorage::getInstance();
 	const PaquetResponse *paquet = PC.getAnswersPackage();
 	if (paquet) {
-		ListPlayers list = ListPlayers::getInstance();
 		if (paquet->getReturn() == 2) {
+				ListPlayers list = ListPlayers::getInstance();
 				list.setId(paquet->getData());
 				std::cout << "------------> ID : " << (int)list.getId() << std::endl;
 		}
