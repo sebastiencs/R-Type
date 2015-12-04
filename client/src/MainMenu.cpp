@@ -1,6 +1,6 @@
 #include "MainMenu.hh"
 #include "OnlineMenu.hh"
-#include "LobbyMenu.hh"
+#include "ListPlayers.hh"
 
 MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 {
@@ -9,7 +9,6 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
 	creditsMenu = new Credits(engine);
-	lobbyMenu = new LobbyMenu(engine);
 
 	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
@@ -81,10 +80,20 @@ void MainMenu::draw()
 	rTypeLabel->draw();
 	if (currentPage == 1)
 		onlineMenu->draw();
-	if (currentPage == 3)
-		lobbyMenu->draw();
 	if (currentPage == 4)
 		creditsMenu->draw();
+
+//	PackageStorage& PC = PackageStorage::getInstance();
+//	const PaquetResponse *paquet = PC.getAnswersPackage();
+//	if (paquet) {
+//		ListPlayers list = ListPlayers::getInstance();
+//		if (paquet->getReturn() == 2) {
+//			list.getListPlayers().front()->setID(paquet->getData());
+//			list.setId(paquet->getData());
+//			std::cout << "------------> ID : " << list.getId() << std::endl;
+//		}
+//	}
+
 }
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
@@ -107,9 +116,6 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 	if (currentPage == 1)
 		if (onlineMenu->onClick(x, y))
 			return;
-	if (currentPage == 3)
-		if (lobbyMenu->onClick(x, y))
-			return;
 }
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
@@ -127,8 +133,6 @@ void MainMenu::onHover(uint32_t x, uint32_t y)
 
 	if (currentPage == 1)
 		onlineMenu->onHover(x, y);
-	if (currentPage == 3)
-		lobbyMenu->onHover(x, y);
 }
 
 void MainMenu::setDisplayOnline()

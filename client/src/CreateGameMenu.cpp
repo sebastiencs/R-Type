@@ -21,7 +21,7 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 
 	t.setPosition(400, 500);
 	t.setBounds(100, 50);
-	fptr = std::bind(&OnlineMenu::backButton, superView);
+	fptr = std::bind(&OnlineMenu::backButtonGameMenu, superView);
 	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 }
 

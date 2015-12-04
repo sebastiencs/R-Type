@@ -1,7 +1,9 @@
 #include "LobbyMenu.hh"
+#include "ListPlayers.hh"
 
-LobbyMenu::LobbyMenu(IGraphicEngine* engine) : engine(engine)
+LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine)
 {
+	_superview = superview;
 	right = nullptr;
 	left = new Box(Orientation::vertical, Transformation(250, 200), "leftBox");
 	left->setSpacing(80);
@@ -29,7 +31,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine) : engine(engine)
 	readyb = new Button("Ready", "readyButton.png", Transformation(0, 0), Color::None, fptr, "readyButton", engine);
 	unReadyb = new Button("Unready", "unreadyButton.png", Transformation(0, 0), Color::None, fptr, "unreadyButton", engine);
 
-	fptr = std::bind(&LobbyMenu::leave, this);
+	fptr = std::bind(&OnlineMenu::backButtonLobbyMenu, _superview);
 	commands->addDrawable(new Button("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
@@ -71,15 +73,6 @@ bool LobbyMenu::onClick(uint32_t x, uint32_t y)
 	return false;
 }
 
-
-
-
-void LobbyMenu::leave()
-{
-	// should do nicer things
-	delete this;
-}
-
 void LobbyMenu::ready()
 {
 	// TODO: savoir quel # on est, pour l'instant 0
@@ -94,11 +87,20 @@ void LobbyMenu::ready()
 		ready->setColor(Color::Red);
 		commands->removeDrawable(readyb);
 		commands->addDrawable(unReadyb);
+		ListPlayers list = ListPlayers::getInstance();
+		PaquetReady *ready = new PaquetReady();
+		ready->setID(list.getPlayer(list.getId())->getID());
+		ready->createPaquet();
+		PackageStorage::getInstance().storeToSendTCPPackage(ready);
 	}
 	else {
 		ready->setText("Ready");
 		ready->setColor(Color::Green);
 		commands->removeDrawable(unReadyb);
 		commands->addDrawable(readyb);
+		PaquetReady *ready = new PaquetReady();
+		ready->setID(ListPlayers::getInstance().getListPlayers().front()->getID());
+		ready->createPaquet();
+		PackageStorage::getInstance().storeToSendTCPPackage(ready);
 	}
 }
