@@ -12,11 +12,12 @@
 #include "Player.hh"
 
 Player::Player()
-  : _name(""),
-    _position(),
-    _level(0),
-    _life(100),
-    _id(0),
+	: _name(""),
+	_position(),
+	_level(0),
+	_life(100),
+	_id(0),
+	_ready(false),
     _addr()
 {
   DEBUG_MSG("Player created");
@@ -24,12 +25,13 @@ Player::Player()
 
 Player::Player(const std::string &name, uint8_t id,
 	       const Position &pos = std::make_tuple(1, 1),
-	       uint8_t level = 0, int life = 100)
+	       uint8_t level = 0, int life = 100, bool ready = false)
   : _name(name),
     _position(pos),
     _level(level),
     _life(life),
     _id(id),
+	_ready(ready),
     _addr()
 {
   DEBUG_MSG("Player created");
@@ -99,6 +101,16 @@ const std::string	&Player::getName() const
 void			Player::setName(const std::string &name)
 {
   _name = name;
+}
+
+const bool		&Player::getReady() const
+{
+	return (_ready);
+}
+
+void			Player::setReady(const bool &ready)
+{
+	_ready = ready;
 }
 
 const Addr		&Player::addr() const
