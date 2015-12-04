@@ -83,16 +83,18 @@ void MainMenu::draw()
 	if (currentPage == 4)
 		creditsMenu->draw();
 
-//	PackageStorage& PC = PackageStorage::getInstance();
-//	const PaquetResponse *paquet = PC.getAnswersPackage();
-//	if (paquet) {
-//		ListPlayers list = ListPlayers::getInstance();
-//		if (paquet->getReturn() == 2) {
-//			list.getListPlayers().front()->setID(paquet->getData());
-//			list.setId(paquet->getData());
-//			std::cout << "------------> ID : " << list.getId() << std::endl;
-//		}
-//	}
+	PackageStorage& PC = PackageStorage::getInstance();
+	const PaquetResponse *paquet = PC.getAnswersPackage();
+	if (paquet) {
+		ListPlayers list = ListPlayers::getInstance();
+		if (paquet->getReturn() == 2) {
+			if (!list.getListPlayers().empty()) {
+				list.getPlayer(0)->setID(paquet->getData());
+				list.setId(paquet->getData());
+				std::cout << "------------> ID : " << list.getId() << std::endl;
+			}
+		}
+	}
 
 }
 
