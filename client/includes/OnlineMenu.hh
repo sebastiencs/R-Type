@@ -11,6 +11,7 @@
 # include "Cell.hh"
 
 class CreateGameMenu;
+class LobbyMenu;
 
 class OnlineMenu {
 public:
@@ -27,17 +28,21 @@ public:
 
 	// Join Button
 	void joinButton();
-	void backButton();
+	void backButtonGameMenu();
+	void backButtonLobbyMenu();
 	void createButton();
 
 private:
 	IGraphicEngine *engine;
 	LobbyMenu *lobby;
+	CreateGameMenu *createGameMenu;
+
 	ScrollView *scrollView;
 	Box *onlineChoiseBox;
 
 	std::list<Button* > buttons;
-	CreateGameMenu *createGameMenu;
+
+	bool inLobby;
 };
 
 #endif // !ONLINE_MENU_HH_

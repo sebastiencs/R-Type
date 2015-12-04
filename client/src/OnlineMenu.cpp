@@ -1,4 +1,5 @@
 #include "OnlineMenu.hh"
+#include "ListPlayers.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 {
@@ -6,8 +7,9 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
-	lobby = new LobbyMenu(engine);
 	createGameMenu = nullptr;
+	lobby = nullptr;
+	inLobby = false;
 	menu();
 }
 
@@ -28,60 +30,102 @@ void OnlineMenu::createRequestPartiesPaquet()
 
 void OnlineMenu::draw()
 {
-	PackageStorage &PS = PackageStorage::getInstance();
-	const Paquet	*tmp;
+	if (inLobby && lobby != nullptr)
+		lobby->draw();
+	else {
+		PackageStorage &PS = PackageStorage::getInstance();
+		const Paquet	*tmp;
 
-	if (tmp = PS.getGameListPackage()) {
-		PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
+		if (tmp = PS.getGameListPackage()) {
+			PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 
-		scrollView->emptyCell();
-		for (auto &party : paquetList.getParties()) {
-			scrollView->createCell(std::get<0>(party), std::get<1>(party));
+			scrollView->emptyCell();
+			for (auto &party : paquetList.getParties()) {
+				scrollView->createCell(std::get<0>(party), std::get<1>(party));
+			}
+			PS.deleteGameListPackage();
+			DEBUG_MSG("Request received");
 		}
-		PS.deleteGameListPackage();
-		DEBUG_MSG("Request received");
+		onlineChoiseBox->draw();
+		scrollView->draw();
+		if (createGameMenu != nullptr)
+			createGameMenu->draw();
 	}
-	onlineChoiseBox->draw();
-	scrollView->draw();
-	if (createGameMenu != nullptr)
-		createGameMenu->draw();
-
 }
 
 bool OnlineMenu::onClick(uint32_t x, uint32_t y)
 {
-	if (onlineChoiseBox->onAction(x, y))
-		return true;
-	else if (createGameMenu != nullptr) {
-		if (createGameMenu->onClick(x, y))
-			return true;
+	if (inLobby && lobby != nullptr) {
+		if (lobby->onClick(x, y))
+			return (true);
 	}
-	if (scrollView->onAction(x, y)) {
-		return true;
+	else {
+		if (onlineChoiseBox->onAction(x, y))
+			return true;
+		else if (createGameMenu != nullptr) {
+			if (createGameMenu->onClick(x, y))
+				return true;
+		}
+		if (scrollView->onAction(x, y)) {
+			return true;
+		}
 	}
 	return false;
 }
 
 void OnlineMenu::onHover(uint32_t x, uint32_t y)
 {
-	onlineChoiseBox->onHover(x, y);
-	scrollView->onHover(x, y);
-	if (createGameMenu != nullptr) {
-		createGameMenu->onHover(x, y);
+	if (inLobby && lobby != nullptr)
+		lobby->onHover(x, y);
+	else {
+		onlineChoiseBox->onHover(x, y);
+		scrollView->onHover(x, y);
+		if (createGameMenu != nullptr) {
+			createGameMenu->onHover(x, y);
+		}
 	}
 }
 
 void OnlineMenu::joinButton()
 {
 	for (Drawable *c : scrollView->getListCell())
-		if (c->getId() == scrollView->getSelectCell())
+		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
+			inLobby = true;
+			if (lobby == nullptr) {
+				PackageStorage &PS = PackageStorage::getInstance();
+				PaquetJoinParty *join = new PaquetJoinParty();
+				join->setName(static_cast<Cell *>(c)->getNameParty());
+				join->createPaquet();
+				PS.storeToSendTCPPackage(join);
+				lobby = new LobbyMenu(engine, this);
+				return;			
+			}
+		}
 }
 
-void OnlineMenu::backButton()
+void OnlineMenu::backButtonGameMenu()
 {
 	delete createGameMenu;
 	createGameMenu = nullptr;
+}
+
+void OnlineMenu::backButtonLobbyMenu()
+{
+	PackageStorage &PS = PackageStorage::getInstance();
+	ListPlayers list = ListPlayers::getInstance();
+	PaquetLeave *leave = new PaquetLeave();
+
+	if (!list.getListPlayers().empty()) {
+		if (list.getPlayer(list.getId()))
+			leave->setID(list.getPlayer(list.getId())->getID());
+		leave->createPaquet();
+		PS.storeToSendTCPPackage(leave);
+	}
+	delete lobby;
+	lobby = nullptr;
+	inLobby = false;
+	DEBUG_MSG("You just leave the lobby");
 }
 
 void OnlineMenu::onCreateGame()
@@ -94,9 +138,18 @@ void OnlineMenu::onCreateGame()
 	paquet->createPaquet();
 	DEBUG_MSG("Create party : " + createGameMenu->getServerName()->getText());
 	PS.storeToSendTCPPackage(paquet);
+
+	PaquetJoinParty *join = new PaquetJoinParty();
+	join->setName(createGameMenu->getServerName()->getText());
+	join->createPaquet();
+	PS.storeToSendTCPPackage(join);
+
 	delete createGameMenu;
 	createGameMenu = nullptr;
 	createRequestPartiesPaquet();
+	inLobby = true;
+	if (lobby == nullptr)
+		lobby = new LobbyMenu(engine, this);
 }
 
 void OnlineMenu::createButton()

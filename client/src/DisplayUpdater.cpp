@@ -1,4 +1,5 @@
 #include "DisplayUpdater.hh"
+#include "ListPlayers.hh"
 
 
 DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
@@ -41,6 +42,16 @@ void DisplayUpdater::mainMenu()
 
 	if (!net->getIsConnect())
 		graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
+
+	PackageStorage& PC = PackageStorage::getInstance();
+	const PaquetResponse *paquet = PC.getAnswersPackage();
+	if (paquet) {
+		ListPlayers list = ListPlayers::getInstance();
+		if (paquet->getReturn() == 2)
+				list.getListPlayers().front()->setID(paquet->getData());
+				list.setId(paquet->getData());
+				std::cout << "------------> ID : " << list.getId() << std::endl;
+	}
 }
 
 void DisplayUpdater::game()

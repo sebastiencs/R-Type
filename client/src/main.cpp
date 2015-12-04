@@ -16,6 +16,7 @@
 #include "DisplayUpdater.hh"
 #include "PackageSorter.hh"
 #include "Tools.hh"
+#include "ListPlayers.hh"
 
 #ifdef _WIN32
 # include "WSA.hh"
@@ -25,29 +26,29 @@
 
 bool isNumber(const std::string& s)
 {
-  return (Tools::findIn(s, [] (char c) { return !(c >= '0' && c <= '9'); }) == false);
+	return (Tools::findIn(s, [](char c) { return !(c >= '0' && c <= '9'); }) == false);
 }
 
 int		main(int argc, char **argv)
 {
 
-  uint16_t port(4242);
-  std::string addr("127.0.0.1");
+	uint16_t port(4242);
+	std::string addr("86.74.56.73");
 
-  if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
-    std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
-    return (0);
-  }
+	if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
+		std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
+		return (0);
+	}
 
-  if (argc > 2) {
-    addr = argv[1];
-    try {
-      port = std::stoi(argv[2]);
-    }
-    catch (std::out_of_range &) {
-      std::cerr << "Wrong port value. Use port " << port << std::endl;
-    }
-  }
+	if (argc > 2) {
+		addr = argv[1];
+		try {
+			port = std::stoi(argv[2]);
+		}
+		catch (std::out_of_range &) {
+			std::cerr << "Wrong port value. Use port " << port << std::endl;
+		}
+	}
 
 #ifdef _WIN32
 	if (WSA::init()) {
@@ -58,14 +59,14 @@ int		main(int argc, char **argv)
 	std::unique_ptr<ISystemAudio> audio(new SystemAudio());
 
 	try {
-	  audio->loadMusic("test.ogg", 1);
-	  audio->loadMusic("crazyfrog.ogg", 2);
-	  audio->loadMusic("eiffel65.ogg", 3);
-	  audio->loadMusic("booba.ogg", 4);
-	  audio->loadMusic("tupac.ogg", 5);
+		audio->loadMusic("test.ogg", 1);
+		audio->loadMusic("crazyfrog.ogg", 2);
+		audio->loadMusic("eiffel65.ogg", 3);
+		audio->loadMusic("booba.ogg", 4);
+		audio->loadMusic("tupac.ogg", 5);
 	}
 	catch (ErrorLoadingFile &) {
-	  DEBUG_MSG("Can't load music");
+		DEBUG_MSG("Can't load music");
 	}
 	audio->playMusicRandom();
 

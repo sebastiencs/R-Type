@@ -1,6 +1,7 @@
 #ifndef LOBBY_HH_
 # define LOBBY_HH_
 
+# include "OnlineMenu.hh"
 # include "Box.hh"
 # include "Sprite.hh"
 # include "Button.hh"
@@ -8,7 +9,7 @@
 
 class LobbyMenu {
 public:
-	LobbyMenu(IGraphicEngine* engine);
+	LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview);
 	~LobbyMenu();
 
 	void draw();
@@ -16,12 +17,12 @@ public:
 	bool onClick(uint32_t x, uint32_t y);
 
 private:
-	void leave();
 	void ready();
 
 protected:
 	IGraphicEngine* engine;
 	std::vector<Box*> playerInfo;
+	OnlineMenu *_superview;
 	Box* left;
 	Box* commands;
 	Box* right;
