@@ -80,7 +80,7 @@ bool			Party::addPlayer(Player_SharedPtr player)
 
 void			Party::deletePlayer(const Addr &addr)
 {
-  auto p = Tools::findIn(_players, [&addr] (std::shared_ptr<Player> const &p) { return (p->addr() == addr); });
+  auto p = Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); });
 
   if (p != nullptr) {
     _players.remove(p);
@@ -95,7 +95,7 @@ void			Party::deletePlayer(const Addr &addr)
 
 Player_SharedPtr	Party::playerLeave(uint8_t id)
 {
-  auto p = Tools::findIn(_players, [id] (std::shared_ptr<Player> const &p) { return (p->getID() == id); });
+  auto p = Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); });
 
   if (p != nullptr) {
     Player_SharedPtr player = p;
@@ -108,12 +108,12 @@ Player_SharedPtr	Party::playerLeave(uint8_t id)
 
 bool			Party::isPlayer(const Addr &addr) const
 {
-  return (Tools::findIn(_players, [&addr] (std::shared_ptr<Player> const &p) { return (p->addr() == addr); }) != nullptr);
+  return (Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); }) != nullptr);
 }
 
 bool			Party::isPlayer(uint8_t id) const
 {
-  return (Tools::findIn(_players, [id] (std::shared_ptr<Player> const &p) { return (p->getID() == id); }) != nullptr);
+  return (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) != nullptr);
 }
 
 void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
