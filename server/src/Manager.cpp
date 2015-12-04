@@ -180,7 +180,7 @@ void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
   auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
 
   if (party) {
-    Player_SharedPtr p = party->playerLeave(id);
+    Player_SharedPtr &&p = party->playerLeave(id);
     if (p) {
       _pWaiting.emplace_back(p);
     }
