@@ -24,7 +24,7 @@ public:
   virtual bool	run(const Callback_t &func, void *arg) = 0;
   virtual bool	close() = 0;
   virtual bool	join() = 0;
-  virtual bool	isRunning() const;
+  virtual bool	isRunning() const = 0;
 };
 
 #include <memory>

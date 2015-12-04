@@ -27,28 +27,31 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-	Packager::createGameListPackage();
-	// TODO: add isRunning to know if thread should be called again
-	if (!threadReceivedParties) {
-		Callback_t fptr = [this](void *arg) {
-			PackageStorage &PS = PackageStorage::getInstance();
-			const Paquet	*tmp = nullptr;
+	Callback_t fptr = [this](void *arg) {
+		PackageStorage &PS = PackageStorage::getInstance();
+		const Paquet	*tmp = nullptr;
 
-			while (tmp == nullptr) {
-				if ((tmp = PS.getGameListPackage())) {
-					Sleep(3000);
-					PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
+		while (tmp == nullptr) {
+			if ((tmp = PS.getGameListPackage())) {
+				PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 
-					scrollView->emptyCell();
-					for (auto &party : paquetList.getParties()) {
-						scrollView->createCell(std::get<0>(party), std::get<1>(party));
-					}
-					PS.deleteGameListPackage();
-					DEBUG_MSG("Request received");
+				scrollView->emptyCell();
+				for (auto &party : paquetList.getParties()) {
+					scrollView->createCell(std::get<0>(party), std::get<1>(party));
 				}
+				PS.deleteGameListPackage();
+				DEBUG_MSG("Request received");
 			}
-			return nullptr;
-		};
+		}
+		return nullptr;
+	};
+	Packager::createGameListPackage();
+	if (threadReceivedParties && threadReceivedParties->isRunning()) {
+		DEBUG_MSG("Thread was already running, resetting it");
+		threadReceivedParties->close();
+		threadReceivedParties->run(fptr, nullptr);
+	}
+	if (!threadReceivedParties) {
 		threadReceivedParties = new Thread(fptr, nullptr);
 		DEBUG_MSG("Request sent");
 	}
