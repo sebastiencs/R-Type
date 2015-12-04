@@ -88,12 +88,10 @@ void MainMenu::draw()
 	if (paquet) {
 		ListPlayers list = ListPlayers::getInstance();
 		if (paquet->getReturn() == 2) {
-			if (!list.getListPlayers().empty()) {
-				list.getPlayer(0)->setID(paquet->getData());
 				list.setId(paquet->getData());
-				std::cout << "------------> ID : " << list.getId() << std::endl;
-			}
+				std::cout << "------------> ID : " << (int)list.getId() << std::endl;
 		}
+		PC.deleteAnswersPackage();
 	}
 
 }
