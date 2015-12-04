@@ -33,6 +33,9 @@ public:
 
   const Callback_t	&getCallback() const;
   const void		*getParam() const;
+
+  void		setRunning(bool);
+  virtual bool	isRunning() const;
 };
 
 void		*jump(void *);

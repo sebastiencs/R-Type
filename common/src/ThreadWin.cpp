@@ -66,7 +66,11 @@ void	*jump(void *arg)
   Callback_t f = threadC->getCallback();
   const void *param = threadC->getParam();
 
-  return (f(const_cast<void *>(param)));
+  auto value = f(const_cast<void *>(param));
+
+  threadC->setRunning(false);
+
+  return (value);
 }
 
 bool	ThreadWin::close()
@@ -87,4 +91,14 @@ bool	ThreadWin::join()
   _running = false;
   DEBUG_MSG("ThreadWin ended");
   return (true);
+}
+
+void		ThreadWin::setRunning(bool run)
+{
+  _running = run;
+}
+
+bool		ThreadWin::isRunning() const
+{
+  return (_running);
 }

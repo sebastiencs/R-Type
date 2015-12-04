@@ -68,7 +68,11 @@ void	*jump(void *arg)
   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-  return (f(const_cast<void *>(param)));
+  auto value = f(const_cast<void *>(param));
+
+  threadC->setRunning(false);
+
+  return (value);
 }
 
 bool	ThreadUnix::close()
@@ -104,4 +108,14 @@ bool	ThreadUnix::join()
     }
   }
   return (true);
+}
+
+void		ThreadUnix::setRunning(bool run)
+{
+  _running = run;
+}
+
+bool		ThreadUnix::isRunning() const
+{
+  return (_running);
 }
