@@ -21,6 +21,7 @@ private:
   bool		_running;
   Callback_t	_callback;
   void		*_param;
+  void		*_return;
 
 public:
   ThreadWin();
@@ -36,6 +37,9 @@ public:
 
   void		setRunning(bool);
   virtual bool	isRunning() const;
+
+  void		setReturn(void *);
+  virtual void	*getReturn() const;
 };
 
 void		*jump(void *);
