@@ -40,18 +40,22 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
 
 void		Manager::deletePlayer(const Addr &addr)
 {
-  for (PlayerList::iterator it = _pWaiting.begin(); it != _pWaiting.end(); ++it) {
-    if ((*it)->addr() == addr) {
-      _pWaiting.erase(it);
+  {
+    auto &&player = Tools::findIn(_pWaiting, [&addr] (auto &p) { return (p->addr() == addr); });
+
+    if (player != nullptr) {
+      _pWaiting.remove(player);
       return ;
     }
   }
-  for (auto &party : _parties) {
-    party->deletePlayer(addr);
+  {
+    auto &&party = Tools::findIn(_parties, [&addr] (auto &p) { return (p->isPlayer(addr)); });
+
+    if (party != nullptr) {
+      party->deletePlayer(addr);
+    }
     if (!party->getPlayers().size()) {
       _parties.remove(party);
-      DEBUG_MSG("Party remove from Manager");
-      break ;
     }
   }
 }
