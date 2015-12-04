@@ -116,12 +116,9 @@ void OnlineMenu::backButtonLobbyMenu()
 	ListPlayers list = ListPlayers::getInstance();
 	PaquetLeave *leave = new PaquetLeave();
 
-	if (!list.getListPlayers().empty()) {
-		if (list.getPlayer(list.getId()))
-			leave->setID(list.getPlayer(list.getId())->getID());
-		leave->createPaquet();
-		PS.storeToSendTCPPackage(leave);
-	}
+	leave->setID(list.getId());
+	leave->createPaquet();
+	PS.storeToSendTCPPackage(leave);
 	delete lobby;
 	lobby = nullptr;
 	inLobby = false;
