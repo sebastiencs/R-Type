@@ -104,12 +104,12 @@ bool		ThreadWin::isRunning() const
   return (_running);
 }
 
-void		ThreadUnix::setReturn(void *ret)
+void		ThreadWin::setReturn(void *ret)
 {
   _return = ret;
 }
 
-void		*ThreadUnix::getReturn() const
+void		*ThreadWin::getReturn() const
 {
   return (_return);
 }

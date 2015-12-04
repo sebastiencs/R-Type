@@ -44,6 +44,7 @@ private:
 	Box *onlineChoiseBox;
 
 	std::list<Button* > buttons;
+	std::list<PartyNB> games;
 
 	bool inLobby;
 };

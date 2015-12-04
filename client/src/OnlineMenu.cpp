@@ -27,32 +27,33 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-	Callback_t fptr = [this](void *) {
+	Callback_t fptr = [](void* param) {
+		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
 		const Paquet	*tmp = nullptr;
 		while (tmp == nullptr) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getGameListPackage())) {
 				PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
-
-				scrollView->emptyCell();
 				for (auto &party : paquetList.getParties()) {
-					scrollView->createCell(std::get<0>(party), std::get<1>(party));
+					list->push_back(party);
 				}
 				PS.deleteGameListPackage();
 				DEBUG_MSG("Request received");
 			}
 		}
-		return nullptr;
+		return list;
 	};
 	Packager::createGameListPackage();
 	if (threadReceivedParties && threadReceivedParties->isRunning()) {
 		DEBUG_MSG("Thread was already running, resetting it");
+		games.clear();
 		threadReceivedParties->close();
-		threadReceivedParties->run(fptr, nullptr);
+		threadReceivedParties->run(fptr, &games);
 	}
 	if (!threadReceivedParties) {
-		threadReceivedParties = new Thread(fptr, nullptr);
+		games.clear();
+		threadReceivedParties = new Thread(fptr, &games);
 		DEBUG_MSG("Request sent");
 	}
 }
@@ -66,6 +67,12 @@ void OnlineMenu::draw()
 		scrollView->draw();
 		if (createGameMenu != nullptr)
 			createGameMenu->draw();
+		if ((!threadReceivedParties || !threadReceivedParties->isRunning()) && !games.empty()) {
+			scrollView->emptyCell();
+			for (PartyNB p : games)
+				scrollView->createCell(std::get<0>(p), std::get<1>(p));
+			games.clear();
+		}
 	}
 }
 
