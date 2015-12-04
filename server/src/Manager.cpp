@@ -179,7 +179,9 @@ void		Manager::handlePaquet(PaquetLaunch *paquet, const Addr &addr)
 		auto &players = party->getPlayers();
 
 		for (auto &player : players) {
-			write(*paquet, player->addr());
+			if (player->getReady()) {
+				write(*paquet, player->addr());
+			}
 		}
 	}
 	else {
