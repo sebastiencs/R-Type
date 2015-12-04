@@ -2,7 +2,7 @@
 
 PackageStorage & PackageStorage::getInstance()
 {
-	static PackageStorage *instance;
+	static PackageStorage *instance = nullptr;
 	if (instance == nullptr) {
 		instance = new PackageStorage();
 		return *instance;
