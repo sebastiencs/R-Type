@@ -24,10 +24,11 @@ private:
   int		_life;
   uint8_t	_id;
   Addr		_addr;
+  bool		_ready;
 
 public:
   Player();
-  Player(const std::string &, uint8_t, const Position &, uint8_t, int);
+  Player(const std::string &, uint8_t, const Position &, uint8_t, int, bool);
   Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0);
   virtual ~Player();
 
@@ -45,6 +46,9 @@ public:
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
+
+  virtual const bool	&getReady() const;
+  virtual void			setReady(const bool &);
 
   virtual const Addr		&addr() const;
 };

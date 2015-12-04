@@ -54,7 +54,7 @@ void		Manager::deletePlayer(const Addr &addr)
     if (party != nullptr) {
       party->deletePlayer(addr);
     }
-    if (!party->getPlayers().size()) {
+    if (party->getPlayers().empty()) {
       _parties.remove(party);
     }
   }
@@ -168,12 +168,32 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
   delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetLaunch *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetLaunch *paquet, const Addr &addr)
 {
-  // DEBUG_MSG(paquet);
+	DEBUG_MSG(*paquet);
+
+	auto &&party = Tools::findIn(_parties, [&addr](Party *p) { return (p->isPlayer(addr)); });
+
+	if (party) {
+
+		auto &players = party->getPlayers();
+
+		for (auto &player : players) {
+			if (player->getReady()) {
+				write(*paquet, player->addr());
+			}
+		}
+	}
+	else {
+#ifdef DEBUG
+		if (!party) {
+			std::cerr << "JoinParty: Can't find party" << std::endl;
+		}
+#endif // !DEBUG
+	}
 }
 
-void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetLeave *paquet, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getID();
 
@@ -185,6 +205,17 @@ void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
     Player_SharedPtr &&p = party->playerLeave(id);
     if (p) {
       _pWaiting.emplace_back(p);
+    }
+
+    auto &players = party->getPlayers();
+
+    if (players.empty()) {
+      _parties.remove(party);
+    }
+    else {
+      for (auto &player : players) {
+	write(*paquet, player->addr());
+      }
     }
   }
   else {
@@ -250,7 +281,6 @@ void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
   }
   p.createPaquet();
   write(p, addr);
-  DEBUG_MSG(*paquet);
   delete paquet;
 }
 

@@ -68,6 +68,7 @@ void	*jump(void *arg)
 
   auto value = f(const_cast<void *>(param));
 
+  threadC->setReturn(value);
   threadC->setRunning(false);
 
   return (value);
@@ -101,4 +102,14 @@ void		ThreadWin::setRunning(bool run)
 bool		ThreadWin::isRunning() const
 {
   return (_running);
+}
+
+void		ThreadUnix::setReturn(void *ret)
+{
+  _return = ret;
+}
+
+void		*ThreadUnix::getReturn() const
+{
+  return (_return);
 }
