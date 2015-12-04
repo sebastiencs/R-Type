@@ -89,7 +89,7 @@ void LobbyMenu::ready()
 		commands->addDrawable(unReadyb);
 		ListPlayers list = ListPlayers::getInstance();
 		PaquetReady *ready = new PaquetReady();
-		ready->setID(list.getPlayer(list.getId())->getID());
+		ready->setID(list.getId());
 		ready->createPaquet();
 		PackageStorage::getInstance().storeToSendTCPPackage(ready);
 	}
@@ -99,7 +99,7 @@ void LobbyMenu::ready()
 		commands->removeDrawable(unReadyb);
 		commands->addDrawable(readyb);
 		PaquetReady *ready = new PaquetReady();
-		ready->setID(ListPlayers::getInstance().getListPlayers().front()->getID());
+		ready->setID(ListPlayers::getInstance().getId());
 		ready->createPaquet();
 		PackageStorage::getInstance().storeToSendTCPPackage(ready);
 	}
