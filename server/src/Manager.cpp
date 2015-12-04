@@ -42,7 +42,6 @@ void		Manager::deletePlayer(const Addr &addr)
 {
   for (PlayerList::iterator it = _pWaiting.begin(); it != _pWaiting.end(); ++it) {
     if ((*it)->addr() == addr) {
-      // delete *it;
       _pWaiting.erase(it);
       return ;
     }
