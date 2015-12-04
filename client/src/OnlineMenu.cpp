@@ -36,7 +36,7 @@ void OnlineMenu::draw()
 		PackageStorage &PS = PackageStorage::getInstance();
 		const Paquet	*tmp;
 
-		if (tmp = PS.getGameListPackage()) {
+		if ((tmp = PS.getGameListPackage())) {
 			PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 
 			scrollView->emptyCell();
@@ -99,7 +99,7 @@ void OnlineMenu::joinButton()
 				join->createPaquet();
 				PS.storeToSendTCPPackage(join);
 				lobby = new LobbyMenu(engine, this);
-				return;			
+				return;
 			}
 		}
 }
