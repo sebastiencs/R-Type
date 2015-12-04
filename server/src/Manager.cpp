@@ -100,7 +100,7 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 
 void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
-  std::string	name = paquet->getName();
+  const std::string	&name = paquet->getName();
 
   DEBUG_MSG(*paquet);
 
@@ -135,7 +135,7 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 
 void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
-  std::string	name = paquet->getName();
+  const std::string	&name = paquet->getName();
 
   DEBUG_MSG(*paquet);
 
