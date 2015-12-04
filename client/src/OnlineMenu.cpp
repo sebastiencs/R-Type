@@ -93,11 +93,6 @@ void OnlineMenu::joinButton()
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
 			inLobby = true;
 			if (lobby == nullptr) {
-				PackageStorage &PS = PackageStorage::getInstance();
-				PaquetJoinParty *join = new PaquetJoinParty();
-				join->setName(static_cast<Cell *>(c)->getNameParty());
-				join->createPaquet();
-				PS.storeToSendTCPPackage(join);
 				lobby = new LobbyMenu(engine, this);
 				return;
 			}
@@ -117,6 +112,7 @@ void OnlineMenu::backButtonLobbyMenu()
 	PaquetLeave *leave = new PaquetLeave();
 
 	leave->setID(list.getId());
+	std::cout << "-------------> ID : " << (int)list.getId() << std::endl;
 	leave->createPaquet();
 	PS.storeToSendTCPPackage(leave);
 	delete lobby;
