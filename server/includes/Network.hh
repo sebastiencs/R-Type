@@ -50,7 +50,7 @@ private:
   bool				_running;
   IThread_UniquePtr		_thread;
   std::stack<PaquetClient>	_stackPaquet;
-  std::list<ISocketTCP *>	_socketClient;
+  std::list<ISocketTCP_SharedPtr>	_socketClient;
   Manager_WeakPtr		_manager;
   Buffer			_buffer;
 

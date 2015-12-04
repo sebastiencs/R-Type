@@ -88,7 +88,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
   DEBUG_MSG("New client TCP");
 
   ISocketTCP	*sock = _socketTCP->accept();
-  _socketClient.push_back(sock);
+  _socketClient.push_back(ISocketTCP_SharedPtr(sock));
 
   size_t	size_fds = fds.size();
   fds.resize(size_fds + 1);
@@ -107,7 +107,7 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
 inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 {
 
-  auto sock = Tools::findIn(_socketClient, [&socket] (ISocketTCP *sock) { return (sock->socket() == socket); });
+  auto sock = Tools::findIn(_socketClient, [&socket] (auto &sock) { return (sock->socket() == socket); });
 
   ssize_t size = sock->read(_buffer);
 
@@ -120,7 +120,7 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 
     (_manager.lock())->deletePlayer(socket);
 
-    auto it = Tools::findIt(fds, [&socket] (const _pollfd &fd) { return (fd.fd == socket); });
+    auto it = Tools::findIt(fds, [&socket] (auto &fd) { return (fd.fd == socket); });
     if (it != fds.end()) {
       fds.erase(it);
     }

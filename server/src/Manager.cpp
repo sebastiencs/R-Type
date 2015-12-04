@@ -101,13 +101,11 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
-  Party		*party;
-  Player_SharedPtr player;
 
   DEBUG_MSG(*paquet);
 
-  party = Tools::findParty(_parties, name);
-  player = Tools::findPlayer(_pWaiting, addr);
+  auto &&party = Tools::findParty(_parties, name);
+  auto &&player = Tools::findPlayer(_pWaiting, addr);
 
   PaquetResponse	p;
 
@@ -138,11 +136,11 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
 void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 {
   std::string	name = paquet->getName();
-  Player_SharedPtr player;
-  Party		*party;
 
-  party = Tools::findParty(_parties, name);
-  player = Tools::findPlayer(_pWaiting, addr);
+  DEBUG_MSG(*paquet);
+
+  auto &&party = Tools::findParty(_parties, name);
+  auto &&player = Tools::findPlayer(_pWaiting, addr);
 
   PaquetResponse	p;
 
@@ -178,9 +176,8 @@ void		Manager::handlePaquet(PaquetLaunch *paquet UNUSED, const Addr &addr UNUSED
 void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getID();
-  Party		*party;
 
-  party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+  auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
 
   if (party) {
     Player_SharedPtr p = party->playerLeave(id);
@@ -212,11 +209,9 @@ void		Manager::handlePaquet(PaquetObstacle *paquet UNUSED, const Addr &addr UNUS
 void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getPlayerID();
-  Party		*party;
-  PlayerCoord	*pc;
 
-  party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
-  pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
+  auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+  auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
   if (party && pc) {
     party->setCoordPlayer(pc);
   }
@@ -259,7 +254,7 @@ void		Manager::handlePaquet(PaquetRequestPlayers *paquet, const Addr &addr)
 
   DEBUG_MSG(*paquet);
 
-  auto party = Tools::findIn(_parties, [&addr] (Party *p) { return (p->isPlayer(addr)); });
+  auto &&party = Tools::findIn(_parties, [&addr] (Party *p) { return (p->isPlayer(addr)); });
 
   if (party) {
 
