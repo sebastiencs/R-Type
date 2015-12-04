@@ -87,7 +87,7 @@ void MainMenu::draw()
 	const PaquetResponse *paquet = PC.getAnswersPackage();
 	if (paquet) {
 		if (paquet->getReturn() == 2) {
-				ListPlayers list = ListPlayers::getInstance();
+				ListPlayers &list = ListPlayers::getInstance();
 				list.setId(paquet->getData());
 				std::cout << "------------> ID : " << (int)list.getId() << std::endl;
 		}

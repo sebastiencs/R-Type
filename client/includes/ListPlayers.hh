@@ -11,6 +11,10 @@ public:
 	static ListPlayers& getInstance();
 
 	ListPlayers();
+	ListPlayers(const ListPlayers &);
+
+	ListPlayers &operator=(const ListPlayers &);
+
 	virtual ~ListPlayers();
 
 	void addPlayer(Player* player);

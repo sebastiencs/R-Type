@@ -108,7 +108,7 @@ void OnlineMenu::backButtonGameMenu()
 void OnlineMenu::backButtonLobbyMenu()
 {
 	PackageStorage &PS = PackageStorage::getInstance();
-	ListPlayers list = ListPlayers::getInstance();
+	ListPlayers &list = ListPlayers::getInstance();
 	PaquetLeave *leave = new PaquetLeave();
 
 	leave->setID(list.getId());

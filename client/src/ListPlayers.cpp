@@ -1,4 +1,5 @@
 #include "ListPlayers.hh"
+#include "Debug.hh"
 
 ListPlayers & ListPlayers::getInstance()
 {
@@ -14,10 +15,23 @@ ListPlayers & ListPlayers::getInstance()
 
 ListPlayers::ListPlayers()
 {
+  DEBUG_MSG("ListPlayer Constructed");
 }
 
 ListPlayers::~ListPlayers()
 {
+  DEBUG_MSG("ListPlayer deleted");
+}
+
+ListPlayers::ListPlayers(const ListPlayers &)
+{
+  DEBUG_MSG("ListPlayer Copied");
+}
+
+ListPlayers &ListPlayers::operator=(const ListPlayers &)
+{
+  DEBUG_MSG("ListPlayer attributed");
+  return (*this);
 }
 
 void ListPlayers::addPlayer(Player* player)

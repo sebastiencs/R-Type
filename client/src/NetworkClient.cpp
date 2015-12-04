@@ -8,9 +8,9 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	_socketTCP(new PaquetTCP(SocketTCP::CLIENT))
 {
 	PaquetFirst *paquet = new PaquetFirst();
-	
+
 	// Creation du player
-	ListPlayers list = ListPlayers::getInstance();
+	ListPlayers &list = ListPlayers::getInstance();
 	std::string name = "Player0";
 	Player *player = new Player(name, 1, (0, 0), 0);
 	list.addPlayer(player);

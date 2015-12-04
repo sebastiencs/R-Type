@@ -87,7 +87,7 @@ void LobbyMenu::ready()
 		ready->setColor(Color::Red);
 		commands->removeDrawable(readyb);
 		commands->addDrawable(unReadyb);
-		ListPlayers list = ListPlayers::getInstance();
+		ListPlayers &list = ListPlayers::getInstance();
 		PaquetReady *ready = new PaquetReady();
 		ready->setID(list.getId());
 		ready->createPaquet();
