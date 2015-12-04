@@ -118,6 +118,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetListPlayers &p)
        << ", level : " << (int)std::get<2>(player)
        << " }" << std::endl;
   }
-  os << " };" << std::endl;
+  os << " };";
   return (os);
 }

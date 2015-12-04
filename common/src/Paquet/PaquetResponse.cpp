@@ -80,6 +80,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetResponse &p)
   p.parsePaquet();
   os << "PaquetResponse = { return : " << p.getReturn()
      << ", data : '" << p.getData()
-     << " };" << std::endl;
+     << " };";
   return (os);
 }

@@ -70,6 +70,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetObstacle &p)
 	os << "PaquetObstacle = " << std::endl
 		<< " { Obstacle type: " << p.getType()
 		<< ", Position: [" << p.getX() << " - " << p.getY() << "]"
-		<< " };" << std::endl;
+		<< " };";
 	return (os);
 }

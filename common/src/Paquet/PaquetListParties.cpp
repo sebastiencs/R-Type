@@ -112,6 +112,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetListParties &p)
        << "', nb : " << (int)std::get<1>(party)
        << " }" << std::endl;
   }
-  os << " };" << std::endl;
+  os << " };";
   return (os);
 }

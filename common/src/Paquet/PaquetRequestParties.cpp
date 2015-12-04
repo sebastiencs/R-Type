@@ -52,6 +52,6 @@ void			PaquetRequestParties::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetRequestParties &p)
 {
   p.parsePaquet();
-  os << "PaquetRequestParties = {};" << std::endl;
+  os << "PaquetRequestParties = {};";
   return (os);
 }

@@ -88,6 +88,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
 		<< " { PlayerID: " << p.getPlayerID()
 		<< ", Shot type: " << p.getType()
 		<< ", Position: [" << p.getX() << " - " << p.getY() << "]"
-		<< " };" << std::endl;
+		<< " };";
 	return (os);
 }

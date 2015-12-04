@@ -52,6 +52,6 @@ void			PaquetLaunch::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetLaunch &p)
 {
   p.parsePaquet();
-  os << "PaquetLaunch = {};" << std::endl;
+  os << "PaquetLaunch = {};";
   return (os);
 }

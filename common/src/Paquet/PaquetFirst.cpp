@@ -103,6 +103,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetFirst &p)
   os << "PaquetFirst = { version : " << version
      << ", name : '" << p.getName()
      << "', level : " << level
-     << " };" << std::endl;
+     << " };";
   return (os);
 }

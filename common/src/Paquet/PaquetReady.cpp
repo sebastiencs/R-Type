@@ -67,6 +67,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetReady &p)
 
   int		playerID = p.getID();
 
-  os << "PaquetReady = { playerID : " << playerID << " };" << std::endl;
+  os << "PaquetReady = { playerID : " << playerID << " };";
   return (os);
 }
