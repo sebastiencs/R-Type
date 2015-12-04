@@ -54,7 +54,7 @@ void		Manager::deletePlayer(const Addr &addr)
     if (party != nullptr) {
       party->deletePlayer(addr);
     }
-    if (!party->getPlayers().size()) {
+    if (party->getPlayers().empty()) {
       _parties.remove(party);
     }
   }
@@ -186,6 +186,17 @@ void		Manager::handlePaquet(PaquetLeave *paquet UNUSED, const Addr &addr UNUSED)
     if (p) {
       _pWaiting.emplace_back(p);
     }
+
+    auto &players = party->getPlayers();
+
+    if (players.empty()) {
+      _parties.remove(party);
+    }
+    else {
+      for (auto &player : players) {
+	write(*paquet, player->addr());
+      }
+    }
   }
   else {
     std::cout << "Can't find party (PaquetLeave)" << std::endl;
@@ -250,7 +261,6 @@ void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
   }
   p.createPaquet();
   write(p, addr);
-  DEBUG_MSG(*paquet);
   delete paquet;
 }
 
