@@ -1,6 +1,8 @@
 #ifndef ONLINE_MENU_HH_
 # define ONLINE_MENU_HH_
 
+# include <chrono>
+# include <thread>
 # include "DisplayUpdater.hh"
 # include "ScrollView.hh"
 # include "Packager.hh"

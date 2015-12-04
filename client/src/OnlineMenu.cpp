@@ -30,8 +30,8 @@ void OnlineMenu::createRequestPartiesPaquet()
 	Callback_t fptr = [this](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
 		const Paquet	*tmp = nullptr;
-
 		while (tmp == nullptr) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getGameListPackage())) {
 				PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
 

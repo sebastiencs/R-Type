@@ -7,15 +7,17 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	right = nullptr;
 	left = new Box(Orientation::vertical, Transformation(250, 200), "leftBox");
 	left->setSpacing(80);
-	for (size_t t = 0; t < 4; ++t) {
+	ListPlayers& playerList = ListPlayers::getInstance();
+	size_t t = 0;
+	for (Player* p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
 		tr.setScale((float)2.0, (float)2.0);
 		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
 		tr.setScale((float)1, (float)1);
-		TextField* playerName = new TextField("Player" + std::to_string(t), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "Player" + std::to_string(t), engine);
+		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
 		TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
-		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(t) + "Box");
+		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + p->getName() + "Box");
 		box->setSpacing(50);
 		box->addDrawable(playerVessel);
 		box->addDrawable(playerName);
@@ -23,6 +25,12 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 		box->addDrawable(playerStatus);
 		playerInfo.push_back(box);
 		left->addDrawable(box);
+		++t;
+	}
+	while (t < 4) {
+		TextField* empty = new TextField("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
+		left->addDrawable(empty);
+		++t;
 	}
 	commands = new Box(Orientation::horizontal, Transformation(200, 500), "commandBox");
 	commands->setSpacing(100);
@@ -77,7 +85,7 @@ void LobbyMenu::ready()
 {
 	// TODO: savoir quel # on est, pour l'instant 0
 	ListPlayers &list = ListPlayers::getInstance();
-	Box* player = static_cast<Box* >(left->getElement("Player" + std::to_string(list.getId()) + "Box"));
+	Box* player = static_cast<Box* >(left->getElement("Player" + list.getListPlayers().front()->getName() + "Box"));
 	if (!player)
 		return;
 	TextField* ready = static_cast<TextField*>(player->getElement("Ready"));
