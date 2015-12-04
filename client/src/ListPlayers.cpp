@@ -2,7 +2,7 @@
 
 ListPlayers & ListPlayers::getInstance()
 {
-	static ListPlayers *instance;
+	static ListPlayers *instance = nullptr;
 	if (instance == nullptr) {
 		instance = new ListPlayers();
 		return *instance;
