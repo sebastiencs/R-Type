@@ -139,11 +139,6 @@ void OnlineMenu::onCreateGame()
 	DEBUG_MSG("Create party : " + createGameMenu->getServerName()->getText());
 	PS.storeToSendTCPPackage(paquet);
 
-	PaquetJoinParty *join = new PaquetJoinParty();
-	join->setName(createGameMenu->getServerName()->getText());
-	join->createPaquet();
-	PS.storeToSendTCPPackage(join);
-
 	delete createGameMenu;
 	createGameMenu = nullptr;
 	createRequestPartiesPaquet();
