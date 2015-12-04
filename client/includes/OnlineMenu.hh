@@ -36,6 +36,7 @@ private:
 	IGraphicEngine *engine;
 	LobbyMenu *lobby;
 	CreateGameMenu *createGameMenu;
+	IThread *threadReceivedParties;
 
 	ScrollView *scrollView;
 	Box *onlineChoiseBox;

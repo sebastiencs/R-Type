@@ -1,4 +1,5 @@
 #include "OnlineMenu.hh"
+#include "IThread.hh"
 #include "ListPlayers.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
@@ -8,6 +9,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
 	createGameMenu = nullptr;
+	threadReceivedParties = nullptr;
 	lobby = nullptr;
 	inLobby = false;
 	menu();
@@ -16,16 +18,40 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 OnlineMenu::~OnlineMenu()
 {
 	delete(scrollView);
+
+	if (threadReceivedParties) {
+		threadReceivedParties->close();
+		delete threadReceivedParties;
+	}
 }
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
-	PackageStorage &PS = PackageStorage::getInstance();
+	Packager::createGameListPackage();
+	// TODO: add isRunning to know if thread should be called again
+	if (!threadReceivedParties) {
+		Callback_t fptr = [this](void *arg) {
+			PackageStorage &PS = PackageStorage::getInstance();
+			const Paquet	*tmp = nullptr;
 
-	PaquetRequestParties	*paquet = new PaquetRequestParties();
-	paquet->createPaquet();
-	PS.storeToSendTCPPackage(paquet);
-	DEBUG_MSG("Request send");
+			while (tmp == nullptr) {
+				if ((tmp = PS.getGameListPackage())) {
+					Sleep(3000);
+					PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
+
+					scrollView->emptyCell();
+					for (auto &party : paquetList.getParties()) {
+						scrollView->createCell(std::get<0>(party), std::get<1>(party));
+					}
+					PS.deleteGameListPackage();
+					DEBUG_MSG("Request received");
+				}
+			}
+			return nullptr;
+		};
+		threadReceivedParties = new Thread(fptr, nullptr);
+		DEBUG_MSG("Request sent");
+	}
 }
 
 void OnlineMenu::draw()
@@ -33,19 +59,6 @@ void OnlineMenu::draw()
 	if (inLobby && lobby != nullptr)
 		lobby->draw();
 	else {
-		PackageStorage &PS = PackageStorage::getInstance();
-		const Paquet	*tmp;
-
-		if ((tmp = PS.getGameListPackage())) {
-			PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
-
-			scrollView->emptyCell();
-			for (auto &party : paquetList.getParties()) {
-				scrollView->createCell(std::get<0>(party), std::get<1>(party));
-			}
-			PS.deleteGameListPackage();
-			DEBUG_MSG("Request received");
-		}
 		onlineChoiseBox->draw();
 		scrollView->draw();
 		if (createGameMenu != nullptr)
@@ -91,8 +104,13 @@ void OnlineMenu::joinButton()
 	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
+			
 			inLobby = true;
 			if (lobby == nullptr) {
+				if (threadReceivedParties) {
+					threadReceivedParties->close();
+					delete threadReceivedParties;
+				}
 				lobby = new LobbyMenu(engine, this);
 				return;
 			}
@@ -107,34 +125,23 @@ void OnlineMenu::backButtonGameMenu()
 
 void OnlineMenu::backButtonLobbyMenu()
 {
-	PackageStorage &PS = PackageStorage::getInstance();
 	ListPlayers &list = ListPlayers::getInstance();
-	PaquetLeave *leave = new PaquetLeave();
+	Packager::createLeavePackage(list.getId());
 
-	leave->setID(list.getId());
-	std::cout << "-------------> ID : " << (int)list.getId() << std::endl;
-	leave->createPaquet();
-	PS.storeToSendTCPPackage(leave);
 	delete lobby;
 	lobby = nullptr;
 	inLobby = false;
-	DEBUG_MSG("You just leave the lobby");
+	DEBUG_MSG("You just left the lobby");
 }
 
 void OnlineMenu::onCreateGame()
 {
-	PackageStorage &PS = PackageStorage::getInstance();
-
-	PaquetCreateParty	*paquet = new PaquetCreateParty();
-
-	paquet->setName(createGameMenu->getServerName()->getText());
-	paquet->createPaquet();
-	DEBUG_MSG("Create party : " + createGameMenu->getServerName()->getText());
-	PS.storeToSendTCPPackage(paquet);
+	Packager::createCreatePartyPackage(createGameMenu->getServerName()->getText());
+	createRequestPartiesPaquet();
 
 	delete createGameMenu;
 	createGameMenu = nullptr;
-	createRequestPartiesPaquet();
+
 	inLobby = true;
 	if (lobby == nullptr)
 		lobby = new LobbyMenu(engine, this);
