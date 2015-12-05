@@ -41,7 +41,7 @@ Party::~Party()
 void			Party::run()
 {
   for (;;) {
-    std::cerr << "A party is running" << std::endl;
+//    std::cerr << "A party is running" << std::endl;
 
     IOEvent::wait(6000);
   }

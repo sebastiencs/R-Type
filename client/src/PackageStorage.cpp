@@ -1,4 +1,5 @@
 #include "PackageStorage.hh"
+#include "Debug.hh"
 
 PackageStorage & PackageStorage::getInstance()
 {
@@ -24,54 +25,62 @@ const Paquet *PackageStorage::getReceivedPackage() const {
 }
 
 const PaquetPlayerCoord *PackageStorage::getPlayersPackage() const {
+	if (!players.empty())
+		DEBUG_MSG(*players.front());
 	return players.empty() ? nullptr : players.front();
 }
 
 const PaquetPlayerCoord *PackageStorage::getEnemiesPackage() const {
+	if (!obstacles.empty())
+		DEBUG_MSG(*enemies.front());
 	return enemies.empty() ? nullptr : enemies.front();
 }
 
 const PaquetObstacle *PackageStorage::getObstaclesPackage() const {
+	if (!obstacles.empty())
+		DEBUG_MSG(*obstacles.front());
 	return obstacles.empty() ? nullptr : obstacles.front();
 }
 
-const PaquetPlayerShot * PackageStorage::getShotsPackage() const
-{
+const PaquetPlayerShot * PackageStorage::getShotsPackage() const {
+	if (!shots.empty())
+		DEBUG_MSG(*shots.front());
 	return shots.empty() ? nullptr : shots.front();
 }
 
-const Paquet * PackageStorage::getToSendUDPPackage() const
-{
+const Paquet * PackageStorage::getToSendUDPPackage() const {
 	return toSendUDP.empty() ? nullptr : toSendUDP.front();
 }
 
-const Paquet * PackageStorage::getToSendTCPPackage() const
-{
+const Paquet * PackageStorage::getToSendTCPPackage() const {
 	return toSendTCP.empty() ? nullptr : toSendTCP.front();
 }
 
-const PaquetListParties * PackageStorage::getGameListPackage() const
-{
+const PaquetListParties * PackageStorage::getGameListPackage() const {
+	if (!gameList.empty())
+		DEBUG_MSG(*gameList.front());
 	return gameList.empty() ? nullptr : gameList.front();
 }
 
-const PaquetListPlayers * PackageStorage::getPlayerListPackage() const
-{
+const PaquetListPlayers * PackageStorage::getPlayerListPackage() const {
+	if (!playerList.empty())
+		DEBUG_MSG(*playerList.front());
 	return playerList.empty() ? nullptr : playerList.front();
 }
 
-const PaquetResponse * PackageStorage::getAnswersPackage() const
-{
+const PaquetResponse * PackageStorage::getAnswersPackage() const {
+	if (!answers.empty())
+		DEBUG_MSG(*answers.front());
 	return answers.empty() ? nullptr : answers.front();
 }
 
-const PaquetLaunch * PackageStorage::getLaunchPackage() const
-{
+const PaquetLaunch * PackageStorage::getLaunchPackage() const {
+	if (!launch.empty())
+		DEBUG_MSG(*launch.front());
 	return launch.empty() ? nullptr : launch.front();
 }
 
-void PackageStorage::storeReceivedPackage(Paquet * package)
-{
+void PackageStorage::storeReceivedPackage(Paquet * package) {
 	received.push_back(package);
 	_semIn->post();
 }

@@ -127,7 +127,6 @@ int NetworkClient::runRead()
 					if (fd.fd == _socketUDP->socket())
 					{
 						this->_socketUDP->read(buffer);
-						DEBUG_MSG(buffer);
 						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						break;
 					}
@@ -153,7 +152,6 @@ int NetworkClient::runRead()
 						}
 
 						if (n > 0) {
-							DEBUG_MSG(buffer);
 							PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						}
 						break;

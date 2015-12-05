@@ -55,6 +55,40 @@ LobbyMenu::~LobbyMenu()
 		delete right;
 }
 
+void LobbyMenu::createRequestListPlayersPaquet()
+{
+	Callback_t fptr = [](void* param) {
+		PackageStorage &PS = PackageStorage::getInstance();
+		ListPlayers &LP = ListPlayers::getInstance();
+		const Paquet	*tmp = nullptr;
+
+		while (tmp == nullptr) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			if ((tmp = PS.getPlayerListPackage())) {
+				PaquetListPlayers paquetList((void *)tmp->getData(), tmp->getSize());
+				for (auto p: paquetList.getPlayers()) {
+					if (LP.getPlayer(std::get<1>(p)) == nullptr)
+						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+				}
+				PS.deleteGameListPackage();
+				DEBUG_MSG("Request received");
+			}
+		}
+		return nullptr;
+	};
+	Packager::createGameListPackage();
+	if (threadReceivedListPlayers && threadReceivedListPlayers->isRunning()) {
+		DEBUG_MSG("Thread was already running, resetting it");
+		threadReceivedListPlayers->close();
+		threadReceivedListPlayers->run(fptr, nullptr);
+	}
+	if (!threadReceivedListPlayers) {
+		threadReceivedListPlayers = new Thread(fptr, nullptr);
+		DEBUG_MSG("Request sent");
+	}
+}
+
+
 void LobbyMenu::draw()
 {
 	if (left)
@@ -63,6 +97,25 @@ void LobbyMenu::draw()
 	//	commands->draw();
 	if (right)
 		right->draw();
+
+
+
+	/* TMP */
+	//PackageStorage &PS = PackageStorage::getInstance();
+	//ListPlayers &LP = ListPlayers::getInstance();
+	//const Paquet	*tmp = nullptr;
+
+	//if ((tmp = PS.getPlayerListPackage())) {
+	//	PaquetListPlayers paquetList((void *)tmp->getData(), tmp->getSize());
+	//	for (auto p : paquetList.getPlayers()) {
+	//		if (LP.getPlayer(std::get<1>(p)) == nullptr)
+	//			LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+	//	}
+	//	PS.deletePlayerListPackage();
+	//}
+	/* !TMP*/
+
+
 }
 
 void LobbyMenu::onHover(uint32_t x, uint32_t y)

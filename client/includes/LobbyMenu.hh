@@ -12,6 +12,9 @@ public:
 	LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview);
 	~LobbyMenu();
 
+	void createRequestListPlayersPaquet();
+
+	//Drawable
 	void draw();
 	void onHover(uint32_t x, uint32_t y);
 	bool onClick(uint32_t x, uint32_t y);
@@ -23,6 +26,7 @@ protected:
 	IGraphicEngine* engine;
 	std::vector<Box*> playerInfo;
 	OnlineMenu *_superview;
+	IThread *threadReceivedListPlayers;
 	Box* left;
 	Box* commands;
 	Box* right;
