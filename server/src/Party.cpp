@@ -127,3 +127,7 @@ void			Party::setReady(uint8_t id)
 		player->setReady(true);
 	}
 }
+
+void			Party::setPlayerShot(PlayerShot *ps UNUSED)
+{
+}

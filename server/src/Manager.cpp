@@ -246,9 +246,25 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
   delete paquet;
 }
 
-void		Manager::handlePaquet(PaquetPlayerShot *paquet UNUSED, const Addr &addr UNUSED)
+void		Manager::handlePaquet(PaquetPlayerShot *paquet, const Addr &addr UNUSED)
 {
-  // DEBUG_MSG(paquet);
+	uint8_t	id = paquet->getPlayerID();
+
+	DEBUG_MSG(*paquet);
+
+	auto &&party = Tools::findIn(_parties, [id](Party *p) { return (p->isPlayer(id)); });
+	auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getPlayerID());
+	if (party && ps) {
+		party->setPlayerShot(ps);
+	}
+	else {
+#ifdef DEBUG
+		if (!party) {
+			std::cerr << "Can't find party" << std::endl;
+		}
+#endif // !DEBUG
+	}
+	delete paquet;
 }
 
 void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
@@ -280,11 +296,13 @@ void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
 			}
 		}
 	}
+	else {
 #ifdef DEBUG
-	if (!party) {
-		std::cerr << "Ready: Can't find party" << std::endl;
-	}
+		if (!party) {
+			std::cerr << "Ready: Can't find party" << std::endl;
+		}
 #endif // !DEBUG
+	}
 	delete paquet;
 }
 
