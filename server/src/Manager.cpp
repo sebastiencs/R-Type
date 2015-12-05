@@ -240,32 +240,40 @@ void		Manager::handlePaquet(PaquetPlayerShot *paquet UNUSED, const Addr &addr UN
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetReady *paquet UNUSED, const Addr &addr)
+void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
 {
-	//DEBUG_MSG(*paquet);
+	DEBUG_MSG(*paquet);
 
 	size_t			size = 0;
 	PaquetLaunch	p;
 
-	auto &&player = Tools::findIn(_pWaiting, [&addr](auto &p) { return (p->addr() == addr); });
+	uint8_t	id = paquet->getID();
 	auto &&party = Tools::findIn(_parties, [&addr](Party *p) { return (p->isPlayer(addr)); });
 
-	if (player && party) {
-	  
-		party->setReady(player);
+	if (party) {
+
+		party->setReady(id);
 		auto &players = party->getPlayers();
 
 		for (auto &player : players) {
+			write(*paquet, player->addr());
 			if (player->getReady()) {
 				size++;
 			}
+		}
 
-			if (players.size() == size) {
-				p.createPaquet();
+		if (players.size() == size) {
+			p.createPaquet();
+			for (auto &player : players) {
 				write(p, player->addr());
 			}
 		}
 	}
+#ifdef DEBUG
+	if (!party) {
+		std::cerr << "Ready: Can't find party" << std::endl;
+	}
+#endif // !DEBUG
 }
 
 

@@ -120,8 +120,9 @@ void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
 {
 }
 
-void			Party::setReady(Player_SharedPtr player)
+void			Party::setReady(uint8_t id)
 {
+	auto &&player = Tools::findIn(_players, [&id](auto &p) { return (p->getID() == id); });
 	if (player) {
 		player->setReady(true);
 	}
