@@ -18,6 +18,7 @@
 # include "Debug.hh"
 # include "Player.hh"
 # include "PlayerCoord.hh"
+# include "PlayerShot.hh"
 
 class	Manager;
 
@@ -50,7 +51,8 @@ public:
   bool			isPlayer(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);
-  void			setReady(Player_SharedPtr player);
+  void			setReady(uint8_t id);
+  void			setPlayerShot(PlayerShot *ps);
 };
 
 #endif /* !PARTY_H_ */

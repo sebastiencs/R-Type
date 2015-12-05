@@ -19,6 +19,7 @@
 # include "Player.hh"
 # include "Addr.hh"
 # include "PlayerCoord.hh"
+# include "PlayerShot.hh"
 
 typedef std::list<Party *>	PartyList;
 typedef std::list<Player_SharedPtr>	PlayerList;
