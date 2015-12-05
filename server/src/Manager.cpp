@@ -112,10 +112,23 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
   if (party && player && party->addPlayer(player)) {
     _pWaiting.remove(player);
     p.setReturn(4);
+    p.createPaquet();
+    write(p, addr);
 
+    auto &players = party->getPlayers();
+    PaquetListPlayers	paquet;
+    for (auto &p : players) {
+      paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
+    }
+    paquet.createPaquet();
+    for (auto &p : players) {
+      write(paquet, p->addr());
+    }
   }
   else {
     p.setReturn(3);
+    p.createPaquet();
+    write(p, addr);
 #ifdef DEBUG
     if (!player) {
       std::cerr << "JoinParty: Can't find player" << std::endl;
@@ -128,8 +141,6 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
     }
 #endif // !DEBUG
   }
-  p.createPaquet();
-  write(p, addr);
   delete paquet;
 }
 
@@ -251,7 +262,7 @@ void		Manager::handlePaquet(PaquetReady *paquet UNUSED, const Addr &addr)
 	auto &&party = Tools::findIn(_parties, [&addr](Party *p) { return (p->isPlayer(addr)); });
 
 	if (player && party) {
-	  
+
 		party->setReady(player);
 		auto &players = party->getPlayers();
 
