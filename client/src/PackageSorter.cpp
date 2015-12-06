@@ -47,7 +47,7 @@ PackageSorter::PackageSorter()
 	_tab[10] = [this](Paquet *paquet) {
 		PaquetReady *store = new PaquetReady((void *)paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeReadyPackage(store);
-		PackageStorage::getInstance().deleteReadyPackage();
+		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[11] = [this](Paquet *paquet UNUSED) {};
 	_tab[12] = [this](Paquet *paquet UNUSED) {};
