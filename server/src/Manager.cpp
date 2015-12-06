@@ -202,9 +202,18 @@ void		Manager::handlePaquet(PaquetLeave *paquet, const Addr &addr UNUSED)
       _parties.remove(party);
     }
     else {
-      for (auto &player : players) {
-	write(*paquet, player->addr());
+      auto &players = party->getPlayers();
+      PaquetListPlayers	paquet;
+      for (auto &p : players) {
+	paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
       }
+      paquet.createPaquet();
+      for (auto &p : players) {
+	write(paquet, p->addr());
+      }
+      // for (auto &player : players) {
+      // 	write(*paquet, player->addr());
+      // }
     }
   }
   else {
