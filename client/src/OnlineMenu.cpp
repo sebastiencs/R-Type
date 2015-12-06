@@ -28,15 +28,22 @@ OnlineMenu::~OnlineMenu()
 
 void OnlineMenu::createRequestPartiesPaquet()
 {
+	Packager::createGameListPackage();
+	if (threadReceivedParties && threadReceivedParties->isRunning()) {
+		DEBUG_MSG("Thread was already running, resetting it");
+		games.clear();
+		threadReceivedParties->close();
+		threadReceivedParties->reRun();
+		return;
+	}
 	Callback_t fptr = [](void* param) {
 		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
-		const Paquet	*tmp = nullptr;
-		while (tmp == nullptr) {
+		const PaquetListParties	*tmp = nullptr;
+		while (!tmp) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getGameListPackage())) {
-				PaquetListParties* paquetList = dynamic_cast<PaquetListParties*>(const_cast<Paquet* >(tmp));
-				for (auto &party : paquetList->getParties()) {
+				for (auto &party : tmp->getParties()) {
 					list->push_back(party);
 				}
 				PS.deleteGameListPackage();
@@ -45,13 +52,6 @@ void OnlineMenu::createRequestPartiesPaquet()
 		}
 		return list;
 	};
-	Packager::createGameListPackage();
-	if (threadReceivedParties && threadReceivedParties->isRunning()) {
-		DEBUG_MSG("Thread was already running, resetting it");
-		games.clear();
-		threadReceivedParties->close();
-		threadReceivedParties->run(fptr, &games);
-	}
 	if (!threadReceivedParties) {
 		games.clear();
 		threadReceivedParties = new Thread(fptr, &games);
