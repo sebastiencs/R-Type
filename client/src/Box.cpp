@@ -130,6 +130,8 @@ const callback & Box::getCallback() const
 	return *(new callback);
 }
 
+#define MAX(a, b) ((a < b) ? (b) : (a))
+
 void Box::updateTransformation()
 {
 	if (isUpdated || elementsList.empty())
@@ -153,8 +155,8 @@ void Box::updateTransformation()
 				newT.setPosition(lastItemT.getX() + offsetX, lastItemT.getY() + offsetY);
 				d->setTransformation(newT);
 			}
-			boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : std::max(boundWidth, d->getTransformation().getWidth()));
-			boundHeight = (orientation == Orientation::horizontal ? std::max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
+			boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : MAX(boundWidth, d->getTransformation().getWidth()));
+			boundHeight = (orientation == Orientation::horizontal ? MAX(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
 			lastItemT = d->getTransformation();
 		}
 	}
