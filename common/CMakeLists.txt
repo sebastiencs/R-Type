@@ -14,6 +14,7 @@ file (GLOB
   src/IOEvent.cpp
   src/PaquetTCP.cpp
   src/Tools.cpp
+  src/TaskScheduler.cpp
   )
 
 file (GLOB
@@ -27,6 +28,7 @@ file (GLOB
   includes/Addr.hh
   includes/PaquetTCP.hh
   includes/Disconnected.hh
+  includes/TaskScheduler.hh
   )
 
 file(GLOB
