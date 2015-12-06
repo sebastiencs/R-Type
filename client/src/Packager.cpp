@@ -58,10 +58,11 @@ void Packager::createCreatePartyPackage(std::string	_name)
 	PackageStorage::getInstance().storeToSendTCPPackage(create);
 }
 
-void Packager::createReadyPackage(uint8_t _playerID)
+void Packager::createReadyPackage(uint8_t _playerID, uint8_t _ready)
 {
 	PaquetReady *ready = new PaquetReady();
 	ready->setID(_playerID);
+	ready->setStatus(_ready);
 	ready->createPaquet();
 	PackageStorage::getInstance().storeToSendTCPPackage(ready);
 }

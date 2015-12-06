@@ -82,9 +82,6 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				    p->setReady(true);
 				  }
 				}
-				// for (auto p : tmp->getPlayers()) {
-				// 	LP.getPlayer(tmp2->getID())->setReady(true);
-				// }
 				PS.deleteReadyPackage();
 				DEBUG_MSG("Request received");
 				this->setPlayerListChanged(true);
@@ -151,13 +148,16 @@ void LobbyMenu::ready()
 		ready->setColor(Color::Red);
 		commands->removeDrawable(readyb);
 		commands->addDrawable(unReadyb);
+		list.getPlayer(list.getId())->setReady(0);
+		Packager::createReadyPackage(list.getId(), 0);
 	}
 	else {
 		ready->setText("Ready");
 		ready->setColor(Color::Green);
 		commands->removeDrawable(unReadyb);
 		commands->addDrawable(readyb);
-		Packager::createReadyPackage(list.getId());
+		list.getPlayer(list.getId())->setReady(1);
+		Packager::createReadyPackage(list.getId(), 1);
 	}
 }
 

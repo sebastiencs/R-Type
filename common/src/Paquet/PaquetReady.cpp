@@ -37,6 +37,11 @@ void			PaquetReady::setStatus(uint8_t status)
   _status = status;
 }
 
+uint8_t PaquetReady::getID() const
+{
+	return _playerID;
+}
+
 uint8_t			PaquetReady::getStatus() const
 {
   return (_status);

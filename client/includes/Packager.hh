@@ -26,7 +26,7 @@ public:
 	static void createJoinPartyPackage(std::string	_name);
 	static void createCreatePartyPackage(std::string _name);
 
-	static void createReadyPackage(uint8_t	_playerID);
+	static void createReadyPackage(uint8_t	_playerID, uint8_t _ready);
 	static void createLeavePackage(uint8_t	_playerID);
 };
 
