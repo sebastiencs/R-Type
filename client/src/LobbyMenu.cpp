@@ -66,9 +66,9 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				}
 				PS.deletePlayerListPackage();
 				DEBUG_MSG("Request received");
+				this->setPlayerListChanged(true);
 			}
 		}
-		this->setPlayerListChanged(true);
 		return nullptr;
 	};
 
@@ -110,17 +110,17 @@ void LobbyMenu::setPlayerListChanged(bool changed)
 void LobbyMenu::ready()
 {
 	ListPlayers &list = ListPlayers::getInstance();
-	Box* players = static_cast<Box* >(left->getElement("quadPlayerBox"));
+	Box* players = dynamic_cast<Box* >(left->getElement("quadPlayerBox"));
 	if (!players) {
 		DEBUG_MSG("Couldn't retreive QuadPlayerBox");
 		return;
 	}
-	Box* player = static_cast<Box* >(players->getElement("Player" + std::to_string(list.getListPlayers().front()->getID()) + "Box"));
+	Box* player = dynamic_cast<Box* >(players->getElement("Player" + std::to_string(list.getListPlayers().front()->getID()) + "Box"));
 	if (!player) {
 		DEBUG_MSG("Couldn't retreive Player Box");
 		return;
 	}
-	TextField* ready = static_cast<TextField*>(player->getElement("Ready"));
+	TextField* ready = dynamic_cast<TextField*>(player->getElement("Ready"));
 	if (!ready)
 		return;
 	if (ready->getText() == "Ready") {

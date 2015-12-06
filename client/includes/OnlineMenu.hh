@@ -23,6 +23,8 @@ public:
 	void menu();
 	void createRequestPartiesPaquet();
 
+	void setPartyListUpdate(bool changed);
+
 	void draw();
 	void onCreateGame();
 	bool onClick(uint32_t x, uint32_t y);
@@ -46,6 +48,7 @@ private:
 	std::list<Button* > buttons;
 	std::list<PartyNB> games;
 
+	bool partyListUpdate;
 	bool inLobby;
 };
 

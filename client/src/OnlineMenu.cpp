@@ -12,6 +12,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 	threadReceivedParties = nullptr;
 	lobby = nullptr;
 	inLobby = false;
+	partyListUpdate = false;
 	menu();
 }
 
@@ -36,7 +37,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 		threadReceivedParties->reRun();
 		return;
 	}
-	Callback_t fptr = [](void* param) {
+	Callback_t fptr = [this](void* param) {
 		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
 		const PaquetListParties	*tmp = nullptr;
@@ -48,6 +49,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 				}
 				PS.deleteGameListPackage();
 				DEBUG_MSG("Request received");
+				this->setPartyListUpdate(true);
 			}
 		}
 		return list;
@@ -59,6 +61,11 @@ void OnlineMenu::createRequestPartiesPaquet()
 	}
 }
 
+void OnlineMenu::setPartyListUpdate(bool changed)
+{
+	partyListUpdate = true;
+}
+
 void OnlineMenu::draw()
 {
 	if (inLobby && lobby != nullptr)
@@ -68,11 +75,12 @@ void OnlineMenu::draw()
 		scrollView->draw();
 		if (createGameMenu != nullptr)
 			createGameMenu->draw();
-		if ((!threadReceivedParties || !threadReceivedParties->isRunning()) && !games.empty()) {
+		if ((!threadReceivedParties || !threadReceivedParties->isRunning()) && partyListUpdate) {
 			scrollView->emptyCell();
 			for (PartyNB p : games)
 				scrollView->createCell(std::get<0>(p), std::get<1>(p));
 			games.clear();
+			partyListUpdate = false;
 		}
 	}
 }
@@ -150,6 +158,7 @@ void OnlineMenu::backButtonGameMenu()
 {
 	delete createGameMenu;
 	createGameMenu = nullptr;
+	createRequestPartiesPaquet();
 }
 
 void OnlineMenu::backButtonLobbyMenu()
