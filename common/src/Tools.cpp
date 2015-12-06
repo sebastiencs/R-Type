@@ -24,7 +24,7 @@ int		Tools::random(int min, int max)
   return (num);
 };
 
-const std::string	&getUser()
+const std::string	&Tools::getUser()
 {
 #ifdef __unix__
 
