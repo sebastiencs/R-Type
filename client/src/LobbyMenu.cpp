@@ -13,32 +13,6 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	quadPlayerBox->setSpacing(80);
 	
 	createRequestListPlayersPaquet();
-	//ListPlayers& playerList = ListPlayers::getInstance();
-	//size_t t = 0;
-	//for (Player* p : playerList.getListPlayers()) {
-	//	Transformation tr(0, 0);
-	//	tr.setScale((float)2.0, (float)2.0);
-	//	Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
-	//	tr.setScale((float)1, (float)1);
-	//	TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
-	//	TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
-	//	TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
-	//	Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
-	//	box->setSpacing(50);
-	//	box->addDrawable(playerVessel);
-	//	box->addDrawable(playerName);
-	//	box->addDrawable(playerLVL);
-	//	box->addDrawable(playerStatus);
-	//	playerInfo.push_back(box);
-	//	quadPlayerBox->addDrawable(box);
-	//	++t;
-	//}
-	//while (t < 4) {
-	//	TextField* empty = new TextField("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
-	//	quadPlayerBox->addDrawable(empty);
-	//	++t;
-	//}
-
 	updatePlayerList();
 
 	left->addDrawable(quadPlayerBox);
@@ -71,7 +45,7 @@ LobbyMenu::~LobbyMenu()
 
 void LobbyMenu::createRequestListPlayersPaquet()
 {
-	Packager::createGameListPackage();
+	Packager::createPlayerListPackage();
 	if (threadReceivedListPlayers && threadReceivedListPlayers->isRunning()) {
 		DEBUG_MSG("Thread was already running, resetting it");
 		threadReceivedListPlayers->close();
