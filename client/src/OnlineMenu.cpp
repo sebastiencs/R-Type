@@ -35,8 +35,8 @@ void OnlineMenu::createRequestPartiesPaquet()
 		while (tmp == nullptr) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getGameListPackage())) {
-				PaquetListParties paquetList((void *)tmp->getData(), tmp->getSize());
-				for (auto &party : paquetList.getParties()) {
+				PaquetListParties* paquetList = dynamic_cast<PaquetListParties*>(const_cast<Paquet* >(tmp));
+				for (auto &party : paquetList->getParties()) {
 					list->push_back(party);
 				}
 				PS.deleteGameListPackage();
