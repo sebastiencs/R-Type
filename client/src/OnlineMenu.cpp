@@ -61,9 +61,9 @@ void OnlineMenu::createRequestPartiesPaquet()
 	}
 }
 
-void OnlineMenu::setPartyListUpdate(bool changed UNUSED)
+void OnlineMenu::setPartyListUpdate(bool changed)
 {
-	partyListUpdate = true;
+	partyListUpdate = changed;
 }
 
 void OnlineMenu::draw()
