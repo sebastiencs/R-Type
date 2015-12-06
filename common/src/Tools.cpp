@@ -23,3 +23,21 @@ int		Tools::random(int min, int max)
   int num = std::rand() % (max - min) + min;
   return (num);
 };
+
+const std::string	&getUser()
+{
+#ifdef __unix__
+
+  static std::string	namestr;
+  char *user = getlogin();
+
+  namestr = (user) ? (user) : ("Unknown");
+
+  return (namestr);
+
+#elif defined(_WIN32)
+
+
+
+#endif
+}

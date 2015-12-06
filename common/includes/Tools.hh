@@ -17,6 +17,11 @@
 # include <ctime>
 # include <memory>
 
+#ifdef __unix__
+#  include <unistd.h>
+#endif
+
+
 class Addr;
 class Party;
 
@@ -58,7 +63,8 @@ namespace		Tools
     return (findIn(input, [&addr] (typename T::value_type p) { return (p->addr() == addr); }));
   };
 
-  int		random(int min, int max);
+  int			random(int min, int max);
+  const std::string	&getUser();
 
 };
 
