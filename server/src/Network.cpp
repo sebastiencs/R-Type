@@ -166,13 +166,7 @@ bool	Network::write()
 	}
       }
       else {
-
-	Buffer buf(pc.paquet.getData(), pc.paquet.getSize());
-	std::cerr << "Sending: " << buf << std::endl;
-	std::cerr << "Size: " << (int)buf.size() << std::endl;
-	ssize_t size;
-	if ((size = _socketTCP->write(pc.paquet, pc.addr)) >= 0) {
-	  std::cerr << "Sent: " << (int)size << std::endl;
+	if (_socketTCP->write(pc.paquet, pc.addr) >= 0) {
 	  _queuePaquet.pop();
 	}
 	else {
