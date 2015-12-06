@@ -77,10 +77,14 @@ void LobbyMenu::createRequestListPlayersPaquet()
 			}
 
 			if ((tmp2 = PS.getReadyPackage())) {
-				// LP.clearList();
-				for (auto p : tmp->getPlayers()) {
-					LP.getPlayer(tmp2->getID())->setReady(true);
+				for (auto &p : LP.getListPlayers()) {
+				  if (p->getID() == tmp2->getID()) {
+				    p->setReady(true);
+				  }
 				}
+				// for (auto p : tmp->getPlayers()) {
+				// 	LP.getPlayer(tmp2->getID())->setReady(true);
+				// }
 				PS.deleteReadyPackage();
 				DEBUG_MSG("Request received");
 				this->setPlayerListChanged(true);
