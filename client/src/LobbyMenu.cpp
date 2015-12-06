@@ -64,7 +64,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		const PaquetReady	*tmp2 = nullptr;
 
 		while (!tmp && !tmp2) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			IOEvent::wait(50);
 			if ((tmp = PS.getPlayerListPackage())) {
 				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
