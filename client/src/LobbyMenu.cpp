@@ -7,6 +7,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	right = nullptr;
 	threadReceivedListPlayers = nullptr;
 	playerListChanged = true;
+	Packager::createPlayerListPackage();
 	left = new Box(Orientation::vertical, Transformation(250, 200), "leftBox");
 	left->setSpacing(80);
 	quadPlayerBox = new Box(Orientation::vertical, Transformation(0, 0), "quadPlayerBox");
@@ -45,7 +46,6 @@ LobbyMenu::~LobbyMenu()
 
 void LobbyMenu::createRequestListPlayersPaquet()
 {
-	Packager::createPlayerListPackage();
 	if (threadReceivedListPlayers && threadReceivedListPlayers->isRunning()) {
 		DEBUG_MSG("Thread was already running, resetting it");
 		threadReceivedListPlayers->close();
@@ -77,7 +77,6 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		DEBUG_MSG("Request sent");
 	}
 }
-
 
 void LobbyMenu::draw()
 {
