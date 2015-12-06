@@ -54,26 +54,23 @@ void LobbyMenu::createRequestListPlayersPaquet()
 
 	Callback_t fptr = [this](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
-		ListPlayers &LP = ListPlayers::getInstance();
+    ListPlayers &LP = ListPlayers::getInstance();
 
-		for (;;) {
+    const PaquetListPlayers	*tmp = nullptr;
 
-		  const PaquetListPlayers	*tmp = nullptr;
-
-		  while (!tmp) {
-		    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-		    if ((tmp = PS.getPlayerListPackage())) {
-		      for (auto p : tmp->getPlayers()) {
-			if (LP.getPlayer(std::get<1>(p)) == nullptr)
-			  LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
-		      }
-		      PS.deletePlayerListPackage();
-		      DEBUG_MSG("Request received");
-		    }
-		  }
-		  this->setPlayerListChanged(true);
-		}
-		return nullptr;
+    while (!tmp) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
+      if ((tmp = PS.getPlayerListPackage())) {
+        for (auto p : tmp->getPlayers()) {
+          if (LP.getPlayer(std::get<1>(p)) == nullptr)
+            LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+        }
+        PS.deletePlayerListPackage();
+        DEBUG_MSG("Request received");
+      }
+    }
+    this->setPlayerListChanged(true);
+    return nullptr;
 	};
 
 	if (!threadReceivedListPlayers) {
@@ -146,6 +143,7 @@ void LobbyMenu::updatePlayerList()
 {
 	if (playerListChanged) {
 		quadPlayerBox->clearElements();
+    threadReceivedListPlayers->reRun();
 		ListPlayers& playerList = ListPlayers::getInstance();
 		size_t t = 0;
 		for (Player* p : playerList.getListPlayers()) {
