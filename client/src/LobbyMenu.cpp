@@ -79,7 +79,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 			if ((tmp2 = PS.getReadyPackage())) {
 				for (auto &p : LP.getListPlayers()) {
 				  if (p->getID() == tmp2->getID()) {
-				    p->setReady(true);
+				    p->setReady(tmp2->getStatus());
 				  }
 				}
 				PS.deleteReadyPackage();
