@@ -38,6 +38,11 @@ void OnlineMenu::createRequestPartiesPaquet()
 		threadReceivedParties->reRun();
 		return;
 	}
+	else if (threadReceivedParties) {
+		games.clear();
+		threadReceivedParties->reRun();
+		return;
+	}
 	Callback_t fptr = [this](void* param) {
 		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
