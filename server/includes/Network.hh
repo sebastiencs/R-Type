@@ -15,7 +15,7 @@
 # include <memory>
 # include <map>
 # include <functional>
-# include <stack>
+# include <queue>
 # include "Socket.hh"
 # include "Debug.hh"
 # include "Paquets.hh"
@@ -49,7 +49,7 @@ private:
   Selector_UniquePtr		_selector;
   bool				_running;
   IThread_UniquePtr		_thread;
-  std::stack<PaquetClient>	_stackPaquet;
+  std::queue<PaquetClient>	_queuePaquet;
   std::list<ISocketTCP_SharedPtr>	_socketClient;
   Manager_WeakPtr		_manager;
   Buffer			_buffer;

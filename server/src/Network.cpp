@@ -143,7 +143,7 @@ bool	Network::write(const Paquet &paquet, const Addr &addr)
   pc.paquet = paquet;
   pc.addr = addr;
 
-  _stackPaquet.push(pc);
+  _queuePaquet.push(pc);
   _sem->post();
   return (true);
 }
@@ -153,21 +153,27 @@ bool	Network::write()
   while (_running) {
     _sem->wait();
 
-    if (_stackPaquet.size()) {
+    if (_queuePaquet.size()) {
 
-      PaquetClient pc = _stackPaquet.top();
+      PaquetClient pc = _queuePaquet.front();
 
       if (pc.addr.getType() == Addr::UDP) {
 	if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
-	  _stackPaquet.pop();
+	  _queuePaquet.pop();
 	}
 	else {
 	  _sem->post();
 	}
       }
       else {
-	if (_socketTCP->write(pc.paquet, pc.addr) >= 0) {
-	  _stackPaquet.pop();
+
+	Buffer buf(pc.paquet.getData(), pc.paquet.getSize());
+	std::cerr << "Sending: " << buf << std::endl;
+	std::cerr << "Size: " << (int)buf.size() << std::endl;
+	ssize_t size;
+	if ((size = _socketTCP->write(pc.paquet, pc.addr)) >= 0) {
+	  std::cerr << "Sent: " << (int)size << std::endl;
+	  _queuePaquet.pop();
 	}
 	else {
 	  std::cout << "write failed" << std::endl;
