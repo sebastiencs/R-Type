@@ -52,9 +52,9 @@ void			PaquetListPlayers::parsePaquet()
   _listPlayers.clear();
 
   _id = readData<uint8_t>(ptr);
-  _nbPlayers = readData<uint16_t>(ptr);
+  _nbPlayers = readData<uint8_t>(ptr);
 
-  for (uint16_t i = 0; i < _nbPlayers; i += 1) {
+  for (uint8_t i = 0; i < _nbPlayers; i += 1) {
 
     char		name[17];
     uint8_t		id;
@@ -73,10 +73,10 @@ void			PaquetListPlayers::parsePaquet()
 void			PaquetListPlayers::createPaquet()
 {
   size_t	ptr = 0;
-  uint16_t	nb = (uint16_t)_listPlayers.size();
+  uint8_t	nb = (uint8_t)_listPlayers.size();
 
   writeData<uint8_t>(ptr, &_id);
-  writeData<uint16_t>(ptr, &nb);
+  writeData<uint8_t>(ptr, &nb);
 
   for (auto player : _listPlayers) {
 

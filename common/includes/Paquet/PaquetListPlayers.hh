@@ -21,7 +21,7 @@ class		PaquetListPlayers : public Paquet
 {
 private:
   uint8_t			_id;
-  uint16_t			_nbPlayers;
+  uint8_t			_nbPlayers;
   std::list<PlayerIDLevel>	_listPlayers;
 
 public:
