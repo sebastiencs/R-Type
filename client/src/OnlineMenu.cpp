@@ -162,7 +162,6 @@ void OnlineMenu::backButtonGameMenu()
 {
 	delete createGameMenu;
 	createGameMenu = nullptr;
-	createRequestPartiesPaquet();
 }
 
 void OnlineMenu::backButtonLobbyMenu()
@@ -173,20 +172,26 @@ void OnlineMenu::backButtonLobbyMenu()
 	delete lobby;
 	lobby = nullptr;
 	inLobby = false;
+	createRequestPartiesPaquet();
 	DEBUG_MSG("You just left the lobby");
 }
 
 void OnlineMenu::onCreateGame()
 {
 	Packager::createCreatePartyPackage(createGameMenu->getServerName()->getText());
-	createRequestPartiesPaquet();
 
 	delete createGameMenu;
 	createGameMenu = nullptr;
 
 	inLobby = true;
-	if (lobby == nullptr)
+	if (lobby == nullptr) {
+		if (threadReceivedParties) {
+			threadReceivedParties->close();
+			delete threadReceivedParties;
+			threadReceivedParties = nullptr;
+		}
 		lobby = new LobbyMenu(engine, this);
+	}
 }
 
 void OnlineMenu::createButton()
