@@ -40,6 +40,7 @@ public:
 
   void		setReturn(void *);
   virtual void	*getReturn() const;
+  virtual void	reRun();
 };
 
 void		*jump(void *);

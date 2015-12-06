@@ -17,14 +17,6 @@ PaquetResponse::PaquetResponse()
 {
 }
 
-PaquetResponse::PaquetResponse(void *data, size_t len)
-{
-  size_t	ptr = 0;
-
-  writeData<char>(ptr, reinterpret_cast<const char *>(data), len);
-  parsePaquet();
-}
-
 PaquetResponse::PaquetResponse(const Buffer &buf)
 {
   size_t	ptr = 0;
@@ -78,7 +70,7 @@ void			PaquetResponse::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetResponse &p)
 {
   p.parsePaquet();
-  os << "PaquetResponse = { return : " << p.getReturn()
+  os << "PaquetResponse = { return : " << (int)p.getReturn()
      << ", data : '" << p.getData()
      << " };";
   return (os);

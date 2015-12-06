@@ -26,6 +26,7 @@ public:
   virtual bool	join() = 0;
   virtual bool	isRunning() const = 0;
   virtual void	*getReturn() const = 0;
+  virtual void	reRun() = 0;
 };
 
 #include <memory>

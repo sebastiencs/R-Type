@@ -70,14 +70,18 @@ public:
     _size = paquet.getSize();
 
     const uint8_t	*data = paquet.getData();
-    std::copy(data, data + _size, _data);
+    size_t		ptr = 0;
+    writeData(ptr, reinterpret_cast<const uint8_t *>(data), _size);
   }
 
-  Paquet(const void *data, size_t len) {
+  template<typename T>
+  Paquet(const T *data, size_t len) {
+    size_t ptr = 0;
+
     _data = new uint8_t[len];
     _size = len;
 
-    std::copy((uint8_t *)data, (uint8_t *)data + len, _data);
+    writeData(ptr, reinterpret_cast<const uint8_t *>(data), len);
   }
 
   virtual ~Paquet() {

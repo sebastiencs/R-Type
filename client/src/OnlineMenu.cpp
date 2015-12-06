@@ -117,6 +117,9 @@ void OnlineMenu::joinButton()
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
 
 			inLobby = true;
+
+
+
 			if (lobby == nullptr) {
 				if (threadReceivedParties) {
 					threadReceivedParties->close();
@@ -124,6 +127,21 @@ void OnlineMenu::joinButton()
 					threadReceivedParties = nullptr;
 				}
 				lobby = new LobbyMenu(engine, this);
+
+				/* TMP */
+//			PackageStorage &PS = PackageStorage::getInstance();
+//			ListPlayers &LP = ListPlayers::getInstance();
+//			const Paquet	*tmp = nullptr;
+//
+//			if ((tmp = PS.getPlayerListPackage())) {
+//				PaquetListPlayers paquetList((void *)tmp->getData(), tmp->getSize());
+//				for (auto p : paquetList.getPlayers()) {
+//					if (LP.getPlayer(std::get<1>(p)) == nullptr)
+//						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+//				}
+//				PS.deletePlayerListPackage();
+//			}
+			/* !TMP */
 				return;
 			}
 		}

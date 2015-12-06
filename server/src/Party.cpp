@@ -41,7 +41,7 @@ Party::~Party()
 void			Party::run()
 {
   for (;;) {
-    std::cerr << "A party is running" << std::endl;
+//    std::cerr << "A party is running" << std::endl;
 
     IOEvent::wait(6000);
   }
@@ -117,5 +117,17 @@ bool			Party::isPlayer(uint8_t id) const
 }
 
 void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
+{
+}
+
+void			Party::setReady(uint8_t id)
+{
+	auto &&player = Tools::findIn(_players, [&id](auto &p) { return (p->getID() == id); });
+	if (player) {
+		player->setReady(true);
+	}
+}
+
+void			Party::setPlayerShot(PlayerShot *ps UNUSED)
 {
 }

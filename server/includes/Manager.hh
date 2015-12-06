@@ -19,6 +19,7 @@
 # include "Player.hh"
 # include "Addr.hh"
 # include "PlayerCoord.hh"
+# include "PlayerShot.hh"
 
 typedef std::list<Party *>	PartyList;
 typedef std::list<Player_SharedPtr>	PlayerList;
@@ -55,7 +56,6 @@ public:
   void		handlePaquet(PaquetFirst *, const Addr &);
   void		handlePaquet(PaquetJoinParty *, const Addr &);
   void		handlePaquet(PaquetCreateParty *, const Addr &);
-  void		handlePaquet(PaquetLaunch *, const Addr &);
   void		handlePaquet(PaquetLeave *, const Addr &);
   void		handlePaquet(PaquetListParties *, const Addr &);
   void		handlePaquet(PaquetListPlayers *, const Addr &);

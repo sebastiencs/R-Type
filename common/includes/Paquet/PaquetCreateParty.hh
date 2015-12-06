@@ -22,7 +22,8 @@ private:
 public:
   PaquetCreateParty();
   PaquetCreateParty(const Buffer &);
-  PaquetCreateParty(void *, size_t);
+  template <typename T>
+  PaquetCreateParty(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetCreateParty();
 
   void			setName(const std::string &);

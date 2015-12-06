@@ -27,7 +27,9 @@ private:
 public:
   PaquetListParties();
   PaquetListParties(const Buffer &);
-  PaquetListParties(void *, size_t);
+  template <typename T>
+  PaquetListParties(const T *data, size_t len)
+    : Paquet(data, len) { }
   virtual ~PaquetListParties();
 
   void		addParty(const std::string &, uint8_t);

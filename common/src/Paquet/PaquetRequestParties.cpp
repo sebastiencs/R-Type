@@ -15,14 +15,6 @@ PaquetRequestParties::PaquetRequestParties()
 {
 }
 
-PaquetRequestParties::PaquetRequestParties(void *data, size_t len)
-{
-  size_t	ptr = 0;
-
-  writeData<char>(ptr, reinterpret_cast<const char *>(data), len);
-  parsePaquet();
-}
-
 PaquetRequestParties::PaquetRequestParties(const Buffer &buf)
 {
   size_t	ptr = 0;

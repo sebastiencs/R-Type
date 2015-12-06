@@ -130,3 +130,13 @@ void		*ThreadUnix::getReturn() const
 {
   return (_return);
 }
+
+void	ThreadUnix::reRun()
+{
+  if (!_running) {
+    run(_callback, _param);
+  }
+  else {
+    DEBUG_MSG("Try to reRun a empty thread");
+  }
+}
