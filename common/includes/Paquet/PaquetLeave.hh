@@ -22,7 +22,8 @@ private:
 public:
   PaquetLeave();
   PaquetLeave(const Buffer &);
-  PaquetLeave(void *, size_t);
+  template <typename T>
+  PaquetLeave(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetLeave();
 
   void		setID(uint8_t);

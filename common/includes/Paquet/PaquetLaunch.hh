@@ -21,7 +21,8 @@ private:
 public:
   PaquetLaunch();
   PaquetLaunch(const Buffer &);
-  PaquetLaunch(void *, size_t);
+  template <typename T>
+  PaquetLaunch(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetLaunch();
 
   void		createPaquet();

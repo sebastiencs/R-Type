@@ -21,7 +21,8 @@ private:
 public:
   PaquetRequestPlayers();
   PaquetRequestPlayers(const Buffer &);
-  PaquetRequestPlayers(void *, size_t);
+  template <typename T>
+  PaquetRequestPlayers(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetRequestPlayers();
 
   void		createPaquet();

@@ -23,7 +23,8 @@ private:
 public:
   PaquetResponse();
   PaquetResponse(const Buffer &);
-  PaquetResponse(void *, size_t);
+  template <typename T>
+  PaquetResponse(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetResponse();
 
   void		setReturn(uint8_t);

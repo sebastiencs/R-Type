@@ -22,7 +22,8 @@ private:
 public:
   PaquetJoinParty();
   PaquetJoinParty(const Buffer &);
-  PaquetJoinParty(void *, size_t);
+  template <typename T>
+  PaquetJoinParty(const T *data, size_t len) : Paquet(data, len) { }
   virtual ~PaquetJoinParty();
 
   void			setName(const std::string &);
