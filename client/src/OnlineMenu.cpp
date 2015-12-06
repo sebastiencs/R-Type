@@ -127,9 +127,20 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 
 void OnlineMenu::joinButton()
 {
+	PackageStorage &PS = PackageStorage::getInstance();
 	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
+
+			const PaquetResponse *paquet = nullptr;
+			ITimer *t = new Timer();
+			t->start();
+			do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
+			delete t;
+			if (paquet->getReturn() == 3) {
+			  DEBUG_MSG("Can't join party");
+			  return ;
+			}
 
 			inLobby = true;
 
@@ -141,7 +152,6 @@ void OnlineMenu::joinButton()
 				}
 
 				/* a changer? on att que le serv nous renvoie la liste des joueurs avant de rejoindre (= freeze)*/
-				PackageStorage &PS = PackageStorage::getInstance();
 				ListPlayers &LP = ListPlayers::getInstance();
 				const PaquetListPlayers	*paquetList = nullptr;
 
