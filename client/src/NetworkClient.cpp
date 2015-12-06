@@ -152,6 +152,7 @@ int NetworkClient::runRead()
 						}
 
 						if (n > 0) {
+							DEBUG_MSG(buffer);
 							PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						}
 						break;
