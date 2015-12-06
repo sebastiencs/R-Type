@@ -32,11 +32,6 @@ void			PaquetReady::setID(uint8_t id)
   _playerID = id;
 }
 
-uint8_t			PaquetReady::getID() const
-{
-  return (_playerID);
-}
-
 void			PaquetReady::setStatus(uint8_t status)
 {
   _status = status;
