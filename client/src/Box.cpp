@@ -153,8 +153,8 @@ void Box::updateTransformation()
 				newT.setPosition(lastItemT.getX() + offsetX, lastItemT.getY() + offsetY);
 				d->setTransformation(newT);
 			}
-			boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : std::max(boundWidth, d->getTransformation().getWidth()));
-			boundHeight = (orientation == Orientation::horizontal ? std::max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
+			boundWidth = (orientation == Orientation::horizontal ? boundWidth + d->getTransformation().getWidth() + spacing : max(boundWidth, d->getTransformation().getWidth()));
+			boundHeight = (orientation == Orientation::horizontal ? max(boundHeight, d->getTransformation().getHeight()) : boundHeight + d->getTransformation().getHeight() + spacing);
 			lastItemT = d->getTransformation();
 		}
 	}

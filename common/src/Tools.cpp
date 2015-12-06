@@ -37,7 +37,14 @@ const std::string	&getUser()
 
 #elif defined(_WIN32)
 
+	static std::string username;
+	char user[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
 
+	GetUserName(user, &username_len);
 
+	username = (user) ? (user) : ("Unknown");
+
+	return (username);
 #endif
 }

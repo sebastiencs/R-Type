@@ -1,6 +1,7 @@
 #include <NetworkClient.hh>
 #include "ListPlayers.hh"
 #include "PaquetTCP.hh"
+#include "Tools.hh"
 #include "PackagerTranslator.hh"
 
 NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
@@ -11,7 +12,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 
 	// Creation du player
 	ListPlayers &list = ListPlayers::getInstance();
-	std::string name = "Player0";
+	std::string name = Tools::getUser();
 	Player *player = new Player(name, 0, 0);
 	list.addPlayer(player);
 	//!Creation
