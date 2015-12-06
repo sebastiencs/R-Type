@@ -49,9 +49,11 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		DEBUG_MSG("Thread was already running, resetting it");
 		threadReceivedListPlayers->close();
 		threadReceivedListPlayers->reRun();
+		return;
 	}
 	else if (threadReceivedListPlayers) {
 		threadReceivedListPlayers->reRun();
+		return;
 	}
 
 	Callback_t fptr = [this](void *) {
