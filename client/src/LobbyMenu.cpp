@@ -65,6 +65,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		while (!tmp) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getPlayerListPackage())) {
+				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
 					if (LP.getPlayer(std::get<1>(p)) == nullptr)
 						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
@@ -85,7 +86,8 @@ void LobbyMenu::createRequestListPlayersPaquet()
 
 void LobbyMenu::draw()
 {
-	updatePlayerList();
+	if (playerListChanged)
+		updatePlayerList();
 	if (left)
 		left->draw();
 	if (right)
@@ -120,7 +122,7 @@ void LobbyMenu::ready()
 		DEBUG_MSG("Couldn't retreive QuadPlayerBox");
 		return;
 	}
-	Box* player = dynamic_cast<Box* >(players->getElement("Player" + std::to_string(list.getListPlayers().front()->getID()) + "Box"));
+	Box* player = dynamic_cast<Box* >(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
 	if (!player) {
 		DEBUG_MSG("Couldn't retreive Player Box");
 		return;
@@ -145,38 +147,36 @@ void LobbyMenu::ready()
 
 void LobbyMenu::updatePlayerList()
 {
-	if (playerListChanged) {
-		quadPlayerBox->clearElements();
-		ListPlayers& playerList = ListPlayers::getInstance();
-		size_t t = 0;
-		for (Player* p : playerList.getListPlayers()) {
-			Transformation tr(0, 0);
-			tr.setScale((float)2.0, (float)2.0);
-			Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
-			tr.setScale((float)1, (float)1);
-			TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
-			TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
-			TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
-			Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
-			box->setSpacing(50);
-			box->addDrawable(playerVessel);
-			box->addDrawable(playerName);
-			if (DEBUG) {
-				TextField* playerID = new TextField("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
-				box->addDrawable(playerID);
-			}
-			box->addDrawable(playerLVL);
-			box->addDrawable(playerStatus);
-			playerInfo.push_back(box);
-			quadPlayerBox->addDrawable(box);
-			++t;
+	quadPlayerBox->clearElements();
+	ListPlayers& playerList = ListPlayers::getInstance();
+	size_t t = 0;
+	for (Player* p : playerList.getListPlayers()) {
+		Transformation tr(0, 0);
+		tr.setScale((float)2.0, (float)2.0);
+		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
+		tr.setScale((float)1, (float)1);
+		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
+		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
+		TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
+		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
+		box->setSpacing(50);
+		box->addDrawable(playerVessel);
+		box->addDrawable(playerName);
+		if (DEBUG) {
+			TextField* playerID = new TextField("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
+			box->addDrawable(playerID);
 		}
-		while (t < 4) {
-			TextField* empty = new TextField("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
-			quadPlayerBox->addDrawable(empty);
-			++t;
-		}
-		threadReceivedListPlayers->reRun();
-		playerListChanged = false;
+		box->addDrawable(playerLVL);
+		box->addDrawable(playerStatus);
+		playerInfo.push_back(box);
+		quadPlayerBox->addDrawable(box);
+		++t;
 	}
+	while (t < 4) {
+		TextField* empty = new TextField("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
+		quadPlayerBox->addDrawable(empty);
+		++t;
+	}
+	threadReceivedListPlayers->reRun();
+	playerListChanged = false;
 }
