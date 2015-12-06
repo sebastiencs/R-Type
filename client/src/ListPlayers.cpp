@@ -38,7 +38,15 @@ void ListPlayers::addPlayer(Player* player)
 
 void ListPlayers::clearList()
 {
-	listPlayers.remove_if([this](Player *p) { if (p->getID() != _id) delete p; return (p->getID() != _id); });
+	listPlayers.remove_if([this](Player *p) {
+	    if (p->getID() != _id) {
+	      delete p;
+	      return (true);
+	    }
+	    else {
+	      return (false);
+	    }
+	  });
 }
 
 const std::list<Player*>& ListPlayers::getListPlayers() const
