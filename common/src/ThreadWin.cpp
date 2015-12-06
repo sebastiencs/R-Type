@@ -120,6 +120,6 @@ void	ThreadWin::reRun()
     run(_callback, _param);
   }
   else {
-    DEBUG_MSG("Try to reRun a empty thread");
+    DEBUG_MSG("Try to reRun a running thread");
   }
 }
