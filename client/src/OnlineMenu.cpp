@@ -19,7 +19,8 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 
 OnlineMenu::~OnlineMenu()
 {
-	delete(scrollView);
+	if (scrollView)
+		delete(scrollView);
 
 	if (threadReceivedParties) {
 		threadReceivedParties->close();
