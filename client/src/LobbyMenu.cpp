@@ -17,7 +17,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
 		TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
-		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + p->getName() + "Box");
+		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
 		box->setSpacing(50);
 		box->addDrawable(playerVessel);
 		box->addDrawable(playerName);
@@ -133,8 +133,9 @@ bool LobbyMenu::onClick(uint32_t x, uint32_t y)
 
 void LobbyMenu::ready()
 {
+	// TODO: envoyer Paquet Ready
 	ListPlayers &list = ListPlayers::getInstance();
-	Box* player = static_cast<Box* >(left->getElement("Player" + list.getListPlayers().front()->getName() + "Box"));
+	Box* player = static_cast<Box* >(left->getElement("Player" + std::to_string(list.getListPlayers().front()->getID()) + "Box"));
 	if (!player) {
 		DEBUG_MSG("Couldn't retreive Player Box");
 		return;

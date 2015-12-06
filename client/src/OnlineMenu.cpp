@@ -118,30 +118,29 @@ void OnlineMenu::joinButton()
 
 			inLobby = true;
 
-
-
 			if (lobby == nullptr) {
 				if (threadReceivedParties) {
 					threadReceivedParties->close();
 					delete threadReceivedParties;
 					threadReceivedParties = nullptr;
 				}
-				lobby = new LobbyMenu(engine, this);
 
-				/* TMP */
-//			PackageStorage &PS = PackageStorage::getInstance();
-//			ListPlayers &LP = ListPlayers::getInstance();
-//			const Paquet	*tmp = nullptr;
-//
-//			if ((tmp = PS.getPlayerListPackage())) {
-//				PaquetListPlayers paquetList((void *)tmp->getData(), tmp->getSize());
-//				for (auto p : paquetList.getPlayers()) {
-//					if (LP.getPlayer(std::get<1>(p)) == nullptr)
-//						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
-//				}
-//				PS.deletePlayerListPackage();
-//			}
-			/* !TMP */
+				/* a changer? on att que le serv nous renvoie la liste des joueurs avant de rejoindre (= freeze)*/
+				PackageStorage &PS = PackageStorage::getInstance();
+				ListPlayers &LP = ListPlayers::getInstance();
+				const PaquetListPlayers	*paquetList = nullptr;
+
+				while (!paquetList) {
+					if ((paquetList = PS.getPlayerListPackage())) {
+						for (auto p : paquetList->getPlayers()) {
+							if (LP.getPlayer(std::get<1>(p)) == nullptr)
+								LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+						}
+						PS.deletePlayerListPackage();
+					}
+				}
+				/* ! */
+				lobby = new LobbyMenu(engine, this);
 				return;
 			}
 		}
