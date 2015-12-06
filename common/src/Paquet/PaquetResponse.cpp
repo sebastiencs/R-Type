@@ -78,7 +78,7 @@ void			PaquetResponse::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetResponse &p)
 {
   p.parsePaquet();
-  os << "PaquetResponse = { return : " << p.getReturn()
+  os << "PaquetResponse = { return : " << (int)p.getReturn()
      << ", data : '" << p.getData()
      << " };";
   return (os);
