@@ -1,5 +1,6 @@
 #include "OnlineMenu.hh"
 #include "IThread.hh"
+#include "Timer.hh"
 #include "ListPlayers.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine* eng)
@@ -138,7 +139,9 @@ void OnlineMenu::joinButton()
 				ListPlayers &LP = ListPlayers::getInstance();
 				const PaquetListPlayers	*paquetList = nullptr;
 
-				while (!paquetList) {
+				ITimer* t = new Timer();
+				t->start();
+				while (!paquetList && t->ms() < 3000) {
 					if ((paquetList = PS.getPlayerListPackage())) {
 						for (auto p : paquetList->getPlayers()) {
 							if (LP.getPlayer(std::get<1>(p)) == nullptr)
@@ -147,6 +150,7 @@ void OnlineMenu::joinButton()
 						PS.deletePlayerListPackage();
 					}
 				}
+				delete t;
 				/* ! */
 				lobby = new LobbyMenu(engine, this);
 				return;
