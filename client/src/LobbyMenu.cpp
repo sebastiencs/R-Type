@@ -161,10 +161,10 @@ void LobbyMenu::updatePlayerList()
 			box->setSpacing(50);
 			box->addDrawable(playerVessel);
 			box->addDrawable(playerName);
-			if (DEBUG) {
-				TextField* playerID = new TextField("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
-				box->addDrawable(playerID);
-			}
+#ifdef DEBUG
+			TextField* playerID = new TextField("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
+			box->addDrawable(playerID);
+#endif // !DEBUG
 			box->addDrawable(playerLVL);
 			box->addDrawable(playerStatus);
 			playerInfo.push_back(box);
