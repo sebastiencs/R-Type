@@ -127,8 +127,8 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 
 void OnlineMenu::joinButton()
 {
-  PackageStorage &PS = PackageStorage::getInstance();
-  for (Drawable *c : scrollView->getListCell())
+	PackageStorage &PS = PackageStorage::getInstance();
+	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
 
@@ -138,11 +138,11 @@ void OnlineMenu::joinButton()
 			do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
 			delete t;
 			if (paquet->getReturn() == 3) {
-			  DEBUG_MSG("Can't join party");
-        PS.deleteAnswersPackage();
-        return ;
+				DEBUG_MSG("Can't join party");
+				PS.deleteAnswersPackage();
+				return;
 			}
-      PS.deleteAnswersPackage();
+			PS.deleteAnswersPackage();
 
 			inLobby = true;
 
@@ -197,22 +197,22 @@ void OnlineMenu::backButtonLobbyMenu()
 void OnlineMenu::onCreateGame()
 {
 	Packager::createCreatePartyPackage(createGameMenu->getServerName()->getText());
-  PackageStorage &PS = PackageStorage::getInstance();
+	PackageStorage &PS = PackageStorage::getInstance();
 
 	delete createGameMenu;
 	createGameMenu = nullptr;
 
-  const PaquetResponse *paquet = nullptr;
-  ITimer *t = new Timer();
-  t->start();
-  do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
-  delete t;
-  if (paquet->getReturn() == 3) {
-    DEBUG_MSG("Can't create party");
-    PS.deleteAnswersPackage();
-    return;
-  }
-  PS.deleteAnswersPackage();
+	const PaquetResponse *paquet = nullptr;
+	ITimer *t = new Timer();
+	t->start();
+	do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
+	delete t;
+	if (paquet->getReturn() == 3) {
+		DEBUG_MSG("Can't create party");
+		PS.deleteAnswersPackage();
+		return;
+	}
+	PS.deleteAnswersPackage();
 
 	inLobby = true;
 	if (lobby == nullptr) {
