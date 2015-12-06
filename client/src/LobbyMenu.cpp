@@ -172,7 +172,7 @@ void LobbyMenu::updatePlayerList()
 			ready = "Ready";
 		else
 			ready = "Unready";
-		TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, ready, engine);
+		TextField* playerStatus = new TextField(ready, tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, ready, engine);
 		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
 		box->setSpacing(50);
 		box->addDrawable(playerVessel);
