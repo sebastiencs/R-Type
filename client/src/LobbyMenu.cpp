@@ -143,7 +143,6 @@ void LobbyMenu::updatePlayerList()
 {
 	if (playerListChanged) {
 		quadPlayerBox->clearElements();
-		threadReceivedListPlayers->reRun();
 		ListPlayers& playerList = ListPlayers::getInstance();
 		size_t t = 0;
 		for (Player* p : playerList.getListPlayers()) {
@@ -169,6 +168,7 @@ void LobbyMenu::updatePlayerList()
 			quadPlayerBox->addDrawable(empty);
 			++t;
 		}
+		threadReceivedListPlayers->reRun();
+		playerListChanged = false;
 	}
-	playerListChanged = false;
 }
