@@ -112,25 +112,6 @@ void LobbyMenu::draw()
 		left->draw();
 	if (right)
 		right->draw();
-
-
-
-	/* TMP */
-	//PackageStorage &PS = PackageStorage::getInstance();
-	//ListPlayers &LP = ListPlayers::getInstance();
-	//const Paquet	*tmp = nullptr;
-
-	//if ((tmp = PS.getPlayerListPackage())) {
-	//	PaquetListPlayers paquetList((void *)tmp->getData(), tmp->getSize());
-	//	for (auto p : paquetList.getPlayers()) {
-	//		if (LP.getPlayer(std::get<1>(p)) == nullptr)
-	//			LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
-	//	}
-	//	PS.deletePlayerListPackage();
-	//}
-	/* !TMP*/
-
-
 }
 
 void LobbyMenu::onHover(uint32_t x, uint32_t y)
@@ -155,7 +136,6 @@ void LobbyMenu::setPlayerListChanged(bool changed)
 
 void LobbyMenu::ready()
 {
-	// TODO: envoyer Paquet Ready
 	ListPlayers &list = ListPlayers::getInstance();
 	Box* players = static_cast<Box* >(left->getElement("quadPlayerBox"));
 	if (!players) {
