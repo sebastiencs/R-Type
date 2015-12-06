@@ -32,9 +32,14 @@ void			PaquetReady::setID(uint8_t id)
   _playerID = id;
 }
 
-uint8_t			PaquetReady::getID() const
+void			PaquetReady::setStatus(uint8_t status)
 {
-  return (_playerID);
+  _status = status;
+}
+
+uint8_t			PaquetReady::getStatus() const
+{
+  return (_status);
 }
 
 void			PaquetReady::parsePaquet()
@@ -43,6 +48,7 @@ void			PaquetReady::parsePaquet()
 
   _id = readData<uint8_t>(ptr);
   _playerID = readData<uint8_t>(ptr);
+  _status = readData<uint8_t>(ptr);
 }
 
 void			PaquetReady::createPaquet()
@@ -51,6 +57,7 @@ void			PaquetReady::createPaquet()
 
   writeData<uint8_t>(ptr, &_id);
   writeData<uint8_t>(ptr, &_playerID);
+  writeData<uint8_t>(ptr, &_status);
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetReady &p)
@@ -58,7 +65,8 @@ std::ostream	&operator<<(std::ostream &os, PaquetReady &p)
   p.parsePaquet();
 
   int		playerID = p.getID();
+  int		status = p.getStatus();
 
-  os << "PaquetReady = { playerID : " << playerID << " };";
+  os << "PaquetReady = { playerID : " << playerID << ", status : " << status << " };";
   return (os);
 }

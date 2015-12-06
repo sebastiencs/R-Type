@@ -18,6 +18,7 @@ class		PaquetReady : public Paquet
 private:
   uint8_t	_id;
   uint8_t	_playerID;
+  uint8_t	_status;
 
 public:
   PaquetReady();
@@ -27,8 +28,10 @@ public:
   virtual ~PaquetReady();
 
   void		setID(uint8_t);
+  void		setStatus(uint8_t);
 
   uint8_t	getID() const;
+  uint8_t	getStatus() const;
 
   void		createPaquet();
   void		parsePaquet();
