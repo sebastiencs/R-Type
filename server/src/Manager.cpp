@@ -140,7 +140,7 @@ void		Manager::handlePaquet(PaquetJoinParty *paquet, const Addr &addr)
       std::cerr << "JoinParty: Can't find party" << std::endl;
     }
     if (party && player) {
-      std::cerr << "JoinParty: Too many players" << std::endl;
+      std::cerr << "JoinParty: Too many players or party already running" << std::endl;
     }
 #endif // !DEBUG
   }
@@ -303,6 +303,7 @@ void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
 
     if (players.size() == size) {
       p.createPaquet();
+      party->setRunning(true);
       for (auto &player : players) {
 	write(p, player->addr());
       }

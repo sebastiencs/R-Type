@@ -16,7 +16,8 @@ Party::Party(const Manager_SharedPtr &&manager)
   : _sem(std::make_unique<Semaphore>()),
     _thread(std::make_unique<Thread>()),
     _manager(std::move(manager)),
-    _name("Unknwon")
+    _name("Unknwon"),
+    _running(false)
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -26,7 +27,8 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
   : _sem(std::make_unique<Semaphore>()),
     _thread(std::make_unique<Thread>()),
     _manager(std::move(manager)),
-    _name(name)
+    _name(name),
+    _running(false)
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -69,7 +71,7 @@ const std::string	&Party::getName() const
 
 bool			Party::addPlayer(Player_SharedPtr player)
 {
-  if (_players.size() < 4) {
+  if (_running == false && _players.size() < 4) {
     _players.emplace_back(player);
     return (true);
   }
@@ -130,4 +132,14 @@ void			Party::setReady(uint8_t id)
 
 void			Party::setPlayerShot(PlayerShot *ps UNUSED)
 {
+}
+
+bool			Party::isRunning() const
+{
+  return (_running);
+}
+
+void			Party::setRunning(bool run)
+{
+  _running = run;
 }

@@ -34,6 +34,7 @@ class			Party
   Manager_WeakPtr	_manager;
   std::string		_name;
   listPlayers		_players;
+  bool			_running;
 
 public:
   Party(const Manager_SharedPtr &&);
@@ -53,6 +54,8 @@ public:
   void			setCoordPlayer(PlayerCoord *pc);
   void			setReady(uint8_t id);
   void			setPlayerShot(PlayerShot *ps);
+  bool			isRunning() const;
+  void			setRunning(bool);
 };
 
 #endif /* !PARTY_H_ */
