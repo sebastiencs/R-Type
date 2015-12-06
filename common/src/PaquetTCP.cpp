@@ -137,6 +137,10 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 
     uint16_t	left = _sizePaquet - _sizeCurrent;
 
+    if (!left) {
+      return (readDone(buf));
+    }
+
     _bufferTMP->reset();
 
 # ifdef __unix__
