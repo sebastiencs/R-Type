@@ -64,7 +64,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 					if (LP.getPlayer(std::get<1>(p)) == nullptr)
 						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
 				}
-				PS.deleteGameListPackage();
+				PS.deletePlayerListPackage();
 				DEBUG_MSG("Request received");
 			}
 		}
