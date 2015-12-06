@@ -12,7 +12,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	// Creation du player
 	ListPlayers &list = ListPlayers::getInstance();
 	std::string name = "Player0";
-	Player *player = new Player(name, 1, 0);
+	Player *player = new Player(name, 0, 0);
 	list.addPlayer(player);
 	//!Creation
 

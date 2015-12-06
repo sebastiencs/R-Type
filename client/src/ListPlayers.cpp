@@ -70,4 +70,5 @@ uint8_t ListPlayers::getId() const
 void ListPlayers::setId(uint8_t id)
 {
 	_id = id;
+  listPlayers.front()->setID(id);
 }
