@@ -57,7 +57,7 @@ LobbyMenu::~LobbyMenu()
 
 void LobbyMenu::createRequestListPlayersPaquet()
 {
-	Callback_t fptr = [](void* param) {
+	Callback_t fptr = [](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
 		ListPlayers &LP = ListPlayers::getInstance();
 		const Paquet	*tmp = nullptr;

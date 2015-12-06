@@ -12,13 +12,13 @@
 #include "Player.hh"
 
 Player::Player()
-	: _name(""),
-	_position(),
-	_level(0),
-	_life(100),
-	_id(0),
-	_ready(false),
-    _addr()
+  : _name(""),
+    _position(),
+    _level(0),
+    _life(100),
+    _id(0),
+    _addr(),
+    _ready(false)
 {
   DEBUG_MSG("Player created");
 }
@@ -31,8 +31,8 @@ Player::Player(const std::string &name, uint8_t id,
     _level(level),
     _life(life),
     _id(id),
-	_ready(ready),
-    _addr()
+    _addr(),
+    _ready(ready)
 {
   DEBUG_MSG("Player created");
 }
