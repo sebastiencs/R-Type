@@ -48,6 +48,11 @@ const PaquetPlayerShot * PackageStorage::getShotsPackage() const {
 	return shots.empty() ? nullptr : shots.front();
 }
 
+const PaquetReady * PackageStorage::getReadyPackage() const
+{
+	return ready.empty() ? nullptr : ready.front();
+}
+
 const Paquet * PackageStorage::getToSendUDPPackage() const {
 	return toSendUDP.empty() ? nullptr : toSendUDP.front();
 }
@@ -103,6 +108,12 @@ void PackageStorage::storeObstaclesPackage(PaquetObstacle * package)
 void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
 {
 	shots.push_back(package);
+}
+
+void PackageStorage::storeShotsReadyPackage(PaquetReady * package)
+{
+	ready.push_back(package);
+	_semOut->post();
 }
 
 void PackageStorage::storeToSendUDPPackage(Paquet * package)
@@ -166,6 +177,12 @@ void PackageStorage::deleteShotsPackage()
 {
 	delete shots.front();
 	shots.erase(shots.begin());
+}
+
+void PackageStorage::deleteReadyPackage()
+{
+	delete ready.front();
+	ready.erase(ready.begin());
 }
 
 void PackageStorage::deleteToSendUDPPackage()

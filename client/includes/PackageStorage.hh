@@ -17,6 +17,7 @@ private:
 	std::list<PaquetPlayerCoord *> enemies;
 	std::list<PaquetObstacle *> obstacles;
 	std::list<PaquetPlayerShot *> shots;
+	std::list<PaquetReady *> ready;
 	std::list<PaquetListParties *> gameList;
 	std::list<PaquetListPlayers *> playerList;
 	std::list<PaquetResponse *> answers;
@@ -38,6 +39,7 @@ public:
 	const PaquetPlayerCoord *getEnemiesPackage() const;
 	const PaquetObstacle *getObstaclesPackage() const;
 	const PaquetPlayerShot *getShotsPackage() const;
+	const PaquetReady *getReadyPackage() const;
 	const Paquet *getToSendUDPPackage() const;
 	const Paquet *getToSendTCPPackage() const;
 	const PaquetListParties *getGameListPackage() const;
@@ -50,6 +52,7 @@ public:
 	void storeEnemiesPackage(PaquetPlayerCoord *package);
 	void storeObstaclesPackage(PaquetObstacle *package);
 	void storeShotsPackage(PaquetPlayerShot *package);
+	void storeShotsReadyPackage(PaquetReady *package);
 	void storeToSendUDPPackage(Paquet *package);
 	void storeToSendTCPPackage(Paquet *package);
 	void storeGameListPackage(PaquetListParties *package);
@@ -62,6 +65,7 @@ public:
 	void deleteEnemiesPackage();
 	void deleteObstaclesPackage();
 	void deleteShotsPackage();
+	void deleteReadyPackage();
 	void deleteToSendUDPPackage();
 	void deleteToSendTCPPackage();
 	void deleteGameListPackage();

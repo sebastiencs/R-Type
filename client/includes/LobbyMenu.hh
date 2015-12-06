@@ -29,6 +29,7 @@ protected:
 	std::vector<Box*> playerInfo;
 	OnlineMenu *_superview;
 	IThread *threadReceivedListPlayers;
+	IThread *threadReceivedReadyPlayers;
 	Box* quadPlayerBox;
 	Box* left;
 	Box* commands;

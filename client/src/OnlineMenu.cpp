@@ -137,7 +137,7 @@ void OnlineMenu::joinButton()
 			t->start();
 			do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
 			delete t;
-			if (paquet->getReturn() == 3) {
+			if (paquet && paquet->getReturn() == 3) {
 				DEBUG_MSG("Can't join party");
 				PS.deleteAnswersPackage();
 				return;

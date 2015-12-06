@@ -14,7 +14,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	quadPlayerBox->setSpacing(80);
 
 	createRequestListPlayersPaquet();
-
+	
 	left->addDrawable(quadPlayerBox);
 	commands = new Box(Orientation::horizontal, Transformation(200, 500), "commandBox");
 	commands->setSpacing(100);
@@ -75,6 +75,22 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				this->setPlayerListChanged(true);
 			}
 		}
+
+		const PaquetReady	*tmp2 = nullptr;
+
+		while (!tmp2) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+			if ((tmp2 = PS.getReadyPackage())) {
+				LP.clearList();
+				for (auto p : tmp->getPlayers()) {
+					LP.getPlayer(tmp2->getID())->setReady(true);
+				}
+				PS.deleteReadyPackage();
+				DEBUG_MSG("Request received");
+				this->setPlayerListChanged(true);
+			}
+		}
+
 		return nullptr;
 	};
 
