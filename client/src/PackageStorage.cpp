@@ -110,7 +110,7 @@ void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
 	shots.push_back(package);
 }
 
-void PackageStorage::storeShotsReadyPackage(PaquetReady * package)
+void PackageStorage::storeReadyPackage(PaquetReady * package)
 {
 	ready.push_back(package);
 	_semOut->post();

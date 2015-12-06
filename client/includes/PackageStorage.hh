@@ -52,7 +52,7 @@ public:
 	void storeEnemiesPackage(PaquetPlayerCoord *package);
 	void storeObstaclesPackage(PaquetObstacle *package);
 	void storeShotsPackage(PaquetPlayerShot *package);
-	void storeShotsReadyPackage(PaquetReady *package);
+	void storeReadyPackage(PaquetReady *package);
 	void storeToSendUDPPackage(Paquet *package);
 	void storeToSendTCPPackage(Paquet *package);
 	void storeGameListPackage(PaquetListParties *package);
