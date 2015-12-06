@@ -12,7 +12,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	left->setSpacing(80);
 	quadPlayerBox = new Box(Orientation::vertical, Transformation(0, 0), "quadPlayerBox");
 	quadPlayerBox->setSpacing(80);
-	
+
 	createRequestListPlayersPaquet();
 	updatePlayerList();
 
@@ -55,20 +55,24 @@ void LobbyMenu::createRequestListPlayersPaquet()
 	Callback_t fptr = [this](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
 		ListPlayers &LP = ListPlayers::getInstance();
-		const PaquetListPlayers	*tmp = nullptr;
 
-		while (!tmp) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
-			if ((tmp = PS.getPlayerListPackage())) {
-				for (auto p : tmp->getPlayers()) {
-					if (LP.getPlayer(std::get<1>(p)) == nullptr)
-						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
-				}
-				PS.deletePlayerListPackage();
-				DEBUG_MSG("Request received");
-			}
+		for (;;) {
+
+		  const PaquetListPlayers	*tmp = nullptr;
+
+		  while (!tmp) {
+		    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		    if ((tmp = PS.getPlayerListPackage())) {
+		      for (auto p : tmp->getPlayers()) {
+			if (LP.getPlayer(std::get<1>(p)) == nullptr)
+			  LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+		      }
+		      PS.deletePlayerListPackage();
+		      DEBUG_MSG("Request received");
+		    }
+		  }
+		  this->setPlayerListChanged(true);
 		}
-		this->setPlayerListChanged(true);
 		return nullptr;
 	};
 
