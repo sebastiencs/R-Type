@@ -22,6 +22,7 @@ OnlineMenu::~OnlineMenu()
 	if (threadReceivedParties) {
 		threadReceivedParties->close();
 		delete threadReceivedParties;
+		threadReceivedParties = nullptr;
 	}
 }
 
@@ -120,6 +121,7 @@ void OnlineMenu::joinButton()
 				if (threadReceivedParties) {
 					threadReceivedParties->close();
 					delete threadReceivedParties;
+					threadReceivedParties = nullptr;
 				}
 				lobby = new LobbyMenu(engine, this);
 				return;

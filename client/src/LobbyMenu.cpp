@@ -59,8 +59,6 @@ void LobbyMenu::draw()
 {
 	if (left)
 		left->draw();
-	//if (commands)
-	//	commands->draw();
 	if (right)
 		right->draw();
 }
@@ -68,7 +66,6 @@ void LobbyMenu::draw()
 void LobbyMenu::onHover(uint32_t x, uint32_t y)
 {
 	left->onHover(x, y);
-//	commands->onHover(x, y);
 //	right->onHover(x, y);
 }
 
@@ -83,11 +80,12 @@ bool LobbyMenu::onClick(uint32_t x, uint32_t y)
 
 void LobbyMenu::ready()
 {
-	// TODO: savoir quel # on est, pour l'instant 0
 	ListPlayers &list = ListPlayers::getInstance();
 	Box* player = static_cast<Box* >(left->getElement("Player" + list.getListPlayers().front()->getName() + "Box"));
-	if (!player)
+	if (!player) {
+		DEBUG_MSG("Couldn't retreive Player Box");
 		return;
+	}
 	TextField* ready = static_cast<TextField*>(player->getElement("Ready"));
 	if (!ready)
 		return;
