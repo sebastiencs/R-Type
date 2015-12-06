@@ -14,7 +14,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	quadPlayerBox->setSpacing(80);
 
 	createRequestListPlayersPaquet();
-	
+
 	left->addDrawable(quadPlayerBox);
 	commands = new Box(Orientation::horizontal, Transformation(200, 500), "commandBox");
 	commands->setSpacing(100);
