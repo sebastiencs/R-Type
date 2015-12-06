@@ -14,7 +14,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	quadPlayerBox->setSpacing(80);
 
 	createRequestListPlayersPaquet();
-
+	
 	left->addDrawable(quadPlayerBox);
 	commands = new Box(Orientation::horizontal, Transformation(200, 500), "commandBox");
 	commands->setSpacing(100);
@@ -61,9 +61,8 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		ListPlayers &LP = ListPlayers::getInstance();
 
 		const PaquetListPlayers	*tmp = nullptr;
-		const PaquetReady	*tmp2 = nullptr;
 
-		while (!tmp && !tmp2) {
+		while (!tmp) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getPlayerListPackage())) {
 				LP.clearList();
@@ -75,11 +74,18 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				DEBUG_MSG("Request received");
 				this->setPlayerListChanged(true);
 			}
+		}
+
+		const PaquetReady	*tmp2 = nullptr;
+
+		while (!tmp2) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp2 = PS.getReadyPackage())) {
+				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
 					LP.getPlayer(tmp2->getID())->setReady(true);
 				}
-				PS.deleteReadyPackage();
+				PS.deletePlayerListPackage();
 				DEBUG_MSG("Request received");
 				this->setPlayerListChanged(true);
 			}
@@ -159,7 +165,6 @@ void LobbyMenu::updatePlayerList()
 {
 	quadPlayerBox->clearElements();
 	ListPlayers& playerList = ListPlayers::getInstance();
-	std::string ready;
 	size_t t = 0;
 	for (Player* p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
@@ -168,11 +173,7 @@ void LobbyMenu::updatePlayerList()
 		tr.setScale((float)1, (float)1);
 		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
-		if (p->getReady())
-			ready = "Ready";
-		else
-			ready = "Unready";
-		TextField* playerStatus = new TextField(ready, tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, ready, engine);
+		TextField* playerStatus = new TextField("Unready", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::Red, "Ready", engine);
 		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
 		box->setSpacing(50);
 		box->addDrawable(playerVessel);
