@@ -171,7 +171,7 @@ void LobbyMenu::updatePlayerList()
 		tr.setScale((float)1, (float)1);
 		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
-		if (p->getID()) {
+		if (p->getReady()) {
 			ready = "Ready";
 			cReady = Color::Green;
 		}
