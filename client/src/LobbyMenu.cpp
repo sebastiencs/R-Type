@@ -76,7 +76,6 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				this->setPlayerListChanged(true);
 			}
 			if ((tmp2 = PS.getReadyPackage())) {
-				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
 					LP.getPlayer(tmp2->getID())->setReady(true);
 				}
