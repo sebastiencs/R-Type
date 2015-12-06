@@ -18,6 +18,7 @@ public:
 	virtual ~ListPlayers();
 
 	void addPlayer(Player* player);
+	void clearList();
 
 	const std::list<Player *>& getListPlayers() const;
 	Player* getPlayer(uint8_t id);

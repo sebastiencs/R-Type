@@ -156,7 +156,7 @@ void OnlineMenu::backButtonLobbyMenu()
 {
 	ListPlayers &list = ListPlayers::getInstance();
 	Packager::createLeavePackage(list.getId());
-
+	list.clearList();
 	delete lobby;
 	lobby = nullptr;
 	inLobby = false;
