@@ -50,6 +50,9 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		threadReceivedListPlayers->close();
 		threadReceivedListPlayers->reRun();
 	}
+	else if (threadReceivedListPlayers) {
+		threadReceivedListPlayers->reRun();
+	}
 
 	Callback_t fptr = [this](void *) {
 		PackageStorage &PS = PackageStorage::getInstance();
