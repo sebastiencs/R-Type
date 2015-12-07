@@ -76,9 +76,11 @@ void	*jump(void *arg)
 
 bool	ThreadWin::close()
 {
-	if (!CloseHandle(_thread))
-		DEBUG_MSG("CloseHandle: " + GetLastError());
-		_running = false;
+  if ((TerminateThread(_thread, 0)) == 0)
+    DEBUG_MSG("TerminateThread: " + GetLastError());  
+  if ((CloseHandle(_thread)) == 0)
+    DEBUG_MSG("CloseHandle: " + GetLastError());
+  _running = false;
   DEBUG_MSG("ThreadWin ended");
   return (true);
 }
@@ -86,7 +88,7 @@ bool	ThreadWin::close()
 bool	ThreadWin::join()
 {
   if (WaitForSingleObject(_thread, INFINITE) == WAIT_FAILED) {
-	  DEBUG_MSG(GetLastError());
+    DEBUG_MSG(GetLastError());
     return (false);
   }
   _running = false;
