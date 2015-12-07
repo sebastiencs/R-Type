@@ -51,12 +51,12 @@ void DisplayUpdater::mainMenu()
 
 void DisplayUpdater::game()
 {
-	//Transformation t;
-	//t.setBounds(1024, 768);
-	//t.setPosition(0, 0);
-	//Sprite *bg = new Sprite("", t, graphicEngine, Color::Red);
-	//bg->draw();
-	graphicEngine->drawImage("vessel0.png", Transformation(50, 50));
+	ListPlayers &LP = ListPlayers::getInstance();
+	Transformation t;
+	t.setBounds(1024, 768);
+	t.setPosition(0, 0);
+	Sprite *bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
+	bg->draw();
 
 	while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
 		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
@@ -66,7 +66,8 @@ void DisplayUpdater::game()
 	}
 	while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
 		const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
-		graphicEngine->drawImage("vessel0.png", Transformation(p->getX(), p->getY()));
+		Position L(p->getX(), p->getY());
+		LP.getPlayer(p->getPlayerID())->setPosition(L);
 		//		graphicEngine->drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deletePlayersPackage();
 	}
@@ -75,6 +76,8 @@ void DisplayUpdater::game()
 //		graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteShotsPackage();
 	}
+	for (Player *player : LP.getListPlayers())
+		graphicEngine->drawImage("vessel0.png", Transformation(std::get<0>(player->getPosition()), std::get<0>(player->getPosition())));
 }
 
 void DisplayUpdater::launchObserver()
