@@ -146,6 +146,7 @@ ssize_t	SocketUDPUnix::write(const Paquet &paquet, const Addr &addr)
   n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
   if (n < 0) {
     DEBUG_MSG("sendto() failed");
+    perror("sendto");
   }
   return (n);
 }

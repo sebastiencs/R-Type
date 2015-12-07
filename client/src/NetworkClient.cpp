@@ -26,7 +26,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	_ip = ip;
 	_port = port;
 
-	if ((_socketTCP->connect(ip, port)) == -1) {
+	if ((_socketTCP->connect(ip, port)) == -1 || (_socketUDP->connect(ip, port)) == -1) {
 		_isConnect = false;
 		_socketTCP.reset(nullptr);
 		_socketUDP.reset(nullptr);
@@ -83,10 +83,10 @@ int NetworkClient::runWrite()
 						if (paquet != nullptr) {
 							PackageStorage::getInstance().getAnswersPackage();
 							DEBUG_MSG("Send paquet");
-							this->writeUDP(*paquet, _socketUDP->getAddr());
+							this->writeUDP(*paquet);
 							PackageStorage::getInstance().deleteToSendUDPPackage();
+							break;
 						}
-						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
@@ -96,15 +96,14 @@ int NetworkClient::runWrite()
 							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
 							PackageStorage::getInstance().deleteToSendTCPPackage();
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
 	}
 	return (0);
-
 }
 
 int NetworkClient::runRead()
