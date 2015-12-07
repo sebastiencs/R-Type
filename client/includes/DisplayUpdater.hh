@@ -36,7 +36,6 @@ private:
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
 	TaskScheduler *launchLoop;
-	ListPlayers LP;
 
 	std::list<Button* > buttons;
 };
