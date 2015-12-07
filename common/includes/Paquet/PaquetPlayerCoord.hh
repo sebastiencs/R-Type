@@ -16,7 +16,7 @@ public:
   PaquetPlayerCoord();
   PaquetPlayerCoord(const Buffer &);
   template <typename T>
-  PaquetPlayerCoord(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetPlayerCoord(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetPlayerCoord();
 
   void setPlayerID(const uint8_t&);

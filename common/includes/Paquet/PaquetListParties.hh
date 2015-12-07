@@ -29,7 +29,7 @@ public:
   PaquetListParties(const Buffer &);
   template <typename T>
   PaquetListParties(const T *data, size_t len)
-    : Paquet(data, len) { }
+    : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetListParties();
 
   void		addParty(const std::string &, uint8_t);

@@ -23,7 +23,7 @@ public:
   PaquetCreateParty();
   PaquetCreateParty(const Buffer &);
   template <typename T>
-  PaquetCreateParty(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetCreateParty(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetCreateParty();
 
   void			setName(const std::string &);

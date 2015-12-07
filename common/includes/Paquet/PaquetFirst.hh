@@ -25,7 +25,7 @@ public:
   PaquetFirst();
   PaquetFirst(const Buffer &);
   template <typename T>
-  PaquetFirst(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetFirst(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetFirst();
 
   void		setVersion(uint16_t);

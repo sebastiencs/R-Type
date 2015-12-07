@@ -22,7 +22,7 @@ public:
   PaquetRequestParties();
   PaquetRequestParties(const Buffer &);
   template <typename T>
-  PaquetRequestParties(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetRequestParties(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetRequestParties();
 
   void		createPaquet();

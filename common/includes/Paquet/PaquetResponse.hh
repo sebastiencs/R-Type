@@ -24,7 +24,7 @@ public:
   PaquetResponse();
   PaquetResponse(const Buffer &);
   template <typename T>
-  PaquetResponse(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetResponse(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetResponse();
 
   void		setReturn(uint8_t);

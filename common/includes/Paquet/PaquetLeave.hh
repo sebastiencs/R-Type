@@ -23,7 +23,7 @@ public:
   PaquetLeave();
   PaquetLeave(const Buffer &);
   template <typename T>
-  PaquetLeave(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetLeave(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetLeave();
 
   void		setID(uint8_t);

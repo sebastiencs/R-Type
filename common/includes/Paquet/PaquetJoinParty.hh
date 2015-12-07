@@ -23,7 +23,7 @@ public:
   PaquetJoinParty();
   PaquetJoinParty(const Buffer &);
   template <typename T>
-  PaquetJoinParty(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetJoinParty(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetJoinParty();
 
   void			setName(const std::string &);

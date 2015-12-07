@@ -22,7 +22,7 @@ public:
   PaquetRequestPlayers();
   PaquetRequestPlayers(const Buffer &);
   template <typename T>
-  PaquetRequestPlayers(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetRequestPlayers(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetRequestPlayers();
 
   void		createPaquet();

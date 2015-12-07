@@ -16,7 +16,7 @@ public:
   PaquetObstacle();
   PaquetObstacle(const Buffer &);
   template <typename T>
-  PaquetObstacle(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetObstacle(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetObstacle();
 
   void setType(const uint8_t&);

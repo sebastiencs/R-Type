@@ -22,7 +22,7 @@ public:
   PaquetLaunch();
   PaquetLaunch(const Buffer &);
   template <typename T>
-  PaquetLaunch(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetLaunch(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetLaunch();
 
   void		createPaquet();

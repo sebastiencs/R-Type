@@ -17,7 +17,7 @@ public:
   PaquetPlayerShot();
   PaquetPlayerShot(const Buffer &);
   template <typename T>
-  PaquetPlayerShot(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetPlayerShot(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetPlayerShot();
 
   void setType(const uint8_t&);

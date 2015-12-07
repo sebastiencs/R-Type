@@ -28,7 +28,7 @@ public:
   PaquetListPlayers();
   PaquetListPlayers(const Buffer &);
   template <typename T>
-  PaquetListPlayers(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetListPlayers(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetListPlayers();
 
   void		addPlayer(const std::string &, uint8_t, uint8_t);
