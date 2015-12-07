@@ -66,6 +66,10 @@ Selector::Selector(const Manager_SharedPtr &&manager) {
     if (!_manager.expired())
       ((_manager.lock()).get()->*resolver<PaquetResponse *>(&Manager::handlePaquet))(new PaquetResponse(buf), addr);
   };
+  _selectorFunc[Paquet::FIRST_UDP] = [this](const Buffer &buf, const Addr &addr) {
+    if (!_manager.expired())
+      ((_manager.lock()).get()->*resolver<PaquetFirstUDP *>(&Manager::handlePaquet))(new PaquetFirstUDP(buf), addr);
+  };
 }
 
 Selector::~Selector()

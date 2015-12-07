@@ -51,6 +51,7 @@ public:
   virtual void			setReady(const bool &);
 
   virtual const Addr		&addr() const;
+  virtual Addr			&addr();
 };
 
 #include <memory>

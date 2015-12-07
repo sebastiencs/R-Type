@@ -66,6 +66,7 @@ public:
   void		handlePaquet(PaquetRequestParties *, const Addr &);
   void		handlePaquet(PaquetRequestPlayers *, const Addr &);
   void		handlePaquet(PaquetResponse *, const Addr &);
+  void		handlePaquet(PaquetFirstUDP *, const Addr &);
 };
 
 #endif /* !MANAGER_H_ */

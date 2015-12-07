@@ -264,10 +264,10 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
 
     // Solution temporaire
     for (auto &player : party->getPlayers()) {
-      // if (player->getID() != paquet->getPlayerID()) {
+      if (player->getID() != paquet->getPlayerID()) {
       std::cout << "ICI\n";
 	write(*paquet, player->addr());
-      // }
+      }
     }
 
 
@@ -382,4 +382,17 @@ void		Manager::handlePaquet(PaquetRequestPlayers *paquet, const Addr &addr)
 void		Manager::handlePaquet(PaquetResponse *paquet UNUSED, const Addr &addr UNUSED)
 {
   // DEBUG_MSG(paquet);
+}
+
+void		Manager::handlePaquet(PaquetFirstUDP *paquet, const Addr &addr)
+{
+  DEBUG_MSG(*paquet);
+
+  uint8_t	id = paquet->getId();
+
+  auto &&p = Tools::findIn(_pWaiting, [id] (auto &p) { return (p->getID() == id); });
+
+  if (p) {
+    p->addr().setPortUDP(addr.get().sin_port);
+  }
 }

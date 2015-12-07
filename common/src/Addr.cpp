@@ -76,6 +76,11 @@ void				Addr::set(struct sockaddr_in &addr)
   _addr = addr;
 }
 
+void				Addr::setPortUDP(uint16_t port)
+{
+  _addrUDP.sin_port = port;
+}
+
 void				Addr::set(const socket_t &socket)
 {
   _type = Addr::TCP;

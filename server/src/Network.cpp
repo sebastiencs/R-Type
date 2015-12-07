@@ -161,7 +161,6 @@ bool	Network::write()
 	std::cout << "SEND UDP" << std::endl;
 	if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
 	  _queuePaquet.pop();
-	  std::cout << "SIZE QUEUE: " << _queuePaquet.size() << std::endl;
 	}
 	else {
 	  _sem->post();

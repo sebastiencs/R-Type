@@ -11,7 +11,7 @@
 #include "PaquetFirstUDP.hh"
 
 PaquetFirstUDP::PaquetFirstUDP()
-	: _id(Paquet::FIRST),
+	: _id(Paquet::FIRST_UDP),
 		_playerId(0)
 {
 }

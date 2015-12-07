@@ -119,3 +119,8 @@ const Addr		&Player::addr() const
 {
   return (_addr);
 }
+
+Addr			&Player::addr()
+{
+  return (_addr);
+}

@@ -53,6 +53,7 @@ public:
   Addr				&operator=(const Addr &);
 
   void				set(struct sockaddr_in &);
+  void				setPortUDP(uint16_t port);
   void				set(const socket_t &);
   const struct sockaddr_in	&get() const;
   struct sockaddr_in		&get();

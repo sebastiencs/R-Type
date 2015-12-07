@@ -185,8 +185,3 @@ const Addr	SocketUDPUnix::getAddr() const
 {
   return (Addr(_addr));
 }
-
-uint16_t	SocketUDPUnix::getPort() const
-{
-  return (ntohs(_addr.sin_port));
-}

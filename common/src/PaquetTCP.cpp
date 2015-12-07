@@ -51,6 +51,7 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::LAUNCH]		= 0x01;
   _pSize[Paquet::LEAVE]			= 0x02;
   _pSize[Paquet::RESPONSE]		= 0x06;
+  _pSize[Paquet::FIRST_UDP]		= 0x02;
 }
 
 ssize_t		PaquetTCP::read(Buffer &buf)
