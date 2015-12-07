@@ -27,6 +27,13 @@ public:
   virtual int	handleFirst(PaquetFirst);
 
   template <class T>
+  bool	writeUDP(const T &input) {
+    if ((_socketUDP->write(input)) == 0)
+      return true;
+    return false;
+  }
+
+  template <class T>
   bool	writeUDP(const T &input, const Addr &addr) {
     if ((_socketUDP->write(input, addr)) == 0)
       return true;
