@@ -32,7 +32,7 @@ Player::Player(const std::string &name, uint8_t id,
     _life(life),
     _id(id),
     _addr(),
-	_ready(ready)
+    _ready(ready)
 {
   DEBUG_MSG("Player created");
 }
@@ -44,7 +44,7 @@ Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &a
     _life(0),
     _id(id),
     _addr(addr),
-	  _ready(false)
+    _ready(false)
 
 {
   DEBUG_MSG("Player created");
@@ -55,7 +55,7 @@ Player::~Player()
   DEBUG_MSG("Player deleted");
 }
 
-const Position	&Player::getPosition() const
+const Position		&Player::getPosition() const
 {
   return (_position);
 }
@@ -75,7 +75,7 @@ void			Player::setLevel(uint8_t level)
   _level = level;
 }
 
-int				Player::getLife() const
+int			Player::getLife() const
 {
   return (_life);
 }
