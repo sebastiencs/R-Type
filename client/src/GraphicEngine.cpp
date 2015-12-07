@@ -1,5 +1,6 @@
 #include "GraphicEngine.hh"
 #include "Timer.hh"
+#include "ListPlayers.hh"
 #include "Packager.hh"
 #include "Sprite.hh"
 #include "Text.hh"
@@ -36,9 +37,9 @@ GraphicEngine::~GraphicEngine()
 {
 	if (window)
 		delete window;
-	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages .begin(); it != cachedImages.end(); ++it)
+	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
 		if (it->second)
-		  delete it->second;
+			delete it->second;
 	delete _timer;
 }
 
@@ -53,6 +54,8 @@ void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::stri
 void GraphicEngine::handleEvents()
 {
 	sf::Event event;
+	ListPlayers &LP = ListPlayers::getInstance();
+	Player *player = LP.getPlayer(LP.getId());
 	while (window->pollEvent(event))
 	{
 		// TODO: Trouver quoi faire des positions du joueur
@@ -63,16 +66,36 @@ void GraphicEngine::handleEvents()
 				_textEnteredcallback(static_cast<char>(event.text.unicode));
 		}
 		else if (event.type == sf::Event::KeyPressed) {
-		  if (event.key.code == sf::Keyboard::Space)
-		    _packager->createShotPackage(0, 0, 0, 0);
-		  else if (event.key.code == sf::Keyboard::Z)
-		    _packager->createMovementPackage(0, 0, 0);
-		  else if (event.key.code == sf::Keyboard::Q)
-		    _packager->createMovementPackage(0, 0, 0);
-		  else if (event.key.code == sf::Keyboard::S)
-		    _packager->createMovementPackage(0, 0, 20);
-		  else if (event.key.code == sf::Keyboard::D)
-		    _packager->createMovementPackage(0, 20, 0);
+			if (event.key.code == sf::Keyboard::Space)
+				_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
+		}
+		else if (event.key.code == sf::Keyboard::Z) {
+			Position pos;
+			std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
+			std::get<1>(pos) = std::get<1>(player->getPosition());
+			player->setPosition(pos);
+			_packager->createMovementPackage(LP.getId(), 0, 0);
+		}
+		else if (event.key.code == sf::Keyboard::Q) {
+			Position pos;
+			std::get<0>(pos) = std::get<0>(player->getPosition());
+			std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
+			player->setPosition(pos);
+			_packager->createMovementPackage(LP.getId(), 0, 0);
+		}
+		else if (event.key.code == sf::Keyboard::S) {
+			Position pos;
+			std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
+			std::get<1>(pos) = std::get<1>(player->getPosition());
+			player->setPosition(pos);
+			_packager->createMovementPackage(LP.getId(), 0, 20);
+		}
+		else if (event.key.code == sf::Keyboard::D) {
+			Position pos;
+			std::get<0>(pos) = std::get<0>(player->getPosition());
+			std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
+			player->setPosition(pos);
+			_packager->createMovementPackage(LP.getId(), 20, 0);
 		}
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
@@ -201,8 +224,6 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	cachedFonts[file] = font;
 	return true;
 }
-
-
 
 void GraphicEngine::drawImage(const std::string& name, const Transformation& t, const Color& color)
 {
