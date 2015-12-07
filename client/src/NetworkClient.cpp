@@ -85,8 +85,8 @@ int NetworkClient::runWrite()
 							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet, _socketUDP->getAddr());
 							PackageStorage::getInstance().deleteToSendUDPPackage();
+							break;
 						}
-						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
@@ -96,8 +96,8 @@ int NetworkClient::runWrite()
 							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
 							PackageStorage::getInstance().deleteToSendTCPPackage();
+							break;
 						}
-						break;
 					}
 				}
 			}
