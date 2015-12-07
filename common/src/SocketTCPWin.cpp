@@ -21,9 +21,14 @@ SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
 }
 
 SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type,
-			     socket_t fd)
+			   socket_t fd,
+			   struct sockaddr_in &addr,
+			   uint16_t port)
+  : _socket(fd),
+    _addr(fd, addr, port),
+    _port(port),
+    _type(type)
 {
-  _socket = fd;
   if (_socket == INVALID_SOCKET)
     DEBUG_MSG("SockectTCPWin failed : ");
   else
@@ -46,11 +51,11 @@ int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
   if (_type == SocketTCPWin::SERVER) {
     throw std::runtime_error("Try to connect with a server");
   }
-  _client.sin_family = AF_INET;
-  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_client.sin_addr.s_addr));
+  _addr.get().sin_family = AF_INET;
+  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_addr.get().sin_addr.s_addr));
   //_client.sin_addr.s_addr = inet_addr(addr.c_str());
-  _client.sin_port = htons(port);
-  if (::connect(_socket, (struct sockaddr *)&_client, sizeof(_client)) == INVALID_SOCKET) {
+  _addr.get().sin_port = htons(port);
+  if (::connect(_socket, (struct sockaddr *)&_addr.get(), sizeof(_addr.get())) == INVALID_SOCKET) {
     DEBUG_MSG("Connect failed");
 	return (-1);
   }
@@ -60,17 +65,17 @@ int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
 ISocketTCP	*SocketTCPWin::accept()
 {
   socket_t socket;
-  int tmp = sizeof(_server);
+  int tmp = sizeof(_addr.get());
 
   if (_type == SocketTCPWin::CLIENT) {
     throw std::runtime_error("Try to connect with a server");
   }
-  if ((socket = ::accept(_socket, (struct sockaddr *)&_server, &tmp)) == INVALID_SOCKET) {
+  if ((socket = ::accept(_socket, (struct sockaddr *)&_addr.get(), &tmp)) == INVALID_SOCKET) {
     DEBUG_MSG("Accept failed");
     return (0);
   }
   DEBUG_MSG("Accept done");
-  SocketTCPWin* newClient = new SocketTCPWin(CLIENT, socket);
+  SocketTCPWin* newClient = new SocketTCPWin(CLIENT, socket, _addr.get(), _port);
   return newClient;
 }
 

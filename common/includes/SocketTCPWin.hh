@@ -23,9 +23,11 @@ public:
 
 protected:
 
-  socket_t  _socket;
-  sockaddr_in _server;
-  sockaddr_in _client;
+  socket_t	_socket;
+  Addr		_addr;
+  uint16_t	_port;
+  // sockaddr_in _server;
+  // sockaddr_in _client;
 
   CONNECTION_TYPE	_type;
 
