@@ -55,22 +55,25 @@ void DisplayUpdater::game()
 	//t.setPosition(0, 0);
 	//Sprite *bg = new Sprite("", t, graphicEngine, Color::Red);
 	//bg->draw();
+	graphicEngine->drawImage("vessel0.png", Transformation(50, 50));
 
-	//while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
-	//	const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
-	//	graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-	//	PackageStorage::getInstance().deleteObstaclesPackage();
-	//}
-	//while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
-	//	const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
-	//	graphicEngine->drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
-	//	PackageStorage::getInstance().deletePlayersPackage();
-	//}
-	//while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
-	//	const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-	//	graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-	//	PackageStorage::getInstance().deleteShotsPackage();
-	//}
+	while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
+		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+//		graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+//		graphicEngine->drawImage("vessel0.png", Transformation(p->getX(), p->getY()), Color::None);
+		PackageStorage::getInstance().deleteObstaclesPackage();
+	}
+	while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
+		const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
+		graphicEngine->drawImage("vessel0.png", Transformation(p->getX(), p->getY()));
+		//		graphicEngine->drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
+		PackageStorage::getInstance().deletePlayersPackage();
+	}
+	while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
+		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
+//		graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+		PackageStorage::getInstance().deleteShotsPackage();
+	}
 }
 
 void DisplayUpdater::launchObserver()
