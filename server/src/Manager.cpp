@@ -258,6 +258,16 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
   auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
   if (party && pc) {
     party->setCoordPlayer(pc);
+
+
+    // Solution temporaire
+    for (auto &player : party->getPlayers()) {
+      if (player->getID() != paquet->getPlayerID()) {
+	write(*paquet, player->addr());
+      }
+    }
+
+
   }
   else {
 #ifdef DEBUG
