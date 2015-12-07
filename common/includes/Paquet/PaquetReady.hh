@@ -24,7 +24,7 @@ public:
   PaquetReady();
   PaquetReady(const Buffer &);
   template <typename T>
-  PaquetReady(const T *data, size_t len) : Paquet(data, len) { }
+  PaquetReady(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetReady();
 
   void		setID(uint8_t);

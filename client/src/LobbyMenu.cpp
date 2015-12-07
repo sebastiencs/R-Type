@@ -78,6 +78,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 
 			if ((tmp2 = PS.getReadyPackage())) {
 				for (auto &p : LP.getListPlayers()) {
+				  // printf("p->getID(): %d tmp2->getID(): %d\n", p->getID(), tmp2->getID());
 				  if (p->getID() == tmp2->getID()) {
 				    p->setReady((tmp2->getStatus()) ? (1) : (0));
 				  }
@@ -179,6 +180,7 @@ void LobbyMenu::updatePlayerList()
 			ready = "Ready";
 			cReady = Color::Green;
 		}
+		printf("ID: %d - Ready: %d\n", p->getID(), p->getReady());
 		TextField* playerStatus = new TextField(ready, tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, cReady, "Ready", engine);
 		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
 		box->setSpacing(50);

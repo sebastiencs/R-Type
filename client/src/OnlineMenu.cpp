@@ -207,12 +207,18 @@ void OnlineMenu::onCreateGame()
 	t->start();
 	do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
 	delete t;
-	if (paquet->getReturn() == 3) {
+
+	if (!paquet) {
+	  std::cerr << "Answer not received" << std::endl;
+	}
+	if (paquet && paquet->getReturn() == 3) {
 		DEBUG_MSG("Can't create party");
 		PS.deleteAnswersPackage();
 		return;
 	}
-	PS.deleteAnswersPackage();
+	else if (paquet) {
+	  PS.deleteAnswersPackage();
+	}
 
 	inLobby = true;
 	if (lobby == nullptr) {
