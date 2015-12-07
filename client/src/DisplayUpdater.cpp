@@ -22,6 +22,7 @@ DisplayUpdater::~DisplayUpdater()
 	for (Button* b : buttons)
 		delete b;
 	buttons.clear();
+	delete launchLoop;
 }
 
 const Packager * DisplayUpdater::getPackager()
@@ -82,6 +83,6 @@ void DisplayUpdater::launchObserver()
 		callback fptr = std::bind(&DisplayUpdater::game, this);
 		graphicEngine->setCallbackFunction(fptr, nullptr);
 		delete launch;
-		delete launchLoop;
+		launchLoop->stop();
 	}
 }
