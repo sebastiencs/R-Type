@@ -73,7 +73,7 @@ int	Network::run()
 
 inline bool	Network::handleUDP()
 {
-  DEBUG_MSG("UDP socket");
+  DEBUG_MSG("Receive UDP socket");
 
   ssize_t size = _socketUDP->read(_buffer);
 
@@ -157,15 +157,18 @@ bool	Network::write()
 
       PaquetClient pc = _queuePaquet.front();
 
-      if (pc.addr.getType() == Addr::UDP) {
+      if (pc.paquet.getType() == Paquet::UDP) {
+	std::cout << "SEND UDP" << std::endl;
 	if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
 	  _queuePaquet.pop();
+	  std::cout << "SIZE QUEUE: " << _queuePaquet.size() << std::endl;
 	}
 	else {
 	  _sem->post();
 	}
       }
       else {
+	std::cout << "SEND TCP" << std::endl;
 	if (_socketTCP->write(pc.paquet, pc.addr) >= 0) {
 	  _queuePaquet.pop();
 	}

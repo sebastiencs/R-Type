@@ -37,11 +37,14 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
 }
 
 SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type,
-			     socket_t fd)
+			     socket_t fd,
+			     struct sockaddr_in &addr,
+			     uint16_t port)
   : _socket(fd),
     _error(0),
-    _addr(),
-    _type(type)
+    _addr(fd, addr, port),
+    _type(type),
+    _port(port)
 {
   DEBUG_MSG("SocketTCPUnix created");
 }
@@ -70,10 +73,11 @@ int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
     _error = 1;
     return (-1);
   }
-  _addr.sin_addr = *reinterpret_cast<struct in_addr *>(h->h_addr_list[0]);
-  _addr.sin_family = AF_INET;
-  _addr.sin_port = htons(port);
-  if (::connect(_socket, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
+
+  _addr.get().sin_addr = *reinterpret_cast<struct in_addr *>(h->h_addr_list[0]);
+  _addr.get().sin_family = AF_INET;
+  _addr.get().sin_port = htons(port);
+  if (::connect(_socket, reinterpret_cast<struct sockaddr *>(&_addr.get()), sizeof(_addr.get())) == -1) {
     DEBUG_MSG("connect failed");
     _error = 1;
     return (-1);
@@ -108,7 +112,7 @@ ISocketTCP	*SocketTCPUnix::accept()
     _error = 1;
     DEBUG_MSG("accept failed");
   }
-  return (new SocketTCPUnix(_type, newfd));
+  return (new SocketTCPUnix(_type, newfd, c_addr, _port));
 }
 
 int	SocketTCPUnix::bind(uint16_t port)
@@ -117,10 +121,11 @@ int	SocketTCPUnix::bind(uint16_t port)
     throw std::runtime_error("Try to bind a socket with a client");
   }
 
-  _addr.sin_family = AF_INET;
-  _addr.sin_addr.s_addr = INADDR_ANY;
-  _addr.sin_port = htons(port);
-  if (::bind(_socket, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
+  _port = port;
+  _addr.get().sin_family = AF_INET;
+  _addr.get().sin_addr.s_addr = INADDR_ANY;
+  _addr.get().sin_port = htons(port);
+  if (::bind(_socket, reinterpret_cast<struct sockaddr *>(&_addr.get()), sizeof(_addr.get())) == -1) {
     DEBUG_MSG("bind() failed");
     perror("->");
     _error = 1;
@@ -206,5 +211,5 @@ ssize_t	SocketTCPUnix::read(Buffer &buf)
 
 const Addr	SocketTCPUnix::getAddr() const
 {
-  return (Addr(_socket));
+  return (_addr);
 }

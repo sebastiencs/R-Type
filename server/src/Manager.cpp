@@ -100,6 +100,8 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 
     uint8_t id = getID();
 
+    std::cout << addr << std::endl;
+
     _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr));
     p.setReturn(2);
     p.setData(id);

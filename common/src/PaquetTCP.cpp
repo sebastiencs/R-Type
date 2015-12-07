@@ -20,15 +20,15 @@ PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type)
   initSize();
 }
 
-PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type, socket_t sock)
-  : SocketTCP(type, sock),
-    _buffer(new Buffer()),
-    _bufferTMP(new Buffer()),
-    _start(true),
-    _sizeCurrent(0)
-{
-  initSize();
-}
+// PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type, socket_t sock)
+//   : SocketTCP(type, sock),
+//     _buffer(new Buffer()),
+//     _bufferTMP(new Buffer()),
+//     _start(true),
+//     _sizeCurrent(0)
+// {
+//   initSize();
+// }
 
 PaquetTCP::~PaquetTCP()
 {

@@ -59,6 +59,23 @@ public:
     RESPONSE		= 0xFF
   };
 
+  enum { TCP, UDP };
+
+  int	getType() const {
+    if (_data && _size > 0) {
+
+      uint8_t id = _data[0];
+
+      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE) {
+	return (UDP);
+      }
+      else {
+	return (TCP);
+      }
+    }
+    return (TCP);
+  }
+
 
   Paquet() : _data(0) {
     _data = new uint8_t[Paquet::PAQUET_SIZE];

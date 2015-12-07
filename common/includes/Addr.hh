@@ -13,7 +13,9 @@
 
 # ifdef __unix__
 
+#  include <sys/socket.h>
 #  include <netinet/in.h>
+#  include <arpa/inet.h>
 typedef int	socket_t;
 
 # elif defined(_WIN32)
@@ -35,23 +37,35 @@ public:
 private:
 
   struct sockaddr_in		_addr;
+  struct sockaddr_in		_addrUDP;
   socket_t			_socket;
   TypeAddr			_type;
+  uint16_t			_port;
 
 public:
   Addr();
+  Addr(const Addr &);
   Addr(const struct sockaddr_in &);
   Addr(const socket_t &);
+  Addr(const socket_t &, const struct sockaddr_in &, uint16_t port);
   virtual ~Addr();
+
+  Addr				&operator=(const Addr &);
 
   void				set(struct sockaddr_in &);
   void				set(const socket_t &);
   const struct sockaddr_in	&get() const;
+  struct sockaddr_in		&get();
+  const struct sockaddr_in	&getUDP() const;
+  struct sockaddr_in		&getUDP();
   const socket_t		&getSocket() const;
+  uint16_t			getPort() const;
 
   bool				operator==(const Addr &) const;
 
   Addr::TypeAddr		getType() const;
 };
+
+std::ostream &operator<<(std::ostream &os, const Addr &o);
 
 #endif /* !ADDR_H_ */

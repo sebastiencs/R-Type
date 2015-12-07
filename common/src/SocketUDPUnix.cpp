@@ -146,9 +146,14 @@ ssize_t	SocketUDPUnix::write(const Paquet &paquet)
 
 ssize_t	SocketUDPUnix::write(const Paquet &paquet, const Addr &addr)
 {
-  struct sockaddr_in	addrIn = addr.get();
+  struct sockaddr_in	addrIn = addr.getUDP();
   ssize_t		n = 0;
 
+#ifdef DEBUG
+  std::cout << "SOCKET: " << addr.getSocket() << std::endl;
+  std::cerr << "Send UDP to " << inet_ntoa(addrIn.sin_addr)
+	    << ":" << static_cast<int>(ntohs(addrIn.sin_port)) << std::endl;
+#endif
   n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
   if (n < 0) {
     DEBUG_MSG("sendto() failed");

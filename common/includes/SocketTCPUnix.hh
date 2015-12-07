@@ -28,13 +28,14 @@ public:
 protected:
   socket_t		_socket;
   int			_error;
-  struct sockaddr_in	_addr;
+  Addr			_addr;
   CONNECTION_TYPE	_type;
+  uint16_t		_port;
 
 public:
 
   SocketTCPUnix(CONNECTION_TYPE);
-  SocketTCPUnix(CONNECTION_TYPE, socket_t);
+  SocketTCPUnix(CONNECTION_TYPE, socket_t, struct sockaddr_in &, uint16_t);
   virtual ~SocketTCPUnix();
 
   virtual socket_t	socket() const;

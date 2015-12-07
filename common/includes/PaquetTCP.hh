@@ -35,7 +35,7 @@ private:
 
 public:
   PaquetTCP(SocketTCP::CONNECTION_TYPE);
-  PaquetTCP(SocketTCP::CONNECTION_TYPE, socket_t);
+//  PaquetTCP(SocketTCP::CONNECTION_TYPE, socket_t);
   virtual ~PaquetTCP();
 
   virtual ssize_t	read(Buffer &);
