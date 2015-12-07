@@ -5,6 +5,7 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 	callcack = _callback;
 	interval = _t;
 	timer = new Timer();
+	running = true;
 	Callback_t fptr = [this](void *) {this->loop(); return nullptr; };
 	thread = new Thread(fptr, nullptr);
 	thread->run(fptr, nullptr);
@@ -20,9 +21,13 @@ TaskScheduler::~TaskScheduler()
 void TaskScheduler::loop()
 {
 	timer->start();
-	while (1) {
+	while (running) {
 		timer->msWait(interval);
 		callcack(nullptr);
-		timer->reset();
 	}
+}
+
+void TaskScheduler::stop()
+{
+	running = false;
 }

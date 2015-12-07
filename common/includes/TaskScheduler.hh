@@ -12,11 +12,14 @@ public:
 	~TaskScheduler();
 
 	void loop();
+	void stop();
+
 private:
 	IThread *thread;
 	long interval;
 	Callback_t callcack;
 	ITimer *timer;
+	bool running;
 };
 
 #endif
