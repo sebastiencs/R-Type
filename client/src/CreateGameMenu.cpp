@@ -23,6 +23,11 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
 	t.setBounds(100, 50);
 	fptr = std::bind(&OnlineMenu::backButtonGameMenu, superView);
 	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
+
+	Transformation t2(300, 330);
+	t2.setScale((float)1.3, (float)4.5);
+	engine->drawImage("backgroundButton.png", t2);
+	sprite = new Sprite("backgroundButton.png", t2, engine, Color::None);
 }
 
 CreateGameMenu::~CreateGameMenu()
@@ -41,10 +46,9 @@ const TextField* CreateGameMenu::getServerName() const
 void CreateGameMenu::draw()
 {
 	Transformation t(300, 330);
-	t.setScale((float)1.3, (float)4.5);
-	engine->drawImage("backgroundButton.png", t);
 	t.setScale((float)1.3, (float)1.3);
 	engine->drawImage("defaultTextZone.png", t);
+	sprite->draw();
 	serverName->draw();
 	back->draw();
 	ok->draw();
@@ -58,7 +62,7 @@ bool CreateGameMenu::onClick(uint32_t x, uint32_t y)
 	if (ok->onAction(x, y)) {
 		return true;
 	}
-	return false;
+	return sprite->isPressed(x, y);
 }
 
 void CreateGameMenu::onHover(uint32_t x, uint32_t y)
