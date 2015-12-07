@@ -122,12 +122,12 @@ void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
 {
 }
 
-void			Party::setReady(uint8_t id)
+void			Party::setReady(uint8_t id, uint8_t status)
 {
-	auto &&player = Tools::findIn(_players, [&id](auto &p) { return (p->getID() == id); });
-	if (player) {
-		player->setReady(true);
-	}
+  auto &&player = Tools::findIn(_players, [&id](auto &p) { return (p->getID() == id); });
+  if (player) {
+    player->setReady((status) ? (true) : (false));
+  }
 }
 
 void			Party::setPlayerShot(PlayerShot *ps UNUSED)

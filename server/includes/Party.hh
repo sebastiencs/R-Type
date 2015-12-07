@@ -52,7 +52,7 @@ public:
   bool			isPlayer(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);
-  void			setReady(uint8_t id);
+  void			setReady(uint8_t id, uint8_t status);
   void			setPlayerShot(PlayerShot *ps);
   bool			isRunning() const;
   void			setRunning(bool);

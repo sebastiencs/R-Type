@@ -302,7 +302,7 @@ void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
 
   if (party) {
 
-    party->setReady(id);
+    party->setReady(id, paquet->getStatus());
     auto &players = party->getPlayers();
 
     for (auto &player : players) {
