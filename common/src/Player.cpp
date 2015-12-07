@@ -32,7 +32,7 @@ Player::Player(const std::string &name, uint8_t id,
     _life(life),
     _id(id),
     _addr(),
-    _ready(ready)
+	_ready(ready)
 {
   DEBUG_MSG("Player created");
 }
@@ -43,7 +43,9 @@ Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &a
     _level(level),
     _life(0),
     _id(id),
-    _addr(addr)
+    _addr(addr),
+	  _ready(false)
+
 {
   DEBUG_MSG("Player created");
 }
