@@ -22,6 +22,9 @@ public:
 
 	const std::string& getImage() const;
 	const Color& getColor() const;
+
+	bool isPressed(uint32_t x, uint32_t y);
+
 protected:
 	sf::Sprite sprite;
 	std::string img;

@@ -7,6 +7,7 @@
 #include "Transformation.hh"
 #include "Color.hh"
 #include "OnlineMenu.hh"
+#include "Sprite.hh"
 
 class OnlineMenu;
 
@@ -31,6 +32,7 @@ private:
 
 	Button *ok;
 	Button *back;
+	Sprite *sprite;
 };
 
 #endif
