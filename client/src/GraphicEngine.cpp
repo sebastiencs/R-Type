@@ -68,28 +68,28 @@ void GraphicEngine::handleEvents()
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Space)
 				_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
-			else if (event.key.code == sf::Keyboard::Z) {
+			if (event.key.code == sf::Keyboard::Z) {
 				Position pos;
 				std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
 				std::get<1>(pos) = std::get<1>(player->getPosition());
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
-			else if (event.key.code == sf::Keyboard::Q) {
+			if (event.key.code == sf::Keyboard::Q) {
 				Position pos;
 				std::get<0>(pos) = std::get<0>(player->getPosition());
 				std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
-			else if (event.key.code == sf::Keyboard::S) {
+			if (event.key.code == sf::Keyboard::S) {
 				Position pos;
 				std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
 				std::get<1>(pos) = std::get<1>(player->getPosition());
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
-			else if (event.key.code == sf::Keyboard::D) {
+			if (event.key.code == sf::Keyboard::D) {
 				Position pos;
 				std::get<0>(pos) = std::get<0>(player->getPosition());
 				std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
@@ -97,7 +97,7 @@ void GraphicEngine::handleEvents()
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
 		}
-		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
 		else if (event.type == sf::Event::MouseMoved)
 			_mouseMoveCall(event.mouseMove.x, event.mouseMove.y);
