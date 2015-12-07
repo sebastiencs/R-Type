@@ -12,7 +12,6 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 
 TaskScheduler::~TaskScheduler()
 {
-	thread->join();
 	thread->close();
 	delete thread;
 	delete timer;
