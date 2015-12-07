@@ -69,6 +69,12 @@ int	SocketUDPUnix::connect(const std::string &addr, uint16_t port)
   _addr.sin_addr = *reinterpret_cast<struct in_addr *>(h->h_addr_list[0]);
   _addr.sin_family = AF_INET;
   _addr.sin_port = htons(port);
+
+#ifdef DEBUG
+  std::cerr << "Connection UDP to " << inet_ntoa(_addr.sin_addr)
+	    << ":" << static_cast<int>(ntohs(_addr.sin_port)) << std::endl;
+#endif
+
   return (0);
 }
 
@@ -78,10 +84,10 @@ int	SocketUDPUnix::bind(uint16_t port)
     throw std::runtime_error("Try to bind a socket with a client");
   }
   _addr.sin_family = AF_INET;
-  _addr.sin_addr.s_addr = INADDR_ANY;
+  _addr.sin_addr.s_addr = htonl(INADDR_ANY);
   _addr.sin_port = htons(port);
-  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) == -1) {
-    DEBUG_MSG("bind() failed");
+  if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr)) < 0) {
+    DEBUG_MSG("bind() UDP failed");
     _error = 1;
     return (-1);
   }

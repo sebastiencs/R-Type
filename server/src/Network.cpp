@@ -92,8 +92,8 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
 
   size_t	size_fds = fds.size();
   fds.resize(size_fds + 1);
-  fds[size_fds - 1].fd = sock->socket();
-  fds[size_fds - 1].events = POLLIN;
+  fds[size_fds].fd = sock->socket();
+  fds[size_fds].events = POLLIN;
 
   ssize_t	size;
   size = sock->read(_buffer);
