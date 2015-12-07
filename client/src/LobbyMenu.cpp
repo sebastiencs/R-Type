@@ -194,7 +194,6 @@ void LobbyMenu::updatePlayerList()
 #endif // !DEBUG
 		box->addDrawable(playerLVL);
 		box->addDrawable(playerStatus);
-		playerInfo.push_back(box);
 		quadPlayerBox->addDrawable(box);
 		++t;
 	}

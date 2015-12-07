@@ -26,7 +26,6 @@ private:
 
 protected:
 	IGraphicEngine* engine;
-	std::vector<Box*> playerInfo;
 	OnlineMenu *_superview;
 	IThread *threadReceivedListPlayers;
 	IThread *threadReceivedReadyPlayers;
