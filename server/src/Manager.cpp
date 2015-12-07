@@ -60,6 +60,17 @@ void		Manager::deletePlayer(const Addr &addr)
     if (party->getPlayers().empty()) {
       _parties.remove(party);
     }
+    else {
+      auto &players = party->getPlayers();
+      PaquetListPlayers	paquet;
+      for (auto &p : players) {
+	paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
+      }
+      paquet.createPaquet();
+      for (auto &p : players) {
+	write(paquet, p->addr());
+      }
+    }
   }
 }
 
