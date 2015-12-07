@@ -36,7 +36,6 @@ private:
 public:
 
   SocketUDPUnix(CONNECTION_TYPE);
-  SocketUDPUnix(CONNECTION_TYPE, socket_t);
   virtual ~SocketUDPUnix();
 
   virtual socket_t	socket() const;
