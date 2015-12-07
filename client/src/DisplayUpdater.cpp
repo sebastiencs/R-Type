@@ -58,12 +58,12 @@ void DisplayUpdater::game()
 	Sprite *bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
 	bg->draw();
 
-	while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
-		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+	//while (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
+	//	const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
 //		graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 //		graphicEngine->drawImage("vessel0.png", Transformation(p->getX(), p->getY()), Color::None);
-		PackageStorage::getInstance().deleteObstaclesPackage();
-	}
+	//	PackageStorage::getInstance().deleteObstaclesPackage();
+	//}
 	while (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
 		const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
 		Position L(p->getX(), p->getY());
@@ -71,11 +71,11 @@ void DisplayUpdater::game()
 		//		graphicEngine->drawImage(playerIDToSpriteString[p->getPlayerID()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deletePlayersPackage();
 	}
-	while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
-		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-//		graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-		PackageStorage::getInstance().deleteShotsPackage();
-	}
+	//while (PackageStorage::getInstance().getShotsPackage() != nullptr) {
+	//	const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
+////		graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+	//	PackageStorage::getInstance().deleteShotsPackage();
+	//}
 	for (Player *player : LP.getListPlayers())
 		graphicEngine->drawImage("vessel0.png", Transformation(std::get<0>(player->getPosition()), std::get<0>(player->getPosition())));
 }
