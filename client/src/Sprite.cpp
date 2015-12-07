@@ -56,3 +56,13 @@ const Color & Sprite::getColor() const
 {
 	return color;
 }
+
+bool Sprite::isPressed(uint32_t x, uint32_t y)
+{
+	uint32_t mx = _transformation.getX();
+	uint32_t my = _transformation.getY();
+	uint32_t mwidth = _transformation.getWidth();
+	uint32_t mheight = _transformation.getHeight();
+	return (x >= mx && x <= (mx + mwidth) &&
+		y >= my && y <= (my + mheight) && _visible);
+}

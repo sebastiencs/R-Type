@@ -77,7 +77,7 @@ void DisplayUpdater::game()
 	//	PackageStorage::getInstance().deleteShotsPackage();
 	//}
 	for (Player *player : LP.getListPlayers())
-		graphicEngine->drawImage("vessel0.png", Transformation(std::get<0>(player->getPosition()), std::get<0>(player->getPosition())));
+		graphicEngine->drawImage("vessel" + std::to_string((player->getID() % 4)) + ".png", Transformation(std::get<0>(player->getPosition()), std::get<1>(player->getPosition())));
 }
 
 void DisplayUpdater::launchObserver()

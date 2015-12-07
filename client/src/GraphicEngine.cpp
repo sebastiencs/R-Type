@@ -28,7 +28,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 
 	shotTypeToSpriteString[0] = "r-typesheet1.gif";
 	shotTypeToSpriteString[1] = "r-typesheet1.gif";
-	shotTypeToSpriteString[2] = "r-typesheet1.gif";
+	shotTypeToSpriteString[2] = "r-typesheet1.gif"; 
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
 }
@@ -70,29 +70,29 @@ void GraphicEngine::handleEvents()
 				_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
 			if (event.key.code == sf::Keyboard::Z) {
 				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
-				std::get<1>(pos) = std::get<1>(player->getPosition());
-				player->setPosition(pos);
-				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-			}
-			if (event.key.code == sf::Keyboard::Q) {
-				Position pos;
 				std::get<0>(pos) = std::get<0>(player->getPosition());
 				std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
+			if (event.key.code == sf::Keyboard::Q) {
+				Position pos;
+				std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
+				std::get<1>(pos) = std::get<1>(player->getPosition());
+				player->setPosition(pos);
+				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+			}
 			if (event.key.code == sf::Keyboard::S) {
 				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
-				std::get<1>(pos) = std::get<1>(player->getPosition());
+				std::get<0>(pos) = std::get<0>(player->getPosition());
+				std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
 			if (event.key.code == sf::Keyboard::D) {
 				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition());
-				std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
+				std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
+				std::get<1>(pos) = std::get<1>(player->getPosition());
 				player->setPosition(pos);
 				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 			}
