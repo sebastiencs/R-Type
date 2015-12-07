@@ -74,28 +74,28 @@ void GraphicEngine::handleEvents()
 			std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
 			std::get<1>(pos) = std::get<1>(player->getPosition());
 			player->setPosition(pos);
-			_packager->createMovementPackage(LP.getId(), 0, 0);
+			_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 		}
 		else if (event.key.code == sf::Keyboard::Q) {
 			Position pos;
 			std::get<0>(pos) = std::get<0>(player->getPosition());
 			std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
 			player->setPosition(pos);
-			_packager->createMovementPackage(LP.getId(), 0, 0);
+			_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 		}
 		else if (event.key.code == sf::Keyboard::S) {
 			Position pos;
 			std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
 			std::get<1>(pos) = std::get<1>(player->getPosition());
 			player->setPosition(pos);
-			_packager->createMovementPackage(LP.getId(), 0, 20);
+			_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 		}
 		else if (event.key.code == sf::Keyboard::D) {
 			Position pos;
 			std::get<0>(pos) = std::get<0>(player->getPosition());
 			std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
 			player->setPosition(pos);
-			_packager->createMovementPackage(LP.getId(), 20, 0);
+			_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
 		}
 		else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
