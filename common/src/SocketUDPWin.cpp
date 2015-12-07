@@ -13,6 +13,7 @@
 
 SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
   : _isKnown(false),
+    _addr(),
     _type(type)
 {
   if (type == SERVER)
@@ -55,9 +56,9 @@ socket_t	SocketUDPWin::socket() const
 int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
 {
   // For the Client
-  _client.sin_family = AF_INET;
-  _client.sin_port = htons(port);
-  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_client.sin_addr.S_un.S_addr));
+  _addr.sin_family = AF_INET;
+  _addr.sin_port = htons(port);
+  inet_pton(AF_INET, addr.c_str(), (PVOID *)(&_addr.sin_addr.S_un.S_addr));
   //_client.sin_addr.S_un.S_addr = inet_addr(addr.c_str());
 	return (0);
 }
@@ -65,10 +66,10 @@ int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
 int	SocketUDPWin::bind(uint16_t port)
 {
   // For the Server
-  _server.sin_family = AF_INET;
-	_server.sin_addr.s_addr = INADDR_ANY;
-	_server.sin_port = htons(port);
-	if (::bind(_socket, (struct sockaddr *)&_server, sizeof(_server)) == SOCKET_ERROR)
+  _addr.sin_family = AF_INET;
+	_addr.sin_addr.s_addr = INADDR_ANY;
+	_addr.sin_port = htons(port);
+	if (::bind(_socket, (struct sockaddr *)&_addr, sizeof(_addr)) == SOCKET_ERROR)
 		DEBUG_MSG("Bind failed");
 	else
 		DEBUG_MSG("Bind done");
@@ -83,10 +84,10 @@ ssize_t	SocketUDPWin::write(const Buffer &buf)
     if (_isKnown == false) {
       throw std::runtime_error("Error sendto() client unknown");
     }
-    n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_client, _clientLen);
+    n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, _clientLen);
   }
   else {
-    n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_server, sizeof(_server));
+    n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, sizeof(_addr));
   }
   if (n == SOCKET_ERROR) {
     DEBUG_MSG("Sendto failed: " + WSAGetLastError());
@@ -97,7 +98,7 @@ ssize_t	SocketUDPWin::write(const Buffer &buf)
 
 ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
 {
-  struct sockaddr_in	addrIn = addr.get();
+  struct sockaddr_in	addrIn = addr.getUDP();
   ssize_t		n;
 
   if ((n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
@@ -115,10 +116,10 @@ ssize_t	SocketUDPWin::write(const Paquet &paquet)
     if (_isKnown == false) {
       throw std::runtime_error("Error sendto() client unknown");
     }
-    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_client, _clientLen);
+    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_addr, _clientLen);
   }
   else {
-    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_server, sizeof(_server));
+    n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_addr, sizeof(_addr));
   }
   if (n == SOCKET_ERROR) {
     DEBUG_MSG("Sendto failed: " + WSAGetLastError());
@@ -129,7 +130,7 @@ ssize_t	SocketUDPWin::write(const Paquet &paquet)
 
 ssize_t	SocketUDPWin::write(const Paquet &paquet, const Addr &addr)
 {
-  struct sockaddr_in	addrIn = addr.get();
+  struct sockaddr_in	addrIn = addr.getUDP();
   ssize_t		n;
 
   if ((n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
@@ -145,13 +146,13 @@ ssize_t	SocketUDPWin::read(Buffer &buf)
 
   buf.reset();
   if (_type == SocketUDPWin::SERVER) {
-    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_client, &_clientLen);
+    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, &_clientLen);
     if (recvlen >= 0) {
       _isKnown = true;
     }
   }
   else {
-    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_server, &_clientLen);
+    recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, &_clientLen);
   }
   if (recvlen = SOCKET_ERROR) {
     DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
@@ -165,5 +166,5 @@ ssize_t	SocketUDPWin::read(Buffer &buf)
 
 const Addr	SocketUDPWin::getAddr() const
 {
-  return (Addr(_client));
+  return (Addr(_addr));
 }

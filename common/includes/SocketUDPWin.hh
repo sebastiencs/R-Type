@@ -23,8 +23,7 @@ public:
 
 private:
   socket_t		_socket;
-  sockaddr_in 		_server;
-  sockaddr_in 		_client;
+  sockaddr_in 		_addr;
   CONNECTION_TYPE	_type;
 
   int _clientLen;

@@ -35,7 +35,7 @@ protected:
 public:
 
   SocketTCPWin(CONNECTION_TYPE);
-  SocketTCPWin(CONNECTION_TYPE, socket_t);
+  SocketTCPWin(CONNECTION_TYPE, socket_t, struct sockaddr_in &, uint16_t);
   virtual ~SocketTCPWin();
 
   virtual socket_t	socket() const;

@@ -65,17 +65,18 @@ int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
 ISocketTCP	*SocketTCPWin::accept()
 {
   socket_t socket;
-  int tmp = sizeof(_addr.get());
+  struct sockaddr_in	c_addr;
+  int tmp = sizeof(c_addr);
 
   if (_type == SocketTCPWin::CLIENT) {
     throw std::runtime_error("Try to connect with a server");
   }
-  if ((socket = ::accept(_socket, (struct sockaddr *)&_addr.get(), &tmp)) == INVALID_SOCKET) {
+  if ((socket = ::accept(_socket, (struct sockaddr *)&c_addr, &tmp)) == INVALID_SOCKET) {
     DEBUG_MSG("Accept failed");
     return (0);
   }
   DEBUG_MSG("Accept done");
-  SocketTCPWin* newClient = new SocketTCPWin(CLIENT, socket, _addr.get(), _port);
+  SocketTCPWin* newClient = new SocketTCPWin(CLIENT, socket, c_addr, _port);
   return newClient;
 }
 
@@ -84,10 +85,10 @@ int	SocketTCPWin::bind(uint16_t port)
   if (_type == SocketTCPWin::CLIENT) {
     throw std::runtime_error("Try to connect with a server");
   }
-  _server.sin_family = AF_INET;
-  _server.sin_addr.s_addr = INADDR_ANY;
-  _server.sin_port = htons(port);
-  if (::bind(_socket, (struct sockaddr *)&_server, sizeof(_server)) == SOCKET_ERROR)
+  _addr.get().sin_family = AF_INET;
+  _addr.get().sin_addr.s_addr = INADDR_ANY;
+  _addr.get().sin_port = htons(port);
+  if (::bind(_socket, (struct sockaddr *)&_addr.get(), sizeof(_addr.get())) == SOCKET_ERROR)
     DEBUG_MSG("Bind failed");
   else
     DEBUG_MSG("Bind done");
@@ -151,5 +152,5 @@ ssize_t	SocketTCPWin::read(Buffer &buf)
 
 const Addr	SocketTCPWin::getAddr() const
 {
-  return (Addr(_socket));
+  return (_addr);
 }
