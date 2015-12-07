@@ -1,7 +1,7 @@
 #include "DisplayUpdater.hh"
 
 
-DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : LP(ListPlayers::getInstance())
+DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 {
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
@@ -61,6 +61,7 @@ void DisplayUpdater::launchObserver()
 
 void DisplayUpdater::game()
 {
+	ListPlayers &LP = ListPlayers::getInstance();
 	Transformation t;
 	t.setBounds(1024, 768);
 	t.setPosition(0, 0);
