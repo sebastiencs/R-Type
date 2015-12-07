@@ -28,7 +28,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 
 	shotTypeToSpriteString[0] = "r-typesheet1.gif";
 	shotTypeToSpriteString[1] = "r-typesheet1.gif";
-	shotTypeToSpriteString[2] = "r-typesheet1.gif";
+	shotTypeToSpriteString[2] = "r-typesheet1.gif"; 
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
 }
