@@ -43,8 +43,8 @@ public:
   };
 
   enum {
-    FIRST		= 0x00,
-    REQUEST_PARTIES	= 0x01,
+		FIRST = 0x00,
+		REQUEST_PARTIES	= 0x01,
     LIST_PARTIES	= 0x02,
     JOIN_PARTY		= 0x03,
     CREATE_PARTY	= 0x04,
@@ -56,6 +56,7 @@ public:
     READY		= 0x0A,
     LAUNCH		= 0x0B,
     LEAVE		= 0x0C,
+		FIRST_UDP = 0x0D,
     RESPONSE		= 0xFF
   };
 

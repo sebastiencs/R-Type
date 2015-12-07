@@ -87,9 +87,13 @@ void MainMenu::draw()
 	const PaquetResponse *paquet = PC.getAnswersPackage();
 	if (paquet) {
 		if (paquet->getReturn() == 2) {
-				ListPlayers &list = ListPlayers::getInstance();
-				list.setId(paquet->getData());
-				std::cout << "------------> ID : " << (int)list.getId() << std::endl;
+			PaquetFirstUDP *first = new PaquetFirstUDP();
+			first->setId(paquet->getData());
+			first->createPaquet();
+			ListPlayers &list = ListPlayers::getInstance();
+			list.setId(paquet->getData());
+			PackageStorage::getInstance().storeToSendUDPPackage(first);
+			std::cout << "------------> ID : " << (int)list.getId() << std::endl;
 		}
 		PC.deleteAnswersPackage();
 	}
@@ -121,14 +125,14 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
 	for (Drawable *d : elements) {
-	  if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
 			if (d->getId() == "Reconnect") {
 				if (!net->getIsConnect())
 					b->onHover(x, y);
 			}
 			else
 				b->onHover(x, y);
-	  }
+		}
 	}
 
 	if (currentPage == 1)

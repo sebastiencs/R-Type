@@ -12,6 +12,7 @@
 # define PAQUETS_H_
 
 # include "PaquetFirst.hh"
+# include "PaquetFirstUDP.hh"
 # include "PaquetCreateParty.hh"
 # include "PaquetJoinParty.hh"
 # include "PaquetListParties.hh"

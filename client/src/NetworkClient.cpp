@@ -22,7 +22,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->setVersion(1);
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendTCPPackage(paquet);
-
+	
 	_ip = ip;
 	_port = port;
 

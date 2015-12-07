@@ -69,12 +69,12 @@ void DisplayUpdater::game()
 
 	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
 		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
-  	//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+		//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteObstaclesPackage();
 	}
 	if (PackageStorage::getInstance().getShotsPackage() != nullptr) {
 		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-  	//graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+		//graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteShotsPackage();
 	}
 	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
