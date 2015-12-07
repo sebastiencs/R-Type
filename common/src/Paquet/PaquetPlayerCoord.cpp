@@ -59,8 +59,8 @@ std::ostream	&operator<<(std::ostream &os, PaquetPlayerCoord &p)
 {
 	p.parsePaquet();
 	os << "PaquetPlayerCoord = " << std::endl
-		<< " { Player ID: " << p.getPlayerID()
-		<< ", Position: [" << p.getX() << " - " << p.getY() << "]"
-		<< " };";
+	   << " { Player ID: " << (int)p.getPlayerID()
+	   << ", Position: [" << (int)p.getX() << " - " << (int)p.getY() << "]"
+	   << " };";
 	return (os);
 }
