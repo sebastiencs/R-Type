@@ -137,7 +137,7 @@ void LobbyMenu::ready()
 	}
 	Box* player = dynamic_cast<Box* >(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
 	if (!player) {
-		DEBUG_MSG("Couldn't retreive Player Box");
+		DEBUG_MSG("Couldn't retreive Player Box: \"" << "Player" << std::to_string(list.getId()) << "Box" << "\"");
 		return;
 	}
 	TextField* ready = dynamic_cast<TextField*>(player->getElement("Ready"));
