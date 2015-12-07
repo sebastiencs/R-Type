@@ -295,7 +295,9 @@ void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
     auto &players = party->getPlayers();
 
     for (auto &player : players) {
-      write(*paquet, player->addr());
+      if (player->getID() != id) {
+	write(*paquet, player->addr());
+      }
       if (player->getReady()) {
 	size++;
       }
