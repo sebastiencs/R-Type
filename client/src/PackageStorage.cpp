@@ -113,7 +113,6 @@ void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
 void PackageStorage::storeReadyPackage(PaquetReady * package)
 {
 	ready.push_back(package);
-	_semOut->post();
 }
 
 void PackageStorage::storeToSendUDPPackage(Paquet * package)

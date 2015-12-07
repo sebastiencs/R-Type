@@ -81,7 +81,6 @@ int NetworkClient::runWrite()
 					{
 						const Paquet *paquet = PackageStorage::getInstance().getToSendUDPPackage();
 						if (paquet != nullptr) {
-							PackageStorage::getInstance().getAnswersPackage();
 							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
 							PackageStorage::getInstance().deleteToSendUDPPackage();
@@ -92,7 +91,6 @@ int NetworkClient::runWrite()
 					{
 						const Paquet *paquet = PackageStorage::getInstance().getToSendTCPPackage();
 						if (paquet != nullptr) {
-							PackageStorage::getInstance().getAnswersPackage();
 							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
 							PackageStorage::getInstance().deleteToSendTCPPackage();
