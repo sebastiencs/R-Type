@@ -140,11 +140,16 @@ std::ostream &operator<<(std::ostream &os, const Addr &o)
 {
   sockaddr_in sock = o.get();
 
+#ifdef __unix__
+
   os << "Addr = { fd : " << (int)o.getSocket()
      << ", port used : " << (int)o.getPort()
      << ", sock : "
      << inet_ntoa(sock.sin_addr)
      << ":" << ntohs(sock.sin_port)
      << " };";
+
+#endif
+
   return (os);
 }
