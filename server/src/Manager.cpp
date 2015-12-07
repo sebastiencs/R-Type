@@ -264,9 +264,10 @@ void		Manager::handlePaquet(PaquetPlayerCoord *paquet, const Addr &addr UNUSED)
 
     // Solution temporaire
     for (auto &player : party->getPlayers()) {
-      if (player->getID() != paquet->getPlayerID()) {
+      // if (player->getID() != paquet->getPlayerID()) {
+      std::cout << "ICI\n";
 	write(*paquet, player->addr());
-      }
+      // }
     }
 
 

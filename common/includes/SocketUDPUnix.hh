@@ -28,7 +28,6 @@ private:
   int			_fd;
   int			_error;
   struct sockaddr_in	_addr;
-  struct sockaddr_in	_clientAddr;
   CONNECTION_TYPE	_type;
 
   bool			_isKnown;
@@ -47,6 +46,7 @@ public:
   virtual ssize_t	write(const Paquet &paquet, const Addr &);
   virtual ssize_t	read(Buffer &buf);
   virtual const Addr	getAddr() const;
+  virtual uint16_t	getPort() const;
 };
 
 

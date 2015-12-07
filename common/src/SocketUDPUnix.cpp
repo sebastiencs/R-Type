@@ -15,7 +15,6 @@
 SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type)
   : _error(0),
     _addr(),
-    _clientAddr(),
     _type(type),
     _isKnown(false)
 {
@@ -91,9 +90,7 @@ ssize_t	SocketUDPUnix::write(const Buffer &buf)
     if (_isKnown == false) {
       throw std::runtime_error("Error sendto() unknown client");
     }
-    struct sockaddr_in tmp = _clientAddr;
-    tmp.sin_port = htons(ntohs(tmp.sin_port) + 1);
-    n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&tmp), sizeof(_clientAddr));
+    n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
   }
   else {
     n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
@@ -106,12 +103,9 @@ ssize_t	SocketUDPUnix::write(const Buffer &buf)
 
 ssize_t	SocketUDPUnix::write(const Buffer &buf, const Addr &addr)
 {
-  struct sockaddr_in	addrIn = addr.get();
+  struct sockaddr_in	addrIn = addr.getUDP();
   ssize_t		n = 0;
 
-  if (_type == SocketUDPUnix::SERVER) {
-    addrIn.sin_port = htons(ntohs(addrIn.sin_port) + 1);
-  }
   n = sendto(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&addrIn), sizeof(addrIn));
   if (n < 0) {
     DEBUG_MSG("sendto() failed");
@@ -123,23 +117,17 @@ ssize_t	SocketUDPUnix::write(const Paquet &paquet)
 {
   ssize_t	n = 0;
 
+#ifdef DEBUG
+  std::cerr << "Send UDP to " << inet_ntoa(_addr.sin_addr)
+	    << ":" << static_cast<int>(ntohs(_addr.sin_port)) << std::endl;
+#endif
   if (_type == SocketUDPUnix::SERVER) {
     if (_isKnown == false) {
       throw std::runtime_error("Error sendto() unknown client");
     }
-    struct sockaddr_in tmp = _clientAddr;
-    tmp.sin_port = htons(ntohs(tmp.sin_port) + 1);
-#ifdef DEBUG
-    std::cerr << "Send UDP to " << inet_ntoa(tmp.sin_addr)
-	      << ":" << static_cast<int>(ntohs(tmp.sin_port)) << std::endl;
-#endif
-    n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&tmp), sizeof(_clientAddr));
+    n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
   }
   else {
-#ifdef DEBUG
-    std::cerr << "Send UDP to " << inet_ntoa(_addr.sin_addr)
-	      << ":" << static_cast<int>(ntohs(_addr.sin_port)) << std::endl;
-#endif
     n = sendto(_fd, paquet.getData(), paquet.getSize(), 0, reinterpret_cast<sockaddr *>(&_addr), sizeof(_addr));
   }
   if (n < 0) {
@@ -153,9 +141,6 @@ ssize_t	SocketUDPUnix::write(const Paquet &paquet, const Addr &addr)
   struct sockaddr_in	addrIn = addr.getUDP();
   ssize_t		n = 0;
 
-  if (_type == SocketUDPUnix::SERVER) {
-    addrIn.sin_port = htons(ntohs(addrIn.sin_port) + 1);
-  }
 #ifdef DEBUG
   std::cerr << "Send UDP to " << inet_ntoa(addrIn.sin_addr)
 	    << ":" << static_cast<int>(ntohs(addrIn.sin_port)) << std::endl;
@@ -171,28 +156,22 @@ ssize_t	SocketUDPUnix::write(const Paquet &paquet, const Addr &addr)
 ssize_t	SocketUDPUnix::read(Buffer &buf)
 {
   ssize_t	n = 0;
-  socklen_t	sizeSock = sizeof(_clientAddr);
+  socklen_t	sizeSock = sizeof(_addr);
 
   buf.reset();
   if (_type == SocketUDPUnix::SERVER) {
-#ifdef DEBUG
-    std::cerr << "Read UDP from " << inet_ntoa(_clientAddr.sin_addr)
-	      << ":" << static_cast<int>(ntohs(_clientAddr.sin_port)) << std::endl;
-#endif
-    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_clientAddr), &sizeSock);
+    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
     if (n >= 0) {
       _isKnown = true;
     }
   }
   else {
-    struct sockaddr_in tmp = _addr;
-    tmp.sin_port = htons(ntohs(tmp.sin_port) + 1);
-#ifdef DEBUG
-  std::cerr << "Read UDP from " << inet_ntoa(tmp.sin_addr)
-	    << ":" << static_cast<int>(ntohs(tmp.sin_port)) << std::endl;
-#endif
-    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&tmp), &sizeSock);
+    n = recvfrom(_fd, buf.get(), buf.size(), 0, reinterpret_cast<sockaddr *>(&_addr), &sizeSock);
   }
+#ifdef DEBUG
+  std::cerr << "Read UDP from " << inet_ntoa(_addr.sin_addr)
+	    << ":" << static_cast<int>(ntohs(_addr.sin_port)) << std::endl;
+#endif
   if (n < 0) {
     DEBUG_MSG("recvfrom() failed");
   }
@@ -204,5 +183,10 @@ ssize_t	SocketUDPUnix::read(Buffer &buf)
 
 const Addr	SocketUDPUnix::getAddr() const
 {
-  return (Addr(_clientAddr));
+  return (Addr(_addr));
+}
+
+uint16_t	SocketUDPUnix::getPort() const
+{
+  return (ntohs(_addr.sin_port));
 }
