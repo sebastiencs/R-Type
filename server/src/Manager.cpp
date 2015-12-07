@@ -313,14 +313,13 @@ void		Manager::handlePaquet(PaquetReady *paquet, const Addr &addr)
 	size++;
       }
     }
-
-    // if (players.size() == size) {
-    //   p.createPaquet();
-    //   party->setRunning(true);
-    //   for (auto &player : players) {
-    // 	write(p, player->addr());
-    //   }
-    // }
+    if (players.size() == size) {
+      p.createPaquet();
+      party->setRunning(true);
+      for (auto &player : players) {
+	write(p, player->addr());
+      }
+    }
   }
   else {
 #ifdef DEBUG
