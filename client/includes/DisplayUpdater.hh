@@ -9,6 +9,7 @@
 # include "MainMenu.hh"
 # include "Credits.hh"
 # include "OnlineMenu.hh"
+#include "TaskScheduler.hh"
 
 class MainMenu;
 class OnlineMenu;
@@ -25,6 +26,7 @@ public:
 
 	void mainMenu();
 	void game();
+	void launchObserver();
 
 private:
 	IGraphicEngine *graphicEngine;
@@ -32,6 +34,7 @@ private:
 	Packager *packager;
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
+	TaskScheduler *launchLoop;
 
 	std::list<Button* > buttons;
 };

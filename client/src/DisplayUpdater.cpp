@@ -8,6 +8,8 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine, net);
 	this->net = net;
+	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };
+	launchLoop = new TaskScheduler(fptr, 50);
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
@@ -44,6 +46,8 @@ void DisplayUpdater::mainMenu()
 		graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
 }
 
+
+
 void DisplayUpdater::game()
 {
 	//Transformation t;
@@ -67,4 +71,16 @@ void DisplayUpdater::game()
 	//	graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 	//	PackageStorage::getInstance().deleteShotsPackage();
 	//}
+}
+
+void DisplayUpdater::launchObserver()
+{
+	static const PaquetLaunch *launch = nullptr;
+	static PackageStorage& ps = PackageStorage::getInstance();
+	launch = ps.getLaunchPackage();
+	if (launch != nullptr) {
+		callback fptr = std::bind(&DisplayUpdater::game, this);
+		graphicEngine->setCallbackFunction(fptr, nullptr);
+		delete launchLoop;
+	}
 }
