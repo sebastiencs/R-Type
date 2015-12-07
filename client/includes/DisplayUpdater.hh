@@ -9,7 +9,8 @@
 # include "MainMenu.hh"
 # include "Credits.hh"
 # include "OnlineMenu.hh"
-#include "TaskScheduler.hh"
+# include "ListPlayers.hh"
+# include "TaskScheduler.hh"
 
 class MainMenu;
 class OnlineMenu;
@@ -35,6 +36,7 @@ private:
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
 	TaskScheduler *launchLoop;
+	ListPlayers LP;
 
 	std::list<Button* > buttons;
 };
