@@ -111,39 +111,39 @@ void GraphicEngine::handleMovements()
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
     Position pos;
-    std::get<0>(pos) = std::get<0>(player->getPosition());
-    std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
+    pos.x = player->getPosition().x;
+    pos.y = player->getPosition().y - 1;
     player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
       // Si S est appuyer en meme temps le mec bouge pas. Ca sert a rien d'envoyer le paquet
-      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
     Position pos;
-    std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
-    std::get<1>(pos) = std::get<1>(player->getPosition());
+    pos.x = player->getPosition().x - 1;
+    pos.y = player->getPosition().y;
     player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
     Position pos;
-    std::get<0>(pos) = std::get<0>(player->getPosition());
-    std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
+    pos.x = player->getPosition().x;
+    pos.y = player->getPosition().y + 1;
     player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
     Position pos;
-    std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
-    std::get<1>(pos) = std::get<1>(player->getPosition());
+    pos.x = player->getPosition().x + 1;
+    pos.y = player->getPosition().y;
     player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
     }
   }
 }

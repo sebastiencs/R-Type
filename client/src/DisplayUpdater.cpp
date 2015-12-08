@@ -85,6 +85,5 @@ void DisplayUpdater::game()
 		PackageStorage::getInstance().deletePlayersPackage();
 	}
 	for (Player *player : LP.getListPlayers())
-		graphicEngine->drawImage("vessel" + std::to_string((player->getID() % 4)) + ".png", Transformation(std::get<0>(player->getPosition()), std::get<1>(player->getPosition())));
+		graphicEngine->drawImage("vessel" + std::to_string((player->getID() % 4)) + ".png", Transformation(player->getPosition().x, player->getPosition().y));
 }
-

@@ -14,7 +14,13 @@
 # include <tuple>
 # include <iostream>
 
-typedef std::tuple<uint16_t, uint16_t>	Position;
+typedef struct s_position {
+  s_position() : x(1), y(1) {}
+  s_position(uint16_t _x, uint16_t _y) : x(_x), y(_y) {}
+  uint16_t x;
+  uint16_t y;
+} Position;
+//typedef std::tuple<uint16_t, uint16_t>	Position;
 
 class		IPlayer
 {

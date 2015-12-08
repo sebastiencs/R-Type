@@ -24,7 +24,7 @@ Player::Player()
 }
 
 Player::Player(const std::string &name, uint8_t id,
-	       const Position &pos = std::make_tuple(1, 1),
+	       const Position &pos = Position(),
 	       uint8_t level = 0, int life = 100, bool ready = false)
   : _name(name),
     _position(pos),
