@@ -13,11 +13,12 @@
 #include "Manager.hh"
 #include "IOEvent.hh"
 #include "Tools.hh"
+#include "PaquetTCP.hh"
 
 Network::Network(const Manager_SharedPtr &&manager, const uint16_t port)
   : _sem(std::make_unique<Semaphore>()),
     _socketUDP(std::make_unique<SocketUDP>(SocketUDP::SERVER)),
-    _socketTCP(std::make_unique<SocketTCP>(SocketTCP::SERVER)),
+    _socketTCP(std::make_unique<PaquetTCP>(SocketTCP::SERVER)),
     _selector(std::make_unique<Selector>(std::move(manager))),
     _running(true),
     _thread(std::make_unique<Thread>([this](void *) -> void * { write(); return (0);}, nullptr)),
@@ -93,12 +94,6 @@ inline bool	Network::handleNewTCP(Pollfd &fds)
   fds[size_fds].fd = sock->socket();
   fds[size_fds].events = POLLIN;
 
-  ssize_t	size;
-  size = sock->read(_buffer);
-  std::cout << "SIZE: " << size << std::endl;
-  if (size > 0) {
-    _selector->execFunc(_buffer, sock->getAddr());
-  }
   return (true);
 }
 
@@ -106,24 +101,25 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 {
 
   auto sock = Tools::findIn(_socketClient, [&socket] (auto &sock) { return (sock->socket() == socket); });
+  ssize_t size;
 
-  ssize_t size = sock->read(_buffer);
-
-  if (size > 0) {
-    DEBUG_MSG(_buffer);
-    _selector->execFunc(_buffer, sock->getAddr());
+  try {
+    size = sock->read(_buffer);
   }
-  else {
-    std::cerr << "Client disconnect\n";
-
+  catch (Disconnected &) {
+    DEBUG_MSG("Client disconnect\n");
     (_manager.lock())->deletePlayer(socket);
 
     auto it = Tools::findIt(fds, [&socket] (auto &fd) { return (fd.fd == socket); });
     if (it != fds.end()) {
       fds.erase(it);
     }
-
     _socketClient.remove(sock);
+  }
+
+  if (size > 0) {
+    DEBUG_MSG(_buffer);
+    _selector->execFunc(_buffer, sock->getAddr());
   }
   return (true);
 }
