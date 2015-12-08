@@ -87,13 +87,14 @@ void DisplayUpdater::game()
 		LP.getPlayer(p->getPlayerID())->setPosition(L);
 		PackageStorage::getInstance().deletePlayersPackage();
 	}
+	// TODO: corriger les pos de la bullet
 	int i = 0;
 	for (Player *player : LP.getListPlayers()) {
 		Transformation t(player->getPosition().x, player->getPosition().y);
 		if (!player->getBullets().empty()) {
 			for (Position *bullet : player->getBullets()) {
-				graphicEngine->drawImage("bullets-8.png", Transformation(bullet->x, bullet->y));
-				bullet->x++;
+				graphicEngine->drawImage("bullet1.png", Transformation(bullet->x, bullet->y));
+				bullet->x += 15;
 			}
 		}
 		t.setScale(3.5, 3.5);
