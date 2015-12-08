@@ -99,12 +99,12 @@ bool OnlineMenu::onClick(uint32_t x, uint32_t y)
 			return (true);
 	}
 	else {
-		if (onlineChoiseBox->onAction(x, y))
-			return true;
-		else if (createGameMenu != nullptr) {
+		if (createGameMenu != nullptr) {
 			if (createGameMenu->onClick(x, y))
 				return true;
 		}
+		if (onlineChoiseBox->onAction(x, y))
+			return true;	
 		if (scrollView->onAction(x, y)) {
 			return true;
 		}
