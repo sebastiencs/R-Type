@@ -77,6 +77,7 @@ void GraphicEngine::handleMovements()
   ListPlayers &LP = ListPlayers::getInstance();
   Player *player = LP.getPlayer(LP.getId());
   bool changed = false;
+	bool bullet = false;
 	if (!player)
 		return;
 
@@ -107,10 +108,18 @@ void GraphicEngine::handleMovements()
       changed = true;
     }
   }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		bullet = true;
+	}
   if (changed) {
-    player->setPosition(pos);
-    _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+		player->setPosition(pos);
+		_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
   }
+	if (bullet) {
+		player->setPosition(pos);
+		_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
+		player->addBullet(new Position(pos.x, pos.y));
+	}
 }
 
 void GraphicEngine::launch()
