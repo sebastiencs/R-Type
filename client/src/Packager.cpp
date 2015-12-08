@@ -17,6 +17,14 @@ void Packager::createMovementPackage(uint8_t _playerID, uint16_t _x, uint16_t _y
 	PackageStorage::getInstance().storeToSendUDPPackage(movement);
 }
 
+void Packager::createFirstUDPPackage(uint8_t _playerID)
+{
+  PaquetFirstUDP *first = new PaquetFirstUDP();
+  first->setId(_playerID);
+  first->createPaquet();
+  PackageStorage::getInstance().storeToSendUDPPackage(first);
+}
+
 void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t _x, uint16_t _y)
 {
 	PaquetPlayerShot *shot = new PaquetPlayerShot();
