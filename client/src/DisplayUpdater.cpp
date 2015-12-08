@@ -76,8 +76,7 @@ t.setScale(3.5, 3.5);	if (PackageStorage::getInstance().getObstaclesPackage() !=
 	}
 	if (PackageStorage::getInstance().getShotsPackage() != nullptr) {
 		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-		Position *L = new Position(p->getX(), p->getY());
-		LP.getPlayer(p->getPlayerID())->addBullet(L);
+		LP.getPlayer(p->getPlayerID())->addBullet(new Position(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteShotsPackage();
 	}
 	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
