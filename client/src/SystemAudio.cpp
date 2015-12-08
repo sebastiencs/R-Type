@@ -26,6 +26,13 @@ SystemAudio::~SystemAudio()
   _sounds.clear();
 }
 
+SystemAudio &SystemAudio::getInstance()
+{
+  static SystemAudio *ptr = nullptr;
+
+  return ((ptr) ? (*ptr) : (*(ptr = new SystemAudio)));
+}
+
 void	SystemAudio::loadMusic(const std::string &file, int id)
 {
 

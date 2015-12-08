@@ -45,6 +45,8 @@ public:
   SystemAudio();
   virtual ~SystemAudio();
 
+  static SystemAudio &getInstance();
+
   virtual void	loadMusic(const std::string &file, int id);
   virtual void	loadSound(const std::string &file, int id);
 
@@ -55,6 +57,7 @@ public:
 
   virtual void	stopMusic();
   virtual void	stopSound();
+
 };
 
 # include <stdexcept>

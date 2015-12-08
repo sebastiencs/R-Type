@@ -1,5 +1,5 @@
 #include "DisplayUpdater.hh"
-
+#include "SystemAudio.hh"
 
 DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 {
@@ -50,8 +50,10 @@ void DisplayUpdater::launchObserver()
 {
 	static const PaquetLaunch *launch = nullptr;
 	static PackageStorage& ps = PackageStorage::getInstance();
+	static ISystemAudio &audio = SystemAudio::getInstance();
 	launch = ps.getLaunchPackage();
 	if (launch != nullptr) {
+		audio.stopMusic();
 		callback fptr = std::bind(&DisplayUpdater::game, this);
 		graphicEngine->setCallbackFunction(fptr, nullptr);
 		delete launch;
@@ -62,6 +64,7 @@ void DisplayUpdater::launchObserver()
 void DisplayUpdater::game()
 {
 	ListPlayers &LP = ListPlayers::getInstance();
+	static ISystemAudio &audio = SystemAudio::getInstance();
 	Transformation t;
 	t.setBounds(1024, 768);
 	t.setPosition(0, 0);
@@ -80,6 +83,7 @@ void DisplayUpdater::game()
 		Player *player = LP.getPlayer(p->getPlayerID());
 		player->addBullet(new Position(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteShotsPackage();
+		audio.playSound(ISystemAudio::SIMPLE_SHOT);
 	}
 	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
 		const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();

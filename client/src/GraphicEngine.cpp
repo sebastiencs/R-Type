@@ -4,6 +4,7 @@
 #include "Packager.hh"
 #include "Sprite.hh"
 #include "Text.hh"
+#include "SystemAudio.hh"
 
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
@@ -79,6 +80,7 @@ void GraphicEngine::handleEvents()
 
 void GraphicEngine::handleMovements()
 {
+	ISystemAudio &audio = SystemAudio::getInstance();
 	ListPlayers &LP = ListPlayers::getInstance();
 	Player *player = LP.getPlayer(LP.getId());
 	bool changed = false;
@@ -114,6 +116,7 @@ void GraphicEngine::handleMovements()
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > SHOT_COOLDOWN) {
+		audio.playSound(ISystemAudio::SIMPLE_SHOT);
 		_shotCooldown->reset();
 		bullet = true;
 	}

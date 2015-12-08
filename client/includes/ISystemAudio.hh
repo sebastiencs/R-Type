@@ -31,6 +31,11 @@ public:
 
   virtual void	stopMusic() = 0;
   virtual void	stopSound() = 0;
+
+  enum {
+    SIMPLE_SHOT = 1
+  };
+
 };
 
 

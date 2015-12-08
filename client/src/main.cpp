@@ -61,19 +61,20 @@ int		main(int argc, char **argv)
 	}
 #endif // !_WIN32
 
-	std::unique_ptr<ISystemAudio> audio(new SystemAudio());
+	ISystemAudio &audio = SystemAudio::getInstance();
 
 	try {
-		audio->loadMusic("test.ogg", 1);
-		audio->loadMusic("crazyfrog.ogg", 2);
-		audio->loadMusic("eiffel65.ogg", 3);
-		audio->loadMusic("booba.ogg", 4);
-		audio->loadMusic("tupac.ogg", 5);
+		audio.loadMusic("test.ogg", 1);
+		audio.loadMusic("crazyfrog.ogg", 2);
+		audio.loadMusic("eiffel65.ogg", 3);
+		audio.loadMusic("booba.ogg", 4);
+		audio.loadMusic("tupac.ogg", 5);
+		audio.loadSound("simple_shot.wav", ISystemAudio::SIMPLE_SHOT);
 	}
 	catch (ErrorLoadingFile &) {
 		DEBUG_MSG("Can't load music");
 	}
-	audio->playMusicRandom();
+	audio.playMusicRandom();
 
 	try {
 		Packager *packager = new Packager();
@@ -90,6 +91,8 @@ int		main(int argc, char **argv)
 		system("pause");
 #endif
 	}
+
+	delete &audio;
 
 #ifdef _WIN32
 	WSA::clean();
