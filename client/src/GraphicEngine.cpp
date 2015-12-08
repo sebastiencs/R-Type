@@ -85,25 +85,25 @@ void GraphicEngine::handleMovements()
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
       // Si S est appuyer en meme temps le mec bouge pas.
-      pos.y -= 1;
+      pos.y -= 4;
       changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-      pos.x -= 1;
+      pos.x -= 4;
       changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-      pos.y += 1;
+      pos.y += 4;
       changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-      pos.x += 1;
+      pos.x += 4;
       changed = true;
     }
   }
