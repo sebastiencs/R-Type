@@ -108,43 +108,38 @@ void GraphicEngine::handleMovements()
 {
   ListPlayers &LP = ListPlayers::getInstance();
   Player *player = LP.getPlayer(LP.getId());
+  bool changed = false;
+
+  Position pos = player->getPosition();
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-    Position pos;
-    pos.x = player->getPosition().x;
-    pos.y = player->getPosition().y - 1;
-    player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-      // Si S est appuyer en meme temps le mec bouge pas. Ca sert a rien d'envoyer le paquet
-      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+      // Si S est appuyer en meme temps le mec bouge pas.
+      pos.y -= 1;
+      changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-    Position pos;
-    pos.x = player->getPosition().x - 1;
-    pos.y = player->getPosition().y;
-    player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+      pos.x -= 1;
+      changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-    Position pos;
-    pos.x = player->getPosition().x;
-    pos.y = player->getPosition().y + 1;
-    player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+      pos.y += 1;
+      changed = true;
     }
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-    Position pos;
-    pos.x = player->getPosition().x + 1;
-    pos.y = player->getPosition().y;
-    player->setPosition(pos);
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-      _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+      pos.x += 1;
+      changed = true;
     }
+  }
+  if (changed) {
+    player->setPosition(pos);
+    _packager->createMovementPackage(LP.getId(), pos.x, pos.y);
   }
 }
 
@@ -157,7 +152,9 @@ void GraphicEngine::launch()
 		if (_timer->msWait(MS_REFRESH))
 		{
 			handleEvents();
-			handleMovements();
+			if (window->hasFocus()) {
+			  handleMovements();
+			}
 			window->clear(sf::Color::Black);
 
 			if (call)
