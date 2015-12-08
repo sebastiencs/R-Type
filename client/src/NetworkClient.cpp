@@ -22,7 +22,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	paquet->setVersion(1);
 	paquet->createPaquet();
 	PackageStorage::getInstance().storeToSendTCPPackage(paquet);
-	
+
 	_ip = ip;
 	_port = port;
 
@@ -61,6 +61,7 @@ NetworkClient::~NetworkClient()
 
 int NetworkClient::runWrite()
 {
+	PackageStorage &PS = PackageStorage::getInstance();
 	Pollfd	fds(2);
 
 	fds[0].fd = _socketTCP->socket();
@@ -70,7 +71,7 @@ int NetworkClient::runWrite()
 
 	while (1)
 	{
-		PackageStorage::getInstance().waitForPackage();
+		PS.waitForPackage();
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
 			for (auto &fd : fds)
@@ -79,21 +80,21 @@ int NetworkClient::runWrite()
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						const Paquet *paquet = PackageStorage::getInstance().getToSendUDPPackage();
+						const Paquet *paquet = PS.getToSendUDPPackage();
 						if (paquet != nullptr) {
 							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
-							PackageStorage::getInstance().deleteToSendUDPPackage();
+							PS.deleteToSendUDPPackage();
 							break;
 						}
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						const Paquet *paquet = PackageStorage::getInstance().getToSendTCPPackage();
+						const Paquet *paquet = PS.getToSendTCPPackage();
 						if (paquet != nullptr) {
 							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
-							PackageStorage::getInstance().deleteToSendTCPPackage();
+							PS.deleteToSendTCPPackage();
 							break;
 						}
 					}
@@ -106,6 +107,7 @@ int NetworkClient::runWrite()
 
 int NetworkClient::runRead()
 {
+	PackageStorage &PS = PackageStorage::getInstance();
 	Buffer buffer;
 	Pollfd	fds(2);
 
@@ -125,7 +127,7 @@ int NetworkClient::runRead()
 					if (fd.fd == _socketUDP->socket())
 					{
 						this->_socketUDP->read(buffer);
-						PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
+						PS.storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
@@ -151,7 +153,7 @@ int NetworkClient::runRead()
 
 						if (n > 0) {
 							DEBUG_MSG(buffer);
-							PackageStorage::getInstance().storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
+							PS.storeReceivedPackage(PackageTranslator::TranslatePaquet(buffer));
 						}
 						break;
 					}
