@@ -57,8 +57,6 @@ public:
   void		handlePaquet(PaquetJoinParty *, const Addr &);
   void		handlePaquet(PaquetCreateParty *, const Addr &);
   void		handlePaquet(PaquetLeave *, const Addr &);
-  void		handlePaquet(PaquetListParties *, const Addr &);
-  void		handlePaquet(PaquetListPlayers *, const Addr &);
   void		handlePaquet(PaquetObstacle *, const Addr &);
   void		handlePaquet(PaquetPlayerCoord *, const Addr &);
   void		handlePaquet(PaquetPlayerShot *, const Addr &);

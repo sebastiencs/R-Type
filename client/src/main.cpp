@@ -36,7 +36,7 @@ int		main(int argc, char **argv)
 	//alex
 	//std::string addr("82.229.96.158");
 	//localhost
-	std::string addr("127.0.0.1");
+	std::string addr("84.102.232.137");
 	//seb
 	//std::string addr("84.102.232.137");
 
