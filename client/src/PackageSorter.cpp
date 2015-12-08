@@ -17,7 +17,7 @@ PackageSorter::PackageSorter()
 	_tab[0] = [this](Paquet *paquet UNUSED) {};
 	_tab[1] = [this](Paquet *paquet UNUSED) {};
 	_tab[2] = [this](Paquet *paquet) {
-		PaquetListParties *store = new PaquetListParties((void *)paquet->getData(), paquet->getSize());
+		PaquetListParties *store = new PaquetListParties(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeGameListPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
@@ -25,39 +25,39 @@ PackageSorter::PackageSorter()
 	_tab[4] = [this](Paquet *paquet UNUSED) {};
 	_tab[5] = [this](Paquet *paquet UNUSED) {};
 	_tab[6] = [this](Paquet *paquet UNUSED) {
-		PaquetListPlayers *store = new PaquetListPlayers((void *)paquet->getData(), paquet->getSize());
+		PaquetListPlayers *store = new PaquetListPlayers(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storePlayerListPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[7] = [this](Paquet *paquet) {
-		PaquetPlayerCoord *store = new PaquetPlayerCoord((void *)paquet->getData(), paquet->getSize());
+		PaquetPlayerCoord *store = new PaquetPlayerCoord(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storePlayersPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[8] = [this](Paquet *paquet) {
-		PaquetPlayerShot *store = new PaquetPlayerShot((void *)paquet->getData(), paquet->getSize());
+		PaquetPlayerShot *store = new PaquetPlayerShot(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeShotsPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[9] = [this](Paquet *paquet) {
-		PaquetObstacle *store = new PaquetObstacle((void *)paquet->getData(), paquet->getSize());
+		PaquetObstacle *store = new PaquetObstacle(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeObstaclesPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[10] = [this](Paquet *paquet) {
-		PaquetReady *store = new PaquetReady((void *)paquet->getData(), paquet->getSize());
+		PaquetReady *store = new PaquetReady(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeReadyPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[11] = [this](Paquet *paquet) {
-		PaquetLaunch *store = new PaquetLaunch((void *)paquet->getData(), paquet->getSize());
+		PaquetLaunch *store = new PaquetLaunch(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeLaunchPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 
 	_tab[12] = [this](Paquet *paquet UNUSED) {};
 	_tab[0xFF] = [this](Paquet *paquet) {
-		PaquetResponse *store = new PaquetResponse((void *)paquet->getData(), paquet->getSize());
+		PaquetResponse *store = new PaquetResponse(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeAnswersPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
