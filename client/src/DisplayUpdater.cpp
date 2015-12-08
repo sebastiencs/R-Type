@@ -93,8 +93,8 @@ void DisplayUpdater::game()
 			Transformation b(player->getBullets().front()->x, player->getBullets().front()->x);
 			graphicEngine->drawImage("bullets.png", b);
 	}
-	t.setScale(2, 2);
-	graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
+	t.setScale(3.5, 3.5);
+		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
 
-}
+	}
 }

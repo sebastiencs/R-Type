@@ -28,6 +28,8 @@ public:
 
 	static void createReadyPackage(uint8_t	_playerID, uint8_t _ready);
 	static void createLeavePackage(uint8_t	_playerID);
+
+	static void createFirstUDPPackage(uint8_t _playerID);
 };
 
 #endif // !PACKAGER_HH

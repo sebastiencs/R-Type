@@ -87,12 +87,11 @@ void MainMenu::draw()
 	const PaquetResponse *paquet = PC.getAnswersPackage();
 	if (paquet) {
 		if (paquet->getReturn() == 2) {
-			PaquetFirstUDP *first = new PaquetFirstUDP();
-			first->setId(paquet->getData());
-			first->createPaquet();
+			Packager::createFirstUDPPackage(paquet->getData());
+			Packager::createFirstUDPPackage(paquet->getData());
+			Packager::createFirstUDPPackage(paquet->getData());
 			ListPlayers &list = ListPlayers::getInstance();
 			list.setId(paquet->getData());
-			PackageStorage::getInstance().storeToSendUDPPackage(first);
 			std::cout << "------------> ID : " << (int)list.getId() << std::endl;
 		}
 		PC.deleteAnswersPackage();
