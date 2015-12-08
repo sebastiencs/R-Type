@@ -21,7 +21,7 @@ PaquetObstacle::~PaquetObstacle()
 void PaquetObstacle::setType(const uint8_t& type)
 	{_type = type;}
 
-void PaquetObstacle::setPosition(const uint8_t& x, const uint8_t& y)
+void PaquetObstacle::setPosition(const uint16_t& x, const uint16_t& y)
 {
 	_x = x;
 	_y = y;
@@ -30,10 +30,10 @@ void PaquetObstacle::setPosition(const uint8_t& x, const uint8_t& y)
 const uint8_t & PaquetObstacle::getType() const
 	{return _type;}
 
-const uint8_t & PaquetObstacle::getX() const
+const uint16_t & PaquetObstacle::getX() const
 	{return _x;}
 
-const uint8_t & PaquetObstacle::getY() const
+const uint16_t & PaquetObstacle::getY() const
 	{return _y;}
 
 void			PaquetObstacle::parsePaquet()
@@ -42,8 +42,8 @@ void			PaquetObstacle::parsePaquet()
 
 	_id = readData<uint8_t>(ptr);
 	_type = readData<uint8_t>(ptr);
-	_x = readData<uint8_t>(ptr);
-	_y = readData<uint8_t>(ptr);
+	_x = readData<uint16_t>(ptr);
+	_y = readData<uint16_t>(ptr);
 }
 
 void			PaquetObstacle::createPaquet()
@@ -52,8 +52,8 @@ void			PaquetObstacle::createPaquet()
 
 	writeData<uint8_t>(ptr, &_id);
 	writeData<uint8_t>(ptr, &_type);
-	writeData<uint8_t>(ptr, &_x);
-	writeData<uint8_t>(ptr, &_y);
+	writeData<uint16_t>(ptr, &_x);
+	writeData<uint16_t>(ptr, &_y);
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetObstacle &p)
