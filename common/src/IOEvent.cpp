@@ -32,6 +32,7 @@ int	IOEvent::wait(int timeout)
 #ifdef __unix__
   return (::poll(nullptr, 0, timeout));
 #elif defined(_WIN32)
-  return (WSAPoll(nullptr, 0, timeout));
+  Sleep(timeout);
+  return (0);
 #endif
 }
