@@ -27,7 +27,7 @@ void PaquetPlayerShot::setPlayerID(const uint8_t& id)
 	_playerID = id;
 }
 
-void PaquetPlayerShot::setPosition(const uint8_t& x, const uint8_t& y)
+void PaquetPlayerShot::setPosition(const uint16_t& x, const uint16_t& y)
 {
 	_x = x;
 	_y = y;
@@ -43,12 +43,12 @@ const uint8_t & PaquetPlayerShot::getPlayerID() const
 	return _playerID;
 }
 
-const uint8_t & PaquetPlayerShot::getX() const
+const uint16_t & PaquetPlayerShot::getX() const
 {
 	return _x;
 }
 
-const uint8_t & PaquetPlayerShot::getY() const
+const uint16_t & PaquetPlayerShot::getY() const
 {
 	return _y;
 }
@@ -59,8 +59,8 @@ void			PaquetPlayerShot::parsePaquet()
 
 	_id = readData<uint8_t>(ptr);
 	_type = readData<uint8_t>(ptr);
-	_x = readData<uint8_t>(ptr);
-	_y = readData<uint8_t>(ptr);
+	_x = readData<uint16_t>(ptr);
+	_y = readData<uint16_t>(ptr);
 }
 
 void			PaquetPlayerShot::createPaquet()
@@ -69,8 +69,8 @@ void			PaquetPlayerShot::createPaquet()
 
 	writeData<uint8_t>(ptr, &_id);
 	writeData<uint8_t>(ptr, &_type);
-	writeData<uint8_t>(ptr, &_x);
-	writeData<uint8_t>(ptr, &_y);
+	writeData<uint16_t>(ptr, &_x);
+	writeData<uint16_t>(ptr, &_y);
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
