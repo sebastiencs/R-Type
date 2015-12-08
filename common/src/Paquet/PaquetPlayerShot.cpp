@@ -58,6 +58,7 @@ void			PaquetPlayerShot::parsePaquet()
 	size_t	ptr = 0;
 
 	_id = readData<uint8_t>(ptr);
+	_playerID = readData<uint8_t>(ptr);
 	_type = readData<uint8_t>(ptr);
 	_x = readData<uint16_t>(ptr);
 	_y = readData<uint16_t>(ptr);
@@ -68,6 +69,7 @@ void			PaquetPlayerShot::createPaquet()
 	size_t	ptr = 0;
 
 	writeData<uint8_t>(ptr, &_id);
+	writeData<uint8_t>(ptr, &_playerID);
 	writeData<uint8_t>(ptr, &_type);
 	writeData<uint16_t>(ptr, &_x);
 	writeData<uint16_t>(ptr, &_y);
@@ -76,7 +78,7 @@ void			PaquetPlayerShot::createPaquet()
 std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
 {
 	p.parsePaquet();
-	os << "PaquetPlayerShot = " << std::endl
+	os << "PaquetPlayerShot = "
 	   << " { PlayerID: " << (int)p.getPlayerID()
 	   << ", Shot type: " << (int)p.getType()
 	   << ", Position: [" << (int)p.getX() << " - " << (int)p.getY() << "]"
