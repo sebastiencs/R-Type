@@ -30,14 +30,6 @@ Selector::Selector(const Manager_SharedPtr &&manager) {
     if (!_manager.expired())
       ((_manager.lock()).get()->*resolver<PaquetLeave *>(&Manager::handlePaquet))(new PaquetLeave(buf), addr);
   };
-  _selectorFunc[Paquet::LIST_PARTIES] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetListParties *>(&Manager::handlePaquet))(new PaquetListParties(buf), addr);
-  };
-  _selectorFunc[Paquet::LIST_PLAYERS] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetListPlayers *>(&Manager::handlePaquet))(new PaquetListPlayers(buf), addr);
-  };
   _selectorFunc[Paquet::OBSTACLE] = [this](const Buffer &buf, const Addr &addr) {
     if (!_manager.expired())
       ((_manager.lock()).get()->*resolver<PaquetObstacle *>(&Manager::handlePaquet))(new PaquetObstacle(buf), addr);

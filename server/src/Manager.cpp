@@ -235,16 +235,6 @@ void		Manager::handlePaquet(PaquetLeave *paquet, const Addr &addr UNUSED)
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetListParties *paquet UNUSED, const Addr &addr UNUSED)
-{
-  // DEBUG_MSG(paquet);
-}
-
-void		Manager::handlePaquet(PaquetListPlayers *paquet UNUSED, const Addr &addr UNUSED)
-{
-  // DEBUG_MSG(paquet);
-}
-
 void		Manager::handlePaquet(PaquetObstacle *paquet UNUSED, const Addr &addr UNUSED)
 {
   // DEBUG_MSG(paquet);
