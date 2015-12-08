@@ -45,6 +45,7 @@ public:
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
 
 	virtual void handleEvents();
+	void handleMovements();
 	virtual void launch();
 	virtual void setCallbackFunction(callback, void* arg);
 	virtual void setMouseClickCallback(mouseCallback);

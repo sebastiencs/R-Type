@@ -28,7 +28,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 
 	shotTypeToSpriteString[0] = "r-typesheet1.gif";
 	shotTypeToSpriteString[1] = "r-typesheet1.gif";
-	shotTypeToSpriteString[2] = "r-typesheet1.gif"; 
+	shotTypeToSpriteString[2] = "r-typesheet1.gif";
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
 }
@@ -54,8 +54,8 @@ void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::stri
 void GraphicEngine::handleEvents()
 {
 	sf::Event event;
-	ListPlayers &LP = ListPlayers::getInstance();
-	Player *player = LP.getPlayer(LP.getId());
+	// ListPlayers &LP = ListPlayers::getInstance();
+	// Player *player = LP.getPlayer(LP.getId());
 	while (window->pollEvent(event))
 	{
 		// TODO: Trouver quoi faire des positions du joueur
@@ -65,43 +65,87 @@ void GraphicEngine::handleEvents()
 			if (event.text.unicode < 128 && _textEnteredcallback)
 				_textEnteredcallback(static_cast<char>(event.text.unicode));
 		}
-		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Space)
-				_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
-			if (event.key.code == sf::Keyboard::Z) {
-				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition());
-				std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
-				player->setPosition(pos);
-				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-			}
-			if (event.key.code == sf::Keyboard::Q) {
-				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
-				std::get<1>(pos) = std::get<1>(player->getPosition());
-				player->setPosition(pos);
-				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-			}
-			if (event.key.code == sf::Keyboard::S) {
-				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition());
-				std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
-				player->setPosition(pos);
-				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-			}
-			if (event.key.code == sf::Keyboard::D) {
-				Position pos;
-				std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
-				std::get<1>(pos) = std::get<1>(player->getPosition());
-				player->setPosition(pos);
-				_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-			}
-		}
+		// if (event.type == sf::Event::KeyPressed) {
+		// 	if (event.key.code == sf::Keyboard::Space)
+		// 		_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
+		// 	if (event.key.code == sf::Keyboard::Z) {
+		// 		Position pos;
+		// 		std::get<0>(pos) = std::get<0>(player->getPosition());
+		// 		std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
+		// 		player->setPosition(pos);
+		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+		// 	}
+		// 	if (event.key.code == sf::Keyboard::Q) {
+		// 		Position pos;
+		// 		std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
+		// 		std::get<1>(pos) = std::get<1>(player->getPosition());
+		// 		player->setPosition(pos);
+		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+		// 	}
+		// 	if (event.key.code == sf::Keyboard::S) {
+		// 		Position pos;
+		// 		std::get<0>(pos) = std::get<0>(player->getPosition());
+		// 		std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
+		// 		player->setPosition(pos);
+		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+		// 	}
+		// 	if (event.key.code == sf::Keyboard::D) {
+		// 		Position pos;
+		// 		std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
+		// 		std::get<1>(pos) = std::get<1>(player->getPosition());
+		// 		player->setPosition(pos);
+		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+		// 	}
+		// }
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
 		else if (event.type == sf::Event::MouseMoved)
 			_mouseMoveCall(event.mouseMove.x, event.mouseMove.y);
 	}
+}
+
+void GraphicEngine::handleMovements()
+{
+  ListPlayers &LP = ListPlayers::getInstance();
+  Player *player = LP.getPlayer(LP.getId());
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+    Position pos;
+    std::get<0>(pos) = std::get<0>(player->getPosition());
+    std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
+    player->setPosition(pos);
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+      // Si S est appuyer en meme temps le mec bouge pas. Ca sert a rien d'envoyer le paquet
+      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+    }
+  }
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+    Position pos;
+    std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
+    std::get<1>(pos) = std::get<1>(player->getPosition());
+    player->setPosition(pos);
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+    }
+  }
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    Position pos;
+    std::get<0>(pos) = std::get<0>(player->getPosition());
+    std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
+    player->setPosition(pos);
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+    }
+  }
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    Position pos;
+    std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
+    std::get<1>(pos) = std::get<1>(player->getPosition());
+    player->setPosition(pos);
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+      _packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
+    }
+  }
 }
 
 void GraphicEngine::launch()
@@ -113,6 +157,7 @@ void GraphicEngine::launch()
 		if (_timer->msWait(MS_REFRESH))
 		{
 			handleEvents();
+			handleMovements();
 			window->clear(sf::Color::Black);
 
 			if (call)
