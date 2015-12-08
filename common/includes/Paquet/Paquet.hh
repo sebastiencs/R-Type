@@ -92,6 +92,15 @@ public:
     writeData(ptr, reinterpret_cast<const uint8_t *>(data), _size);
   }
 
+  Paquet(const Buffer &buffer) : _data(0) {
+    _data = new uint8_t[buffer.size()];
+    _size = buffer.size();
+
+    const uint8_t	*data = buffer.get();
+    size_t		ptr = 0;
+    writeData(ptr, reinterpret_cast<const uint8_t *>(data), _size);
+  }
+
   template<typename T>
   Paquet(const T *data, size_t len) {
     size_t ptr = 0;
