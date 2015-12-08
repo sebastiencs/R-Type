@@ -183,11 +183,11 @@ Serveur: |    ID   | NB Joueurs ||     Name    |   id    |  Level  ||     Name1 
 Lorsque le client bouge, il envoi ce paquet au serveur.
 Le serveur le renvoi aux autres clients du serveur.
 
-   	+---------+-----------+---------+---------+
-Client: |    ID   | ID Player |    X    |    Y	  |
-	+---------+-----------+---------+---------+
-	| uint8_t | uint8_t   | uint8_t | uint8_t |
-	+---------+-----------+---------+---------+
+   	+---------+-----------+----------+----------+
+Client: |    ID   | ID Player |    X     |    Y	    |
+	+---------+-----------+----------+----------+
+	| uint8_t | uint8_t   | uint16_t | uint16_t |
+	+---------+-----------+---------+-----------+
 
 	 ID: unsigned char ( 8 bits )
 	        Valeur: 7
@@ -195,10 +195,10 @@ Client: |    ID   | ID Player |    X    |    Y	  |
 	ID Player: unsigned char (8 bits)
 	   	Valeur attribuée précedement par le serveur
 
-	X: unsigned char (8 bits)
+	X: unsigned char (16 bits)
 	   	Position en x du joueur
 
-	Y: unsigned char (8 bits)
+	Y: unsigned char (16 bits)
 	   	Position en y du joueur
 
 
@@ -209,11 +209,11 @@ Client: |    ID   | ID Player |    X    |    Y	  |
 Lorsque le client effectue un tir, il envoi ce paquet au serveur.
 Le serveur le renvoi aux autres clients de la partie.
 
-   	+---------+-----------+---------+---------+-----------+
-Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
-	+---------+-----------+---------+---------+-----------+
-	| uint8_t | uint8_t   | uint8_t | uint8_t |  uint8_t  |
-	+---------+-----------+---------+---------+-----------+
+   	+---------+-----------+----------+----------+-----------+
+Client: |    ID   | ID Player |    X     |    Y	    | Type tirs |
+	+---------+-----------+----------+----------+-----------+
+	| uint8_t | uint8_t   | uint16_t | uint16_t |  uint8_t  |
+	+---------+-----------+-----------+---------+-----------+
 
 	 ID: unsigned char ( 8 bits )
 	        Valeur: 8
@@ -221,10 +221,10 @@ Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
 	ID Player: unsigned char (8 bits)
 	   	Valeur attribuée précedement par le serveur
 
-	X: unsigned char (8 bits)
+	X: unsigned char (16 bits)
 	   	Position en x du joueur
 
-	Y: unsigned char (8 bits)
+	Y: unsigned char (16 bits)
 	   	Position en y du joueur
 
 	Type du tir: unsigned char (8 bits)
@@ -236,11 +236,11 @@ Client: |    ID   | ID Player |    X    |    Y	  | Type tirs |
 
 Le client ne repond pas.
 
-   	+---------+---------------+---------+---------+
-Server: |    ID   | Type Obstacle |    X    |    Y    |
-	+---------+---------------+---------+---------+
-	| uint8_t |    uint8_t    | uint8_t | uint8_t |
-	+---------+---------------+---------+---------+
+   	+---------+---------------+----------+----------+
+Server: |    ID   | Type Obstacle |    X     |    Y     |
+	+---------+---------------+----------+----------+
+	| uint8_t |    uint8_t    | uint16_t | uint16_t |
+	+---------+---------------+----------+----------+
 
 	ID: unsigned char ( 8 bits )
 	        Valeur: 9
@@ -248,10 +248,10 @@ Server: |    ID   | Type Obstacle |    X    |    Y    |
 	ID Obstacle: unsigned char (8 bits)
 	   	Valeur attribuée au type de l'obstacle (ex: 0 = arbre, 1 = ta mère ...)
 
-	X: unsigned char (8 bits)
+	X: unsigned char (16 bits)
 	   	Position en x du joueur
 
-	Y: unsigned char (8 bits)
+	Y: unsigned char (16 bits)
 	   	Position en y du joueur
 
 
