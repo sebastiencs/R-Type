@@ -60,6 +60,7 @@ bool CreateGameMenu::onClick(uint32_t x, uint32_t y)
 		return true;
 	}
 	if (ok->onAction(x, y)) {
+		std::cout << "onClick ok" << std::endl;
 		return true;
 	}
 	return sprite->isPressed(x, y);
