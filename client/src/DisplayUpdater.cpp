@@ -89,8 +89,10 @@ t.setScale(3.5, 3.5);	if (PackageStorage::getInstance().getObstaclesPackage() !=
 	int i = 0;
 	for (Player *player : LP.getListPlayers()) {
 		Transformation t(player->getPosition().x, player->getPosition().y);
-		if (!player->getBullets().empty())
+		if (!player->getBullets().empty()) {
 			graphicEngine->drawImage("bullets-8.png", Transformation(player->getBullets().front()->x, player->getBullets().front()->y));
+			player->getBullets().front()->x++;
+		}
 		t.setScale(3.5, 3.5);
 		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
 
