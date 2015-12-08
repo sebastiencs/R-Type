@@ -11,7 +11,9 @@
 #ifndef PATERN_H_
 # define PATERN_H_
 
+# include <iostream>
 # include <functional>
+# include <cmath>
 
 typedef std::function< uint8_t(uint8_t) > function;
 
