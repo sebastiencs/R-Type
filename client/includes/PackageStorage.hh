@@ -76,14 +76,6 @@ public:
 	void waitForReceivedPackage();
 	bool isThereReceivedPackage();
 	void waitForPackage();
-	/*bool deletePlayersPackage();
-	bool deleteEnemiesPackage();
-	bool deleteObstaclesPackage();
-	bool deleteShotsPackage();
-	bool deleteToSendPackage();
-	bool deleteGameListPackage();
-	bool deletePlayerListPackage();
-	bool deleteAnswersPackage();*/
 };
 
 #endif
