@@ -8,7 +8,7 @@ Packager::~Packager()
 {
 }
 
-void Packager::createMovementPackage(uint8_t _playerID, uint8_t _x, uint8_t _y)
+void Packager::createMovementPackage(uint8_t _playerID, uint16_t _x, uint16_t _y)
 {
 	PaquetPlayerCoord *movement = new PaquetPlayerCoord();
 	movement->setPlayerID(_playerID);
@@ -17,7 +17,7 @@ void Packager::createMovementPackage(uint8_t _playerID, uint8_t _x, uint8_t _y)
 	PackageStorage::getInstance().storeToSendUDPPackage(movement);
 }
 
-void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint8_t _x, uint8_t _y)
+void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t _x, uint16_t _y)
 {
 	PaquetPlayerShot *shot = new PaquetPlayerShot();
 	shot->setPlayerID(_playerID);
@@ -74,4 +74,3 @@ void Packager::createLeavePackage(uint8_t _playerID)
 	leave->createPaquet();
 	PackageStorage::getInstance().storeToSendTCPPackage(leave);
 }
-
