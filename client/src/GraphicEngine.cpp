@@ -42,7 +42,10 @@ GraphicEngine::~GraphicEngine()
 	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
 		if (it->second)
 			delete it->second;
-	delete _timer;
+	if (_timer)
+		delete _timer;
+	if (_shotCooldown)
+		delete _shotCooldown;
 }
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
