@@ -72,6 +72,7 @@ protected:
 
 	Packager* _packager;
 	ITimer* _timer;
+	ITimer* _shotCooldown;
 	callback call;
 	textEnteredCallback _textEnteredcallback;
 	mouseCallback _mouseClickCall;

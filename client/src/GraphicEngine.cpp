@@ -13,6 +13,8 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	_textEnteredcallback = nullptr;
 	_timer = new Timer();
 	_timer->start();
+	_shotCooldown = new Timer();
+	_shotCooldown->start();
 	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
 	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
@@ -108,7 +110,8 @@ void GraphicEngine::handleMovements()
 			changed = true;
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > 500) {
+		_shotCooldown->reset();
 		bullet = true;
 	}
 	if (changed) {
