@@ -96,7 +96,20 @@ void DisplayUpdater::game()
 				graphicEngine->drawImage("bullet1.png", Transformation(bullet->x, bullet->y));
 				bullet->x += 15;
 			}
+
+			int windowWidth = getGraphicEngine()->getWindowWidth();
+			auto clearFunc = [windowWidth](Position *elem) {
+				DEBUG_MSG("bulletX: " << elem->x << "window: " << windowWidth);
+				if (elem->x > windowWidth) {
+					delete elem;
+					return true;
+				}
+				return false;
+			};
+			std::list<Position* >& bulletList = const_cast<std::list<Position* >& >(player->getBullets());
+			bulletList.remove_if(clearFunc);
 		}
+
 		t.setScale(3.5, 3.5);
 		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
 	}
