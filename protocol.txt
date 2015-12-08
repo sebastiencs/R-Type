@@ -315,6 +315,27 @@ Client: |    ID   | ID Player |
 
 ----------------------------------------------------
 
+14 - Premier paquet UDP
+
+Lorsqu'un client se connecte, il envoi ce paquet apres avoir
+recu son id.
+Aucune reponse n'est attendue
+
+   	+---------+-----------+
+Client: |    ID   | ID Player |
+	+---------+-----------+
+	| uint8_t | uint8_t   |
+	+---------+-----------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 13
+
+	ID Player: unsigned char ( 8 bits )
+	   	Valeur attribuée précedement par le serveur
+
+
+----------------------------------------------------
+
 
 XX - Retour du serveur
 
