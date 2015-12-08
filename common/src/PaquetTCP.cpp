@@ -44,9 +44,9 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::CREATE_PARTY]		= 0x11;
   _pSize[Paquet::REQUEST_PLAYERS]	= 0x01;
   _pSize[Paquet::LIST_PLAYERS]		= UNKNOWN_SIZE;
-  _pSize[Paquet::COORD_PLAYER]		= 0x04;
-  _pSize[Paquet::PLAYER_SHOT]		= 0x05;
-  _pSize[Paquet::OBSTACLE]		= 0x04;
+  _pSize[Paquet::COORD_PLAYER]		= 0x06;
+  _pSize[Paquet::PLAYER_SHOT]		= 0x07;
+  _pSize[Paquet::OBSTACLE]		= 0x06;
   _pSize[Paquet::READY]			= 0x03;
   _pSize[Paquet::LAUNCH]		= 0x01;
   _pSize[Paquet::LEAVE]			= 0x02;
