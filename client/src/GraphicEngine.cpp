@@ -113,7 +113,7 @@ void GraphicEngine::handleMovements()
 			changed = true;
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > 500) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > SHOT_COOLDOWN) {
 		_shotCooldown->reset();
 		bullet = true;
 	}

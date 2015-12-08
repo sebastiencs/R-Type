@@ -17,6 +17,8 @@
 # include <SFML/Graphics/Sprite.hpp>
 # include "IGraphicEngine.hh"
 
+# define SHOT_COOLDOWN 300
+
 class Button;
 class Drawable;
 class Text;
