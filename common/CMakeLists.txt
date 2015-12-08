@@ -13,6 +13,7 @@ file (GLOB
   src/Player.cpp
   src/IOEvent.cpp
   src/PaquetTCP.cpp
+  src/Patern.cpp
   src/Tools.cpp
   src/TaskScheduler.cpp
   )
@@ -27,6 +28,7 @@ file (GLOB
   includes/Timer.hh
   includes/Addr.hh
   includes/PaquetTCP.hh
+  includes/Patern.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
   )
