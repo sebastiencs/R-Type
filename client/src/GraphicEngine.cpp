@@ -65,38 +65,6 @@ void GraphicEngine::handleEvents()
 			if (event.text.unicode < 128 && _textEnteredcallback)
 				_textEnteredcallback(static_cast<char>(event.text.unicode));
 		}
-		// if (event.type == sf::Event::KeyPressed) {
-		// 	if (event.key.code == sf::Keyboard::Space)
-		// 		_packager->createShotPackage(LP.getId(), 0, std::get<0>(player->getPosition()), std::get<1>(player->getPosition()));
-		// 	if (event.key.code == sf::Keyboard::Z) {
-		// 		Position pos;
-		// 		std::get<0>(pos) = std::get<0>(player->getPosition());
-		// 		std::get<1>(pos) = std::get<1>(player->getPosition()) - 1;
-		// 		player->setPosition(pos);
-		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-		// 	}
-		// 	if (event.key.code == sf::Keyboard::Q) {
-		// 		Position pos;
-		// 		std::get<0>(pos) = std::get<0>(player->getPosition()) - 1;
-		// 		std::get<1>(pos) = std::get<1>(player->getPosition());
-		// 		player->setPosition(pos);
-		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-		// 	}
-		// 	if (event.key.code == sf::Keyboard::S) {
-		// 		Position pos;
-		// 		std::get<0>(pos) = std::get<0>(player->getPosition());
-		// 		std::get<1>(pos) = std::get<1>(player->getPosition()) + 1;
-		// 		player->setPosition(pos);
-		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-		// 	}
-		// 	if (event.key.code == sf::Keyboard::D) {
-		// 		Position pos;
-		// 		std::get<0>(pos) = std::get<0>(player->getPosition()) + 1;
-		// 		std::get<1>(pos) = std::get<1>(player->getPosition());
-		// 		player->setPosition(pos);
-		// 		_packager->createMovementPackage(LP.getId(), std::get<0>(pos), std::get<1>(pos));
-		// 	}
-		// }
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
 		else if (event.type == sf::Event::MouseMoved)
@@ -109,6 +77,8 @@ void GraphicEngine::handleMovements()
   ListPlayers &LP = ListPlayers::getInstance();
   Player *player = LP.getPlayer(LP.getId());
   bool changed = false;
+	if (!player)
+		return;
 
   Position pos = player->getPosition();
 
