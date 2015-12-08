@@ -68,7 +68,7 @@ void DisplayUpdater::game()
 	Sprite *bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
 	bg->draw();
 
-	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
+t.setScale(3.5, 3.5);	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
 		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
 
 		//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
@@ -89,11 +89,9 @@ void DisplayUpdater::game()
 	int i = 0;
 	for (Player *player : LP.getListPlayers()) {
 		Transformation t(player->getPosition().x, player->getPosition().y);
-		if (player->getBullets().front()) {
-			Transformation b(player->getBullets().front()->x, player->getBullets().front()->x);
-			graphicEngine->drawImage("bullets.png", b);
-	}
-	t.setScale(3.5, 3.5);
+		if (!player->getBullets().empty())
+			graphicEngine->drawImage("bullets-8.png", Transformation(player->getBullets().front()->x, player->getBullets().front()->y));
+		t.setScale(3.5, 3.5);
 		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
 
 	}
