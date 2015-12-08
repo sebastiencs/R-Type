@@ -2,7 +2,7 @@
 #define PACKAGESTORAGE_HH
 
 #include <iostream>
-#include <list>
+#include <deque>
 #include "Paquets.hh"
 #include "Paquet.hh"
 #include "Semaphore.hh"
@@ -10,18 +10,18 @@
 class PackageStorage {
 private:
 
-	std::list<Paquet *> received;
-	std::list<Paquet *> toSendUDP;
-	std::list<Paquet *> toSendTCP;
-	std::list<PaquetPlayerCoord *> players;
-	std::list<PaquetPlayerCoord *> enemies;
-	std::list<PaquetObstacle *> obstacles;
-	std::list<PaquetPlayerShot *> shots;
-	std::list<PaquetReady *> ready;
-	std::list<PaquetListParties *> gameList;
-	std::list<PaquetListPlayers *> playerList;
-	std::list<PaquetResponse *> answers;
-	std::list<PaquetLaunch * > launch;
+	std::deque<Paquet *> received;
+	std::deque<Paquet *> toSendUDP;
+	std::deque<Paquet *> toSendTCP;
+	std::deque<PaquetPlayerCoord *> players;
+	std::deque<PaquetPlayerCoord *> enemies;
+	std::deque<PaquetObstacle *> obstacles;
+	std::deque<PaquetPlayerShot *> shots;
+	std::deque<PaquetReady *> ready;
+	std::deque<PaquetListParties *> gameList;
+	std::deque<PaquetListPlayers *> playerList;
+	std::deque<PaquetResponse *> answers;
+	std::deque<PaquetLaunch * > launch;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
