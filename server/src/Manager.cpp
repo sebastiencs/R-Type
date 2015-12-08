@@ -350,7 +350,9 @@ void		Manager::handlePaquet(PaquetRequestParties *paquet, const Addr &addr)
   DEBUG_MSG(*paquet);
 
   for (auto &party : _parties) {
-    p.addParty(party->getName(), party->getNb());
+    if (party->isRunning() == false) {
+      p.addParty(party->getName(), party->getNb());
+    }
   }
   p.createPaquet();
   write(p, addr);
