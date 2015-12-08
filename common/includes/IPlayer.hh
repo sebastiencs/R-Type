@@ -20,7 +20,6 @@ typedef struct s_position {
   uint16_t x;
   uint16_t y;
 } Position;
-//typedef std::tuple<uint16_t, uint16_t>	Position;
 
 class		IPlayer
 {
