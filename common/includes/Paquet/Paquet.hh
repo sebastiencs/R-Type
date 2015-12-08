@@ -135,11 +135,10 @@ public:
       changeSize(ptr + len);
     }
 
-    size_t i;
-    for (i = 0; i < len; i += 1) {
-      _data[ptr + i] = reinterpret_cast<const uint8_t *>(new_data)[i];
-    }
-    ptr += i;
+    const uint8_t *src = reinterpret_cast<const uint8_t *>(new_data);
+
+    std::copy(src, src + len, _data + ptr);
+    ptr += len;
   }
 
   template<typename T>
@@ -153,12 +152,8 @@ public:
 
     byte = reinterpret_cast<uint8_t *>((buffer) ? (buffer) : (&value));
 
-    if (ptr + len <= _size) {
-      for (size_t i = 0; i < len; i += 1) {
-	byte[i] = _data[ptr];
-	ptr += 1;
-      }
-    }
+    std::copy(_data + ptr, _data + ptr + len, byte);
+    ptr += len;
     return (value);
   }
 
