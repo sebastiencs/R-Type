@@ -16,6 +16,7 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
     _addr(),
     _type(type)
 {
+  _clientLen = sizeof(_addr);
   if (type == SERVER)
   {
 	  if ((_socket = ::socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
@@ -36,6 +37,7 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
   : _isKnown(false)
 {
 	_socket = fd;
+  _clientLen = sizeof(_addr);
 	if (_socket == INVALID_SOCKET)
 		DEBUG_MSG("SockectUDPWin failed : ");
 	else
@@ -154,7 +156,7 @@ ssize_t	SocketUDPWin::read(Buffer &buf)
   else {
     recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, &_clientLen);
   }
-  if (recvlen = SOCKET_ERROR) {
+  if (recvlen == SOCKET_ERROR) {
     DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
   }
   else {
