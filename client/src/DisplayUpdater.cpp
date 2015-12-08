@@ -70,12 +70,14 @@ void DisplayUpdater::game()
 
 	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
 		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+
 		//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteObstaclesPackage();
 	}
 	if (PackageStorage::getInstance().getShotsPackage() != nullptr) {
 		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-		//graphicEngine->drawImage(shotTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
+		Position *L = new Position(p->getX(), p->getY());
+		LP.getPlayer(p->getPlayerID())->addBullet(L);
 		PackageStorage::getInstance().deleteShotsPackage();
 	}
 	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
@@ -87,7 +89,12 @@ void DisplayUpdater::game()
 	int i = 0;
 	for (Player *player : LP.getListPlayers()) {
 		Transformation t(player->getPosition().x, player->getPosition().y);
-		t.setScale(2, 2);
-		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
+		if (player->getBullets().front()) {
+			Transformation b(player->getBullets().front()->x, player->getBullets().front()->x);
+			graphicEngine->drawImage("bullets.png", b);
 	}
+	t.setScale(2, 2);
+	graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
+
+}
 }

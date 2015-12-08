@@ -65,6 +65,16 @@ void			Player::setPosition(const Position &pos)
   _position = pos;
 }
 
+const std::list<Position*>& Player::getBullets() const
+{
+	return _bullets;
+}
+
+void Player::addBullet(Position *bullet)
+{
+	_bullets.push_back(bullet);
+}
+
 uint8_t			Player::getLevel() const
 {
   return (_level);

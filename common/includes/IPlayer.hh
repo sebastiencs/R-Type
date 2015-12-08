@@ -29,6 +29,9 @@ public:
 	virtual const Position	&getPosition() const = 0;
 	virtual void			setPosition(const Position &) = 0;
 
+	virtual const std::list<Position*>& getBullets() const = 0;
+	virtual void			addBullet(Position *) = 0;
+
 	virtual uint8_t		getLevel() const = 0;
 	virtual void			setLevel(uint8_t) = 0;
 
