@@ -291,6 +291,15 @@ void		Manager::handlePaquet(PaquetPlayerShot *paquet, const Addr &addr UNUSED)
   auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getPlayerID());
   if (party && ps) {
     party->setPlayerShot(ps);
+
+    // Solution temporaire
+    for (auto &player : party->getPlayers()) {
+      if (player->getID() != paquet->getPlayerID()) {
+	write(*paquet, player->addr());
+      }
+    }
+
+
   }
   else {
 #ifdef DEBUG
