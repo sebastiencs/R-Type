@@ -86,6 +86,8 @@ void DisplayUpdater::game()
 	}
 	int i = 0;
 	for (Player *player : LP.getListPlayers()) {
-		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", Transformation(player->getPosition().x, player->getPosition().y));
+		Transformation t(player->getPosition().x, player->getPosition().y);
+		t.setScale(2, 2);
+		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
 	}
 }

@@ -33,7 +33,7 @@ int		main(int argc, char **argv)
 {
 
 	uint16_t port(4242);
-	std::string addr("93.31.219.204");
+	std::string addr("84.102.232.137");
 
 	if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
 		std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
