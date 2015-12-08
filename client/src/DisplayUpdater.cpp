@@ -68,15 +68,17 @@ void DisplayUpdater::game()
 	Sprite *bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
 	bg->draw();
 
-t.setScale(3.5, 3.5);	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
-		const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+	t.setScale(3.5, 3.5);
+	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
+		//const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
 
 		//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-		PackageStorage::getInstance().deleteObstaclesPackage();
+		//PackageStorage::getInstance().deleteObstaclesPackage();
 	}
 	if (PackageStorage::getInstance().getShotsPackage() != nullptr) {
 		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-		LP.getPlayer(p->getPlayerID())->addBullet(new Position(p->getX(), p->getY()));
+		Player *player = LP.getPlayer(p->getPlayerID());
+		player->addBullet(new Position(p->getX(), p->getY()));
 		PackageStorage::getInstance().deleteShotsPackage();
 	}
 	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {

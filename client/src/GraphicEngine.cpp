@@ -74,47 +74,47 @@ void GraphicEngine::handleEvents()
 
 void GraphicEngine::handleMovements()
 {
-  ListPlayers &LP = ListPlayers::getInstance();
-  Player *player = LP.getPlayer(LP.getId());
-  bool changed = false;
+	ListPlayers &LP = ListPlayers::getInstance();
+	Player *player = LP.getPlayer(LP.getId());
+	bool changed = false;
 	bool bullet = false;
 	if (!player)
 		return;
 
-  Position pos = player->getPosition();
+	Position pos = player->getPosition();
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 5) {
-      // Si S est appuyer en meme temps le mec bouge pas.
-      pos.y -= 4;
-      changed = true;
-    }
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 5) {
-      pos.x -= 4;
-      changed = true;
-    }
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
-      pos.y += 4;
-      changed = true;
-    }
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
-      pos.x += 4;
-      changed = true;
-    }
-  }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 5) {
+			// Si S est appuyer en meme temps le mec bouge pas.
+			pos.y -= 4;
+			changed = true;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 5) {
+			pos.x -= 4;
+			changed = true;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
+			pos.y += 4;
+			changed = true;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
+			pos.x += 4;
+			changed = true;
+		}
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		bullet = true;
 	}
-  if (changed) {
+	if (changed) {
 		player->setPosition(pos);
 		_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
-  }
+	}
 	if (bullet) {
 		player->setPosition(pos);
 		_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
