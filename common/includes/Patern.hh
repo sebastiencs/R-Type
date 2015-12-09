@@ -31,7 +31,6 @@ private:
 	function patern;
 };
 
-uint8_t absPatern(uint8_t x);
 uint8_t cosPatern(uint8_t x);
 uint8_t sinPatern(uint8_t x);
 
