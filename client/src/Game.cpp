@@ -97,7 +97,7 @@ void	Game::updateGraphic()
 		Transformation t(player->getPosition().x, player->getPosition().y);
 		t.setScale(3.5, 3.5);
 		drawImage("vessel" + std::to_string(i++) + ".png", t);
-		t.setPosition(t.getX(), t.getY() + );
+		t.setPosition(t.getX(), t.getY() - 22);
 		t.setScale(1, 1);
 		drawText(player->getName(), t);
 				
