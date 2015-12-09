@@ -48,6 +48,7 @@ private:
 
 	IThread *threadGame;
 	std::list<Button* > buttons;
+	std::deque<Image> pseudo;
 	std::deque<Image> images;
 	IMutex *mutex;
 	Game *_game;
