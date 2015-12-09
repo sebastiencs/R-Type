@@ -19,7 +19,7 @@ class		Enemy
 public:
   Enemy();
   Enemy(const uint8_t id, const int life, const uint8_t type);
-  ~Enemy();
+  virtual ~Enemy();
 
   void		setPosX(const uint8_t x);
   void		setPosY(const uint8_t y);

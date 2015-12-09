@@ -20,14 +20,13 @@ Enemy::Enemy()
     DEBUG_MSG("Enemy created");
 }
 
-Enemy::Enemy(const uint8_t id, const int life = 100, const uint8_t type)
+Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
   : _id(id),
     _x(std::rand() % 1024),
     _y(std::rand() % 768),
     _life(life),
     _type(type)
 {
-  //1024, 768
   DEBUG_MSG("Enemy created");
 }
 
