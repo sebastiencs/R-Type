@@ -14,16 +14,18 @@ Enemy::Enemy()
   : _id(0),
     _x(0),
     _y(0),
-    _life(100)
+    _life(0),
+    _type(0)
 {
     DEBUG_MSG("Enemy created");
 }
 
-Enemy::Enemy(const uint8_t id, int life = 100)
+Enemy::Enemy(const uint8_t id, const int life = 100, const uint8_t type)
   : _id(id),
     _x(std::rand() % 1024),
     _y(std::rand() % 768),
-    _life(life)
+    _life(life),
+    _type(type)
 {
   //1024, 768
   DEBUG_MSG("Enemy created");
@@ -54,6 +56,11 @@ void	Enemy::setLife(const int life)
   _life = life;
 }
 
+void	Enemy::setType(const uint8_t type)
+{
+  _type = type;
+}
+
 uint8_t	Enemy::getPosX() const
 {
   return _x;
@@ -72,4 +79,9 @@ uint8_t	Enemy::getID() const
 int	Enemy::getLife() const
 {
   return _life;
+}
+
+uint8_t	Enemy::getType() const
+{
+  return _type;
 }
