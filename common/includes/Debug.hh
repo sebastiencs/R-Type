@@ -13,7 +13,11 @@
 
 # ifdef DEBUG
 #  include <iostream>
-#  define DEBUG_MSG(x)	do { std::cerr << x << std::endl; } while (0)
+#  if DEBUG >= 2
+#   define DEBUG_MSG(x)	do { std::cerr << __PRETTY_FUNCTION__ << " : " << x << std::endl; } while (0)
+#  else
+#   define DEBUG_MSG(x)	do { std::cerr <<  x << std::endl; } while (0)
+#  endif
 # else
 #  define DEBUG_MSG(x)
 # endif // !DEBUG
