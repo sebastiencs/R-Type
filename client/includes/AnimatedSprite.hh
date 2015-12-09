@@ -16,7 +16,7 @@ public:
 	virtual void draw();
 
 protected:
-	GraphicEngine* _engine;
+	IGraphicEngine* _engine;
 	Timer *_timer;
 	Sprite *_sprite;
 	Color _color;

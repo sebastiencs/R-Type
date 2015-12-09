@@ -92,7 +92,7 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				drawImage("bullet1.png", Transformation(bullet.x, bullet.y));
+				drawImage("bullets-8.png", Transformation(bullet.x, bullet.y));
 				bullet.x += 15;
 			}
 
