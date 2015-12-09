@@ -46,6 +46,7 @@ void	Game::handlingNetwork()
 	auto &&shot = _PS.getShotsPackage();
 	auto &&coord = _PS.getPlayersPackage();
 	auto &&leave = _PS.getLeavePackage();
+	auto &&enemy = _PS.getEnemyPackage();
 
 	IPlayer *player;
 
@@ -70,6 +71,11 @@ void	Game::handlingNetwork()
 			player->setPosition(Position(coord->getX(), coord->getY()));
 		}
 		_PS.deletePlayersPackage();
+	}
+
+	if (enemy != nullptr) {
+		DEBUG_MSG("ENEMY !");
+		_PS.deleteEnemyPackage();
 	}
 
 	if (leave != nullptr) {
@@ -100,7 +106,7 @@ void	Game::updateGraphic()
 		t.setPosition(t.getX(), t.getY() - 22);
 		t.setScale(1, 1);
 		drawText(player->getName(), t);
-				
+
 	}
 }
 
