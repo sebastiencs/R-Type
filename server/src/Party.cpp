@@ -11,6 +11,7 @@
 #include "Party.hh"
 #include "IOEvent.hh"
 #include "Tools.hh"
+#include "Manager.hh"
 
 Party::Party(const Manager_SharedPtr &&manager)
   : _sem(std::make_unique<Semaphore>()),
@@ -42,8 +43,16 @@ Party::~Party()
 
 void			Party::run()
 {
+
+  // Tu creer l'enemy
+
   for (;;) {
-//    std::cerr << "A party is running" << std::endl;
+
+    // dans une boucle tu l'envoi a tout le monde avec la fonction write de Manager
+
+    if (!_manager.expired()) {
+//      (_manager.lock())->write(PAQUET, ADDR)
+    }
 
     IOEvent::wait(6000);
   }
