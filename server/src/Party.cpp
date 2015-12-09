@@ -44,8 +44,7 @@ Party::~Party()
 
 void			Party::run()
 {
-  //refaire l'ID
-  Enemy		*enemy = new Enemy(100, 100, 1);
+  Enemy		*enemy = new Enemy(getUniqueID(), 100, 1);
   PaquetEnemy	paquet;
 
   paquet.setID(enemy->getID());
