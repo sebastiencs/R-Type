@@ -36,6 +36,7 @@ private:
   uint8_t		_x;
   uint8_t		_y;
   uint8_t		_type;
+  uint8_t	        _speed;
   uint8_t		_id;
 };
 

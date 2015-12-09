@@ -70,6 +70,6 @@ uint8_t		PlayerShot::getID() const {
   return _id;
 }
 
-uint8_t		PlayerSpeed::getSpeed() const {
+uint8_t		PlayerShot::getSpeed() const {
   return _speed;
 }
