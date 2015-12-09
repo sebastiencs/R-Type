@@ -11,10 +11,19 @@
 # include "OnlineMenu.hh"
 # include "ListPlayers.hh"
 # include "TaskScheduler.hh"
+# include "Mutex.hh"
 
 class MainMenu;
 class OnlineMenu;
 class NetworkClient;
+class Game;
+
+typedef struct s_image {
+  s_image(std::string _img, Transformation &&_t) : img(_img), t(_t) { }
+  s_image(std::string _img, Transformation &_t) : img(_img), t(_t) { }
+  std::string img;
+  Transformation t;
+} Image;
 
 class DisplayUpdater {
 public:
@@ -37,7 +46,11 @@ private:
 	OnlineMenu *onlineMenu;
 	TaskScheduler *launchLoop;
 
+	IThread *threadGame;
 	std::list<Button* > buttons;
+	std::deque<Image> images;
+	IMutex *mutex;
+	Game *Game;
 };
 
 #endif /* !DISPLAYUPDATER_HH */

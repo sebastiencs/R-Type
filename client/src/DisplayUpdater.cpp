@@ -1,8 +1,12 @@
 #include "DisplayUpdater.hh"
 #include "SystemAudio.hh"
+#include "Game.hh"
 
 DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 {
+	threadGame = nullptr;
+	mutex = nullptr;
+	Game = nullptr;
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine, net);
@@ -16,7 +20,11 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 
 DisplayUpdater::~DisplayUpdater()
 {
-	delete graphicEngine;
+	delete threadGame;
+	delete mutex;
+	mutex = nullptr;
+	delete Game;
+//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
 	delete mainmenu;
 	for (Button* b : buttons)
 		delete b;
@@ -48,73 +56,49 @@ void DisplayUpdater::mainMenu()
 
 void DisplayUpdater::launchObserver()
 {
-	static const PaquetLaunch *launch = nullptr;
-	static PackageStorage& ps = PackageStorage::getInstance();
-	static ISystemAudio &audio = SystemAudio::getInstance();
-	launch = ps.getLaunchPackage();
-	if (launch != nullptr) {
-		audio.stopMusic();
-		callback fptr = std::bind(&DisplayUpdater::game, this);
-		graphicEngine->setCallbackFunction(fptr, nullptr);
-		delete launch;
-		launchLoop->stop();
+  static PackageStorage& ps = PackageStorage::getInstance();
+  auto launch = ps.getLaunchPackage();
+
+  if (launch != nullptr) {
+
+    mutex = new Mutex();
+
+    int width = getGraphicEngine()->getWindowWidth();
+    int height = getGraphicEngine()->getWindowHeight();
+    Game = new class Game(width, height, images, mutex);
+
+    threadGame = new Thread([this] (void *) -> void * {
+	for (;;) {
+	  Game->run();
 	}
+	return (nullptr);
+      }, nullptr);
+
+    callback fptr = std::bind(&DisplayUpdater::game, this);
+    graphicEngine->setCallbackFunction(fptr, nullptr);
+    delete launch;
+    launchLoop->stop();
+  }
 }
 
 void DisplayUpdater::game()
 {
-	ListPlayers &LP = ListPlayers::getInstance();
-	static ISystemAudio &audio = SystemAudio::getInstance();
-	Transformation t;
-	t.setBounds(1024, 768);
-	t.setPosition(0, 0);
-	Sprite *bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
-	bg->draw();
+  static Sprite *bg = nullptr;
 
-	t.setScale(3.5, 3.5);
-	if (PackageStorage::getInstance().getObstaclesPackage() != nullptr) {
-		//const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
+  if (!bg) {
+    Transformation t;
+    t.setBounds(1024, 768);
+    t.setPosition(0, 0);
+    bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
+  }
+  bg->draw();
 
-		//graphicEngine->drawImage(obstacleTypeToSpriteString[p->getType()], Transformation(p->getX(), p->getY()));
-		//PackageStorage::getInstance().deleteObstaclesPackage();
-	}
-	if (PackageStorage::getInstance().getShotsPackage() != nullptr) {
-		const PaquetPlayerShot* p = PackageStorage::getInstance().getShotsPackage();
-		Player *player = LP.getPlayer(p->getPlayerID());
-		player->addBullet(new Position(p->getX(), p->getY()));
-		PackageStorage::getInstance().deleteShotsPackage();
-		audio.playSound(ISystemAudio::SIMPLE_SHOT);
-	}
-	if (PackageStorage::getInstance().getPlayersPackage() != nullptr) {
-		const PaquetPlayerCoord* p = PackageStorage::getInstance().getPlayersPackage();
-		Position L(p->getX(), p->getY());
-		LP.getPlayer(p->getPlayerID())->setPosition(L);
-		PackageStorage::getInstance().deletePlayersPackage();
-	}
-	// TODO: corriger les pos de la bullet
-	int i = 0;
-	for (Player *player : LP.getListPlayers()) {
-		Transformation t(player->getPosition().x, player->getPosition().y);
-		if (!player->getBullets().empty()) {
-			for (Position *bullet : player->getBullets()) {
-				graphicEngine->drawImage("bullet1.png", Transformation(bullet->x, bullet->y));
-				bullet->x += 15;
-			}
-
-			int windowWidth = getGraphicEngine()->getWindowWidth();
-			auto clearFunc = [windowWidth](Position *elem) {
-				DEBUG_MSG("bulletX: " << elem->x << "window: " << windowWidth);
-				if (elem->x > windowWidth) {
-					delete elem;
-					return true;
-				}
-				return false;
-			};
-			std::list<Position* >& bulletList = const_cast<std::list<Position* >& >(player->getBullets());
-			bulletList.remove_if(clearFunc);
-		}
-
-		t.setScale(3.5, 3.5);
-		graphicEngine->drawImage("vessel" + std::to_string(i++) + ".png", t);
-	}
+  if (mutex) {
+    mutex->lock();
+    for (auto &img : images) {
+      graphicEngine->drawImage(img.img, img.t);
+    }
+    images.clear();
+    mutex->unlock();
+  }
 }

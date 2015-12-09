@@ -127,7 +127,7 @@ void GraphicEngine::handleMovements()
 	if (bullet) {
 		player->setPosition(pos);
 		_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
-		player->addBullet(new Position(pos.x, pos.y));
+		player->addBullet(Position(pos.x, pos.y));
 	}
 }
 
