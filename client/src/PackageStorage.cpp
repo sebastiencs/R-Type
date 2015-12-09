@@ -259,6 +259,14 @@ void PackageStorage::deleteAnswersPackage()
 
 void PackageStorage::deleteLaunchPackage()
 {
+  if (!launch.empty()) {
+    delete launch.front();
+    launch.erase(launch.begin());
+  }
+}
+
+void PackageStorage::deleteEnemyPackage()
+{
   if (!enemy.empty()) {
     delete enemy.front();
     enemy.erase(enemy.begin());
