@@ -165,7 +165,7 @@ bool	Network::write()
 	}
 	else {
 	  std::cout << "write failed" << std::endl;
-	  _sem->post();
+	  // _sem->post();
 	}
       }
     }
