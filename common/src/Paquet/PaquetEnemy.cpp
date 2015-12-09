@@ -93,7 +93,6 @@ std::ostream	&operator<<(std::ostream &os, PaquetEnemy &p)
   os << "PaquetEnemy = "
      << " { Type : " << (int)p.getType()
      << ", ID : " << (int)p.getID()
-     << ", ID : " << (int)p.getID()
      << ", Position: [" << (int)p.getX() << " - " << (int)p.getY() << "]"
      << ", Life : " << (int)p.getLife()
      << " };";

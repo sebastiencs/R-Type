@@ -57,7 +57,7 @@ public:
     LAUNCH		= 0x0B,
     LEAVE		= 0x0C,
     FIRST_UDP		= 0x0D,
-    ENEMY		= 0x0C,
+    ENEMY		= 0x0E,
     RESPONSE		= 0xFF
   };
 
