@@ -65,7 +65,7 @@ void DisplayUpdater::launchObserver()
 
     int width = getGraphicEngine()->getWindowWidth();
     int height = getGraphicEngine()->getWindowHeight();
-    _game = new class Game(width, height, images, mutex);
+    _game = new class Game(width, height, images, mutex, pseudo);
 
     threadGame = new Thread([this] (void *) -> void * {
 	for (;;) {
@@ -96,9 +96,13 @@ void DisplayUpdater::game()
   if (mutex) {
     mutex->lock();
     for (auto &img : images) {
-      graphicEngine->drawImage(img.img, img.t);
-    }
-    images.clear();
-    mutex->unlock();
+			graphicEngine->drawImage(img.img, img.t);
+		}
+		for (auto &text : pseudo) {
+			graphicEngine->drawText(text.img, text.t, 12);
+		}
+		pseudo.clear();
+		images.clear();
+		mutex->unlock();
   }
 }
