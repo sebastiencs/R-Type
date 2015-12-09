@@ -12,6 +12,7 @@ private:
   uint8_t _type;
   uint16_t _x;
   uint16_t _y;
+  uint8_t _speed;
 
 public:
   PaquetPlayerShot();
@@ -20,14 +21,16 @@ public:
   PaquetPlayerShot(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetPlayerShot();
 
-  void setType(const uint8_t&);
-  void setPlayerID(const uint8_t&);
-  void setPosition(const uint16_t&, const uint16_t&);
+  void setType(const uint8_t);
+  void setPlayerID(const uint8_t);
+  void setPosition(const uint16_t, const uint16_t);
+  void setSpeed(uint8_t);
 
-  const uint8_t& getType() const;
-  const uint8_t& getPlayerID() const;
-  const uint16_t& getX() const;
-  const uint16_t& getY() const;
+  uint8_t getType() const;
+  uint8_t getPlayerID() const;
+  uint16_t getX() const;
+  uint16_t getY() const;
+  uint8_t getSpeed() const;
 
   void		createPaquet();
   void		parsePaquet();
