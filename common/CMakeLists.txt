@@ -16,6 +16,7 @@ file (GLOB
   src/Patern.cpp
   src/Tools.cpp
   src/Mutex.cpp
+  src/Enemy.cpp
   src/TaskScheduler.cpp
   )
 
@@ -31,6 +32,7 @@ file (GLOB
   includes/Mutex.hh
   includes/PaquetTCP.hh
   includes/Patern.hh
+  includes/Enemy.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
   )
