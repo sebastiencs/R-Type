@@ -44,6 +44,7 @@ void	Game::handlingNetwork()
   auto &&obstacle = _PS.getObstaclesPackage();
   auto &&shot = _PS.getShotsPackage();
   auto &&coord = _PS.getPlayersPackage();
+  auto &&leave = _PS.getLeavePackage();
 
   IPlayer *player;
 
@@ -69,6 +70,12 @@ void	Game::handlingNetwork()
     }
     _PS.deletePlayersPackage();
   }
+
+  if (leave != nullptr) {
+    _LP.deletePlayer(leave->getID());
+    _PS.deleteLeavePackage();
+  }
+
 }
 
 void	Game::updateGraphic()

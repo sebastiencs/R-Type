@@ -36,6 +36,20 @@ void ListPlayers::addPlayer(Player* player)
 	listPlayers.push_back(player);
 }
 
+void ListPlayers::deletePlayer(uint8_t id)
+{
+  listPlayers.remove_if([this, id] (auto &p) {
+      if (p->getID() == id) {
+	delete p;
+	DEBUG_MSG("One player deleted");
+	return (true);
+      }
+      else {
+	return (false);
+      }
+    });
+}
+
 void ListPlayers::clearList()
 {
 	listPlayers.remove_if([this](Player *p) {

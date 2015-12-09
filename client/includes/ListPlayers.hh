@@ -20,6 +20,8 @@ public:
 	void addPlayer(Player* player);
 	void clearList();
 
+	void deletePlayer(uint8_t id);
+
 	const std::list<Player *>& getListPlayers() const;
 	Player* getPlayer(uint8_t id);
 	uint8_t getId() const;
