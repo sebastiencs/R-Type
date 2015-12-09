@@ -180,3 +180,16 @@ bool			Party::addEnemy(Enemy *enemy)
   }
   return false;
 }
+
+uint8_t			Party::getUniqueID() const
+{
+  uint8_t		id;
+
+  for (id = 0; id < 255; id += 1) {
+    if (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) == nullptr
+	&& Tools::findIn(_enemies, [id] (auto &e) { return (e->getID() == id); }) == nullptr) {
+      return (id);
+    }
+  }
+  return (0xFF);
+}

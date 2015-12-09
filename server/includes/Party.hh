@@ -62,6 +62,7 @@ public:
   bool			isRunning() const;
   void			setRunning(bool);
   bool			addEnemy(Enemy *enemy);
+  uint8_t		getUniqueID() const;
 };
 
 #endif /* !PARTY_H_ */
