@@ -18,20 +18,23 @@ class		Enemy
 {
 public:
   Enemy();
-  Enemy(const uint8_t id);
+  Enemy(const uint8_t id, int life);
   ~Enemy();
 
   void		setPosX(const uint8_t x);
   void		setPosY(const uint8_t y);
   void		setPosID(const uint8_t id);
+  void		setLife(const int life);
   uit8_t	getPosX() const;
   uit8_t	getPosY() const;
   uit8_t	getID() const;
+  int		getLife() const;
 
 private:
   uint8_t	_x;
   uint8_t	_y;
-  uint8_t	_id;  
+  uint8_t	_id;
+  int		_life;
 };
 
 #endif /* !ENEMY_HH_ */
