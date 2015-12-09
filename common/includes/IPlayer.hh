@@ -13,10 +13,13 @@
 
 # include <tuple>
 # include <iostream>
+# include <list>
 
 typedef struct s_position {
   s_position() : x(1), y(1) {}
   s_position(uint16_t _x, uint16_t _y) : x(_x), y(_y) {}
+  s_position(const s_position &pos) : x(pos.x), y(pos.y) {}
+  s_position &operator=(const s_position &pos) { x = pos.x; y = pos.y; return (*this); }
   uint16_t x;
   uint16_t y;
 } Position;
@@ -24,25 +27,27 @@ typedef struct s_position {
 class		IPlayer
 {
 public:
-	virtual ~IPlayer() {}
+  virtual ~IPlayer() {}
 
-	virtual const Position	&getPosition() const = 0;
-	virtual void			setPosition(const Position &) = 0;
+  virtual const Position	&getPosition() const = 0;
+  virtual void			setPosition(const Position &) = 0;
 
-	virtual const std::list<Position*>& getBullets() const = 0;
-	virtual void			addBullet(Position *) = 0;
+  virtual const std::list<Position> &getBullets() const = 0;
+  virtual std::list<Position>	&getBullets() = 0;
+  virtual void			addBullet(Position &&) = 0;
+  virtual void			addBullet(Position &) = 0;
 
-	virtual uint8_t		getLevel() const = 0;
-	virtual void			setLevel(uint8_t) = 0;
+  virtual uint8_t		getLevel() const = 0;
+  virtual void			setLevel(uint8_t) = 0;
 
-	virtual int			getLife() const = 0;
-	virtual void			setLife(int) = 0;
+  virtual int			getLife() const = 0;
+  virtual void			setLife(int) = 0;
 
-	virtual uint8_t		getID() const = 0;
-	virtual void	setID(uint8_t) = 0;
+  virtual uint8_t		getID() const = 0;
+  virtual void	setID(uint8_t) = 0;
 
-	virtual const std::string	&getName() const = 0;
-	virtual void	setName(const std::string &) = 0;
+  virtual const std::string	&getName() const = 0;
+  virtual void	setName(const std::string &) = 0;
 };
 
 #endif /* !IPLAYER_H_ */

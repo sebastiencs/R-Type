@@ -50,8 +50,10 @@ void		Manager::deletePlayer(const Addr &addr)
   }
   {
     auto &&party = Tools::findIn(_parties, [&addr] (auto &p) { return (p->isPlayer(addr)); });
+    uint8_t id = 0xFF;
 
     if (party != nullptr) {
+      id = party->getIdFromAddr(addr);
       party->deletePlayer(addr);
     }
     else {
@@ -61,14 +63,25 @@ void		Manager::deletePlayer(const Addr &addr)
       _parties.remove(party);
     }
     else {
-      auto &players = party->getPlayers();
-      PaquetListPlayers	paquet;
-      for (auto &p : players) {
-	paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
+      if (party->isRunning()) {
+	std::cout << "DELETING PLAYER\n";
+	PaquetLeave p;
+	p.setID(id);
+	p.createPaquet();
+	for (auto &player : party->getPlayers()) {
+	  write(p, player->addr());
+	}
       }
-      paquet.createPaquet();
-      for (auto &p : players) {
-	write(paquet, p->addr());
+      else {
+	auto &players = party->getPlayers();
+	PaquetListPlayers	paquet;
+	for (auto &p : players) {
+	  paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
+	}
+	paquet.createPaquet();
+	for (auto &p : players) {
+	  write(paquet, p->addr());
+	}
       }
     }
   }

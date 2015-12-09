@@ -55,7 +55,11 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 
-	_tab[12] = [this](Paquet *paquet UNUSED) {};
+	_tab[12] = [this](Paquet *paquet) {
+		PaquetLeave *store = new PaquetLeave(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeLeavePackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
 	_tab[0xFF] = [this](Paquet *paquet) {
 		PaquetResponse *store = new PaquetResponse(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeAnswersPackage(store);

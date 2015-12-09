@@ -85,6 +85,12 @@ const PaquetLaunch * PackageStorage::getLaunchPackage() const {
 	return launch.empty() ? nullptr : launch.front();
 }
 
+const PaquetLeave * PackageStorage::getLeavePackage() const {
+	if (!leave.empty())
+		DEBUG_MSG(*leave.front());
+	return leave.empty() ? nullptr : leave.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet * package) {
 	received.push_back(package);
 	_semIn->post();
@@ -147,77 +153,113 @@ void PackageStorage::storeLaunchPackage(PaquetLaunch * package)
 	launch.push_back(package);
 }
 
+void PackageStorage::storeLeavePackage(PaquetLeave * package)
+{
+	leave.push_back(package);
+}
+
 void PackageStorage::deleteReceivedPackage()
 {
-	delete received.front();
-	received.erase(received.begin());
-
+  if (!received.empty()) {
+    delete received.front();
+    received.erase(received.begin());
+  }
 }
 
 void PackageStorage::deletePlayersPackage()
 {
-	delete players.front();
-	players.erase(players.begin());
+  if (!players.empty()) {
+    delete players.front();
+    players.erase(players.begin());
+  }
 }
 
 void PackageStorage::deleteEnemiesPackage()
 {
-	delete enemies.front();
-	enemies.erase(enemies.begin());
+  if (!enemies.empty()) {
+    delete enemies.front();
+    enemies.erase(enemies.begin());
+  }
 }
 
 void PackageStorage::deleteObstaclesPackage()
 {
-	delete obstacles.front();
-	obstacles.erase(obstacles.begin());
+  if (!obstacles.empty()) {
+    delete obstacles.front();
+    obstacles.erase(obstacles.begin());
+  }
 }
 
 void PackageStorage::deleteShotsPackage()
 {
-	delete shots.front();
-	shots.erase(shots.begin());
+  if (!shots.empty()) {
+    delete shots.front();
+    shots.erase(shots.begin());
+  }
 }
 
 void PackageStorage::deleteReadyPackage()
 {
-	delete ready.front();
-	ready.erase(ready.begin());
+  if (!ready.empty()) {
+    delete ready.front();
+    ready.erase(ready.begin());
+  }
 }
 
 void PackageStorage::deleteToSendUDPPackage()
 {
-	delete toSendUDP.front();
-	toSendUDP.erase(toSendUDP.begin());
+  if (!toSendUDP.empty()) {
+    delete toSendUDP.front();
+    toSendUDP.erase(toSendUDP.begin());
+  }
 }
 
 void PackageStorage::deleteToSendTCPPackage()
 {
-	delete toSendTCP.front();
-	toSendTCP.erase(toSendTCP.begin());
+  if (!toSendTCP.empty()) {
+    delete toSendTCP.front();
+    toSendTCP.erase(toSendTCP.begin());
+  }
 }
 
 void PackageStorage::deleteGameListPackage()
 {
-	delete gameList.front();
-	gameList.erase(gameList.begin());
+  if (!gameList.empty()) {
+    delete gameList.front();
+    gameList.erase(gameList.begin());
+  }
 }
 
 void PackageStorage::deletePlayerListPackage()
 {
-	delete playerList.front();
-	playerList.erase(playerList.begin());
+  if (!playerList.empty()) {
+    delete playerList.front();
+    playerList.erase(playerList.begin());
+  }
 }
 
 void PackageStorage::deleteAnswersPackage()
 {
-	delete answers.front();
-	answers.erase(answers.begin());
+  if (!answers.empty()) {
+    delete answers.front();
+    answers.erase(answers.begin());
+  }
 }
 
 void PackageStorage::deleteLaunchPackage()
 {
-	delete launch.front();
-	launch.erase(launch.begin());
+  if (!launch.empty()) {
+    delete launch.front();
+    launch.erase(launch.begin());
+  }
+}
+
+void PackageStorage::deleteLeavePackage()
+{
+  if (!leave.empty()) {
+    delete leave.front();
+    leave.erase(leave.begin());
+  }
 }
 
 bool PackageStorage::isThereReceivedPackage()

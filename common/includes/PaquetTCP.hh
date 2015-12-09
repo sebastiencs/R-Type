@@ -35,9 +35,10 @@ private:
 
 public:
   PaquetTCP(SocketTCP::CONNECTION_TYPE);
-//  PaquetTCP(SocketTCP::CONNECTION_TYPE, socket_t);
+  PaquetTCP(CONNECTION_TYPE type, socket_t fd, struct sockaddr_in &addr, uint16_t port);
   virtual ~PaquetTCP();
 
+  virtual ISocketTCP	*accept();
   virtual ssize_t	read(Buffer &);
 };
 

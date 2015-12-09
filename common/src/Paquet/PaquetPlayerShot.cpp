@@ -17,40 +17,50 @@ PaquetPlayerShot::~PaquetPlayerShot()
 {
 }
 
-void PaquetPlayerShot::setType(const uint8_t& type)
+void PaquetPlayerShot::setType(const uint8_t type)
 {
 	_type = type;
 }
 
-void PaquetPlayerShot::setPlayerID(const uint8_t& id)
+void PaquetPlayerShot::setPlayerID(const uint8_t id)
 {
 	_playerID = id;
 }
 
-void PaquetPlayerShot::setPosition(const uint16_t& x, const uint16_t& y)
+void PaquetPlayerShot::setPosition(const uint16_t x, const uint16_t y)
 {
 	_x = x;
 	_y = y;
 }
 
-const uint8_t & PaquetPlayerShot::getType() const
+void PaquetPlayerShot::setSpeed(uint8_t speed)
+{
+	_speed = speed;
+}
+
+uint8_t PaquetPlayerShot::getType() const
 {
 	return _type;
 }
 
-const uint8_t & PaquetPlayerShot::getPlayerID() const
+uint8_t PaquetPlayerShot::getPlayerID() const
 {
 	return _playerID;
 }
 
-const uint16_t & PaquetPlayerShot::getX() const
+uint16_t PaquetPlayerShot::getX() const
 {
 	return _x;
 }
 
-const uint16_t & PaquetPlayerShot::getY() const
+uint16_t PaquetPlayerShot::getY() const
 {
 	return _y;
+}
+
+uint8_t PaquetPlayerShot::getSpeed() const
+{
+	return (_speed);
 }
 
 void			PaquetPlayerShot::parsePaquet()
@@ -59,9 +69,10 @@ void			PaquetPlayerShot::parsePaquet()
 
 	_id = readData<uint8_t>(ptr);
 	_playerID = readData<uint8_t>(ptr);
-	_type = readData<uint8_t>(ptr);
 	_x = readData<uint16_t>(ptr);
 	_y = readData<uint16_t>(ptr);
+	_type = readData<uint8_t>(ptr);
+	_speed = readData<uint8_t>(ptr);
 }
 
 void			PaquetPlayerShot::createPaquet()
@@ -70,9 +81,10 @@ void			PaquetPlayerShot::createPaquet()
 
 	writeData<uint8_t>(ptr, &_id);
 	writeData<uint8_t>(ptr, &_playerID);
-	writeData<uint8_t>(ptr, &_type);
 	writeData<uint16_t>(ptr, &_x);
 	writeData<uint16_t>(ptr, &_y);
+	writeData<uint8_t>(ptr, &_type);
+	writeData<uint8_t>(ptr, &_speed);
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
@@ -82,6 +94,7 @@ std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
 	   << " { PlayerID: " << (int)p.getPlayerID()
 	   << ", Shot type: " << (int)p.getType()
 	   << ", Position: [" << (int)p.getX() << " - " << (int)p.getY() << "]"
+	   << ", Speed: " << (int)p.getSpeed()
 	   << " };";
 	return (os);
 }

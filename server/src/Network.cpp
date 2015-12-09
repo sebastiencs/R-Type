@@ -164,8 +164,9 @@ bool	Network::write()
 	  _queuePaquet.pop();
 	}
 	else {
+	  perror("write");
 	  std::cout << "write failed" << std::endl;
-	  _sem->post();
+	  // _sem->post();
 	}
       }
     }

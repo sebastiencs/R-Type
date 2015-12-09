@@ -19,7 +19,7 @@
 class		Player : public IPlayer
 {
 private:
-	std::list<Position *> _bullets;
+  std::list<Position> _bullets;
   std::string	_name;
   Position	_position;
   uint8_t	_level;
@@ -34,11 +34,14 @@ public:
   Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0);
   virtual ~Player();
 
-	virtual const Position	&getPosition() const;
-	virtual void			setPosition(const Position &);
+  virtual const Position	&getPosition() const;
+  virtual void			setPosition(const Position &);
+  virtual void			setPosition(const Position &&);
 
-	virtual const std::list<Position*>& getBullets() const;
-	virtual void			addBullet(Position *);
+  virtual const std::list<Position> &getBullets() const;
+  virtual std::list<Position>	&getBullets();
+  virtual void			addBullet(Position &&);
+  virtual void			addBullet(Position &);
 
   virtual uint8_t		getLevel() const;
   virtual void			setLevel(uint8_t);

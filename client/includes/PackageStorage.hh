@@ -22,6 +22,7 @@ private:
 	std::deque<PaquetListPlayers *> playerList;
 	std::deque<PaquetResponse *> answers;
 	std::deque<PaquetLaunch * > launch;
+	std::deque<PaquetLeave * > leave;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
@@ -46,6 +47,7 @@ public:
 	const PaquetListPlayers *getPlayerListPackage() const;
 	const PaquetResponse *getAnswersPackage() const;
 	const PaquetLaunch *getLaunchPackage() const;
+	const PaquetLeave *getLeavePackage() const;
 
 	void storeReceivedPackage(Paquet *package);
 	void storePlayersPackage(PaquetPlayerCoord *package);
@@ -59,6 +61,7 @@ public:
 	void storePlayerListPackage(PaquetListPlayers *package);
 	void storeAnswersPackage(PaquetResponse *package);
 	void storeLaunchPackage(PaquetLaunch *package);
+	void storeLeavePackage(PaquetLeave *package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
@@ -72,6 +75,7 @@ public:
 	void deletePlayerListPackage();
 	void deleteAnswersPackage();
 	void deleteLaunchPackage();
+	void deleteLeavePackage();
 
 	void waitForReceivedPackage();
 	bool isThereReceivedPackage();

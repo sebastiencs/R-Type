@@ -50,6 +50,7 @@ public:
   void			deletePlayer(const Addr &);
   Player_SharedPtr	playerLeave(uint8_t id);
   bool			isPlayer(const Addr &) const;
+  uint8_t		getIdFromAddr(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
   void			setCoordPlayer(PlayerCoord *pc);
   void			setReady(uint8_t id, uint8_t status);

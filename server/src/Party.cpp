@@ -113,6 +113,13 @@ bool			Party::isPlayer(const Addr &addr) const
   return (Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); }) != nullptr);
 }
 
+uint8_t			Party::getIdFromAddr(const Addr &addr) const
+{
+  auto &&player = Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); });
+
+  return ((player) ? (player->getID()) : (0xFF));
+}
+
 bool			Party::isPlayer(uint8_t id) const
 {
   return (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) != nullptr);
