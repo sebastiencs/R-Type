@@ -175,7 +175,7 @@ void			Party::setRunning(bool run)
 bool			Party::addEnemy(Enemy *enemy)
 {
   if (enemy) {
-    _enemies.push_back(enemy);
+    _enemies.emplace_back(enemy);
     return true;
   }
   return false;

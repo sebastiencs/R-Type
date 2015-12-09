@@ -12,6 +12,7 @@
 # define ENEMY_HH_
 
 # include <iostream>
+# include <memory>
 # include "Debug.hh"
 
 class		Enemy
@@ -40,5 +41,7 @@ private:
   int		_life;
   uint8_t	_type;
 };
+
+typedef std::shared_ptr<Enemy>	Enemy_SharedPtr;
 
 #endif /* !ENEMY_HH_ */

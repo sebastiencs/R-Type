@@ -27,8 +27,7 @@ typedef std::shared_ptr<Manager>	Manager_SharedPtr;
 typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
 typedef std::list<Player_SharedPtr>	listPlayers;
-
-typedef std::list<Enemy*>		listEnemies;
+typedef std::list<Enemy_SharedPtr>	listEnemies;
 
 class			Party
 {
