@@ -26,5 +26,6 @@
 # include "PaquetLaunch.hh"
 # include "PaquetReady.hh"
 # include "PaquetLeave.hh"
+# include "PaquetEnemy.hh"
 
 #endif /* !PAQUETS_H_ */

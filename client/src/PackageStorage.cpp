@@ -91,6 +91,12 @@ const PaquetLeave * PackageStorage::getLeavePackage() const {
 	return leave.empty() ? nullptr : leave.front();
 }
 
+const PaquetEnemy * PackageStorage::getEnemyPackage() const {
+	if (!enemy.empty())
+		DEBUG_MSG(*enemy.front());
+	return enemy.empty() ? nullptr : enemy.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet * package) {
 	received.push_back(package);
 	_semIn->post();
@@ -156,6 +162,11 @@ void PackageStorage::storeLaunchPackage(PaquetLaunch * package)
 void PackageStorage::storeLeavePackage(PaquetLeave * package)
 {
 	leave.push_back(package);
+}
+
+void PackageStorage::storeEnemyPackage(PaquetEnemy * package)
+{
+	enemy.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -248,9 +259,9 @@ void PackageStorage::deleteAnswersPackage()
 
 void PackageStorage::deleteLaunchPackage()
 {
-  if (!launch.empty()) {
-    delete launch.front();
-    launch.erase(launch.begin());
+  if (!enemy.empty()) {
+    delete enemy.front();
+    enemy.erase(enemy.begin());
   }
 }
 

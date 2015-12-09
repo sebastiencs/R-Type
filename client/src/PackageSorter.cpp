@@ -54,10 +54,14 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().storeLaunchPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
-
 	_tab[12] = [this](Paquet *paquet) {
 		PaquetLeave *store = new PaquetLeave(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeLeavePackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
+	_tab[14] = [this](Paquet *paquet) {
+		PaquetEnemy *store = new PaquetEnemy(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeEnemyPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[0xFF] = [this](Paquet *paquet) {
