@@ -43,8 +43,8 @@ public:
   };
 
   enum {
-		FIRST = 0x00,
-		REQUEST_PARTIES	= 0x01,
+    FIRST		= 0x00,
+    REQUEST_PARTIES	= 0x01,
     LIST_PARTIES	= 0x02,
     JOIN_PARTY		= 0x03,
     CREATE_PARTY	= 0x04,
@@ -56,7 +56,8 @@ public:
     READY		= 0x0A,
     LAUNCH		= 0x0B,
     LEAVE		= 0x0C,
-		FIRST_UDP = 0x0D,
+    FIRST_UDP		= 0x0D,
+    ENEMY		= 0x0C,
     RESPONSE		= 0xFF
   };
 
@@ -67,7 +68,7 @@ public:
 
       uint8_t id = _data[0];
 
-      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE || id == LEAVE) {
+      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE || id == LEAVE || id == ENEMY) {
 	return (UDP);
       }
       else {
