@@ -209,11 +209,11 @@ Client: |    ID   | ID Player |    X     |    Y	    |
 Lorsque le client effectue un tir, il envoi ce paquet au serveur.
 Le serveur le renvoi aux autres clients de la partie.
 
-   	+---------+-----------+----------+----------+-----------+
-Client: |    ID   | ID Player |    X     |    Y	    | Type tirs |
-	+---------+-----------+----------+----------+-----------+
-	| uint8_t | uint8_t   | uint16_t | uint16_t |  uint8_t  |
-	+---------+-----------+-----------+---------+-----------+
+   	+---------+-----------+----------+----------+-----------+---------
+Client: |    ID   | ID Player |    X     |    Y	    | Type tirs | Vitesse |
+	+---------+-----------+----------+----------+-----------+---------
+	| uint8_t | uint8_t   | uint16_t | uint16_t |  uint8_t  | uint8_t |
+	+---------+-----------+-----------+---------+-----------+---------
 
 	 ID: unsigned char ( 8 bits )
 	        Valeur: 8
@@ -229,6 +229,9 @@ Client: |    ID   | ID Player |    X     |    Y	    | Type tirs |
 
 	Type du tir: unsigned char (8 bits)
 	   	Type du tir du joueur
+
+	Vitesse du tir: unsigned char (8 bits)
+	   	Vitesse du tir du joueur
 
 ----------------------------------------------------
 
