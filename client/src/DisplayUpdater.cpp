@@ -6,7 +6,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 {
 	threadGame = nullptr;
 	mutex = nullptr;
-	Game = nullptr;
+	_game = nullptr;
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine, net);
@@ -23,7 +23,7 @@ DisplayUpdater::~DisplayUpdater()
 	delete threadGame;
 	delete mutex;
 	mutex = nullptr;
-	delete Game;
+	delete _game;
 //	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
 	delete mainmenu;
 	for (Button* b : buttons)
@@ -65,11 +65,11 @@ void DisplayUpdater::launchObserver()
 
     int width = getGraphicEngine()->getWindowWidth();
     int height = getGraphicEngine()->getWindowHeight();
-    Game = new class Game(width, height, images, mutex);
+    _game = new class Game(width, height, images, mutex);
 
     threadGame = new Thread([this] (void *) -> void * {
 	for (;;) {
-	  Game->run();
+	  _game->run();
 	}
 	return (nullptr);
       }, nullptr);

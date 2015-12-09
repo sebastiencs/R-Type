@@ -50,7 +50,7 @@ private:
 	std::list<Button* > buttons;
 	std::deque<Image> images;
 	IMutex *mutex;
-	Game *Game;
+	Game *_game;
 };
 
 #endif /* !DISPLAYUPDATER_HH */
