@@ -38,20 +38,24 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
 Party::~Party()
 {
   _players.clear();
+  _enemies.clear();
   DEBUG_MSG("Party deleted");
 }
 
 void			Party::run()
 {
-
-  // Tu creer l'enemy
-  //Enemy *en = new Enemy(100, 100, 1);
+  //refaire l'ID
+  Enemy		*enemy = new Enemy(100, 100, 1);
   PaquetEnemy	paquet;
 
+  paquet.setID(enemy->getID());
+  paquet.setType(enemy->getType());
+  paquet.setLife(enemy->getLife());
+  paquet.setPosition(enemy->getPosX(), enemy->getPosY());
   paquet.createPaquet();
+  addEnemy(enemy);
   for (;;) {
 
-    // dans une boucle tu l'envoi a tout le monde avec la fonction write de Manager
     for (auto &p : _players) {
       _manager.lock()->write(paquet, p->addr());
     }
@@ -165,4 +169,14 @@ bool			Party::isRunning() const
 void			Party::setRunning(bool run)
 {
   _running = run;
+}
+
+
+bool			Party::addEnemy(Enemy *enemy)
+{
+  if (enemy) {
+    _enemies.push_back(enemy);
+    return true;
+  }
+  return false;
 }

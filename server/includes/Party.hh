@@ -28,7 +28,7 @@ typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
 typedef std::list<Player_SharedPtr>	listPlayers;
 
-typedef std::list<Enemy>		listEnemies;
+typedef std::list<Enemy*>		listEnemies;
 
 class			Party
 {
@@ -61,6 +61,7 @@ public:
   void			setPlayerShot(PlayerShot *ps);
   bool			isRunning() const;
   void			setRunning(bool);
+  bool			addEnemy(Enemy *enemy);
 };
 
 #endif /* !PARTY_H_ */
