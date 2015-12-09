@@ -17,24 +17,26 @@
 class			PlayerShot
 {
 public:
-	PlayerShot();
-	PlayerShot(const uint8_t x, const uint8_t y, const uint8_t type, const uint8_t id);
-	virtual ~PlayerShot();
-
-	void			setX(const uint8_t x);
-	void			setY(const uint8_t y);
-	void			setType(const uint8_t y);
-	void			setID(const uint8_t id);
-	uint8_t			getX() const;
-	uint8_t			getY() const;
-	uint8_t			getType() const;
-	uint8_t			getID() const;
-
+  PlayerShot();
+  PlayerShot(const uint8_t x, const uint8_t y, const uint8_t type, const uint8_t speed, const uint8_t id);
+  virtual ~PlayerShot();
+  
+  void			setX(const uint8_t x);
+  void			setY(const uint8_t y);
+  void			setType(const uint8_t y);
+  void			setSpeed(const uint8_t	speed);
+  void			setID(const uint8_t id);
+  uint8_t		getX() const;
+  uint8_t		getY() const;
+  uint8_t		getType() const;
+  uint8_t		getSpeed() const;
+  uint8_t		getID() const;
+  
 private:
-	uint8_t			_x;
-	uint8_t			_y;
-	uint8_t			_type;
-	uint8_t			_id;
+  uint8_t		_x;
+  uint8_t		_y;
+  uint8_t		_type;
+  uint8_t		_id;
 };
 
 #endif /* !PLAYERSHOT_H_ */

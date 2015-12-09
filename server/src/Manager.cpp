@@ -291,7 +291,7 @@ void		Manager::handlePaquet(PaquetPlayerShot *paquet, const Addr &addr UNUSED)
   DEBUG_MSG(*paquet);
 
   auto &&party = Tools::findIn(_parties, [id](Party *p) { return (p->isPlayer(id)); });
-  auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getPlayerID());
+  auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getSpeed(), paquet->getPlayerID());
   if (party && ps) {
     party->setPlayerShot(ps);
 

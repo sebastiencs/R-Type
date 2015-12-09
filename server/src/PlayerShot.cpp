@@ -11,55 +11,65 @@
 #include "PlayerShot.hh"
 
 PlayerShot::PlayerShot()
-	: _x(0),
-	_y(0),
-	_type(0),
-	_id(0)
+  : _x(0),
+    _y(0),
+    _type(0),
+    _speed(0),
+    _id(0)
 {
-	DEBUG_MSG("PlayerShot created");
+  DEBUG_MSG("PlayerShot created");
 }
 
-PlayerShot::PlayerShot(const uint8_t x, const uint8_t y, const uint8_t type, const uint8_t id)
-	: _x(x),
-	_y(y),
-	_type(type),
-	_id(id)
+PlayerShot::PlayerShot(const uint8_t x, const uint8_t y, const uint8_t type, const uint8_t speed, const uint8_t id)
+  : _x(x),
+    _y(y),
+    _type(type),
+    _speed(speed),
+    _id(id)
 {
-	DEBUG_MSG("PlayerShot created");
+  DEBUG_MSG("PlayerShot created");
 }
 
 PlayerShot::~PlayerShot() {
-	DEBUG_MSG("PlayerShot deleted");
+  DEBUG_MSG("PlayerShot deleted");
 }
 
 void		PlayerShot::setX(const uint8_t x) {
-	_x = x;
+  _x = x;
 }
 
 void		PlayerShot::setY(const uint8_t y) {
-	_y = y;
+  _y = y;
 }
 
 void		PlayerShot::setType(const uint8_t type) {
-	_type = type;
+  _type = type;
+}
+
+void	        PlayerShot::setSpeed(const uint8_t speed) {
+  _speed = speed;
 }
 
 void		PlayerShot::setID(const uint8_t id) {
-	_id = id;
+  _id = id;
 }
 
 uint8_t		PlayerShot::getX() const {
-	return _x;
+  return _x;
 }
 
 uint8_t		PlayerShot::getY() const {
-	return _y;
+  return _y;
 }
 
 uint8_t		PlayerShot::getType() const {
-	return _type;
+  return _type;
 }
 
 uint8_t		PlayerShot::getID() const {
-	return _id;
+  return _id;
+}
+
+uint8_t		PlayerSpeed::getSpeed() const {
+  return _speed;
 }
