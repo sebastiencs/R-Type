@@ -204,10 +204,13 @@ Client: |    ID   | ID Player |    X     |    Y	    |
 
 ----------------------------------------------------
 
-9 - Envoi des tirs du joueur au serveur
+9 - Envoi des tirs du joueur/ennemie au serveur
 
 Lorsque le client effectue un tir, il envoi ce paquet au serveur.
 Le serveur le renvoi aux autres clients de la partie.
+
+Ce paquet est aussi utilisé par le serveur pour indiquer le tir des
+ennemies.
 
    	+---------+-----------+----------+----------+-----------+---------
 Client: |    ID   | ID Player |    X     |    Y	    | Type tirs | Vitesse |
@@ -335,6 +338,34 @@ Client: |    ID   | ID Player |
 
 	ID Player: unsigned char ( 8 bits )
 	   	Valeur attribuée précedement par le serveur
+
+
+----------------------------------------------------
+
+10 - Information sur l'ennemie
+
+Le client ne repond pas.
+
+   	+---------+---------+---------+----------+--------------------
+Server: |    ID   |   Type  |   ID    |    X     |    Y     |  Vie    |
+	+---------+-------------------+----------+----------+---------
+	| uint8_t | uint8_t | uint8_t | uint16_t | uint16_t | uint8_t |
+	+---------+---------+---------+----------+--------------------
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 14
+
+	Type: unsigned char (8 bits)
+	   	Type de l'ennemie
+
+	X: unsigned char (16 bits)
+	   	Position en x du joueur
+
+	Y: unsigned char (16 bits)
+	   	Position en y du joueur
+
+	Vie: unsigned char (8 bits)
+	   	Vie restante de l'ennemie
 
 
 ----------------------------------------------------
