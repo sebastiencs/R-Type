@@ -1,7 +1,8 @@
+#include <cstdlib>
 #include "AnimatedSprite.hh"
 
 AnimatedSprite::AnimatedSprite(const std::string & img, long interval, const Transformation & t, IGraphicEngine * engine, const Color & color)
-	: _color(color), _nameSprite(img)
+	: _color(color), _nameSprite(img), _engine(engine)
 {
 	_transformation = t;
 	_id = img;
@@ -14,16 +15,16 @@ AnimatedSprite::AnimatedSprite(const std::string & img, long interval, const Tra
 	_interval = interval;
 	_timer = new Timer();
 	_timer->start();
-	_nbrStates = _nameSprite.substr(_nameSprite.find('-') + 1).size();
+	_nbrStates = std::stoi(_nameSprite.substr(_nameSprite.find('-') + 1).c_str());
 }
 
 void AnimatedSprite::draw()
 {
-	if (_timer->ms(_interval)) {
+	if (_timer->ms() > _interval) {
 		_states %= _nbrStates;
-		_transformation.setCrop((_width / _nbrStates) * _states, 0, (_width / _nbrStates), _height);
 		++_states;
 		_timer->reset();
 	}
+	_transformation.setCrop((_width / _nbrStates) * _states, 0, (_width / _nbrStates), _height);
 	_engine->drawSplitImage(_nameSprite, _transformation, _color);
 }

@@ -24,7 +24,7 @@ DisplayUpdater::~DisplayUpdater()
 	delete mutex;
 	mutex = nullptr;
 	delete _game;
-//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
+	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
 	delete mainmenu;
 	for (Button* b : buttons)
 		delete b;
@@ -56,47 +56,54 @@ void DisplayUpdater::mainMenu()
 
 void DisplayUpdater::launchObserver()
 {
-  static PackageStorage& ps = PackageStorage::getInstance();
-  auto launch = ps.getLaunchPackage();
+	static PackageStorage& ps = PackageStorage::getInstance();
+	auto launch = ps.getLaunchPackage();
 
-  if (launch != nullptr) {
+	if (launch != nullptr) {
 
-    mutex = new Mutex();
+		mutex = new Mutex();
 
-    int width = getGraphicEngine()->getWindowWidth();
-    int height = getGraphicEngine()->getWindowHeight();
-    _game = new class Game(width, height, images, mutex, pseudo);
+		int width = getGraphicEngine()->getWindowWidth();
+		int height = getGraphicEngine()->getWindowHeight();
+		_game = new class Game(width, height, images, mutex, pseudo);
 
-    threadGame = new Thread([this] (void *) -> void * {
-	for (;;) {
-	  _game->run();
+		threadGame = new Thread([this](void *) -> void * {
+			for (;;) {
+				_game->run();
+			}
+			return (nullptr);
+		}, nullptr);
+
+		callback fptr = std::bind(&DisplayUpdater::game, this);
+		graphicEngine->setCallbackFunction(fptr, nullptr);
+		delete launch;
+		launchLoop->stop();
 	}
-	return (nullptr);
-      }, nullptr);
-
-    callback fptr = std::bind(&DisplayUpdater::game, this);
-    graphicEngine->setCallbackFunction(fptr, nullptr);
-    delete launch;
-    launchLoop->stop();
-  }
 }
+
+#include "AnimatedSprite.hh"
 
 void DisplayUpdater::game()
 {
-  static Sprite *bg = nullptr;
+	static Sprite *bg = nullptr;
 
-  if (!bg) {
-    Transformation t;
-    t.setBounds(1024, 768);
-    t.setPosition(0, 0);
-    bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
-  }
-  bg->draw();
+	if (!bg) {
+		Transformation t;
+		t.setBounds(1024, 768);
+		t.setPosition(0, 0);
+		bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
+	}
+	bg->draw();
 
-  if (mutex) {
-    mutex->lock();
-    for (auto &img : images) {
-			graphicEngine->drawImage(img.img, img.t);
+	if (mutex) {
+		mutex->lock();
+		for (auto &img : images) {
+//			if (img.img == "bullets-8.png") {
+//				AnimatedSprite *test = new AnimatedSprite(img.img, 30, img.t, graphicEngine);
+//				test->draw();
+//			}
+//			else
+				graphicEngine->drawImage(img.img, img.t);
 		}
 		for (auto &text : pseudo) {
 			graphicEngine->drawText(text.img, text.t, 12);
@@ -104,5 +111,5 @@ void DisplayUpdater::game()
 		pseudo.clear();
 		images.clear();
 		mutex->unlock();
-  }
+	}
 }

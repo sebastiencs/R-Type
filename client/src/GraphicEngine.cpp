@@ -290,6 +290,7 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 		subRect.width = cachedImages[name]->getSize().x;
 		subRect.height = cachedImages[name]->getSize().x;
 	}
+
 	sf::Sprite sprite(*cachedImages[name], subRect);
 	transformSprite(sprite, t, color);
 	window->draw(sprite);
