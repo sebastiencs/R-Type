@@ -83,7 +83,7 @@ void	Game::updateGraphic()
       }
 
       auto &bulletList = player->getBullets();
-      bulletList.remove_if([this] (auto &b) { return (remove_elem(b)); });
+      bulletList.remove_if([this] (auto &b) { return (this->remove_elem(b)); });
     }
 
     Transformation t(player->getPosition().x, player->getPosition().y);
