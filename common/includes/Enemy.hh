@@ -26,9 +26,9 @@ public:
   void		setPosID(const uint8_t id);
   void		setLife(const int life);
   void		setType(const uint8_t type);
-  uit8_t	getPosX() const;
-  uit8_t	getPosY() const;
-  uit8_t	getID() const;
+  uint8_t	getPosX() const;
+  uint8_t	getPosY() const;
+  uint8_t	getID() const;
   int		getLife() const;
   uint8_t       getType() const;
 

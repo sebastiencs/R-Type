@@ -45,10 +45,17 @@ void			Party::run()
 {
 
   // Tu creer l'enemy
+  //Enemy *en = new Enemy(100, 100, 1);
+  PaquetEnemy	paquet;
 
+  paquet.createPaquet();
   for (;;) {
 
     // dans une boucle tu l'envoi a tout le monde avec la fonction write de Manager
+    for (auto &p : _players) {
+      _manager.lock()->write(paquet, p->addr());
+    }
+
 
     if (!_manager.expired()) {
 //      (_manager.lock())->write(PAQUET, ADDR)
