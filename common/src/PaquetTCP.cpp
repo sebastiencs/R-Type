@@ -20,15 +20,19 @@ PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type)
   initSize();
 }
 
-// PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type, socket_t sock)
-//   : SocketTCP(type, sock),
-//     _buffer(new Buffer()),
-//     _bufferTMP(new Buffer()),
-//     _start(true),
-//     _sizeCurrent(0)
-// {
-//   initSize();
-// }
+PaquetTCP::PaquetTCP(CONNECTION_TYPE type,
+		     socket_t fd,
+		     struct sockaddr_in &addr,
+		     uint16_t port)
+  : SocketTCP(type, fd, addr, port),
+    _buffer(new Buffer()),
+    _bufferTMP(new Buffer()),
+    _start(true),
+    _sizeCurrent(0)
+{
+  DEBUG_MSG("PaquetTCP created");
+  initSize();
+}
 
 PaquetTCP::~PaquetTCP()
 {
@@ -54,6 +58,51 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::FIRST_UDP]		= 0x02;
 }
 
+ISocketTCP	*PaquetTCP::accept()
+{
+#ifdef __unix__
+
+  struct sockaddr_in	c_addr;
+  size_t		size;
+  int			newfd;
+
+  if (_type == SocketTCP::CLIENT) {
+    throw std::runtime_error("Try to accept with a client");
+  }
+  size = sizeof(c_addr);
+  newfd = ::accept(_socket, reinterpret_cast<struct sockaddr *>(&c_addr),
+		   reinterpret_cast<socklen_t *>(&size));
+  if (newfd >= 0) {
+#ifdef DEBUG
+    std::cerr << "Connection from " << inet_ntoa(c_addr.sin_addr)
+	      << ":" << static_cast<int>(ntohs(c_addr.sin_port)) << std::endl;
+#endif // !DEBUG
+  }
+  else {
+    _error = 1;
+    DEBUG_MSG("accept failed");
+  }
+  return (new PaquetTCP(_type, newfd, c_addr, _port));
+
+#elif defined(_WIN32)
+
+  socket_t socket;
+  struct sockaddr_in	c_addr;
+  int tmp = sizeof(c_addr);
+
+  if (_type == SocketTCPWin::CLIENT) {
+    throw std::runtime_error("Try to connect with a server");
+  }
+  if ((socket = ::accept(_socket, (struct sockaddr *)&c_addr, &tmp)) == INVALID_SOCKET) {
+    DEBUG_MSG("Accept failed");
+    return (0);
+  }
+  DEBUG_MSG("Accept done");
+  return (new PaquetTCP(CLIENT, socket, c_addr, _port));
+
+#endif
+}
+
 ssize_t		PaquetTCP::read(Buffer &buf)
 {
   ssize_t	n = 0;
@@ -62,11 +111,11 @@ ssize_t		PaquetTCP::read(Buffer &buf)
 
     uint8_t	id;
 # ifdef __unix__
-	n = ::read(_socket, &id, sizeof(id));
+    n = ::read(_socket, &id, sizeof(id));
 # elif defined(_WIN32)
-	n = recv(_socket, reinterpret_cast<char *>(&id), sizeof(id), 0);
+    n = recv(_socket, reinterpret_cast<char *>(&id), sizeof(id), 0);
 #endif
-	if (n > 0) {
+    if (n > 0) {
       if (_pSize.count(id)) {
 	_idPaquet = id;
 	_sizeCurrent = 1;
