@@ -64,7 +64,6 @@ void		Manager::deletePlayer(const Addr &addr)
     }
     else {
       if (party->isRunning()) {
-	std::cout << "DELETING PLAYER\n";
 	PaquetLeave p;
 	p.setID(id);
 	p.createPaquet();

@@ -56,9 +56,9 @@ void			Party::run()
   for (;;) {
 
     for (auto &p : _players) {
+      std::cout << *p << std::endl;
       _manager.lock()->write(paquet, p->addr());
     }
-
 
     if (!_manager.expired()) {
 //      (_manager.lock())->write(PAQUET, ADDR)
@@ -144,8 +144,16 @@ bool			Party::isPlayer(uint8_t id) const
   return (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) != nullptr);
 }
 
-void			Party::setCoordPlayer(PlayerCoord *pc UNUSED)
+void			Party::setCoordPlayer(PlayerCoord *pc)
 {
+  uint8_t id = pc->getID();
+  auto &&player = Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); });
+
+  if (player) {
+    std::cout << "New Position: " << (int)pc->getX() << ", " << (int)pc->getY() << std::endl;
+    player->setPosition(Position(pc->getX(), pc->getY()));
+  }
+  delete pc;
 }
 
 void			Party::setReady(uint8_t id, uint8_t status)
@@ -156,8 +164,10 @@ void			Party::setReady(uint8_t id, uint8_t status)
   }
 }
 
-void			Party::setPlayerShot(PlayerShot *ps UNUSED)
+void			Party::setPlayerShot(PlayerShot *ps)
 {
+  // TODO: Sauvegarder les tirs, comme avec setCoordPlayer
+  delete ps;
 }
 
 bool			Party::isRunning() const
