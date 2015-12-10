@@ -30,6 +30,7 @@ public:
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;
+	virtual void drawSplitImage(Sprite& sprite) = 0;
 
 	virtual void drawSprite(Sprite& sprite) = 0;
 	virtual void drawText(Text& text) = 0;

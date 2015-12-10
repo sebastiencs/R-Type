@@ -296,6 +296,15 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 	window->draw(sprite);
 }
 
+void GraphicEngine::drawSplitImage(Sprite& sprite)
+{
+	sprite.setEngine(this);
+	//	transformSprite(sprite, t, color);
+	if (!sprite.hasEngine())
+		sprite.setEngine(this);
+	sprite.draw();
+}
+
 void GraphicEngine::drawSprite(Sprite& sprite)
 {
 	if (!sprite.hasEngine())

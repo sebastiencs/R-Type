@@ -12,10 +12,12 @@ public:
 	AnimatedSprite(const std::string& img, long, const Transformation& t, IGraphicEngine* engine = nullptr, const Color& color = Color::None);
 
 	// Drawable
+	virtual void setEngine(IGraphicEngine * engine);
 	virtual void draw();
 
 protected:
 	Timer *_timer;
+	sf::IntRect _subRect;
 
 	uint16_t _width;
 	uint16_t _height;
