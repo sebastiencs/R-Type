@@ -65,7 +65,7 @@ void DisplayUpdater::launchObserver()
 
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
-		_game = new class Game(width, height, images, mutex, pseudo);
+		_game = new class Game(width, height, images, mutex, _nickname);
 
 		threadGame = new Thread([this](void *) -> void * {
 			for (;;) {
@@ -97,18 +97,15 @@ void DisplayUpdater::game()
 
 	if (mutex) {
 		mutex->lock();
-		for (auto &img : images) {
-//			if (img.img == "bullets-8.png") {
-//				AnimatedSprite *test = new AnimatedSprite(img.img, 30, img.t, graphicEngine);
-//				test->draw();
-//			}
-//			else
-				graphicEngine->drawImage(img.img, img.t);
+		for (Sprite *img : images) {
+			graphicEngine->drawSprite(*img);
+			delete img;
 		}
-		for (auto &text : pseudo) {
-			graphicEngine->drawText(text.img, text.t, 12);
+		for (Text *text : _nickname) {
+			graphicEngine->drawText(*text);
+			delete text;
 		}
-		pseudo.clear();
+		_nickname.clear();
 		images.clear();
 		mutex->unlock();
 	}

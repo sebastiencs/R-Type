@@ -7,12 +7,28 @@ Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine
 	_visible = true;
 
 	this->img = img;
-	this->engine = dynamic_cast<GraphicEngine* >(engine);
-	if (!engine)
-		throw std::runtime_error("GraphicEngine not set");
-	sprite = sf::Sprite(this->engine->loadTexture(img));
-	transform(_transformation, color);
-	_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+	if (engine) {
+		this->engine = dynamic_cast<GraphicEngine*>(engine);
+		if (!engine)
+			throw std::runtime_error("GraphicEngine not set");
+		sprite = sf::Sprite(this->engine->loadTexture(img));
+		transform(_transformation, color);
+		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+	}
+}
+
+Sprite::Sprite(const Sprite & right) : sprite(right.sprite), img(right.img), engine(right.engine), color(right.color)
+{
+	_transformation = right._transformation;
+	_id = right._id;
+	_visible = right._visible;
+
+	this->img = right.img;
+	if (engine) {
+		sprite = sf::Sprite(this->engine->loadTexture(img));
+		transform(_transformation, color);
+		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+	}
 }
 
 void Sprite::setTransformation(const Transformation & t)
@@ -21,9 +37,20 @@ void Sprite::setTransformation(const Transformation & t)
 	transform(t, color);
 }
 
+void Sprite::setEngine(IGraphicEngine * engine)
+{
+	if (this->engine = dynamic_cast<GraphicEngine*>(engine)) {
+		sprite = sf::Sprite(this->engine->loadTexture(img));
+		transform(_transformation, color);
+		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+	}
+	else
+		throw std::runtime_error("Sprite: wrong GraphicEngine");
+}
+
 void Sprite::draw()
 {
-	if (_visible)
+	if (_visible && engine)
 		engine->drawSprite(sprite);
 }
 
@@ -65,4 +92,9 @@ bool Sprite::isPressed(uint32_t x, uint32_t y)
 	uint32_t mheight = _transformation.getHeight();
 	return (x >= mx && x <= (mx + mwidth) &&
 		y >= my && y <= (my + mheight) && _visible);
+}
+
+bool Sprite::hasEngine() const
+{
+	return engine != nullptr;
 }

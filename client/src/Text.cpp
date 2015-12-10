@@ -3,22 +3,35 @@
 
 Text::Text(const std::string & text, const std::string & font, uint16_t size, const Transformation& t, IGraphicEngine * gengine, const Color& color) : color(color)
 {
-	engine = dynamic_cast<GraphicEngine*>(gengine);
-	if (!engine)
-		throw std::runtime_error("GraphicEngine is not set");
+	this->font = font;
+	textString = text;
+	_size = size;
 	_transformation = t;
 	_visible = true;
+	if (gengine) {
+		engine = dynamic_cast<GraphicEngine*>(gengine);
+		if (!engine)
+			throw std::runtime_error("GraphicEngine is not set");
+		this->text = sf::Text(text, engine->loadFont(font));
+		this->text.setCharacterSize(size);
+		transform(t, color);
+	}
 
-	this->font = font;
-	this->text = sf::Text(text, engine->loadFont(font));
-	this->text.setCharacterSize(size);
-	textString = text;
-	transform(t, color);
+}
+
+Text::Text(const Text& r) : _size(r._size), textString(r.textString), font(r.font), text(r.text), color(r.color), engine(r.engine) {
+	_transformation = r._transformation;
+	_visible = r._visible;
+	if (engine) {
+		this->text = sf::Text(textString, this->engine->loadFont(font));
+		this->text.setCharacterSize(_size);
+		transform(_transformation, color);
+	}
 }
 
 void Text::draw()
 {
-	if (_visible)
+	if (_visible && engine)
 		engine->drawText(text);
 }
 
@@ -26,6 +39,17 @@ void Text::setTransformation(const Transformation & t)
 {
 	_transformation = t;
 	transform(t);
+}
+
+void Text::setEngine(IGraphicEngine * engine)
+{
+	if (this->engine = dynamic_cast<GraphicEngine*>(engine)) {
+		if (!this->engine)
+			throw std::runtime_error("GraphicEngine is not set");
+		this->text = sf::Text(this->textString, this->engine->loadFont(font));
+		this->text.setCharacterSize(_size);
+		transform(_transformation, color);
+	}
 }
 
 void Text::setText(const std::string & txt)
@@ -73,4 +97,9 @@ const Color & Text::getColor() const
 const std::string & Text::getFont() const
 {
 	return font;
+}
+
+bool Text::hasEngine() const
+{
+	return false;
 }

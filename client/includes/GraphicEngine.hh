@@ -38,7 +38,7 @@ public:
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
-	virtual void drawSprite(const Sprite& sprite);
+	virtual void drawSprite(Sprite& sprite);
 	void drawSprite(const sf::Sprite& sprite);
 
 	virtual void drawText(const Text& text);

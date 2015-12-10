@@ -12,18 +12,13 @@
 # include "ListPlayers.hh"
 # include "TaskScheduler.hh"
 # include "Mutex.hh"
+# include "Text.hh"
+# include "Sprite.hh"
 
 class MainMenu;
 class OnlineMenu;
 class NetworkClient;
 class Game;
-
-typedef struct s_image {
-  s_image(std::string _img, Transformation &&_t) : img(_img), t(_t) { }
-  s_image(std::string _img, Transformation &_t) : img(_img), t(_t) { }
-  std::string img;
-  Transformation t;
-} Image;
 
 class DisplayUpdater {
 public:
@@ -48,8 +43,8 @@ private:
 
 	IThread *threadGame;
 	std::list<Button* > buttons;
-	std::deque<Image> pseudo;
-	std::deque<Image> images;
+	std::deque<Text* > _nickname;
+	std::deque<Sprite* > images;
 	IMutex *mutex;
 	Game *_game;
 };

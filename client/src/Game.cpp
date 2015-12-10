@@ -15,9 +15,10 @@
 #include "ListPlayers.hh"
 #include "Transformation.hh"
 #include "Sprite.hh"
+#include "Text.hh"
 #include "Keyboard.hh"
 
-Game::Game(int width, int height, std::deque<Image> &images, IMutex *mutex, std::deque<Image> &speudo)
+Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo)
 	: _PS(PackageStorage::getInstance()),
 	_audio(SystemAudio::getInstance()),
 	_LP(ListPlayers::getInstance()),
@@ -26,7 +27,7 @@ Game::Game(int width, int height, std::deque<Image> &images, IMutex *mutex, std:
 	_timer(new Timer()),
 	_width(width),
 	_height(height),
-	_speudo(speudo)
+	_nickname(speudo)
 {
 	DEBUG_MSG("Game created");
 	(void)_height;
@@ -92,7 +93,8 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				drawImage("bullets-8.png", Transformation(bullet.x, bullet.y));
+				Sprite* sprite = new Sprite("bullets-8.png", Transformation(bullet.x, bullet.y));
+				drawImage(sprite);
 				bullet.x += 15;
 			}
 
@@ -102,10 +104,12 @@ void	Game::updateGraphic()
 
 		Transformation t(player->getPosition().x, player->getPosition().y);
 		t.setScale(3.5, 3.5);
-		drawImage("vessel" + std::to_string(i++) + ".png", t);
+		Sprite* sprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
+		drawImage(sprite);
 		t.setPosition(t.getX(), t.getY() - 22);
 		t.setScale(1, 1);
-		drawText(player->getName(), t);
+		Text* playerName = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
+		drawText(playerName);
 
 	}
 }

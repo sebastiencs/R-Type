@@ -26,14 +26,14 @@ private:
 	ISystemAudio		&_audio;
 	ListPlayers		&_LP;
 	IMutex		*_mutex;
-	std::deque<Image> &_speudo;
-	std::deque<Image>	&_images;
+	std::deque<Text* > &_nickname;
+	std::deque<Sprite* > &_images;
 	ITimer		*_timer;
 	int			_width;
 	int			_height;
 
 public:
-	Game(int width, int height, std::deque<Image> &images, IMutex *mutex, std::deque<Image> &speudo);
+	Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo);
 	virtual ~Game();
 
 	void	run();
@@ -50,7 +50,7 @@ public:
 	template<typename... Args>
 	void drawText(Args... args) {
 		_mutex->lock();
-		_speudo.emplace_back(args...);
+		_nickname.emplace_back(args...);
 		_mutex->unlock();
 	};
 

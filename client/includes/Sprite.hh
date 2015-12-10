@@ -11,10 +11,12 @@ class GraphicEngine;
 
 class Sprite : public Drawable {
 public:
-	Sprite(const std::string& img, const Transformation& t, IGraphicEngine* engine, const Color& color = Color::None);
+	Sprite(const std::string& img, const Transformation& t, IGraphicEngine* engine = nullptr, const Color& color = Color::None);
+	Sprite(const Sprite& right);
 
 	// Drawable
 	virtual void setTransformation(const Transformation& t);
+	virtual void setEngine(IGraphicEngine* engine);
 	virtual void draw();
 
 	void setColor(const Color& newColor);
@@ -24,6 +26,7 @@ public:
 	const Color& getColor() const;
 
 	bool isPressed(uint32_t x, uint32_t y);
+	bool hasEngine() const;
 
 protected:
 	sf::Sprite sprite;
