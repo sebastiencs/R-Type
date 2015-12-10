@@ -9,6 +9,7 @@
 //
 
 #include "Enemy.hh"
+#include "Tools.hh"
 
 Enemy::Enemy()
   : _id(0),
@@ -22,8 +23,8 @@ Enemy::Enemy()
 
 Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
   : _id(id),
-    _x(std::rand() % 1024),
-    _y(std::rand() % 768),
+    _x(Tools::random(1, 1024)),
+    _y(Tools::random(1, 768)),
     _life(life),
     _type(type)
 {
