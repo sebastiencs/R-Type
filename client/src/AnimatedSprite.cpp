@@ -2,7 +2,7 @@
 #include "AnimatedSprite.hh"
 
 AnimatedSprite::AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine, const Color& color)
-	: _nameSprite(img), Sprite(img, t)
+	: Sprite(img, t), _nameSprite(img)
 {
 	_transformation = t;
 	_id = img;
