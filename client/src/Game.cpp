@@ -22,11 +22,11 @@ Game::Game(int width, int height, std::deque<Image> &images, IMutex *mutex, std:
 	_audio(SystemAudio::getInstance()),
 	_LP(ListPlayers::getInstance()),
 	_mutex(mutex),
+	_speudo(speudo),
 	_images(images),
 	_timer(new Timer()),
 	_width(width),
-	_height(height),
-	_speudo(speudo)
+	_height(height)
 {
 	DEBUG_MSG("Game created");
 	(void)_height;
