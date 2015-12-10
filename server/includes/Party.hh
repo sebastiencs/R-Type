@@ -20,14 +20,15 @@
 # include "PlayerCoord.hh"
 # include "PlayerShot.hh"
 # include "Enemy.hh"
+# include "ListSecure.hh"
 
 class	Manager;
 
 typedef std::shared_ptr<Manager>	Manager_SharedPtr;
 typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
-typedef std::list<Player_SharedPtr>	listPlayers;
-typedef std::list<Enemy_SharedPtr>	listEnemies;
+typedef ListSecure<Player_SharedPtr>	listPlayers;
+typedef ListSecure<Enemy_SharedPtr>	listEnemies;
 
 class			Party
 {

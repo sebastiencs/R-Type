@@ -63,7 +63,7 @@ void ListPlayers::clearList()
 	  });
 }
 
-const std::list<Player*>& ListPlayers::getListPlayers() const
+const ListSecure<Player*>& ListPlayers::getListPlayers() const
 {
 	return listPlayers;
 }
