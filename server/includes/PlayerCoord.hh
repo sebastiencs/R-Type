@@ -18,19 +18,19 @@ class			PlayerCoord
 {
 public:
   PlayerCoord();
-  PlayerCoord(const uint8_t x, const uint8_t y, const uint8_t id);
+  PlayerCoord(const uint16_t x, const uint16_t y, const uint8_t id);
   virtual ~PlayerCoord();
-  
-  void			setX(const uint8_t x);
-  void			setY(const uint8_t y);
+
+  void			setX(const uint16_t x);
+  void			setY(const uint16_t y);
   void			setID(const uint8_t id);
-  uint8_t		getX() const;
-  uint8_t		getY() const;
+  uint16_t		getX() const;
+  uint16_t		getY() const;
   uint8_t		getID() const;
 
 private:
-  uint8_t		_x;
-  uint8_t		_y;
+  uint16_t		_x;
+  uint16_t		_y;
   uint8_t		_id;
 };
 
