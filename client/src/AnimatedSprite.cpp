@@ -1,24 +1,29 @@
 #include <cstdlib>
 #include "AnimatedSprite.hh"
 
-AnimatedSprite::AnimatedSprite(const std::string & img, long interval, const Transformation & t, IGraphicEngine * engine, const Color & color)
-	: _color(color), _nameSprite(img), _engine(engine), Sprite(img, t)
+AnimatedSprite::AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine, const Color& color)
+	: _nameSprite(img), Sprite(img, t)
 {
 	_transformation = t;
 	_id = img;
 	_visible = true;
-
+	this->color = color;
+	this->engine = nullptr;
+	if (engine) {
+		this->engine = dynamic_cast<GraphicEngine*>(engine);
+		if (!engine)
+			throw std::runtime_error("GraphicEngine not set");
+	}
 	_states = 0;
-	_sprite = new Sprite(img, t, engine, color);
-	_width = _sprite->getTransformation().getWidth();
-	_height = _sprite->getTransformation().getHeight();
+	_width = getTransformation().getWidth();
+	_height = getTransformation().getHeight();
 	_interval = interval;
 	_timer = new Timer();
 	_timer->start();
 	_nbrStates = std::stoi(_nameSprite.substr(_nameSprite.find('-') + 1).c_str());
 }
 
-void AnimatedSprite::draw()
+	void AnimatedSprite::draw()
 {
 	if (_timer->ms() > _interval) {
 		_states %= _nbrStates;
@@ -26,5 +31,9 @@ void AnimatedSprite::draw()
 		_timer->reset();
 	}
 	_transformation.setCrop((_width / _nbrStates) * _states, 0, (_width / _nbrStates), _height);
-	_engine->drawSplitImage(_nameSprite, _transformation, _color);
+	_transformation.setBounds(_width, _height);
+	if (_visible && engine)
+		engine->drawSplitImage(_nameSprite, _transformation, color);
+	else
+		std::cout << "FOIOFPAIOPFJAFJAPOFJ";
 }
