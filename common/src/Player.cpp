@@ -149,3 +149,17 @@ Addr			&Player::addr()
 {
   return (_addr);
 }
+
+std::ostream &operator<<(std::ostream &os, const Player &p)
+{
+  auto &pos = p.getPosition();
+
+  os << "Player = { name : '" << p.getName()
+     << "', id : " << (int)p.getID()
+     << "', life : " << (int)p.getLife()
+     << ", level : " << (int)p.getLevel()
+     << ", X : " << (int)pos.x
+     << ", Y : " << (int)pos.y
+     << " };";
+  return (os);
+}
