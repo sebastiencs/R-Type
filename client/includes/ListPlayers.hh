@@ -4,6 +4,7 @@
 # include <iostream>
 # include <list>
 # include "Player.hh"
+# include "ListSecure.hh"
 
 class		ListPlayers
 {
@@ -22,13 +23,13 @@ public:
 
 	void deletePlayer(uint8_t id);
 
-	const std::list<Player *>& getListPlayers() const;
+	const ListSecure<Player *> &getListPlayers() const;
 	Player* getPlayer(uint8_t id);
 	uint8_t getId() const;
 	void setId(uint8_t id);
 
 private:
- std::list<Player *> listPlayers;
+ ListSecure<Player *> listPlayers;
  uint8_t _id;
 };
 

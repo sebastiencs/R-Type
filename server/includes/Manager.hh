@@ -20,9 +20,10 @@
 # include "Addr.hh"
 # include "PlayerCoord.hh"
 # include "PlayerShot.hh"
+# include "ListSecure.hh"
 
-typedef std::list<Party *>	PartyList;
-typedef std::list<Player_SharedPtr>	PlayerList;
+typedef std::list<Party *>		PartyList;
+typedef ListSecure<Player_SharedPtr>	PlayerList;
 
 class	INetwork;
 
