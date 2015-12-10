@@ -154,7 +154,7 @@ std::ostream &operator<<(std::ostream &os, const Player &p)
 {
   auto &pos = p.getPosition();
 
-  os << "Player = { name : '" << p.getName()
+  os << "Player = { name : '" << p.getName().c_str()
      << "', id : " << (int)p.getID()
      << "', life : " << (int)p.getLife()
      << ", level : " << (int)p.getLevel()
