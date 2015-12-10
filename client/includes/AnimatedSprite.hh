@@ -1,14 +1,13 @@
 #ifndef ANIMATED_SPRITE_HH_
 # define ANIMATED_SPRITE_HH_
 
-# include "Drawable.hpp"
 # include "Sprite.hh"
 # include "Timer.hh"
 
 class IGraphicEngine;
 class GraphicEngine;
 
-class AnimatedSprite : public Drawable {
+class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine, const Color& color = Color::None);
 
