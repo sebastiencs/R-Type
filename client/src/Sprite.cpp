@@ -40,7 +40,7 @@ void Sprite::setTransformation(const Transformation & t)
 
 void Sprite::setEngine(IGraphicEngine * engine)
 {
-	if (this->engine = dynamic_cast<GraphicEngine*>(engine)) {
+	if ((this->engine = dynamic_cast<GraphicEngine*>(engine))) {
 		sprite = sf::Sprite(this->engine->loadTexture(img));
 		transform(_transformation, color);
 		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);

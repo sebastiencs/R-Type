@@ -44,7 +44,7 @@ void Text::setTransformation(const Transformation & t)
 
 void Text::setEngine(IGraphicEngine * engine)
 {
-	if (this->engine = dynamic_cast<GraphicEngine*>(engine)) {
+	if ((this->engine = dynamic_cast<GraphicEngine*>(engine))) {
 		if (!this->engine)
 			throw std::runtime_error("GraphicEngine is not set");
 		this->text = sf::Text(this->textString, this->engine->loadFont(font));
