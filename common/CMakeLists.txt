@@ -33,6 +33,7 @@ file (GLOB
   includes/PaquetTCP.hh
   includes/Patern.hh
   includes/Enemy.hh
+  includes/ListSecure.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
   )
