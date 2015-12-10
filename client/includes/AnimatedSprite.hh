@@ -9,7 +9,7 @@ class GraphicEngine;
 
 class AnimatedSprite : public Sprite {
 public:
-	AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine, const Color& color = Color::None);
+	AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine = nullptr, const Color& color = Color::None);
 
 	// Drawable
 	virtual void draw();

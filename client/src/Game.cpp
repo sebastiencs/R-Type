@@ -14,6 +14,7 @@
 #include "SystemAudio.hh"
 #include "ListPlayers.hh"
 #include "Transformation.hh"
+#include "AnimatedSprite.hh"
 #include "Sprite.hh"
 #include "Keyboard.hh"
 
@@ -92,7 +93,7 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-8.png", Transformation(bullet.x, bullet.y));
+				AnimatedSprite* sprite = new AnimatedSprite("bullets-8.png", 30, Transformation(bullet.x, bullet.y));
 				drawImage(sprite);
 				bullet.x += 15;
 			}
