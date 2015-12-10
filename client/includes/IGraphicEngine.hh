@@ -32,7 +32,7 @@ public:
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;
 
 	virtual void drawSprite(Sprite& sprite) = 0;
-	virtual void drawText(const Text& text) = 0;
+	virtual void drawText(Text& text) = 0;
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "") = 0;
 

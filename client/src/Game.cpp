@@ -93,7 +93,7 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				AnimatedSprite* sprite = new AnimatedSprite("bullets-8.png", 30, Transformation(bullet.x, bullet.y));
+				Sprite* sprite = new Sprite("bullets-8.png", Transformation(bullet.x, bullet.y));
 				drawImage(sprite);
 				bullet.x += 15;
 			}

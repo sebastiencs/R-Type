@@ -8,6 +8,7 @@ Text::Text(const std::string & text, const std::string & font, uint16_t size, co
 	_size = size;
 	_transformation = t;
 	_visible = true;
+	this->engine = nullptr;
 	if (gengine) {
 		engine = dynamic_cast<GraphicEngine*>(gengine);
 		if (!engine)

@@ -300,7 +300,8 @@ void GraphicEngine::drawSprite(Sprite& sprite)
 {
 	if (!sprite.hasEngine())
 		sprite.setEngine(this);
-	drawImage(sprite.getImage(), sprite.getTransformation(), sprite.getColor());
+
+	sprite.draw();
 }
 
 void GraphicEngine::drawSprite(const sf::Sprite & sprite)
@@ -308,9 +309,11 @@ void GraphicEngine::drawSprite(const sf::Sprite & sprite)
 	window->draw(sprite);
 }
 
-void GraphicEngine::drawText(const Text& text)
+void GraphicEngine::drawText(Text& text)
 {
-	drawText(text.getText(), text.getTransformation(), text.getSize(), text.getColor(), text.getFont());
+	if (!text.hasEngine())
+		text.setEngine(this);
+	text.draw();
 }
 void GraphicEngine::drawText(const sf::Text & text)
 {

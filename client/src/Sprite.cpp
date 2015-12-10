@@ -7,6 +7,7 @@ Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine
 	_visible = true;
 
 	this->img = img;
+	this->engine = nullptr;
 	if (engine) {
 		this->engine = dynamic_cast<GraphicEngine*>(engine);
 		if (!engine)

@@ -41,7 +41,7 @@ public:
 	virtual void drawSprite(Sprite& sprite);
 	void drawSprite(const sf::Sprite& sprite);
 
-	virtual void drawText(const Text& text);
+	virtual void drawText(Text& text);
 	void drawText(const sf::Text& text);
 	virtual void drawText(const std::string& text, const Transformation& transformation,
 		uint16_t size, const Color& color = Color::White, const std::string& font = "");
