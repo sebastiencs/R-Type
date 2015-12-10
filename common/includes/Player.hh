@@ -62,6 +62,8 @@ public:
   virtual Addr			&addr();
 };
 
+std::ostream &operator<<(std::ostream &os, const Player &p);
+
 #include <memory>
 typedef std::shared_ptr<Player>	Player_SharedPtr;
 typedef std::unique_ptr<Player>	Player_UniquePtr;
