@@ -20,6 +20,7 @@
 # include "PlayerCoord.hh"
 # include "PlayerShot.hh"
 # include "Enemy.hh"
+# include "Wave.hh"
 # include "ListSecure.hh"
 
 class	Manager;
@@ -30,6 +31,8 @@ typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 typedef ListSecure<Player_SharedPtr>	listPlayers;
 typedef ListSecure<Enemy_SharedPtr>	listEnemies;
 
+typedef std::unique_ptr<Wave>		Wave_UniquePtr;
+
 class			Party
 {
   ISemaphore_UniquePtr	_sem;
@@ -39,6 +42,7 @@ class			Party
   listPlayers		_players;
   listEnemies		_enemies;
   bool			_running;
+  Wave_UniquePtr	_wave;
 
 public:
   Party(const Manager_SharedPtr &&);

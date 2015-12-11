@@ -23,9 +23,6 @@ class		Wave
 public:
   Wave();
   virtual ~Wave();
-
-private:
-  std::map<Timer*, Enemy*>	_enemies
 };
 
 #endif /* !WAVE_HH_ */
