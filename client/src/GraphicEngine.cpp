@@ -43,6 +43,7 @@ GraphicEngine::~GraphicEngine()
 	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
 		if (it->second)
 			delete it->second;
+	cachedImages.clear();
 	if (_timer)
 		delete _timer;
 	if (_shotCooldown)
@@ -64,7 +65,6 @@ void GraphicEngine::handleEvents()
 	// Player *player = LP.getPlayer(LP.getId());
 	while (window->pollEvent(event))
 	{
-		// TODO: Trouver quoi faire des positions du joueur
 		if (event.type == sf::Event::Closed)
 			window->close();
 		else if (event.type == sf::Event::TextEntered) {
@@ -90,28 +90,29 @@ void GraphicEngine::handleMovements()
 
 	Position pos = player->getPosition();
 
+	uint16_t playerVelocity = (uint16_t)(300 * getDeltaTimeS());
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 5) {
 			// Si S est appuyer en meme temps le mec bouge pas.
-			pos.y -= 4;
+			pos.y -= playerVelocity;
 			changed = true;
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 5) {
-			pos.x -= 4;
+			pos.x -= playerVelocity;
 			changed = true;
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
-			pos.y += 4;
+			pos.y += playerVelocity;
 			changed = true;
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
-			pos.x += 4;
+			pos.x += playerVelocity;
 			changed = true;
 		}
 	}
@@ -121,6 +122,7 @@ void GraphicEngine::handleMovements()
 		bullet = true;
 	}
 	if (changed) {
+		DEBUG_MSG("Player Mov: " << playerVelocity);
 		player->setPosition(pos);
 		_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
 	}
@@ -135,6 +137,8 @@ void GraphicEngine::launch()
 {
 	if (!window)
 		throw std::runtime_error("No window created, use createWindow function before using launch");
+	sf::Clock clock;
+
 	while (window->isOpen())
 	{
 		if (_timer->msWait(MS_REFRESH))
@@ -143,12 +147,15 @@ void GraphicEngine::launch()
 			if (window->hasFocus()) {
 			  handleMovements();
 			}
-			window->clear(sf::Color::Black);
 
+			window->clear(sf::Color::Black);
 			if (call)
 				call();
 			window->display();
+
+			elapsedTime = clock.restart();
 			_timer->reset();
+						
 		}
 	}
 }
@@ -298,7 +305,6 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 
 void GraphicEngine::drawSplitImage(Sprite& sprite)
 {
-	sprite.setEngine(this);
 	//	transformSprite(sprite, t, color);
 	if (!sprite.hasEngine())
 		sprite.setEngine(this);
@@ -351,6 +357,17 @@ void GraphicEngine::closeWindow()
 	if (window->isOpen()) {
 		window->close();
 	}
+}
+
+int32_t GraphicEngine::getDeltaTimeMS() const
+{
+	DEBUG_MSG("getDeltaTime: " << elapsedTime.asMilliseconds() / 20);
+	return elapsedTime.asMilliseconds() / 20;
+}
+
+float GraphicEngine::getDeltaTimeS() const
+{
+	return elapsedTime.asSeconds();
 }
 
 const sf::Texture* GraphicEngine::None = new sf::Texture();

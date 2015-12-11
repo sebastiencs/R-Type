@@ -15,6 +15,7 @@
 # include <SFML/Graphics/Text.hpp>
 # include <SFML/Graphics/Texture.hpp>
 # include <SFML/Graphics/Sprite.hpp>
+# include <SFML/System/Time.hpp>
 # include "IGraphicEngine.hh"
 
 # define SHOT_COOLDOWN 300
@@ -66,6 +67,9 @@ public:
 
 	virtual void closeWindow();
 
+	virtual int32_t getDeltaTimeMS() const;
+	virtual float getDeltaTimeS() const;
+
 	static const sf::Texture* None;
 	static const sf::Font* NoneFont;
 
@@ -76,6 +80,7 @@ protected:
 	Packager* _packager;
 	ITimer* _timer;
 	ITimer* _shotCooldown;
+	sf::Time elapsedTime;
 	callback call;
 	textEnteredCallback _textEnteredcallback;
 	mouseCallback _mouseClickCall;

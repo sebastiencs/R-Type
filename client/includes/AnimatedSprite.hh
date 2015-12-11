@@ -10,7 +10,7 @@ class GraphicEngine;
 class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite(const std::string& img, long, const Transformation& t, IGraphicEngine* engine = nullptr, const Color& color = Color::None);
-
+	~AnimatedSprite();
 	// Drawable
 	virtual void setEngine(IGraphicEngine * engine);
 	virtual void draw();
@@ -23,7 +23,7 @@ protected:
 	uint16_t _height;
 	size_t _nbrStates;
 	uint8_t _states;
-	long _interval;
+	long _animationLength;
 	std::string _nameSprite;
 };
 #endif /* !ANIMATED_SPRITE_HH_ */

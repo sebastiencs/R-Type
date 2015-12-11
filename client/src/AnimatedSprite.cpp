@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "AnimatedSprite.hh"
 
-AnimatedSprite::AnimatedSprite(const std::string& img, long interval, const Transformation& t, IGraphicEngine* engine, const Color& color)
+AnimatedSprite::AnimatedSprite(const std::string& img, long fullAnimationTime, const Transformation& t, IGraphicEngine* engine, const Color& color)
 	: Sprite(img, t), _nameSprite(img)
 {
 	_transformation = t;
@@ -15,17 +15,23 @@ AnimatedSprite::AnimatedSprite(const std::string& img, long interval, const Tran
 			throw std::runtime_error("GraphicEngine not set");
 	}
 	_states = 0;
-	_interval = interval;
+	_animationLength = fullAnimationTime;
 	_timer = new Timer();
 	_timer->start();
-	_nbrStates = std::stoi(_nameSprite.substr(_nameSprite.find('-') + 1).c_str());
+	_nbrStates = std::stoi(_nameSprite.substr(_nameSprite.find('-') + 1));
+}
+
+AnimatedSprite::~AnimatedSprite()
+{
+	if (_timer)
+		delete _timer;
 }
 
 void AnimatedSprite::draw()
 {
 	_width = sprite.getTextureRect().width;// getTransformation().getWidth();
 	_height = sprite.getTextureRect().height;//getTransformation().getHeight();
-	if (_timer->ms() > _interval) {
+	if (_timer->ms() > _animationLength) {
 		_states %= _nbrStates;
 		++_states;
 		_timer->reset();
