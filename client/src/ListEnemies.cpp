@@ -17,6 +17,18 @@ void ListEnemies::addEnemy(Enemy* enemy)
   _enemies.push_back(enemy);
 }
 
+void		ListEnemies::handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y)
+{
+  Enemy		*e;
+
+  if ((e = getEnemy(id)) == nullptr) {
+    e = new Enemy(id, life, type);
+    addEnemy(e);
+  }
+  e->setPosX(x);
+  e->setPosY(y);
+}
+
 void ListEnemies::deleteEnemy(uint8_t id)
 {
   _enemies.remove_if([this, id] (auto &e) {
