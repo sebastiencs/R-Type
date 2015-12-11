@@ -9,9 +9,8 @@ Mutex::Mutex()
 Mutex::~Mutex()// TODO: plante chez moi sur un ALT-f4 ("unlock of unowned mutex"). Clement
 {
   DEBUG_MSG("Mutex deleted");
-  if (!tryLock()) {
-    _mutex.unlock();
-  }
+  tryLock();
+  _mutex.unlock();
 }
 
 void	Mutex::lock()
