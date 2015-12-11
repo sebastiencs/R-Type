@@ -76,6 +76,7 @@ void	Game::handlingNetwork()
 
 	if (enemy != nullptr) {
 		DEBUG_MSG("ENEMY !");
+		_LE.handleEnnemy(enemy->getID(), enemy->getLife(), enemy->getLife(), enemy->getX(), enemy->getY());
 		_PS.deleteEnemyPackage();
 	}
 
@@ -110,6 +111,12 @@ void	Game::updateGraphic()
 		t.setScale(1, 1);
 		Text* text = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);
+	}
+	for (auto &&enemy : _LE.getListEnemies()) {
+		Transformation t(enemy->getPosX(), enemy->getPosY());
+		t.setScale(3.5, 3.5);
+		Sprite* vesselSprite = new Sprite("vessel0.png", t);
+		drawImage(vesselSprite);
 	}
 }
 

@@ -13,6 +13,7 @@
 
 # include <deque>
 # include "DisplayUpdater.hh"
+# include "ListEnemies.hh"
 
 class PackageStorage;
 class ISystemAudio;
@@ -23,8 +24,9 @@ class		Game
 private:
 
 	PackageStorage	&_PS;
-	ISystemAudio		&_audio;
-	ListPlayers		&_LP;
+	ISystemAudio	&_audio;
+	ListPlayers	&_LP;
+	ListEnemies	_LE;
 	IMutex		*_mutex;
 	std::deque<Text* > &_nickname;
 	std::deque<Sprite* > &_images;
