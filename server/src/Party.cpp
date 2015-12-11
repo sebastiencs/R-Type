@@ -101,7 +101,7 @@ bool			Party::addPlayer(Player_SharedPtr player)
 
 void			Party::deletePlayer(const Addr &addr)
 {
-  auto p = Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); });
+  auto &&p = _players.findIn([&addr] (auto &p) { return (p->addr() == addr); });
 
   if (p != nullptr) {
     _players.remove(p);
@@ -116,7 +116,7 @@ void			Party::deletePlayer(const Addr &addr)
 
 Player_SharedPtr	Party::playerLeave(uint8_t id)
 {
-  auto p = Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); });
+  auto &&p = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
   if (p != nullptr) {
     Player_SharedPtr player = p;
@@ -129,28 +129,27 @@ Player_SharedPtr	Party::playerLeave(uint8_t id)
 
 bool			Party::isPlayer(const Addr &addr) const
 {
-  return (Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); }) != nullptr);
+  return (_players.findIn([&addr] (auto &p) { return (p->addr() == addr); }) != nullptr);
 }
 
 uint8_t			Party::getIdFromAddr(const Addr &addr) const
 {
-  auto &&player = Tools::findIn(_players, [&addr] (auto &p) { return (p->addr() == addr); });
+  auto &&player = _players.findIn([&addr] (auto &p) { return (p->addr() == addr); });
 
   return ((player) ? (player->getID()) : (0xFF));
 }
 
 bool			Party::isPlayer(uint8_t id) const
 {
-  return (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) != nullptr);
+  return (_players.findIn([id] (auto &p) { return (p->getID() == id); }) != nullptr);
 }
 
 void			Party::setCoordPlayer(PlayerCoord *pc)
 {
   uint8_t id = pc->getID();
-  auto &&player = Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); });
+  auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
   if (player) {
-    std::cout << "New Position: " << (int)pc->getX() << ", " << (int)pc->getY() << std::endl;
     player->setPosition(Position(pc->getX(), pc->getY()));
   }
   delete pc;
@@ -158,7 +157,7 @@ void			Party::setCoordPlayer(PlayerCoord *pc)
 
 void			Party::setReady(uint8_t id, uint8_t status)
 {
-  auto &&player = Tools::findIn(_players, [&id](auto &p) { return (p->getID() == id); });
+  auto &&player = _players.findIn([&id](auto &p) { return (p->getID() == id); });
   if (player) {
     player->setReady((status) ? (true) : (false));
   }
@@ -195,8 +194,8 @@ uint8_t			Party::getUniqueID() const
   uint8_t		id;
 
   for (id = 0; id < 255; id += 1) {
-    if (Tools::findIn(_players, [id] (auto &p) { return (p->getID() == id); }) == nullptr
-	&& Tools::findIn(_enemies, [id] (auto &e) { return (e->getID() == id); }) == nullptr) {
+    if (_players.findIn([id] (auto &p) { return (p->getID() == id); }) == nullptr
+	&& _enemies.findIn([id] (auto &e) { return (e->getID() == id); }) == nullptr) {
       return (id);
     }
   }
