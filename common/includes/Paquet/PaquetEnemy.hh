@@ -13,6 +13,8 @@
 
 # include "Paquet.hh"
 
+class Enemy;
+
 class		PaquetEnemy : public Paquet
 {
 private:
@@ -29,6 +31,8 @@ public:
   template <typename T>
   PaquetEnemy(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetEnemy();
+
+  PaquetEnemy &operator=(Enemy *);
 
   void	setType(const uint8_t);
   void	setID(const uint8_t);

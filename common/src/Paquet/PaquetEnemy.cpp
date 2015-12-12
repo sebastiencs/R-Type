@@ -1,4 +1,5 @@
 #include "PaquetEnemy.hh"
+#include "Enemy.hh"
 
 PaquetEnemy::PaquetEnemy()
   : _id(Paquet::ENEMY)
@@ -15,6 +16,19 @@ PaquetEnemy::PaquetEnemy(const Buffer &buf)
 
 PaquetEnemy::~PaquetEnemy()
 {
+}
+
+PaquetEnemy &PaquetEnemy::operator=(Enemy *e)
+{
+  if (e) {
+    _type = e->getType();
+    _eID = e->getID();
+    _x = e->getPosX();
+    _y = e->getPosY();
+    _life = e->getLife();
+    createPaquet();
+  }
+  return (*this);
 }
 
 void	PaquetEnemy::setType(const uint8_t type)
