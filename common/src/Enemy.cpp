@@ -31,17 +31,27 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
   DEBUG_MSG("Enemy created");
 }
 
+Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_t x, const uint16_t y)
+  : _id(id),
+    _x(x),
+    _y(y),
+    _life(life),
+    _type(type)
+{
+  DEBUG_MSG("Enemy created");
+}
+
 Enemy::~Enemy()
 {
   DEBUG_MSG("Enemy deleted");
 }
 
-void	Enemy::setPosX(const uint8_t x)
+void	Enemy::setPosX(const uint16_t x)
 {
   _x = x;
 }
 
-void	Enemy::setPosY(const uint8_t y)
+void	Enemy::setPosY(const uint16_t y)
 {
   _y = y;
 }
@@ -61,12 +71,12 @@ void	Enemy::setType(const uint8_t type)
   _type = type;
 }
 
-uint8_t	Enemy::getPosX() const
+uint16_t Enemy::getPosX() const
 {
   return _x;
 }
 
-uint8_t Enemy::getPosY() const
+uint16_t Enemy::getPosY() const
 {
   return _y;
 }
