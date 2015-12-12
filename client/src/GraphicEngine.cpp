@@ -6,6 +6,8 @@
 #include "Text.hh"
 #include "SystemAudio.hh"
 
+sf::Time GraphicEngine::elapsedTime;
+
 GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 {
 	callbackArg = nullptr;
@@ -113,7 +115,7 @@ void GraphicEngine::launch()
 				call();
 			window->display();
 
-			elapsedTime = clock.restart();
+			GraphicEngine::elapsedTime = clock.restart();
 			_timer->reset();
 						
 		}
@@ -324,15 +326,15 @@ void GraphicEngine::closeWindow()
 	}
 }
 
-int32_t GraphicEngine::getDeltaTimeMS() const
+int32_t GraphicEngine::getDeltaTimeMS()
 {
-	DEBUG_MSG("getDeltaTime: " << elapsedTime.asMilliseconds() / 20);
-	return elapsedTime.asMilliseconds() / 20;
+	DEBUG_MSG("getDeltaTime: " << GraphicEngine::elapsedTime.asMilliseconds() / 20);
+	return GraphicEngine::elapsedTime.asMilliseconds() / 20;
 }
 
-float GraphicEngine::getDeltaTimeS() const
+float GraphicEngine::getDeltaTimeS()
 {
-	return elapsedTime.asSeconds();
+	return GraphicEngine::elapsedTime.asSeconds();
 }
 
 const sf::Texture* GraphicEngine::None = new sf::Texture();
