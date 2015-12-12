@@ -24,9 +24,9 @@ private:
 
 public:
 
-  ListSecure<T>	&operator=(ListSecure<T>) = delete;
-  ListSecure<T>	&operator=(ListSecure<T> &) = delete;
-  ListSecure<T>	&operator=(ListSecure<T> &&) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T>) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T> &) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T> &&) = delete;
 
   template<typename... Args>
   void	push_back(Args&&... args) {
