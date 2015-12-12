@@ -33,19 +33,22 @@ void		Wave::getSpawn()
   {
   case 2: // 2 enemies
     while(++i < 2) {
-      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1, 700, 400 + i * 200));
+      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 0, 700, 400 + i * 200));
     }
     break;
   case 4: // 4 enemies
     while(++i < 4) {
-      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1, 700, 300 + i * 100));
+      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 0, 700, 300 + i * 100));
     }
     break;
-  case 5: // 1 boss
+  case 5: // 1 mini boss
+    _party.addEnemy(new Enemy(_party.getUniqueID(), 200, 1, 700, 400));
+    break;
+  case 8: // 1 boss
     _party.addEnemy(new Enemy(_party.getUniqueID(), 250, 2, 700, 400));
     break;
   default: // 1 enemy par defaut
-    _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1, 700, 400));
+    _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 0, 700, 400));
     break;
   }
   i = 0;

@@ -29,10 +29,9 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	_width(width),
 	_height(height)
 {
-	obstacleTypeToSpriteString[0] = "enemy0.png";
-	obstacleTypeToSpriteString[1] = "enemy1.png";
-	obstacleTypeToSpriteString[2] = "enemy2.png";
-	obstacleTypeToSpriteString[100] = "enemy2.png";
+	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
+	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
+	obstacleTypeToSpriteString[2] = "enemy2.png"; // boss
 
 	DEBUG_MSG("Game created");
 	(void)_height;
@@ -82,7 +81,7 @@ void	Game::handlingNetwork()
 
 	if (enemy != nullptr) {
 		DEBUG_MSG("ENEMY !");
-		_LE.handleEnnemy(enemy->getID(), enemy->getLife(), enemy->getLife(), enemy->getX(), enemy->getY());
+		_LE.handleEnnemy(enemy->getID(), enemy->getLife(), enemy->getType(), enemy->getX(), enemy->getY());
 		_PS.deleteEnemyPackage();
 	}
 
