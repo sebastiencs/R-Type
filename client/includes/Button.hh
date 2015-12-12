@@ -37,9 +37,10 @@ private:
 	callback _fptr;
 	Sprite* _sprite;
 
-	bool _enabled;
 	std::string _text;
 	std::string _textureName;
+  	bool _enabled;
+
 };
 
 #endif /* !BUTTON_H_ */
