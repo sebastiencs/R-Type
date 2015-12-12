@@ -20,6 +20,8 @@ class ISystemAudio;
 class ListPlayers;
 
 # define SHOT_COOLDOWN 200
+# define VESSEL_WIDTH 112
+# define VESSEL_HEIGHT 49
 
 class		Game
 {

@@ -184,8 +184,20 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (changed) {
-		player->setPosition(pos);
-		_packager->createMovementPackage(_LP.getId(), pos.x, pos.y);
+		for (Player* player : _LP.getListPlayers()) {
+			if (player->getID() != _LP.getId()) {
+				Position playerPos = player->getPosition();
+				if (pos.x < playerPos.x + VESSEL_WIDTH && pos.x + VESSEL_WIDTH > playerPos.x &&
+					pos.y < playerPos.y + VESSEL_HEIGHT && pos.y + VESSEL_HEIGHT > playerPos.y) {
+					changed = false;
+					break;
+				}
+			}
+		}
+		if (changed) {
+			player->setPosition(pos);
+			_packager->createMovementPackage(_LP.getId(), pos.x, pos.y);
+		}
 	}
 	if (bullet) {
 		player->setPosition(pos);
