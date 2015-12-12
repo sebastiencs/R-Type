@@ -46,24 +46,24 @@ Party::~Party()
 
 void			Party::run()
 {
-  // PaquetEnemy	paquet;
+  PaquetEnemy	paquet;
 
-  // paquet.setID(enemy->getID());
-  // paquet.setType(enemy->getType());
-  // paquet.setLife(enemy->getLife());
-  // paquet.setPosition(enemy->getPosX(), enemy->getPosY());
-  // paquet.createPaquet();
-  // addEnemy(enemy);
-
-
-  // refaire la boucle sur la list et call le getSpawn
-
+  //call to les X temps
+  _wave->getSpawn();
+  
+  for (auto &enemy : _enemies) {
+      paquet.setID(enemy->getID());
+      paquet.setType(enemy->getType());
+      paquet.setLife(enemy->getLife());
+      paquet.setPosition(enemy->getPosX(), enemy->getPosY());
+      paquet.createPaquet();
+  }
   for (;;) {
 
-    // for (auto &p : _players) {
-    //   std::cout << *p << std::endl;
-    //   _manager.lock()->write(paquet, p->addr());
-    // }
+    for (auto &p : _players) {
+      std::cout << *p << std::endl;
+      _manager.lock()->write(paquet, p->addr());
+    }
 
     if (!_manager.expired()) {
 //      (_manager.lock())->write(PAQUET, ADDR)

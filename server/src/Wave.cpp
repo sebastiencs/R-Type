@@ -22,7 +22,7 @@ Wave::~Wave()
   DEBUG_MSG("Wave deleted");
 }
 
-void	Wave::getSpawn()
+void		Wave::getSpawn()
 {
   static	int nb_waves = 0;
   int	        i = 0;
