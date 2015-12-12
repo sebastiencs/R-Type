@@ -49,9 +49,6 @@ void DisplayUpdater::mainMenu()
 	if (!inGame) {
 		if (mainmenu->getCurrentPage() == 1)
 			onlineMenu->menu();
-
-		if (!net->getIsConnect())
-			graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
 	}
 }
 
@@ -84,8 +81,6 @@ void DisplayUpdater::launchObserver()
 		launchLoop->stop();
 	}
 }
-
-#include "AnimatedSprite.hh"
 
 void DisplayUpdater::game()
 {

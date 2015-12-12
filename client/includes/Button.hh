@@ -27,7 +27,9 @@ public:
 	const std::string& getName() const;
 	const std::string& getTextureName() const;
 	const Color& getColor() const;
+
 	virtual void setTransformation(const Transformation& t);
+	void setEnabled(bool enabled);
 
 private:
 	IGraphicEngine* _engine;
@@ -35,6 +37,7 @@ private:
 	callback _fptr;
 	Sprite* _sprite;
 
+	bool _enabled;
 	std::string _text;
 	std::string _textureName;
 };

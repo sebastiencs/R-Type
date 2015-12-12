@@ -13,6 +13,7 @@ class IGraphicEngine;
 class NetworkClient;
 class Box;
 class Drawable;
+class Button;
 
 class MainMenu
 {
@@ -39,6 +40,7 @@ private:
 	NetworkClient *net;
 	OnlineMenu *onlineMenu;
 	Credits *creditsMenu;
+	Button* onlineButton;
 
 	Box* mainChoiceBox;
 	TextField *rTypeLabel;

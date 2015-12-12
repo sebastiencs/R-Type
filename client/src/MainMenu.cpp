@@ -19,7 +19,8 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 
 	mainChoiceBox = new Box(Orientation::vertical, transformation, "mainBox");
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	mainChoiceBox->addDrawable(new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine));
+	onlineButton = new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
+	mainChoiceBox->addDrawable(onlineButton);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
 	mainChoiceBox->addDrawable(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
@@ -68,6 +69,9 @@ void MainMenu::draw()
 	engine->drawImage("menubackground8bit.png", Transformation(0, 0));
 	if (!net->getIsConnect())
 		engine->drawText("You are not connected", Transformation(750, 50), 12, Color::Red, "Fipps.otf");
+
+	if (onlineButton)
+		onlineButton->setEnabled(net->getIsConnect());
 
 	for (Drawable* b : elements)
 		if (b->getId() == "Reconnect") {

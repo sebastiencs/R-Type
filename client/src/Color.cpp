@@ -16,6 +16,7 @@ bool Color::isUsed() const
 }
 
 const Color Color::Darker = Color(200, 200, 200, 255);
+const Color Color::Darkest = Color(100, 100, 100, 255);
 const Color Color::Black = Color(0, 0, 0, 255);
 const Color Color::White = Color(255, 255, 255, 255);
 const Color Color::Red = Color(255, 0, 0, 255);

@@ -20,6 +20,7 @@ public:
 	bool isUsed() const;
 
 	static const Color Darker;
+	static const Color Darkest;
 	static const Color Black;
 	static const Color White;
 	static const Color Red;

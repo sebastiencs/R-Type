@@ -2,7 +2,7 @@
 #include "Debug.hh"
 
 Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
-  : _engine(engine), _color(color), _fptr(fptr), _text(text), _textureName(img)
+	: _engine(engine), _color(color), _fptr(fptr), _text(text), _textureName(img), _enabled(true)
 {
 	_transformation = t;
 	_id = id;
@@ -23,8 +23,8 @@ bool Button::isPressed(uint32_t x, uint32_t y) const
 	uint32_t my = _transformation.getY();
 	uint32_t mwidth = _transformation.getWidth();
 	uint32_t mheight = _transformation.getHeight();
-	return (x >= mx && x <= (mx + mwidth) &&
-		y >= my && y <= (my + mheight) && _visible);
+	return ((x >= mx && x <= (mx + mwidth) &&
+		y >= my && y <= (my + mheight) && _visible && _enabled));
 }
 
 const std::string& Button::getName() const
@@ -55,6 +55,11 @@ void Button::setTransformation(const Transformation & t)
 
 }
 
+void Button::setEnabled(bool enabled)
+{
+	_enabled = enabled;
+}
+
 void Button::draw()
 {
 	if (_engine) {
@@ -73,7 +78,7 @@ const Sprite& Button::getSprite() const
 
 bool Button::onAction(uint32_t x, uint32_t y)
 {
-	if (_fptr != nullptr && isPressed(x, y))
+	if (_fptr && isPressed(x, y))
 	{
 		_fptr();
 		return true;
@@ -85,6 +90,9 @@ void Button::onHover(uint32_t x, uint32_t y)
 {
 	if (isPressed(x, y)) {
 		_sprite->setColor(Color::Darker);
+	}
+	else if (!_enabled) {
+		_sprite->setColor(Color::Darkest);
 	}
 	else
 		_sprite->setColor(Color::White);
