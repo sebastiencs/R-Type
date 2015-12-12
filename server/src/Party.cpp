@@ -19,7 +19,8 @@ Party::Party(const Manager_SharedPtr &&manager)
     _manager(std::move(manager)),
     _name("Unknwon"),
     _running(false),
-    _wave(nullptr)
+    _wave(std::make_unique<Wave>(*this)),
+    _timerWave(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -31,7 +32,8 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
     _manager(std::move(manager)),
     _name(name),
     _running(false),
-    _wave(new Wave(*this))
+    _wave(std::make_unique<Wave>(*this)),
+    _timerWave(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -49,22 +51,30 @@ void			Party::run()
   PaquetEnemy	paquet;
 
   //call to les X temps
-  _wave->getSpawn();
-  
+
+  _timerWave->start();
+
   for (;;) {
 
     // refaire la boucle
-    for (auto &enemy : _enemies) {
-      paquet = enemy;
-    }
-    for (auto &p : _players) {
-      std::cout << *p << std::endl;
-      _manager.lock()->write(paquet, p->addr());
+
+    if (_enemies.empty() || _timerWave->ms() >= 100000) {
+      _wave->getSpawn();
+      for (auto &enemy : _enemies) {
+	paquet = enemy;
+	for (auto &p : _players) {
+	  if (!_manager.expired()) {
+	    _manager.lock()->write(paquet, p->addr());
+	  }
+	}
+      }
+      _timerWave->reset();
     }
 
-    if (!_manager.expired()) {
-//      (_manager.lock())->write(PAQUET, ADDR)
-    }
+    // for (auto &p : _players) {
+    //   std::cout << *p << std::endl;
+    //   _manager.lock()->write(paquet, p->addr());
+    // }
 
     IOEvent::wait(6000);
   }

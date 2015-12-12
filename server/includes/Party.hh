@@ -22,6 +22,7 @@
 # include "Enemy.hh"
 # include "Wave.hh"
 # include "ListSecure.hh"
+# include "Timer.hh"
 
 class	Manager;
 
@@ -43,6 +44,7 @@ class			Party
   listEnemies		_enemies;
   bool			_running;
   Wave_UniquePtr	_wave;
+  ITimer_UniquePtr	_timerWave;
 
 public:
   Party(const Manager_SharedPtr &&);

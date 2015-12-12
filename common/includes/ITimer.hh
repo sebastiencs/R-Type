@@ -12,6 +12,7 @@
 # define ITIMER_H_
 
 # include <iostream>
+# include <memory>
 
 # undef min
 
@@ -31,5 +32,8 @@ public:
   virtual void	reset() = 0;
 };
 
+typedef std::shared_ptr<ITimer>	ITimer_SharedPtr;
+typedef std::unique_ptr<ITimer>	ITimer_UniquePtr;
+typedef std::weak_ptr<ITimer>	ITimer_WeakPtr;
 
 #endif /* !ITIMER_H_ */
