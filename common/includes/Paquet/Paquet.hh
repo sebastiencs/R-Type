@@ -58,6 +58,7 @@ public:
     LEAVE		= 0x0C,
     FIRST_UDP		= 0x0D,
     ENEMY		= 0x0E,
+    BONUS_MALUS		= 0x0F,
     RESPONSE		= 0xFF
   };
 
