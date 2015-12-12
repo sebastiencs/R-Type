@@ -18,8 +18,6 @@
 # include <SFML/System/Time.hpp>
 # include "IGraphicEngine.hh"
 
-# define SHOT_COOLDOWN 300
-
 class Button;
 class Drawable;
 class Text;
@@ -80,7 +78,6 @@ protected:
 
 	Packager* _packager;
 	ITimer* _timer;
-	ITimer* _shotCooldown;
 	static sf::Time elapsedTime;
 	callback call;
 	textEnteredCallback _textEnteredcallback;

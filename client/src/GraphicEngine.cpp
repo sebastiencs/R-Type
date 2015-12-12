@@ -17,8 +17,6 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	_usableKeyPressedCallback = nullptr;
 	_timer = new Timer();
 	_timer->start();
-	_shotCooldown = new Timer();
-	_shotCooldown->start();
 
 	playerIDToSpriteString[0] = "r-typesheet42.gif";
 	playerIDToSpriteString[1] = "r-typesheet42.gif";
@@ -43,8 +41,6 @@ GraphicEngine::~GraphicEngine()
 	cachedImages.clear();
 	if (_timer)
 		delete _timer;
-	if (_shotCooldown)
-		delete _shotCooldown;
 }
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)

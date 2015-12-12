@@ -19,6 +19,8 @@ class PackageStorage;
 class ISystemAudio;
 class ListPlayers;
 
+# define SHOT_COOLDOWN 200
+
 class		Game
 {
 private:
@@ -34,6 +36,7 @@ private:
 	int			_width;
 	int			_height;
 	Packager* _packager;
+	ITimer* _shotCooldown;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:

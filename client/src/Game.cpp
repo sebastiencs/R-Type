@@ -28,7 +28,8 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	_timer(new Timer()),
 	_width(width),
 	_height(height),
-	_packager(packager)
+	_packager(packager),
+	_shotCooldown(new Timer())
 {
 	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
@@ -38,11 +39,14 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	(void)_height;
 	_audio.stopMusic();
 	_timer->start();
+	_shotCooldown->start();
 }
 
 Game::~Game()
 {
 	delete _timer;
+	if (_shotCooldown)
+		delete _shotCooldown;
 	DEBUG_MSG("Game deleted");
 }
 
@@ -107,7 +111,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : player->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet.x, bullet.y));
 				drawImage(sprite);
-				bullet.x += 600 * GraphicEngine::getDeltaTimeS();
+				bullet.x += (uint16_t)(600 * GraphicEngine::getDeltaTimeS());
 			}
 
 			auto &bulletList = player->getBullets();
@@ -141,7 +145,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		return;
 
 	Position pos = player->getPosition();
-	uint16_t playerVelocity = (uint16_t)(100 /** getDeltaTimeS()*/);
+	uint16_t playerVelocity = (uint16_t)(300 * GraphicEngine::getDeltaTimeS());
 	for (UsableKeys k : keysPressed) {
 		switch (k) {
 		case UsableKeys::Z:
@@ -161,10 +165,11 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 			changed = true;
 			break;
 		case UsableKeys::SPACE:
-			// if (_shotCoolDown->ms() > SHOT_COOLDOWN)
-			SystemAudio::getInstance().playSound(ISystemAudio::SIMPLE_SHOT);
-			// _shotCoolDown->reset();
-			bullet = true;
+			if (_shotCooldown->ms() > SHOT_COOLDOWN) {
+				SystemAudio::getInstance().playSound(ISystemAudio::SIMPLE_SHOT);
+				_shotCooldown->reset();
+				bullet = true;
+			}
 			break;
 		default:
 			break;
