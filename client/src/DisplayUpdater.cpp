@@ -2,7 +2,7 @@
 #include "SystemAudio.hh"
 #include "Game.hh"
 
-DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
+DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false)
 {
 	threadGame = nullptr;
 	mutex = nullptr;
@@ -20,16 +20,18 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net)
 
 DisplayUpdater::~DisplayUpdater()
 {
-	delete threadGame;
-	delete mutex;
+	if (threadGame)
+		delete threadGame;
+	if (mutex)
+		delete mutex;
 	mutex = nullptr;
-	delete _game;
+	if (_game)
+		delete _game;
 	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
-	delete mainmenu;
-	for (Button* b : buttons)
-		delete b;
-	buttons.clear();
-	delete launchLoop;
+	if (mainmenu)
+		delete mainmenu;
+	if (launchLoop)
+		delete launchLoop;
 }
 
 const Packager * DisplayUpdater::getPackager()
@@ -44,14 +46,13 @@ IGraphicEngine * DisplayUpdater::getGraphicEngine()
 
 void DisplayUpdater::mainMenu()
 {
-	for (Button* b : buttons)
-		b->draw();
+	if (!inGame) {
+		if (mainmenu->getCurrentPage() == 1)
+			onlineMenu->menu();
 
-	if (mainmenu->getCurrentPage() == 1)
-		onlineMenu->menu();
-
-	if (!net->getIsConnect())
-		graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
+		if (!net->getIsConnect())
+			graphicEngine->drawText("You are not connected", Transformation(800, 50), 12, Color::Red, "Fipps.otf");
+	}
 }
 
 void DisplayUpdater::launchObserver()
@@ -67,6 +68,9 @@ void DisplayUpdater::launchObserver()
 		int height = getGraphicEngine()->getWindowHeight();
 		_game = new class Game(width, height, images, mutex, _nickname);
 
+		inGame = true;
+		graphicEngine->setMouseClickCallback(nullptr);	// In game, don't bother to call MainMenu::OnClick
+		graphicEngine->setMouseMovedCallback(nullptr);
 		threadGame = new Thread([this](void *) -> void * {
 			for (;;) {
 				_game->run();

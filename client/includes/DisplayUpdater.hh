@@ -40,9 +40,9 @@ private:
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
 	TaskScheduler *launchLoop;
+	bool inGame;
 
 	IThread *threadGame;
-	std::list<Button* > buttons;
 	std::deque<Text* > _nickname;
 	std::deque<Sprite* > images;
 	IMutex *mutex;

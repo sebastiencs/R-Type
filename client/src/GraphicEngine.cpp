@@ -65,9 +65,9 @@ void GraphicEngine::handleEvents()
 			if (event.text.unicode < 128 && _textEnteredcallback)
 				_textEnteredcallback(static_cast<char>(event.text.unicode));
 		}
-		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+		if (_mouseClickCall && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			_mouseClickCall(event.mouseButton.x, event.mouseButton.y);
-		else if (event.type == sf::Event::MouseMoved)
+		else if (_mouseMoveCall && event.type == sf::Event::MouseMoved)
 			_mouseMoveCall(event.mouseMove.x, event.mouseMove.y);
 	}
 }
