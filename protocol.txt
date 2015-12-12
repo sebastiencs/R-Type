@@ -342,7 +342,7 @@ Client: |    ID   | ID Player |
 
 ----------------------------------------------------
 
-10 - Information sur l'ennemie
+15 - Information sur l'ennemie
 
 Le client ne repond pas.
 
@@ -366,6 +366,33 @@ Server: |    ID   |   Type  |   ID    |    X     |    Y     |  Vie    |
 
 	Vie: unsigned char (8 bits)
 	   	Vie restante de l'ennemie
+
+----------------------------------------------------
+
+16 - Bonus / Malus
+
+Le client ne repond pas.
+
+   	+---------+---------+---------+----------+--------------------
+Server: |    ID   |   Type  |   ID    |    X     |    Y     | Vitesse |
+	+---------+-------------------+----------+----------+---------
+	| uint8_t | uint8_t | uint8_t | uint16_t | uint16_t | uint8_t |
+	+---------+---------+---------+----------+--------------------
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 15
+
+	Type: unsigned char (8 bits)
+	   	Type de bonus/malus
+
+	X: unsigned char (16 bits)
+	   	Position en x du bonus/malus
+
+	Y: unsigned char (16 bits)
+	   	Position en y du bonus/malus
+
+	Vitesse: unsigned char (8 bits)
+	   	Vitesse a laquelle le bonus/malus se deplace sur le terrain
 
 
 ----------------------------------------------------
