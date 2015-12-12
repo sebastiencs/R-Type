@@ -108,6 +108,15 @@ public:
     return (ptr);
   };
 
+  template <class U>
+  void for_each(const U &func) const {
+
+    _mutex.lock();
+    std::for_each(_list.begin(), _list.end(), func);
+    _mutex.unlock();
+
+  };
+
 };
 
 #endif /* !LISTSECURE_H_ */
