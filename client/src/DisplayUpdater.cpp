@@ -63,11 +63,13 @@ void DisplayUpdater::launchObserver()
 
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
-		_game = new class Game(width, height, images, mutex, _nickname);
+		_game = new class Game(width, height, images, mutex, _nickname, packager);
 
 		inGame = true;
 		graphicEngine->setMouseClickCallback(nullptr);	// In game, don't bother to call MainMenu::OnClick
 		graphicEngine->setMouseMovedCallback(nullptr);
+		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
+		graphicEngine->setUsableKeyPressedCallback(ptr);
 		threadGame = new Thread([this](void *) -> void * {
 			for (;;) {
 				_game->run();

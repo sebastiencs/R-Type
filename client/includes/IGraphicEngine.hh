@@ -6,6 +6,7 @@
 # include <functional>
 # include "Transformation.hh"
 # include "Color.hh"
+# include <deque>
 //# include "Text.hh"
 //# include "Sprite.hh"
 
@@ -18,9 +19,18 @@ class Sprite;
 # define DEFAULT_FONT_SIZE 12
 # define MS_REFRESH 33
 
+enum UsableKeys {
+	Z = 0,
+	Q,
+	S,
+	D,
+	SPACE
+};
+
 typedef std::function<void()> callback;
 typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
 typedef std::function<void(const char)> textEnteredCallback;
+typedef std::function<void(const std::deque<UsableKeys>&)> usableKeyPressedCallback;
 
 class IGraphicEngine {
 public:
@@ -41,6 +51,7 @@ public:
 	virtual void setMouseClickCallback(mouseCallback) = 0;
 	virtual void setMouseMovedCallback(mouseCallback) = 0;
 	virtual void setTextEnteredCallback(textEnteredCallback) = 0;
+	virtual void setUsableKeyPressedCallback(usableKeyPressedCallback) = 0;
 
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;

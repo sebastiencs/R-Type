@@ -55,6 +55,7 @@ public:
 	virtual void setMouseClickCallback(mouseCallback);
 	virtual void setMouseMovedCallback(mouseCallback);
 	virtual void setTextEnteredCallback(textEnteredCallback);
+	virtual void setUsableKeyPressedCallback(usableKeyPressedCallback);
 
 
 	virtual int getWindowWidth() const;
@@ -85,6 +86,7 @@ protected:
 	textEnteredCallback _textEnteredcallback;
 	mouseCallback _mouseClickCall;
 	mouseCallback _mouseMoveCall;
+	usableKeyPressedCallback _usableKeyPressedCallback;
 	int windowWidth;
 	int windowHeight;
 	void* callbackArg;

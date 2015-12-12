@@ -12,6 +12,7 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	call = nullptr;
 	window = nullptr;
 	_textEnteredcallback = nullptr;
+	_usableKeyPressedCallback = nullptr;
 	_timer = new Timer();
 	_timer->start();
 	_shotCooldown = new Timer();
@@ -74,55 +75,21 @@ void GraphicEngine::handleEvents()
 
 void GraphicEngine::handleMovements()
 {
-	ISystemAudio &audio = SystemAudio::getInstance();
-	ListPlayers &LP = ListPlayers::getInstance();
-	Player *player = LP.getPlayer(LP.getId());
-	bool changed = false;
-	bool bullet = false;
-	if (!player)
-		return;
+	if (_usableKeyPressedCallback) {
+		std::deque<UsableKeys> keys;
 
-	Position pos = player->getPosition();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			keys.push_back(UsableKeys::Z);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			keys.push_back(UsableKeys::Q);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			keys.push_back(UsableKeys::S);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			keys.push_back(UsableKeys::D);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			keys.push_back(UsableKeys::SPACE);
 
-	uint16_t playerVelocity = (uint16_t)(300 * getDeltaTimeS());
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 10) {
-			// Si S est appuyer en meme temps le mec bouge pas.
-			pos.y -= playerVelocity;
-			changed = true;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 10) {
-			pos.x -= playerVelocity;
-			changed = true;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
-			pos.y += playerVelocity;
-			changed = true;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
-			pos.x += playerVelocity;
-			changed = true;
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > SHOT_COOLDOWN) {
-		audio.playSound(ISystemAudio::SIMPLE_SHOT);
-		_shotCooldown->reset();
-		bullet = true;
-	}
-	if (changed) {
-		player->setPosition(pos);
-		_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
-	}
-	if (bullet) {
-		player->setPosition(pos);
-		_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
-		player->addBullet(Position(pos.x, pos.y));
+		_usableKeyPressedCallback(keys);
 	}
 }
 
@@ -172,6 +139,11 @@ void GraphicEngine::setMouseMovedCallback(mouseCallback call)
 void GraphicEngine::setTextEnteredCallback(textEnteredCallback call)
 {
 	_textEnteredcallback = call;
+}
+
+void GraphicEngine::setUsableKeyPressedCallback(usableKeyPressedCallback cb)
+{
+	_usableKeyPressedCallback = cb;
 }
 
 int GraphicEngine::getWindowWidth() const

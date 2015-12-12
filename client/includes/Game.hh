@@ -33,15 +33,17 @@ private:
 	ITimer		*_timer;
 	int			_width;
 	int			_height;
+	Packager* _packager;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:
-	Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo);
+	Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager);
 	virtual ~Game();
 
 	void	run();
 	void	handlingNetwork();
 	void	updateGraphic();
+	void	handlePlayerMovement(const std::deque<UsableKeys>& keysPressed);
 
 	template<typename... Args>
 	void drawImage(Args... args) {

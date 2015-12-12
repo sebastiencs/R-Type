@@ -18,7 +18,7 @@
 #include "Sprite.hh"
 #include "Keyboard.hh"
 
-Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo)
+Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
 	_audio(SystemAudio::getInstance()),
 	_LP(ListPlayers::getInstance()),
@@ -27,7 +27,8 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	_images(images),
 	_timer(new Timer()),
 	_width(width),
-	_height(height)
+	_height(height),
+	_packager(packager)
 {
 	obstacleTypeToSpriteString[0] = "enemy0.png";
 	obstacleTypeToSpriteString[1] = "enemy1.png";
@@ -130,6 +131,96 @@ void	Game::updateGraphic()
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 	}
+}
+
+void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
+{
+	Player *player = _LP.getPlayer(_LP.getId());
+	bool changed = false;
+	bool bullet = false;
+	if (!player)
+		return;
+
+	Position pos = player->getPosition();
+	uint16_t playerVelocity = (uint16_t)(100 /** getDeltaTimeS()*/);
+	for (UsableKeys k : keysPressed) {
+		switch (k) {
+		case UsableKeys::Z:
+			pos.y -= playerVelocity;
+			changed = true;
+			break;
+		case UsableKeys::Q:
+			pos.x -= playerVelocity;
+			changed = true;
+			break;
+		case UsableKeys::S:
+			pos.y += playerVelocity;
+			changed = true;
+			break;
+		case UsableKeys::D:
+			pos.x += playerVelocity;
+			changed = true;
+			break;
+		case UsableKeys::SPACE:
+			// if (_shotCoolDown->ms() > SHOT_COOLDOWN)
+			SystemAudio::getInstance().playSound(ISystemAudio::SIMPLE_SHOT);
+			// _shotCoolDown->reset();
+			bullet = true;
+			break;
+		default:
+			break;
+		}
+	}
+	if (changed) {
+		player->setPosition(pos);
+		_packager->createMovementPackage(_LP.getId(), pos.x, pos.y);
+	}
+	if (bullet) {
+		player->setPosition(pos);
+		_packager->createShotPackage(_LP.getId(), 1, pos.x, pos.y);
+		player->addBullet(Position(pos.x, pos.y));
+	}
+
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 10) {
+		//		// Si S est appuyer en meme temps le mec bouge pas.
+		//		pos.y -= playerVelocity;
+		//		changed = true;
+		//	}
+		//}
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 10) {
+		//		pos.x -= playerVelocity;
+		//		changed = true;
+		//	}
+		//}
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
+		//		pos.y += playerVelocity;
+		//		changed = true;
+		//	}
+		//}
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
+		//		pos.x += playerVelocity;
+		//		changed = true;
+		//	}
+		//}
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > SHOT_COOLDOWN) {
+		//	audio.playSound(ISystemAudio::SIMPLE_SHOT);
+		//	_shotCooldown->reset();
+		//	bullet = true;
+		//}
+		//if (changed) {
+		//	player->setPosition(pos);
+		//	_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
+		//}
+		//if (bullet) {
+		//	player->setPosition(pos);
+		//	_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
+		//	player->addBullet(Position(pos.x, pos.y));
+		//}
+
 }
 
 void	Game::run()
