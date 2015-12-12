@@ -25,7 +25,7 @@ Wave::~Wave()
 void		Wave::getSpawn()
 {
   static	int nb_waves = 0;
-  int	        i = 0;
+  int	        i = -1;
 
   // Faire spawn les ennemies la ou y'a personne
 
@@ -51,6 +51,6 @@ void		Wave::getSpawn()
     _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 0, 700, 400));
     break;
   }
-  i = 0;
+  i = -1;
   nb_waves++;
 }
