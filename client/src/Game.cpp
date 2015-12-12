@@ -149,20 +149,28 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	for (UsableKeys k : keysPressed) {
 		switch (k) {
 		case UsableKeys::Z:
-			pos.y -= playerVelocity;
-			changed = true;
+			if (pos.y > 10) {
+				pos.y -= playerVelocity;
+				changed = true;
+			}
 			break;
 		case UsableKeys::Q:
-			pos.x -= playerVelocity;
-			changed = true;
+			if (pos.x > 10) {
+				pos.x -= playerVelocity;
+				changed = true;
+			}
 			break;
 		case UsableKeys::S:
-			pos.y += playerVelocity;
-			changed = true;
+			if (pos.y < 715) {
+				pos.y += playerVelocity;
+				changed = true;
+			}
 			break;
 		case UsableKeys::D:
-			pos.x += playerVelocity;
-			changed = true;
+			if (pos.x <= 910) {
+				pos.x += playerVelocity;
+				changed = true;
+			}
 			break;
 		case UsableKeys::SPACE:
 			if (_shotCooldown->ms() > SHOT_COOLDOWN) {
