@@ -25,6 +25,7 @@
 # include "Timer.hh"
 
 class	Manager;
+class	Paquet;
 
 typedef std::shared_ptr<Manager>	Manager_SharedPtr;
 typedef std::weak_ptr<Manager>		Manager_WeakPtr;
@@ -45,6 +46,10 @@ class			Party
   bool			_running;
   Wave_UniquePtr	_wave;
   ITimer_UniquePtr	_timerWave;
+
+  void				write(const Paquet &, const Addr &) const;
+  const Player_SharedPtr	focusOnClosestPlayer(const uint8_t yEnnemy) const;
+  void				updateEnemy(const Enemy_SharedPtr &);
 
 public:
   Party(const Manager_SharedPtr &&);
