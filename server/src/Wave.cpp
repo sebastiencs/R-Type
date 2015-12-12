@@ -22,12 +22,28 @@ Wave::~Wave()
   DEBUG_MSG("Wave deleted");
 }
 
-listEnemies	Wave::getSpawn()
+void	Wave::getSpawn()
 {
-  static	int i = 0;
-  listEnemies	ennemies;
-  Enemy		*enemy = new Enemy(_party.getUniqueID(), 100, 1);
+  static	int nb_waves = 0;
+  int	        i = 0;
 
-  ennemies.emplace_back(enemy);
-  return ennemies;
+  switch(nb_waves)
+    {
+    case 2: // 2 enemies
+      while(++i < 2)
+	_party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1));
+      break;
+    case 4: // 4 enemies
+      while(++i < 4)
+      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1));
+      break;
+    case 5: // 1 boss
+      _party.addEnemy(new Enemy(_party.getUniqueID(), 250, 2));
+      break;
+    default: // 1 enemy par defaut
+      _party.addEnemy(new Enemy(_party.getUniqueID(), 100, 1));
+      break;      
+    }
+  i = 0;
+  nb_waves++;
 }

@@ -13,19 +13,15 @@
 
 # include <iostream>
 # include "Enemy.hh"
-# include "ListSecure.hh"
 # include "Debug.hh"
 
-typedef ListSecure<Enemy_SharedPtr>	listEnemies;
-
 class		Party;
-
 class		Wave
 {
 public:
   Wave(Party &party);
-  virtual ~Wave();
-  listEnemies	getSpawn();
+  virtual	~Wave();
+  void		getSpawn();
 
 private:
   Party		&_party;

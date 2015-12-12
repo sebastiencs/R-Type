@@ -55,6 +55,9 @@ void			Party::run()
   // paquet.createPaquet();
   // addEnemy(enemy);
 
+
+  // refaire la boucle sur la list et call le getSpawn
+
   for (;;) {
 
     // for (auto &p : _players) {
