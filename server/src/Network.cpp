@@ -101,7 +101,7 @@ inline bool	Network::handleTCP(const socket_t socket, Pollfd &fds)
 {
 
   auto sock = Tools::findIn(_socketClient, [&socket] (auto &sock) { return (sock->socket() == socket); });
-  ssize_t size;
+  ssize_t size = 0;
 
   try {
     size = sock->read(_buffer);
