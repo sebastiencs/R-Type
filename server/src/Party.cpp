@@ -189,6 +189,23 @@ bool			Party::isRunning() const
 void			Party::setRunning(bool run)
 {
   _running = run;
+  if (run == true) {
+    Position pos;
+    PaquetPlayerCoord	paquet;
+    int i = 1;
+    for (auto &player : _players) {
+      pos = player->getPosition();
+      pos.y += 200 * i;
+      player->setPosition(pos);
+
+      paquet.setPlayerID(player->getID());
+      paquet.setPosition(pos.x, pos.y);
+      paquet.createPaquet();
+      if (!_manager.expired()) {
+	_manager.lock()->write(paquet, player->addr());
+      }
+    }
+  }
 }
 
 
