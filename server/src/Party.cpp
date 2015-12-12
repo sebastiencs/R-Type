@@ -51,11 +51,12 @@ void			Party::run()
   //call to les X temps
   _wave->getSpawn();
   
-  for (auto &enemy : _enemies) {
-    paquet = enemy;
-  }
   for (;;) {
 
+    // refaire la boucle
+    for (auto &enemy : _enemies) {
+      paquet = enemy;
+    }
     for (auto &p : _players) {
       std::cout << *p << std::endl;
       _manager.lock()->write(paquet, p->addr());
