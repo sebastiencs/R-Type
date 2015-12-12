@@ -200,7 +200,6 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (bullet) {
-		player->setPosition(pos);
 		_packager->createShotPackage(_LP.getId(), 1, pos.x, pos.y);
 		player->addBullet(Position(pos.x, pos.y));
 	}
@@ -240,7 +239,6 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		//	_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
 		//}
 		//if (bullet) {
-		//	player->setPosition(pos);
 		//	_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
 		//	player->addBullet(Position(pos.x, pos.y));
 		//}
