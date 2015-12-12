@@ -32,9 +32,9 @@ int		main(int argc, char **argv)
 
 	uint16_t port(4242);
 	//alex
-	//std::string addr("82.229.96.158");
+	std::string addr("82.229.96.158");
 	//localhost
-	std::string addr("127.0.0.1");
+	//std::string addr("127.0.0.1");
 	//seb
 	//std::string addr("84.102.232.137");
 

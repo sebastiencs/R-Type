@@ -86,14 +86,14 @@ void GraphicEngine::handleMovements()
 
 	uint16_t playerVelocity = (uint16_t)(300 * getDeltaTimeS());
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 5) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 10) {
 			// Si S est appuyer en meme temps le mec bouge pas.
 			pos.y -= playerVelocity;
 			changed = true;
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 5) {
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 10) {
 			pos.x -= playerVelocity;
 			changed = true;
 		}
@@ -116,7 +116,6 @@ void GraphicEngine::handleMovements()
 		bullet = true;
 	}
 	if (changed) {
-		DEBUG_MSG("Player Mov: " << playerVelocity);
 		player->setPosition(pos);
 		_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
 	}

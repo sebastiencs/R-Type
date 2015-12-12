@@ -59,7 +59,6 @@ public:
 
 	template<class T>
 	bool	remove_elem(T &elem) {
-		DEBUG_MSG("Elem X: " << elem.x << "window: " << _width);
 		if (elem.x > _width) {
 			return true;
 		}
