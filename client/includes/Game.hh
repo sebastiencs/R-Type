@@ -33,6 +33,7 @@ private:
 	ITimer		*_timer;
 	int			_width;
 	int			_height;
+	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:
 	Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo);

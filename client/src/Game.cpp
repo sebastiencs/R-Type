@@ -29,6 +29,11 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	_width(width),
 	_height(height)
 {
+	obstacleTypeToSpriteString[0] = "enemy0.png";
+	obstacleTypeToSpriteString[1] = "enemy1.png";
+	obstacleTypeToSpriteString[2] = "enemy2.png";
+	obstacleTypeToSpriteString[100] = "enemy2.png";
+
 	DEBUG_MSG("Game created");
 	(void)_height;
 	_audio.stopMusic();
@@ -120,8 +125,9 @@ void	Game::updateGraphic()
 	}
 	for (auto &&enemy : _LE.getListEnemies()) {
 		Transformation t(enemy->getPosX(), enemy->getPosY());
-		t.setScale(3.5, 3.5);
-		Sprite* vesselSprite = new Sprite("vessel0.png", t);
+		t.setScale(1.5, 1.5);
+		//DEBUG_MSG("type: " << (int)enemy->getType());
+		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 	}
 }

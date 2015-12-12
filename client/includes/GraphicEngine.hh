@@ -94,7 +94,6 @@ protected:
 	std::list<IDrawable *> dElements;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
-	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 	std::map<uint8_t, std::string> playerIDToSpriteString;
 	std::map<uint8_t, std::string> shotTypeToSpriteString;
 };

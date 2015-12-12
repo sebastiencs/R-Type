@@ -16,12 +16,6 @@ GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
 	_timer->start();
 	_shotCooldown = new Timer();
 	_shotCooldown->start();
-	obstacleTypeToSpriteString[0] = "r-typesheet17.gif";
-	obstacleTypeToSpriteString[1] = "r-typesheet17.gif";
-	obstacleTypeToSpriteString[2] = "r-typesheet17.gif";
-	obstacleTypeToSpriteString[3] = "r-typesheet17.gif";
-	obstacleTypeToSpriteString[4] = "r-typesheet17.gif";
-	obstacleTypeToSpriteString[5] = "r-typesheet17.gif";
 
 	playerIDToSpriteString[0] = "r-typesheet42.gif";
 	playerIDToSpriteString[1] = "r-typesheet42.gif";
