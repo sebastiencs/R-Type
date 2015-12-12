@@ -27,5 +27,6 @@
 # include "PaquetReady.hh"
 # include "PaquetLeave.hh"
 # include "PaquetEnemy.hh"
+# include "PaquetBonusMalus.hh"
 
 #endif /* !PAQUETS_H_ */

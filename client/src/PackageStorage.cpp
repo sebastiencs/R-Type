@@ -97,6 +97,12 @@ const PaquetEnemy * PackageStorage::getEnemyPackage() const {
 	return enemy.empty() ? nullptr : enemy.front();
 }
 
+const PaquetBonusMalus * PackageStorage::getBonusMalusPackage() const {
+	if (!bonusmalus.empty())
+		DEBUG_MSG(*bonusmalus.front());
+	return bonusmalus.empty() ? nullptr : bonusmalus.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet * package) {
 	received.push_back(package);
 	_semIn->post();
@@ -167,6 +173,11 @@ void PackageStorage::storeLeavePackage(PaquetLeave * package)
 void PackageStorage::storeEnemyPackage(PaquetEnemy * package)
 {
 	enemy.push_back(package);
+}
+
+void PackageStorage::storeBonusMalusPackage(PaquetBonusMalus * package)
+{
+	bonusmalus.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -278,6 +289,14 @@ void PackageStorage::deleteLeavePackage()
   if (!leave.empty()) {
     delete leave.front();
     leave.erase(leave.begin());
+  }
+}
+
+void PackageStorage::deleteBonusMalusPackage()
+{
+  if (!bonusmalus.empty()) {
+    delete bonusmalus.front();
+    bonusmalus.erase(bonusmalus.begin());
   }
 }
 

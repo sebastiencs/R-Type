@@ -48,6 +48,7 @@ void	Game::handlingNetwork()
 	auto &&coord = _PS.getPlayersPackage();
 	auto &&leave = _PS.getLeavePackage();
 	auto &&enemy = _PS.getEnemyPackage();
+	auto &&bonusmalus = _PS.getBonusMalusPackage();
 
 	IPlayer *player;
 
@@ -78,6 +79,11 @@ void	Game::handlingNetwork()
 		DEBUG_MSG("ENEMY !");
 		_LE.handleEnnemy(enemy->getID(), enemy->getLife(), enemy->getLife(), enemy->getX(), enemy->getY());
 		_PS.deleteEnemyPackage();
+	}
+
+	if (bonusmalus != nullptr) {
+		DEBUG_MSG("BONUS/MALUS !");
+		_PS.deleteBonusMalusPackage();
 	}
 
 	if (leave != nullptr) {
