@@ -56,55 +56,45 @@ void			Party::updateEnemy(const Enemy_SharedPtr &e)
   PaquetEnemy		paquet;
 
   paquet = e;
-  for (auto &p : _players) {
-    write(paquet, p->addr());
-  }
+  _players.for_each([&] (auto &p) {
+      write(paquet, p->addr());
+    });
 }
 
 void			Party::run()
 {
   PaquetEnemy	paquet;
 
-  //call to les X temps
-
   _timerWave->start();
 
   for (;;) {
 
-    // refaire la boucle
-
     if (_enemies.empty() || _timerWave->ms() >= 100000) {
       _wave->getSpawn();
-      for (auto &enemy : _enemies) {
-	paquet = enemy;
-	for (auto &p : _players) {
-	  write(paquet, p->addr());
-	}
-      }
+      _enemies.for_each([this] (auto &enemy) {
+	  updateEnemy(enemy);
+	});
       _timerWave->reset();
     }
 
-    for (auto &enemy : _enemies) {
+    _enemies.for_each([&] (auto &enemy) {
+	uint16_t y = enemy->getPosY();
+	auto focused = focusOnClosestPlayer(y);
+	bool changed = false;
 
+	if (focused && focused->getPosition().y < y - 3) {
+	  enemy->setPosY(y - 2);
+	  changed = true;
+	}
+	else if (focused && focused->getPosition().y > y + 3) {
+	  enemy->setPosY(y + 2);
+	  changed = true;
+	}
+	if (changed) {
+	  updateEnemy(enemy);
+	}
+      });
 
-      uint16_t y = enemy->getPosY();
-      auto focused = focusOnClosestPlayer(y);
-      bool changed = false;
-
-      if (focused && focused->getPosition().y < y - 3) {
-	enemy->setPosY(y - 2);
-	changed = true;
-      }
-      else if (focused && focused->getPosition().y > y + 3) {
-	enemy->setPosY(y + 2);
-	changed = true;
-      }
-      if (changed) {
-	updateEnemy(enemy);
-      }
-
-
-    }
     IOEvent::wait(20);
   }
 }
@@ -114,13 +104,13 @@ const Player_SharedPtr	Party::focusOnClosestPlayer(const uint8_t yEnemy) const
   uint8_t idClosest = 0xFF;
   uint16_t distance = 0xFFFF;
 
-  for (auto &p : _players) {
-    uint16_t tmp = std::abs(p->getPosition().y - yEnemy);
-    if (tmp < distance) {
-      idClosest = p->getID();
-      distance = tmp;
-    }
-  }
+  _players.for_each([&] (auto &p) mutable {
+      uint16_t tmp = std::abs(p->getPosition().y - yEnemy);
+      if (tmp < distance) {
+	idClosest = p->getID();
+	distance = tmp;
+      }
+    });
 
   return (_players.findIn([idClosest] (auto &p) { return (p->getID() == idClosest); }));
 }
@@ -239,16 +229,17 @@ void			Party::setRunning(bool run)
     Position pos;
     PaquetPlayerCoord	paquet;
     int i = 1;
-    for (auto &player : _players) {
-      pos = player->getPosition();
-      pos.y += 200 * i;
-      player->setPosition(pos);
 
-      paquet.setPlayerID(player->getID());
-      paquet.setPosition(pos.x, pos.y);
-      paquet.createPaquet();
-      write(paquet, player->addr());
-    }
+    _players.for_each([&] (auto &player) {
+	pos = player->getPosition();
+	pos.y += 200 * i;
+	player->setPosition(pos);
+
+	paquet.setPlayerID(player->getID());
+	paquet.setPosition(pos.x, pos.y);
+	paquet.createPaquet();
+	write(paquet, player->addr());
+      });
   }
 }
 
