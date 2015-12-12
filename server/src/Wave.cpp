@@ -9,8 +9,10 @@
 //
 
 #include "Wave.hh"
+#include "Party.hh"
 
-Wave::Wave()
+Wave::Wave(Party &party)
+  :_party(party)
 {
   DEBUG_MSG("Wave created");
 }
@@ -18,4 +20,14 @@ Wave::Wave()
 Wave::~Wave()
 {
   DEBUG_MSG("Wave deleted");
+}
+
+listEnemies	Wave::getSpawn()
+{
+  static	int i = 0;
+  listEnemies	ennemies;
+  Enemy		*enemy = new Enemy(_party.getUniqueID(), 100, 1);
+
+  ennemies.emplace_back(enemy);
+  return ennemies;
 }

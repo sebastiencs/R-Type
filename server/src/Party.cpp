@@ -18,7 +18,8 @@ Party::Party(const Manager_SharedPtr &&manager)
     _thread(std::make_unique<Thread>()),
     _manager(std::move(manager)),
     _name("Unknwon"),
-    _running(false)
+    _running(false),
+    _wave(nullptr)
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -29,7 +30,8 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
     _thread(std::make_unique<Thread>()),
     _manager(std::move(manager)),
     _name(name),
-    _running(false)
+    _running(false),
+    _wave(new Wave(*this))
 {
   DEBUG_MSG("Party created");
   _thread->run([this](void *) -> void * { run(); return (0); }, 0);
@@ -44,21 +46,21 @@ Party::~Party()
 
 void			Party::run()
 {
-  Enemy		*enemy = new Enemy(getUniqueID(), 100, 1);
-  PaquetEnemy	paquet;
+  // PaquetEnemy	paquet;
 
-  paquet.setID(enemy->getID());
-  paquet.setType(enemy->getType());
-  paquet.setLife(enemy->getLife());
-  paquet.setPosition(enemy->getPosX(), enemy->getPosY());
-  paquet.createPaquet();
-  addEnemy(enemy);
+  // paquet.setID(enemy->getID());
+  // paquet.setType(enemy->getType());
+  // paquet.setLife(enemy->getLife());
+  // paquet.setPosition(enemy->getPosX(), enemy->getPosY());
+  // paquet.createPaquet();
+  // addEnemy(enemy);
+
   for (;;) {
 
-    for (auto &p : _players) {
-      std::cout << *p << std::endl;
-      _manager.lock()->write(paquet, p->addr());
-    }
+    // for (auto &p : _players) {
+    //   std::cout << *p << std::endl;
+    //   _manager.lock()->write(paquet, p->addr());
+    // }
 
     if (!_manager.expired()) {
 //      (_manager.lock())->write(PAQUET, ADDR)

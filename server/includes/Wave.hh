@@ -12,17 +12,23 @@
 # define WAVE_HH_
 
 # include <iostream>
-# include <memory>
-# include <map>
 # include "Enemy.hh"
-# include "Timer.h"
+# include "ListSecure.hh"
 # include "Debug.hh"
+
+typedef ListSecure<Enemy_SharedPtr>	listEnemies;
+
+class		Party;
 
 class		Wave
 {
 public:
-  Wave();
+  Wave(Party &party);
   virtual ~Wave();
+  listEnemies	getSpawn();
+
+private:
+  Party		&_party;
 };
 
 #endif /* !WAVE_HH_ */
