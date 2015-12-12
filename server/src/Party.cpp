@@ -52,11 +52,7 @@ void			Party::run()
   _wave->getSpawn();
   
   for (auto &enemy : _enemies) {
-      paquet.setID(enemy->getID());
-      paquet.setType(enemy->getType());
-      paquet.setLife(enemy->getLife());
-      paquet.setPosition(enemy->getPosX(), enemy->getPosY());
-      paquet.createPaquet();
+    paquet = enemy;
   }
   for (;;) {
 
