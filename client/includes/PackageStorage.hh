@@ -6,25 +6,26 @@
 #include "Paquets.hh"
 #include "Paquet.hh"
 #include "Semaphore.hh"
+#include "DequeSecure.hh"
 
 class PackageStorage {
 private:
 
-	std::deque<Paquet *> received;
-	std::deque<Paquet *> toSendUDP;
-	std::deque<Paquet *> toSendTCP;
-	std::deque<PaquetPlayerCoord *> players;
-	std::deque<PaquetPlayerCoord *> enemies;
-	std::deque<PaquetObstacle *> obstacles;
-	std::deque<PaquetPlayerShot *> shots;
-	std::deque<PaquetReady *> ready;
-	std::deque<PaquetListParties *> gameList;
-	std::deque<PaquetListPlayers *> playerList;
-	std::deque<PaquetResponse *> answers;
-	std::deque<PaquetLaunch *> launch;
-	std::deque<PaquetLeave *> leave;
-	std::deque<PaquetEnemy *> enemy;
-	std::deque<PaquetBonusMalus *> bonusmalus;
+	DequeSecure<Paquet *> received;
+	DequeSecure<Paquet *> toSendUDP;
+	DequeSecure<Paquet *> toSendTCP;
+	DequeSecure<PaquetPlayerCoord *> players;
+	DequeSecure<PaquetPlayerCoord *> enemies;
+	DequeSecure<PaquetObstacle *> obstacles;
+	DequeSecure<PaquetPlayerShot *> shots;
+	DequeSecure<PaquetReady *> ready;
+	DequeSecure<PaquetListParties *> gameList;
+	DequeSecure<PaquetListPlayers *> playerList;
+	DequeSecure<PaquetResponse *> answers;
+	DequeSecure<PaquetLaunch *> launch;
+	DequeSecure<PaquetLeave *> leave;
+	DequeSecure<PaquetEnemy *> enemy;
+	DequeSecure<PaquetBonusMalus *> bonusmalus;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
