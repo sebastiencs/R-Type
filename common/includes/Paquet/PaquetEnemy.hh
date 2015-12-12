@@ -32,7 +32,18 @@ public:
   PaquetEnemy(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetEnemy();
 
-  PaquetEnemy &operator=(Enemy *);
+  template<typename T>
+  PaquetEnemy &operator=(T &e) {
+    if (e) {
+      _type = e->getType();
+      _eID = e->getID();
+      _x = e->getPosX();
+      _y = e->getPosY();
+      _life = e->getLife();
+      createPaquet();
+    }
+    return (*this);
+  }
 
   void	setType(const uint8_t);
   void	setID(const uint8_t);
