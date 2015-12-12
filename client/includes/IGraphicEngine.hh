@@ -45,8 +45,8 @@ public:
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
 
-	virtual int32_t getDeltaTimeMS() const = 0;
-	virtual float getDeltaTimeS() const = 0;
+	//virtual int32_t getDeltaTimeMS() = 0;
+	//virtual float getDeltaTimeS() = 0;
 	virtual int getWindowWidth() const = 0;
 	virtual int getWindowHeight() const = 0;
 

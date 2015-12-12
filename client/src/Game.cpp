@@ -106,7 +106,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : player->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet.x, bullet.y));
 				drawImage(sprite);
-				bullet.x += 15; // * engine.getDeltaTimeS();
+				bullet.x += 600 * GraphicEngine::getDeltaTimeS();
 			}
 
 			auto &bulletList = player->getBullets();

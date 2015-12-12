@@ -67,8 +67,8 @@ public:
 
 	virtual void closeWindow();
 
-	virtual int32_t getDeltaTimeMS() const;
-	virtual float getDeltaTimeS() const;
+	static int32_t getDeltaTimeMS();
+	static float getDeltaTimeS();
 
 	static const sf::Texture* None;
 	static const sf::Font* NoneFont;
@@ -80,7 +80,7 @@ protected:
 	Packager* _packager;
 	ITimer* _timer;
 	ITimer* _shotCooldown;
-	sf::Time elapsedTime;
+	static sf::Time elapsedTime;
 	callback call;
 	textEnteredCallback _textEnteredcallback;
 	mouseCallback _mouseClickCall;
