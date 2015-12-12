@@ -82,7 +82,7 @@ int NetworkClient::runWrite()
 					{
 						const Paquet *paquet = PS.getToSendUDPPackage();
 						if (paquet != nullptr) {
-							DEBUG_MSG("Send paquet");
+//							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
 							PS.deleteToSendUDPPackage();
 							break;
@@ -92,7 +92,7 @@ int NetworkClient::runWrite()
 					{
 						const Paquet *paquet = PS.getToSendTCPPackage();
 						if (paquet != nullptr) {
-							DEBUG_MSG("Send paquet");
+//							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
 							PS.deleteToSendTCPPackage();
 							break;
