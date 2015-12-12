@@ -29,6 +29,7 @@ public:
   ListEnemies &operator=(const ListEnemies &) = delete;
 
   void		addEnemy(Enemy* player);
+  void		handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y);
   void		clearList();
 
   void		deleteEnemy(uint8_t id);

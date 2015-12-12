@@ -12,6 +12,7 @@
 # define LISTSECURE_H_
 
 # include <list>
+# include <algorithm>
 # include "Mutex.hh"
 
 template<typename T>
@@ -23,9 +24,9 @@ private:
 
 public:
 
-  ListSecure<T>	&operator=(ListSecure<T>) = delete;
-  ListSecure<T>	&operator=(ListSecure<T> &) = delete;
-  ListSecure<T>	&operator=(ListSecure<T> &&) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T>) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T> &) = delete;
+  // ListSecure<T>	&operator=(ListSecure<T> &&) = delete;
 
   template<typename... Args>
   void	push_back(Args&&... args) {
@@ -94,6 +95,17 @@ public:
     auto &&val = _list.end();
     _mutex.unlock();
     return (val);
+  };
+
+  template <class U>
+  auto findIn(const U &func) const -> T {
+
+    _mutex.lock();
+    auto &&found = std::find_if(_list.begin(), _list.end(), func);
+    auto ptr = (found == _list.end()) ? (nullptr) : (*found);
+    _mutex.unlock();
+
+    return (ptr);
   };
 
 };
