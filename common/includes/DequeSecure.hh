@@ -24,8 +24,6 @@ private:
 
 public:
 
-  DequeSecure<T>	&operator=(DequeSecure<T>) = delete;
-  DequeSecure<T>	&operator=(DequeSecure<T> &) = delete;
   DequeSecure<T>	&operator=(DequeSecure<T> &&) = delete;
 
   template<typename... Args>
