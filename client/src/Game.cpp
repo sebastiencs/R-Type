@@ -59,7 +59,7 @@ void	Game::handlingNetwork()
 	auto &&enemy = _PS.getEnemyPackage();
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
 
-	IPlayer *player;
+	Player *player;
 
 	if (obstacle != nullptr) {
 		//const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();

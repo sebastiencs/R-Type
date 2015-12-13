@@ -12,15 +12,12 @@
 #include "Player.hh"
 
 Player::Player()
-  : _name(""),
-    _position(),
+  : Object(),
+    _name(""),
     _level(0),
     _life(100),
-    _id(0),
     _addr(),
-    _ready(false),
-    _sizeX(0),
-    _sizeY(0)
+    _ready(false)
 {
   DEBUG_MSG("Player created");
 }
@@ -28,29 +25,23 @@ Player::Player()
 Player::Player(const std::string &name, uint8_t id,
 	       const Position &pos = Position(),
 	       uint8_t level = 0, int life = 100, bool ready = false)
-  : _name(name),
-    _position(pos),
+  : Object(id, pos),
+    _name(name),
     _level(level),
     _life(life),
-    _id(id),
     _addr(),
-    _ready(ready),
-    _sizeX(0),
-    _sizeY(0)
+    _ready(ready)
 {
   DEBUG_MSG("Player created");
 }
 
 Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &addr)
-  : _name(name),
-    _position(),
+  : Object(id),
+    _name(name),
     _level(level),
     _life(0),
-    _id(id),
     _addr(addr),
-    _ready(false),
-    _sizeX(0),
-    _sizeY(0)
+    _ready(false)
 {
   DEBUG_MSG("Player created");
 }
@@ -58,51 +49,6 @@ Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &a
 Player::~Player()
 {
   DEBUG_MSG("Player deleted");
-}
-
-const Position		&Player::getPosition() const
-{
-  return (_position);
-}
-
-uint16_t		Player::getX() const
-{
-  return (_position.x);
-}
-
-uint16_t		Player::getY() const
-{
-  return (_position.y);
-}
-
-uint8_t			Player::getSizeX() const
-{
-  return (_sizeX);
-}
-
-uint8_t			Player::getSizeY() const
-{
-  return (_sizeY);
-}
-
-void			Player::setX(const uint16_t x)
-{
-  _position.x = x;
-}
-
-void			Player::setY(const uint16_t y)
-{
-  _position.y = y;
-}
-
-void			Player::setPosition(const Position &pos)
-{
-  _position = pos;
-}
-
-void			Player::setPosition(const Position &&pos)
-{
-  _position = pos;
 }
 
 const std::list<Position> &Player::getBullets() const
@@ -143,16 +89,6 @@ int			Player::getLife() const
 void			Player::setLife(int life)
 {
   _life = life;
-}
-
-uint8_t			Player::getID() const
-{
-  return (_id);
-}
-
-void			Player::setID(uint8_t id)
-{
-  _id = id;
 }
 
 const std::string	&Player::getName() const

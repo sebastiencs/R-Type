@@ -13,40 +13,24 @@
 
 # include <tuple>
 # include <list>
-# include "IPlayer.hh"
 # include "Addr.hh"
+# include "Object.hh"
 
-class		Player : public IPlayer
+class		Player : public Object
 {
 private:
   std::list<Position> _bullets;
   std::string	_name;
-  Position	_position;
   uint8_t	_level;
   int		_life;
-  uint8_t	_id;
   Addr		_addr;
   bool		_ready;
-  uint8_t	_sizeX;
-  uint8_t	_sizeY;
 
 public:
   Player();
   Player(const std::string &, uint8_t, const Position &, uint8_t, int, bool);
   Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0);
   virtual ~Player();
-
-  virtual const Position	&getPosition() const;
-  virtual void			setPosition(const Position &);
-  virtual void			setPosition(const Position &&);
-
-  virtual uint16_t		getX() const;
-  virtual uint16_t		getY() const;
-  virtual void			setX(const uint16_t);
-  virtual void			setY(const uint16_t);
-
-  virtual uint8_t		getSizeX() const;
-  virtual uint8_t		getSizeY() const;
 
   virtual const std::list<Position> &getBullets() const;
   virtual std::list<Position>	&getBullets();
@@ -58,9 +42,6 @@ public:
 
   virtual int			getLife() const;
   virtual void			setLife(int);
-
-  virtual uint8_t		getID() const;
-  virtual void			setID(uint8_t);
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);

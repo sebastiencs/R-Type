@@ -11,14 +11,26 @@
 # include "Object.hh"
 
 Object::Object()
+  : _id(0),
+    _pos(),
+    _sizeX(0),
+    _sizeY(0)
 {
   DEBUG_MSG("Object created");
 }
 
 Object::Object(const uint8_t id, const uint16_t x, const uint16_t y, const uint8_t sizeX, const uint8_t sizeY)
   : _id(id),
-    _x(x),
-    _y(y),
+    _pos(x, y),
+    _sizeX(sizeX),
+    _sizeY(sizeY)
+{
+  DEBUG_MSG("Object created");
+}
+
+Object::Object(const uint8_t id, const Position pos, const uint8_t sizeX, const uint8_t sizeY)
+  : _id(id),
+    _pos(pos),
     _sizeX(sizeX),
     _sizeY(sizeY)
 {
@@ -32,12 +44,12 @@ Object::~Object()
 
 void		Object::setX(const uint16_t x)
 {
-  _x = x;
+  _pos.x = x;
 }
 
 void		Object::setY(const uint16_t y)
 {
-  _y = y;
+  _pos.y = y;
 }
 
 void		Object::setSizeX(const uint8_t sizeX)
@@ -52,12 +64,12 @@ void		Object::setSizeY(const uint8_t sizeY)
 
 uint16_t	Object::getX() const
 {
-  return _x;
+  return _pos.x;
 }
 
 uint16_t	Object::getY() const
 {
-  return _y;
+  return _pos.y;
 }
 
 uint8_t		Object::getSizeX() const
@@ -78,4 +90,24 @@ void		Object::setID(const uint8_t id)
 uint8_t		Object::getID() const
 {
   return (_id);
+}
+
+const Position	&Object::getPosition() const
+{
+  return (_pos);
+}
+
+Position	&Object::getPosition()
+{
+  return (_pos);
+}
+
+void		Object::setPosition(const Position &&pos)
+{
+  _pos = pos;
+}
+
+void		Object::setPosition(const Position &pos)
+{
+  _pos = pos;
 }

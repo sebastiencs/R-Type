@@ -14,27 +14,41 @@
 # include <iostream>
 # include "Debug.hh"
 
+typedef struct s_position {
+  s_position() : x(1), y(1) {}
+  s_position(uint16_t _x, uint16_t _y) : x(_x), y(_y) {}
+  s_position(const s_position &pos) : x(pos.x), y(pos.y) {}
+  s_position &operator=(const s_position &pos) { x = pos.x; y = pos.y; return (*this); }
+  uint16_t x;
+  uint16_t y;
+} Position;
+
 class		Object
 {
 public:
   Object();
-  Object(const uint8_t id, const uint16_t posX, const uint16_t posY, const uint8_t sizeX, const uint8_t sizeY);
+  Object(const uint8_t id, const uint16_t posX = 0, const uint16_t posY = 0, const uint8_t sizeX = 0, const uint8_t sizeY = 0);
+  Object(const uint8_t id, const Position pos, const uint8_t sizeX = 0, const uint8_t sizeY = 0);
   virtual ~Object();
-  void		setX(const uint16_t posX);
-  void		setY(const uint16_t posY);
-  void		setSizeX(const uint8_t sizeX);
-  void		setSizeY(const uint8_t sizeY);
-  uint16_t	getX() const;
-  uint16_t	getY() const;
-  uint8_t	getSizeX() const;
-  uint8_t	getSizeY() const;
-  void		setID(const uint8_t id);
-  uint8_t	getID() const;
+
+  void			setX(const uint16_t posX);
+  void			setY(const uint16_t posY);
+  void			setSizeX(const uint8_t sizeX);
+  void			setSizeY(const uint8_t sizeY);
+  uint16_t		getX() const;
+  uint16_t		getY() const;
+  uint8_t		getSizeX() const;
+  uint8_t		getSizeY() const;
+  void			setID(const uint8_t id);
+  uint8_t		getID() const;
+  const Position	&getPosition() const;
+  Position		&getPosition();
+  void			setPosition(const Position &&);
+  void			setPosition(const Position &);
 
 protected:
   uint8_t	_id;
-  uint16_t	_x;
-  uint16_t	_y;
+  Position	_pos;
   uint8_t	_sizeX;
   uint8_t	_sizeY;
 };
