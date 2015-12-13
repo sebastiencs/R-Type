@@ -29,22 +29,22 @@ Object::~Object()
   DEBUG_MSG("Object deleted");
 }
 
-void		setX(const uint16_t posX)
+void		Object::setX(const uint16_t posX)
 {
   _posX = posX;
 }
 
-void		setY(const uint16_t posY)
+void		Object::setY(const uint16_t posY)
 {
   _posY = posY;
 }
 
-void		setSizeX(const uint8_t sizeX)
+void		Object::setSizeX(const uint8_t sizeX)
 {
   _sizeX = sizeX;
 }
 
-void		setSizeY(const uint8_t sizeY)
+void		Object::setSizeY(const uint8_t sizeY)
 {
   _sizeY = sizeY;
 }
