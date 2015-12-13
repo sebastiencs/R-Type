@@ -17,6 +17,7 @@ file (GLOB
   src/Tools.cpp
   src/Mutex.cpp
   src/Enemy.cpp
+  src/Object.cpp
   src/TaskScheduler.cpp
   )
 
@@ -33,6 +34,7 @@ file (GLOB
   includes/PaquetTCP.hh
   includes/Patern.hh
   includes/Enemy.hh
+  includes/Object.hh
   includes/ListSecure.hh
   includes/Physics.hh
   includes/DequeSecure.hh
