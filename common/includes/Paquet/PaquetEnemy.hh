@@ -37,8 +37,8 @@ public:
     if (e) {
       _type = e->getType();
       _eID = e->getID();
-      _x = e->getPosX();
-      _y = e->getPosY();
+      _x = e->getX();
+      _y = e->getY();
       _life = e->getLife();
       createPaquet();
     }
