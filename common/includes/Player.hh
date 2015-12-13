@@ -27,6 +27,8 @@ private:
   uint8_t	_id;
   Addr		_addr;
   bool		_ready;
+  uint8_t	_sizeX;
+  uint8_t	_sizeY;
 
 public:
   Player();
@@ -37,6 +39,14 @@ public:
   virtual const Position	&getPosition() const;
   virtual void			setPosition(const Position &);
   virtual void			setPosition(const Position &&);
+
+  virtual uint16_t		getX() const;
+  virtual uint16_t		getY() const;
+  virtual void			setX(const uint16_t);
+  virtual void			setY(const uint16_t);
+
+  virtual uint8_t		getSizeX() const;
+  virtual uint8_t		getSizeY() const;
 
   virtual const std::list<Position> &getBullets() const;
   virtual std::list<Position>	&getBullets();

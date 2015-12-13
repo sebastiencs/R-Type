@@ -18,7 +18,9 @@ Player::Player()
     _life(100),
     _id(0),
     _addr(),
-    _ready(false)
+    _ready(false),
+    _sizeX(0),
+    _sizeY(0)
 {
   DEBUG_MSG("Player created");
 }
@@ -32,7 +34,9 @@ Player::Player(const std::string &name, uint8_t id,
     _life(life),
     _id(id),
     _addr(),
-    _ready(ready)
+    _ready(ready),
+    _sizeX(0),
+    _sizeY(0)
 {
   DEBUG_MSG("Player created");
 }
@@ -44,8 +48,9 @@ Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &a
     _life(0),
     _id(id),
     _addr(addr),
-    _ready(false)
-
+    _ready(false),
+    _sizeX(0),
+    _sizeY(0)
 {
   DEBUG_MSG("Player created");
 }
@@ -58,6 +63,36 @@ Player::~Player()
 const Position		&Player::getPosition() const
 {
   return (_position);
+}
+
+uint16_t		Player::getX() const
+{
+  return (_position.x);
+}
+
+uint16_t		Player::getY() const
+{
+  return (_position.y);
+}
+
+uint8_t			Player::getSizeX() const
+{
+  return (_sizeX);
+}
+
+uint8_t			Player::getSizeY() const
+{
+  return (_sizeY);
+}
+
+void			Player::setX(const uint16_t x)
+{
+  _position.x = x;
+}
+
+void			Player::setY(const uint16_t y)
+{
+  _position.y = y;
 }
 
 void			Player::setPosition(const Position &pos)
