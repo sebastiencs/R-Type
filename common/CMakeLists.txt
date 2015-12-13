@@ -38,6 +38,7 @@ file (GLOB
   includes/ListSecure.hh
   includes/Physics.hh
   includes/DequeSecure.hh
+  includes/QueueSecure.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
   )

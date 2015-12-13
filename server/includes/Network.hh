@@ -23,6 +23,7 @@
 # include "Thread.hh"
 # include "Semaphore.hh"
 # include "IOEvent.hh"
+# include "QueueSecure.hh"
 
 class	Selector;
 class	Manager;
@@ -49,7 +50,7 @@ private:
   Selector_UniquePtr		_selector;
   bool				_running;
   IThread_UniquePtr		_thread;
-  std::queue<PaquetClient>	_queuePaquet;
+  QueueSecure<PaquetClient>	_queuePaquet;
   std::list<ISocketTCP_SharedPtr>	_socketClient;
   Manager_WeakPtr		_manager;
   Buffer			_buffer;
