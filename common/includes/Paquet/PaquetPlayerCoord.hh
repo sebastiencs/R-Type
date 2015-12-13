@@ -19,6 +19,15 @@ public:
   PaquetPlayerCoord(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetPlayerCoord();
 
+  template <typename T>
+  PaquetPlayerCoord &operator=(T &p) {
+    _playerID = p->getID();
+    _x = p->getX();
+    _y = p->getY();
+    createPaquet();
+    return (*this);
+  }
+
   void setPlayerID(const uint8_t&);
   void setPosition(const uint16_t&, const uint16_t&);
 
