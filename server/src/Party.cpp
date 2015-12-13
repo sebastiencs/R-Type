@@ -12,6 +12,7 @@
 #include "IOEvent.hh"
 #include "Tools.hh"
 #include "Manager.hh"
+#include "Physics.hh"
 
 Party::Party(const Manager_SharedPtr &&manager)
   : _sem(std::make_unique<Semaphore>()),
@@ -69,7 +70,7 @@ void			Party::run()
 
   for (;;) {
 
-    if (_enemies.empty() || _timerWave->ms() >= 100000) {
+    if (_enemies.empty() || _timerWave->ms() >= 10000) {
       _wave->getSpawn();
       _enemies.for_each([this] (auto &enemy) {
     	  updateEnemy(enemy);
@@ -83,27 +84,24 @@ void			Party::run()
 
 	if (enemy->getStatus() == Enemy::JUST_ENTERED) {
 
-	  uint16_t x = enemy->getPosX();
+	  uint16_t x = enemy->getX();
 	  if (x > 700) {
-	    enemy->setPosX(x - 2);
-	    changed = true;
+	    changed = Physics::moveX(Physics::NO_LOCK, enemy, x - 2, _enemies, _players);
 	  }
 	  else {
-	    enemy->setStatus(Enemy::PLAYING);
+	    enemy->nextAction();
 	  }
 	}
-	else if (enemy->getStatus() == Enemy::PLAYING) {
+	else if (enemy->getStatus() == Enemy::FOLLOWING) {
 
-	  uint16_t y = enemy->getPosY();
+	  uint16_t y = enemy->getY();
 	  auto focused = focusOnClosestPlayer(y);
 
 	  if (focused && focused->getPosition().y < y - 3) {
-	    enemy->setPosY(y - 2);
-	    changed = true;
+	    changed = Physics::moveY(Physics::NO_LOCK, enemy, y - 2, _enemies, _players);
 	  }
 	  else if (focused && focused->getPosition().y > y + 3) {
-	    enemy->setPosY(y + 2);
-	    changed = true;
+	    changed = Physics::moveY(Physics::NO_LOCK, enemy, y + 2, _enemies, _players);
 	  }
 	}
 
@@ -212,9 +210,17 @@ void			Party::setCoordPlayer(PlayerCoord *pc)
 {
   uint8_t id = pc->getID();
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
+  PaquetPlayerCoord	paquet;
 
   if (player) {
-    player->setPosition(Position(pc->getX(), pc->getY()));
+
+    uint16_t x = pc->getX();
+    uint16_t y = pc->getY();
+
+    if (Physics::move(Physics::LOCK, player, x, y, _players, _enemies) == false) {
+      paquet = player;
+      write(paquet, player->addr());
+    }
   }
   delete pc;
 }
@@ -256,7 +262,7 @@ void			Party::setRunning(bool run)
 
     _players.for_each([&] (auto &player_a) {
 
-	_players.for_each_internal([&] (auto &player) {
+	_players.for_each_nolock([&] (auto &player) {
 
 	    pos = player->getPosition();
 	    paquet.setPlayerID(player->getID());
