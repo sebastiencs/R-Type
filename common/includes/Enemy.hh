@@ -15,8 +15,9 @@
 # include <memory>
 # include <queue>
 # include "Debug.hh"
+# include "Object.hh"
 
-class		Enemy
+class		Enemy : public Object
 {
 public:
   Enemy();
@@ -24,21 +25,13 @@ public:
   Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_t x, const uint16_t y);
   virtual ~Enemy();
 
-  void		setX(const uint16_t x);
-  void		setY(const uint16_t y);
   void		setPosID(const uint8_t id);
   void		setLife(const int life);
   void		setType(const uint8_t type);
-  void		setID(const uint8_t);
-  uint16_t	getX() const;
-  uint16_t	getY() const;
-  uint8_t	getID() const;
   int		getLife() const;
   uint8_t       getType() const;
   int		getStatus() const;
   void		setStatus(const int status);
-  uint8_t	getSizeX() const;
-  uint8_t	getSizeY() const;
   void		pushAction(int);
   void		nextAction();
 
@@ -49,14 +42,9 @@ public:
   };
 
 private:
-  uint8_t		_id;
-  uint16_t		_x;
-  uint16_t		_y;
   int			_life;
   uint8_t		_type;
   int			_status;
-  uint8_t		_sizeX;
-  uint8_t		_sizeY;
   std::queue<int>	_actions;
 };
 

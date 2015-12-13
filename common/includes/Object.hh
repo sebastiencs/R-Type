@@ -18,7 +18,7 @@ class		Object
 {
 public:
   Object();
-  Object(const uint16_t posX, const uint16_t posY, const uint8_t sizeX, const uint8_t sizeY);
+  Object(const uint8_t id, const uint16_t posX, const uint16_t posY, const uint8_t sizeX, const uint8_t sizeY);
   virtual ~Object();
   void		setX(const uint16_t posX);
   void		setY(const uint16_t posY);
@@ -28,10 +28,13 @@ public:
   uint16_t	getY() const;
   uint8_t	getSizeX() const;
   uint8_t	getSizeY() const;
-  
-private:
-  uint16_t	_posX;
-  uint16_t	_posY;
+  void		setID(const uint8_t id);
+  uint8_t	getID() const;
+
+protected:
+  uint8_t	_id;
+  uint16_t	_x;
+  uint16_t	_y;
   uint8_t	_sizeX;
   uint8_t	_sizeY;
 };
