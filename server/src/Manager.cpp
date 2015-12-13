@@ -183,7 +183,7 @@ void		Manager::handlePaquet(PaquetCreateParty *paquet, const Addr &addr)
 
   PaquetResponse	p;
 
-  if (!party && player) {
+  if (!party && player && name.size()) {
     Party	*party(new Party(shared_from_this(), name));
 
     party->addPlayer(player);
