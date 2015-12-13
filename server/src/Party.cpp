@@ -58,7 +58,7 @@ void			Party::updateEnemy(const Enemy_SharedPtr &e)
 
   paquet = e;
   _players.for_each([&] (auto &p) {
-      write(paquet, p->addr());
+      this->write(paquet, p->addr());
     });
 }
 
@@ -73,7 +73,7 @@ void			Party::run()
     if (_enemies.empty() || _timerWave->ms() >= 10000) {
       _wave->getSpawn();
       _enemies.for_each([this] (auto &enemy) {
-    	  updateEnemy(enemy);
+    	  this->updateEnemy(enemy);
     	});
       _timerWave->reset();
     }
@@ -95,7 +95,7 @@ void			Party::run()
 	else if (enemy->getStatus() == Enemy::FOLLOWING) {
 
 	  uint16_t y = enemy->getY();
-	  auto focused = focusOnClosestPlayer(y);
+	  auto focused = this->focusOnClosestPlayer(y);
 
 	  if (focused && focused->getPosition().y < y - 3) {
 	    changed = Physics::moveY(Physics::NO_LOCK, enemy, y - 2, _enemies, _players);
@@ -106,7 +106,7 @@ void			Party::run()
 	}
 
 	if (changed) {
-	  updateEnemy(enemy);
+	  this->updateEnemy(enemy);
 	}
       });
 
@@ -268,8 +268,7 @@ void			Party::setRunning(bool run)
 	    paquet.setPlayerID(player->getID());
 	    paquet.setPosition(pos.x, pos.y);
 	    paquet.createPaquet();
-
-	    write(paquet, player_a->addr());
+	    this->write(paquet, player_a->addr());
 
 	  });
       });
