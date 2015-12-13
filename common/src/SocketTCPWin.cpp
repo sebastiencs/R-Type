@@ -15,7 +15,7 @@ SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
 {
   _type = type;
   if ((_socket = ::socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-    DEBUG_MSG("SockectTCOWin failed : " + WSAGetLastError());
+    DEBUG_MSG("SockectTCOWin failed : " << WSAGetLastError());
   else
     DEBUG_MSG("SocketTCPWin created");
 }
@@ -107,7 +107,7 @@ int	SocketTCPWin::listen(int max)
 ssize_t	SocketTCPWin::write(const Buffer &buf)
 {
   if ((send(_socket, (const char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR) {
-    DEBUG_MSG("Send failed: " + WSAGetLastError());
+    DEBUG_MSG("Send failed: " << WSAGetLastError());
   }
   return (0);
 }
@@ -115,7 +115,7 @@ ssize_t	SocketTCPWin::write(const Buffer &buf)
 ssize_t	SocketTCPWin::write(const Buffer &buf, const Addr &addr)
 {
   if ((send(addr.getSocket(), (const char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR) {
-    DEBUG_MSG("Send failed: " + WSAGetLastError());
+    DEBUG_MSG("Send failed: " << WSAGetLastError());
   }
   return (0);
 }
@@ -123,7 +123,7 @@ ssize_t	SocketTCPWin::write(const Buffer &buf, const Addr &addr)
 ssize_t	SocketTCPWin::write(const Paquet &paquet)
 {
   if ((send(_socket, (const char *)paquet.getData(), paquet.getSize(), 0)) == SOCKET_ERROR) {
-    DEBUG_MSG("Send failed: " + WSAGetLastError());
+    DEBUG_MSG("Send failed: " << WSAGetLastError());
   }
   return (0);
 }
@@ -131,7 +131,7 @@ ssize_t	SocketTCPWin::write(const Paquet &paquet)
 ssize_t	SocketTCPWin::write(const Paquet &paquet, const Addr &addr)
 {
   if ((send(addr.getSocket(), (const char *)paquet.getData(), paquet.getSize(), 0)) == SOCKET_ERROR) {
-    DEBUG_MSG("Send failed: " + WSAGetLastError());
+    DEBUG_MSG("Send failed: " << WSAGetLastError());
   }
   return (0);
 }
@@ -142,7 +142,7 @@ ssize_t	SocketTCPWin::read(Buffer &buf)
 
   buf.reset();
   if ((recvlen = recv(_socket, (char *)buf.get(), buf.size(), 0)) == SOCKET_ERROR)
-    DEBUG_MSG("Recv failed: " + WSAGetLastError());
+    DEBUG_MSG("Recv failed: " << WSAGetLastError());
   else {
 //    DEBUG_MSG((char *)buf);
     buf.setSize(recvlen);

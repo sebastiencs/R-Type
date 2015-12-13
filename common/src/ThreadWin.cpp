@@ -77,9 +77,9 @@ void	*jump(void *arg)
 bool	ThreadWin::close()
 {
   if ((TerminateThread(_thread, 0)) == 0)
-    DEBUG_MSG("TerminateThread: " + GetLastError());  
+    DEBUG_MSG("TerminateThread: " << GetLastError());
   if ((CloseHandle(_thread)) == 0)
-    DEBUG_MSG("CloseHandle: " + GetLastError());
+    DEBUG_MSG("CloseHandle: " << GetLastError());
   _running = false;
   DEBUG_MSG("ThreadWin ended");
   return (true);

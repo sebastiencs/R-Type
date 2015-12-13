@@ -22,12 +22,12 @@ public:
   typedef enum { SERVER = 2, CLIENT = 4 } CONNECTION_TYPE;
 
 private:
+  bool	_isKnown;
   socket_t		_socket;
   sockaddr_in 		_addr;
   CONNECTION_TYPE	_type;
 
   int _clientLen;
-  bool	_isKnown;
 
 public:
 

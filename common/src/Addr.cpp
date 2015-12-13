@@ -127,9 +127,10 @@ uint16_t			Addr::getPort() const {
 
 std::ostream &operator<<(std::ostream &os, const Addr &o)
 {
-  sockaddr_in sock = o.get();
 
 #ifdef __unix__
+
+  sockaddr_in sock = o.get();
 
   os << "Addr = { fd : " << (int)o.getSocket()
      << ", sock : "

@@ -41,10 +41,12 @@ const std::string	&Tools::getUser()
 	char user[UNLEN + 1];
 	DWORD username_len = UNLEN + 1;
 
-	GetUserName(user, &username_len);
-
-	username = (user) ? (user) : ("Unknown");
-
+  if (!GetUserName(user, &username_len)) {
+    username = "Unknown";
+  }
+  else {
+    username = user;
+  }
 	return (username);
 #endif
 }

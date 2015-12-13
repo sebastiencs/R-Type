@@ -20,16 +20,16 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
   if (type == SERVER)
   {
 	  if ((_socket = ::socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
-  		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
+		  DEBUG_MSG("SockectUDPWin failed : " << WSAGetLastError());
 	  else
-	  	DEBUG_MSG("SocketUDPWin created");
+      DEBUG_MSG("SocketUDPWin created");
   }
   else if (type == CLIENT)
   {
 	  if ((_socket = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
-  		DEBUG_MSG("SockectUDPWin failed : " + WSAGetLastError());
+      DEBUG_MSG("SockectUDPWin failed : " << WSAGetLastError());
 	  else
-	  	DEBUG_MSG("SocketUDPWin created");
+      DEBUG_MSG("SocketUDPWin created");
   }
 }
 
@@ -92,7 +92,7 @@ ssize_t	SocketUDPWin::write(const Buffer &buf)
     n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, sizeof(_addr));
   }
   if (n == SOCKET_ERROR) {
-    DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+    DEBUG_MSG("Sendto failed: " << WSAGetLastError());
     n = -1;
   }
   return (n);
@@ -104,7 +104,7 @@ ssize_t	SocketUDPWin::write(const Buffer &buf, const Addr &addr)
   ssize_t		n;
 
   if ((n = sendto(_socket, (const char *)buf.get(), buf.size(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
-      DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+      DEBUG_MSG("Sendto failed: " << WSAGetLastError());
       n = -1;
   }
   return (n);
@@ -124,7 +124,7 @@ ssize_t	SocketUDPWin::write(const Paquet &paquet)
     n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &_addr, sizeof(_addr));
   }
   if (n == SOCKET_ERROR) {
-    DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+    DEBUG_MSG("Sendto failed: " << WSAGetLastError());
     n = -1;
   }
   return (n);
@@ -136,7 +136,7 @@ ssize_t	SocketUDPWin::write(const Paquet &paquet, const Addr &addr)
   ssize_t		n;
 
   if ((n = sendto(_socket, (const char *)paquet.getData(), paquet.getSize(), 0, (struct sockaddr *) &addrIn, sizeof(addrIn))) == SOCKET_ERROR) {
-      DEBUG_MSG("Sendto failed: " + WSAGetLastError());
+      DEBUG_MSG("Sendto failed: " << WSAGetLastError());
       n = -1;
   }
   return (n);
@@ -157,7 +157,7 @@ ssize_t	SocketUDPWin::read(Buffer &buf)
     recvlen = recvfrom(_socket, (char *)buf.get(), buf.size(), 0, (struct sockaddr *) &_addr, &_clientLen);
   }
   if (recvlen == SOCKET_ERROR) {
-    DEBUG_MSG("RecvFrom failed: " + WSAGetLastError());
+    DEBUG_MSG("RecvFrom failed: " << WSAGetLastError());
   }
   else {
     buf.setSize(recvlen);

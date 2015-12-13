@@ -17,8 +17,8 @@
 class		ThreadWin : public IThread
 {
 private:
-  HANDLE	_thread;
   bool		_running;
+  HANDLE	_thread;
   Callback_t	_callback;
   void		*_param;
   void		*_return;
