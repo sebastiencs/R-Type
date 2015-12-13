@@ -18,7 +18,7 @@ Enemy::Enemy()
     _life(0),
     _type(0)
 {
-    DEBUG_MSG("Enemy created");
+  DEBUG_MSG("Enemy created");
 }
 
 Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
@@ -27,8 +27,14 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
     _y(Tools::random(1, 768)),
     _life(life),
     _type(type),
-    _status(JUST_ENTERED)
+    _status(JUST_ENTERED),
+    _sizeX(0),
+    _sizeY(0)
 {
+  if (type == 0) {
+    _sizeX = 70;
+    _sizeY = 50;
+  }
   DEBUG_MSG("Enemy created");
 }
 
@@ -38,8 +44,14 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
     _y(y),
     _life(life),
     _type(type),
-    _status(JUST_ENTERED)
+    _status(JUST_ENTERED),
+    _sizeX(0),
+    _sizeY(0)
 {
+  if (type == 0) {
+    _sizeX = 70;
+    _sizeY = 50;
+  }
   DEBUG_MSG("Enemy created");
 }
 
@@ -48,12 +60,12 @@ Enemy::~Enemy()
   DEBUG_MSG("Enemy deleted");
 }
 
-void	Enemy::setPosX(const uint16_t x)
+void	Enemy::setX(const uint16_t x)
 {
   _x = x;
 }
 
-void	Enemy::setPosY(const uint16_t y)
+void	Enemy::setY(const uint16_t y)
 {
   _y = y;
 }
@@ -73,12 +85,12 @@ void	Enemy::setType(const uint8_t type)
   _type = type;
 }
 
-uint16_t Enemy::getPosX() const
+uint16_t Enemy::getX() const
 {
   return _x;
 }
 
-uint16_t Enemy::getPosY() const
+uint16_t Enemy::getY() const
 {
   return _y;
 }
@@ -106,4 +118,31 @@ int	Enemy::getStatus() const
 void	Enemy::setStatus(const int status)
 {
   _status = status;
+}
+
+uint8_t	Enemy::getSizeX() const
+{
+  return (_sizeX);
+}
+
+uint8_t	Enemy::getSizeY() const
+{
+  return (_sizeY);
+}
+
+void	Enemy::pushAction(int action)
+{
+  _actions.push(action);
+}
+
+void	Enemy::nextAction()
+{
+  int action = UNDEFINED;
+
+  if (_actions.size()) {
+    action = _actions.front();
+    _actions.pop();
+
+  }
+  _status = action;
 }

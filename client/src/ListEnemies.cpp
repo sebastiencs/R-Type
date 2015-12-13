@@ -25,8 +25,8 @@ void		ListEnemies::handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t
     e = new Enemy(id, life, type);
     addEnemy(e);
   }
-  e->setPosX(x);
-  e->setPosY(y);
+  e->setX(x);
+  e->setY(y);
 }
 
 void ListEnemies::deleteEnemy(uint8_t id)

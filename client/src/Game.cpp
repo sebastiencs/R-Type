@@ -128,7 +128,7 @@ void	Game::updateGraphic()
 		drawText(text);
 	}
 	for (auto &&enemy : _LE.getListEnemies()) {
-		Transformation t(enemy->getPosX(), enemy->getPosY());
+		Transformation t(enemy->getX(), enemy->getY());
 		t.setScale(1.5, 1.5);
 		//DEBUG_MSG("type: " << (int)enemy->getType());
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
