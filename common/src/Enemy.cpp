@@ -26,7 +26,8 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
     _x(Tools::random(1, 1024)),
     _y(Tools::random(1, 768)),
     _life(life),
-    _type(type)
+    _type(type),
+    _status(JUST_ENTERED)
 {
   DEBUG_MSG("Enemy created");
 }
@@ -36,7 +37,8 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
     _x(x),
     _y(y),
     _life(life),
-    _type(type)
+    _type(type),
+    _status(JUST_ENTERED)
 {
   DEBUG_MSG("Enemy created");
 }
@@ -94,4 +96,14 @@ int	Enemy::getLife() const
 uint8_t	Enemy::getType() const
 {
   return _type;
+}
+
+int	Enemy::getStatus() const
+{
+  return (_status);
+}
+
+void	Enemy::setStatus(const int status)
+{
+  _status = status;
 }

@@ -34,6 +34,13 @@ public:
   uint8_t	getID() const;
   int		getLife() const;
   uint8_t       getType() const;
+  int		getStatus() const;
+  void		setStatus(const int status);
+
+  enum {
+    JUST_ENTERED,
+    PLAYING
+  };
 
 private:
   uint8_t	_id;
@@ -41,6 +48,7 @@ private:
   uint16_t	_y;
   int		_life;
   uint8_t	_type;
+  int		_status;
 };
 
 typedef std::shared_ptr<Enemy>	Enemy_SharedPtr;

@@ -78,18 +78,35 @@ void			Party::run()
     }
 
     _enemies.for_each([&] (auto &enemy) {
-	uint16_t y = enemy->getPosY();
-	auto focused = focusOnClosestPlayer(y);
+
 	bool changed = false;
 
-	if (focused && focused->getPosition().y < y - 3) {
-	  enemy->setPosY(y - 2);
-	  changed = true;
+	if (enemy->getStatus() == Enemy::JUST_ENTERED) {
+
+	  uint16_t x = enemy->getPosX();
+	  if (x > 700) {
+	    enemy->setPosX(x - 2);
+	    changed = true;
+	  }
+	  else {
+	    enemy->setStatus(Enemy::PLAYING);
+	  }
 	}
-	else if (focused && focused->getPosition().y > y + 3) {
-	  enemy->setPosY(y + 2);
-	  changed = true;
+	else if (enemy->getStatus() == Enemy::PLAYING) {
+
+	  uint16_t y = enemy->getPosY();
+	  auto focused = focusOnClosestPlayer(y);
+
+	  if (focused && focused->getPosition().y < y - 3) {
+	    enemy->setPosY(y - 2);
+	    changed = true;
+	  }
+	  else if (focused && focused->getPosition().y > y + 3) {
+	    enemy->setPosY(y + 2);
+	    changed = true;
+	  }
 	}
+
 	if (changed) {
 	  updateEnemy(enemy);
 	}
