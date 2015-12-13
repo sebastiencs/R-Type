@@ -13,24 +13,43 @@
 
 # include <memory>
 # include <iostream>
+# include <initializer_list>
+
+class Object;
 
 class		Physics
 {
+public:
+  enum { LOCK, NO_LOCK };
+
 private:
-  static bool	isMove(std::initializer_list<std::shared_ptr<void>> &init_list) {
+
+  template <typename... T, typename U>
+  static inline bool searchInLists(int lock, U &func, T&... list) {
+
+    std::initializer_list<std::shared_ptr<Object>> init_list;
+
+    if (lock == LOCK) {
+      init_list = { (list.findIn(func))... };
+    }
+    else {
+      init_list = { (list.find_if_nolock(func))... };
+    }
+
+    bool changed = true;
+
     for (auto &e : init_list) {
       if (e != nullptr) {
-	return (false);
+	changed = false;
       }
     }
-    return (true);
+
+    return (changed);
   }
 
 public:
   Physics();
   virtual ~Physics();
-
-  enum { LOCK, NO_LOCK };
 
   template<typename... T, typename U>
   static bool			moveX(int lock, U &elem, uint16_t newX, T&... list) {
@@ -52,15 +71,9 @@ public:
       return (false);
     };
 
-    std::initializer_list<std::shared_ptr<void>> init_list;
-
-    if (lock == LOCK)
-      init_list = { (list.findIn(func))... };
-    else
-      init_list = { (list.find_if_nolock(func))... };
-
-    if ((changed = isMove(init_list)))
+    if ((changed = searchInLists(lock, func, list...))) {
       elem->setX(newX);
+    }
     return (changed);
   }
 
@@ -84,15 +97,9 @@ public:
       return (false);
     };
 
-    std::initializer_list<std::shared_ptr<void>> init_list;
-
-    if (lock == LOCK)
-      init_list = { (list.findIn(func))... };
-    else
-      init_list = { (list.find_if_nolock(func))... };
-
-    if ((changed = isMove(init_list)))
+    if ((changed = searchInLists(lock, func, list...))) {
       elem->setY(newY);
+    }
     return (changed);
   }
 
