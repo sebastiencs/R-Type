@@ -109,6 +109,15 @@ public:
   };
 
   template <class U>
+  auto find_if_nolock(const U &func) const -> T {
+
+    auto &&found = std::find_if(_list.begin(), _list.end(), func);
+    auto ptr = (found == _list.end()) ? (nullptr) : (*found);
+
+    return (ptr);
+  };
+
+  template <class U>
   void for_each(const U &func) const {
 
     _mutex.lock();
@@ -118,7 +127,7 @@ public:
   };
 
   template <class U>
-  void for_each_internal(const U &func) const {
+  void for_each_nolock(const U &func) const {
 
     std::for_each(_list.begin(), _list.end(), func);
 
