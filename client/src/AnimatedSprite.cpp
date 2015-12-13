@@ -36,7 +36,7 @@ void AnimatedSprite::draw()
 		++_states;
 		_timer->reset();
 	}
-	_transformation.setCrop((_width / _nbrStates) * _states, 0, (_width / _nbrStates), _height);
+	_transformation.setCrop((_width / _nbrStates) * _states, 0, static_cast<uint16_t>((_width / _nbrStates)), _height);
 	_transformation.setBounds(_width, _height);
 
 	if (getTransformation().hasCrop())

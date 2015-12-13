@@ -48,7 +48,7 @@ class			Party
   ITimer_UniquePtr	_timerWave;
 
   void				write(const Paquet &, const Addr &) const;
-  const Player_SharedPtr	focusOnClosestPlayer(const uint8_t yEnnemy) const;
+  const Player_SharedPtr	focusOnClosestPlayer(const uint16_t yEnnemy) const;
   void				updateEnemy(const Enemy_SharedPtr &);
 
 public:
