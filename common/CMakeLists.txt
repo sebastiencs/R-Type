@@ -34,6 +34,7 @@ file (GLOB
   includes/Patern.hh
   includes/Enemy.hh
   includes/ListSecure.hh
+  includes/Physics.hh
   includes/DequeSecure.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
