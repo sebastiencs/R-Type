@@ -72,8 +72,8 @@ void			Party::run()
     if (_enemies.empty() || _timerWave->ms() >= 100000) {
       _wave->getSpawn();
       _enemies.for_each([this] (auto &enemy) {
-	  updateEnemy(enemy);
-	});
+    	  updateEnemy(enemy);
+    	});
       _timerWave->reset();
     }
 
@@ -250,12 +250,22 @@ void			Party::setRunning(bool run)
     _players.for_each([&] (auto &player) {
 	pos = player->getPosition();
 	pos.y += 200 * i;
+	i += 1;
 	player->setPosition(pos);
+      });
 
-	paquet.setPlayerID(player->getID());
-	paquet.setPosition(pos.x, pos.y);
-	paquet.createPaquet();
-	write(paquet, player->addr());
+    _players.for_each([&] (auto &player_a) {
+
+	_players.for_each_internal([&] (auto &player) {
+
+	    pos = player->getPosition();
+	    paquet.setPlayerID(player->getID());
+	    paquet.setPosition(pos.x, pos.y);
+	    paquet.createPaquet();
+
+	    write(paquet, player_a->addr());
+
+	  });
       });
   }
 }
