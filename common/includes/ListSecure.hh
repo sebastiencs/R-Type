@@ -117,6 +117,13 @@ public:
 
   };
 
+  template <class U>
+  void for_each_internal(const U &func) const {
+
+    std::for_each(_list.begin(), _list.end(), func);
+
+  };
+
 };
 
 #endif /* !LISTSECURE_H_ */
