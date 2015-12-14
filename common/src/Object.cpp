@@ -19,7 +19,7 @@ Object::Object()
   DEBUG_MSG("Object created");
 }
 
-Object::Object(const uint8_t id, const uint16_t x, const uint16_t y, const uint8_t sizeX, const uint8_t sizeY)
+Object::Object(const uint8_t id, const uint16_t x, const uint16_t y, const uint16_t sizeX, const uint16_t sizeY)
   : _id(id),
     _pos(x, y),
     _sizeX(sizeX),
@@ -28,7 +28,7 @@ Object::Object(const uint8_t id, const uint16_t x, const uint16_t y, const uint8
   DEBUG_MSG("Object created");
 }
 
-Object::Object(const uint8_t id, const Position pos, const uint8_t sizeX, const uint8_t sizeY)
+Object::Object(const uint8_t id, const Position pos, const uint16_t sizeX, const uint16_t sizeY)
   : _id(id),
     _pos(pos),
     _sizeX(sizeX),
@@ -52,12 +52,12 @@ void		Object::setY(const uint16_t y)
   _pos.y = y;
 }
 
-void		Object::setSizeX(const uint8_t sizeX)
+void		Object::setSizeX(const uint16_t sizeX)
 {
   _sizeX = sizeX;
 }
 
-void		Object::setSizeY(const uint8_t sizeY)
+void		Object::setSizeY(const uint16_t sizeY)
 {
   _sizeY = sizeY;
 }
@@ -72,12 +72,12 @@ uint16_t	Object::getY() const
   return _pos.y;
 }
 
-uint8_t		Object::getSizeX() const
+uint16_t	Object::getSizeX() const
 {
   return _sizeX;
 }
 
-uint8_t		Object::getSizeY() const
+uint16_t	Object::getSizeY() const
 {
   return _sizeY;
 }
