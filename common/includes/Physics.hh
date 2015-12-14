@@ -104,6 +104,13 @@ public:
   }
 
   template<typename... T, typename U>
+  static bool			isContact(int lock, U &elem, T&... list) {
+
+    return ((!moveX(lock, elem, elem->getX(), list...) || !moveY(lock, elem, elem->getY(), list...)));
+
+  }
+
+  template<typename... T, typename U>
   static bool			move(int lock, U &elem, uint16_t newX, uint16_t newY, T&... list) {
 
     return (!(!moveX(lock, elem, newX, list...) || !moveY(lock, elem, newY, list...)));
