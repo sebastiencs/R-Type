@@ -186,25 +186,16 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (changed) {
-		for (auto &player : _LP.getListPlayers()) {
-			if (player->getID() != _LP.getId()) {
-				Position playerPos = player->getPosition();
-				if (pos.x < playerPos.x + VESSEL_WIDTH && pos.x + VESSEL_WIDTH > playerPos.x &&
-					pos.y < playerPos.y + VESSEL_HEIGHT && pos.y + VESSEL_HEIGHT > playerPos.y) {
-					changed = false;
-					break;
-				}
-			}
-		}
-	  // changed = Physics::move(Physics::LOCK, player, pos.x, pos.y, _LP.getListPlayers(), _LE.getListEnemies());
+		changed = Physics::move(Physics::LOCK, player, pos.x, pos.y, _LP.getListPlayers(), _LE.getListEnemies());
 		if (changed) {
-			player->setPosition(pos);
 			_packager->createMovementPackage(_LP.getId(), pos.x, pos.y);
 		}
 	}
 	if (bullet) {
-		_packager->createShotPackage(_LP.getId(), 1, pos.x, pos.y);
-		player->addBullet(std::make_shared<Bullet>(pos.x, pos.y));
+		uint16_t x = pos.x + (VESSEL_WIDTH / 2);
+		uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
+		_packager->createShotPackage(_LP.getId(), 1, x, y);
+		player->addBullet(std::make_shared<Bullet>(x, y));
 	}
 
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
