@@ -66,7 +66,7 @@ public:
 
 	template<class T>
 	bool	remove_elem(T &elem) {
-		if (elem.x > _width) {
+		if (elem->getX() > _width) {
 			return true;
 		}
 		return false;

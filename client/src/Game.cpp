@@ -17,6 +17,7 @@
 #include "AnimatedSprite.hh"
 #include "Sprite.hh"
 #include "Keyboard.hh"
+#include "Bullet.hh"
 
 Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
@@ -70,7 +71,7 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-			player->addBullet(Position(shot->getX(), shot->getY()));
+		  player->addBullet(std::make_shared<Bullet>(0, shot->getX(), shot->getY()));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
@@ -109,9 +110,9 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet.x, bullet.y));
+				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet.x += (uint16_t)(600 * GraphicEngine::getDeltaTimeS());
+				bullet->getX() += (uint16_t)(600 * GraphicEngine::getDeltaTimeS());
 			}
 
 			auto &bulletList = player->getBullets();
@@ -201,7 +202,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	}
 	if (bullet) {
 		_packager->createShotPackage(_LP.getId(), 1, pos.x, pos.y);
-		player->addBullet(Position(pos.x, pos.y));
+		player->addBullet(std::make_shared<Bullet>(pos.x, pos.y));
 	}
 
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {

@@ -13,13 +13,17 @@
 
 # include <tuple>
 # include <list>
+# include <memory>
 # include "Addr.hh"
 # include "Object.hh"
+
+class Bullet;
+typedef std::shared_ptr<Bullet>	Bullet_SharedPtr;
 
 class		Player : public Object
 {
 private:
-  std::list<Position> _bullets;
+  std::list<Bullet_SharedPtr> _bullets;
   std::string	_name;
   uint8_t	_level;
   int		_life;
@@ -32,10 +36,9 @@ public:
   Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
   virtual ~Player();
 
-  virtual const std::list<Position> &getBullets() const;
-  virtual std::list<Position>	&getBullets();
-  virtual void			addBullet(Position &&);
-  virtual void			addBullet(Position &);
+  virtual const std::list<Bullet_SharedPtr> &getBullets() const;
+  virtual std::list<Bullet_SharedPtr>	&getBullets();
+  virtual void			addBullet(Bullet_SharedPtr &&);
 
   virtual uint8_t		getLevel() const;
   virtual void			setLevel(uint8_t);

@@ -11,6 +11,7 @@
 #ifndef BULLET_H_
 # define BULLET_H_
 
+# include <memory>
 # include "Object.hh"
 
 class		Bullet : public Object
@@ -20,11 +21,13 @@ private:
 
 public:
   Bullet();
-  Bullet(const uint8_t id, const uint16_t x = 0, const uint16_t y = 0, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
+  Bullet(const uint16_t x, const uint16_t y, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
   virtual ~Bullet();
 
   uint16_t	getSpeed() const;
   void		setSpeed(const uint16_t speed);
 };
+
+typedef std::shared_ptr<Bullet>	Bullet_SharedPtr;
 
 #endif /* !BULLET_H_ */

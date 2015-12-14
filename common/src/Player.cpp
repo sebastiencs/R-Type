@@ -10,6 +10,7 @@
 
 #include "Debug.hh"
 #include "Player.hh"
+#include "Bullet.hh"
 
 Player::Player()
   : Object(),
@@ -52,24 +53,19 @@ Player::~Player()
   DEBUG_MSG("Player deleted");
 }
 
-const std::list<Position> &Player::getBullets() const
+const std::list<Bullet_SharedPtr> &Player::getBullets() const
 {
 	return _bullets;
 }
 
-std::list<Position> &Player::getBullets()
+std::list<Bullet_SharedPtr> &Player::getBullets()
 {
 	return _bullets;
 }
 
-void Player::addBullet(Position &bullet)
+void Player::addBullet(Bullet_SharedPtr &&bullet)
 {
-	_bullets.emplace_back(bullet);
-}
-
-void Player::addBullet(Position &&bullet)
-{
-	_bullets.emplace_back(bullet);
+  _bullets.push_back(bullet);
 }
 
 uint8_t			Player::getLevel() const
