@@ -18,7 +18,6 @@
 #include "Sprite.hh"
 #include "Keyboard.hh"
 #include "Bullet.hh"
-#include "Physics.hh"
 
 Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),

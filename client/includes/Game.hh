@@ -14,6 +14,7 @@
 # include <deque>
 # include "DisplayUpdater.hh"
 # include "ListEnemies.hh"
+# include "Physics.hh"
 
 class PackageStorage;
 class ISystemAudio;
@@ -68,6 +69,9 @@ public:
 	bool	remove_elem(T &elem) {
 		if (elem->getX() > _width) {
 			return true;
+		}
+		if (Physics::isContact(Physics::LOCK, elem, _LE.getListEnemies())) {
+			return (true);
 		}
 		return false;
 	};
