@@ -18,6 +18,7 @@
 #include "Sprite.hh"
 #include "Keyboard.hh"
 #include "Bullet.hh"
+#include "Physics.hh"
 
 Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
@@ -60,7 +61,7 @@ void	Game::handlingNetwork()
 	auto &&enemy = _PS.getEnemyPackage();
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
 
-	Player *player;
+	Player_SharedPtr player;
 
 	if (obstacle != nullptr) {
 		//const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
@@ -139,7 +140,7 @@ void	Game::updateGraphic()
 
 void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 {
-	Player *player = _LP.getPlayer(_LP.getId());
+	auto player = _LP.getPlayer(_LP.getId());
 	bool changed = false;
 	bool bullet = false;
 	if (!player)
@@ -185,7 +186,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (changed) {
-		for (Player* player : _LP.getListPlayers()) {
+		for (auto &player : _LP.getListPlayers()) {
 			if (player->getID() != _LP.getId()) {
 				Position playerPos = player->getPosition();
 				if (pos.x < playerPos.x + VESSEL_WIDTH && pos.x + VESSEL_WIDTH > playerPos.x &&
@@ -195,6 +196,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 				}
 			}
 		}
+	  // changed = Physics::move(Physics::LOCK, player, pos.x, pos.y, _LP.getListPlayers(), _LE.getListEnemies());
 		if (changed) {
 			player->setPosition(pos);
 			_packager->createMovementPackage(_LP.getId(), pos.x, pos.y);

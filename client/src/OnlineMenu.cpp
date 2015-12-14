@@ -104,7 +104,7 @@ bool OnlineMenu::onClick(uint32_t x, uint32_t y)
 				return true;
 		}
 		if (onlineChoiseBox->onAction(x, y))
-			return true;	
+			return true;
 		if (scrollView->onAction(x, y)) {
 			return true;
 		}
@@ -163,7 +163,7 @@ void OnlineMenu::joinButton()
 					if ((paquetList = PS.getPlayerListPackage())) {
 						for (auto p : paquetList->getPlayers()) {
 							if (LP.getPlayer(std::get<1>(p)) == nullptr)
-								LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+							  LP.addPlayer(std::make_shared<Player>(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
 						}
 						PS.deletePlayerListPackage();
 					}

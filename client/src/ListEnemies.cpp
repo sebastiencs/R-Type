@@ -12,17 +12,17 @@ ListEnemies::~ListEnemies()
   DEBUG_MSG("ListEnemy deleted");
 }
 
-void ListEnemies::addEnemy(Enemy* enemy)
+void ListEnemies::addEnemy(Enemy_SharedPtr enemy)
 {
   _enemies.push_back(enemy);
 }
 
 void		ListEnemies::handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y)
 {
-  Enemy		*e;
+  Enemy_SharedPtr	e;
 
   if ((e = getEnemy(id)) == nullptr) {
-    e = new Enemy(id, life, type);
+    e = std::make_shared<Enemy>(id, life, type);
     addEnemy(e);
   }
   e->setX(x);
@@ -33,7 +33,6 @@ void ListEnemies::deleteEnemy(uint8_t id)
 {
   _enemies.remove_if([this, id] (auto &e) {
       if (e->getID() == id) {
-	delete e;
 	DEBUG_MSG("One enemy deleted");
 	return (true);
       }
@@ -48,12 +47,12 @@ void ListEnemies::clearList()
   _enemies.clear();
 }
 
-const ListSecure<Enemy*> &ListEnemies::getListEnemies() const
+const ListSecure<Enemy_SharedPtr> &ListEnemies::getListEnemies() const
 {
   return _enemies;
 }
 
-Enemy* ListEnemies::getEnemy(uint8_t id)
+Enemy_SharedPtr ListEnemies::getEnemy(uint8_t id)
 {
   return (Tools::findIn(_enemies, [id] (auto &e) { return (e->getID() == id); }));
 }

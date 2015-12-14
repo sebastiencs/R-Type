@@ -18,20 +18,19 @@ public:
 
 	virtual ~ListPlayers();
 
-	void addPlayer(Player* player);
+	void addPlayer(Player_SharedPtr &&player);
 	void clearList();
 
 	void deletePlayer(uint8_t id);
 
-	const ListSecure<Player *> &getListPlayers() const;
-	Player* getPlayer(uint8_t id);
+	const ListSecure<Player_SharedPtr> &getListPlayers() const;
+	Player_SharedPtr getPlayer(uint8_t id);
 	uint8_t getId() const;
 	void setId(uint8_t id);
 
 private:
- ListSecure<Player *> listPlayers;
+ ListSecure<Player_SharedPtr> listPlayers;
  uint8_t _id;
 };
-
 
 #endif /* !LIST_PLAYERS_HH_ */

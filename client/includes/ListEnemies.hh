@@ -18,7 +18,7 @@
 
 class		ListEnemies
 {
-  ListSecure<Enemy *> _enemies;
+  ListSecure<Enemy_SharedPtr> _enemies;
 
 public:
 
@@ -28,14 +28,14 @@ public:
 
   ListEnemies &operator=(const ListEnemies &) = delete;
 
-  void		addEnemy(Enemy* player);
+  void		addEnemy(Enemy_SharedPtr player);
   void		handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y);
   void		clearList();
 
   void		deleteEnemy(uint8_t id);
 
-  const ListSecure<Enemy *> &getListEnemies() const;
-  Enemy*	getEnemy(uint8_t id);
+  const ListSecure<Enemy_SharedPtr> &getListEnemies() const;
+  Enemy_SharedPtr	getEnemy(uint8_t id);
 
 };
 

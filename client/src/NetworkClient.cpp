@@ -13,8 +13,8 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	// Creation du player
 	ListPlayers &list = ListPlayers::getInstance();
 	std::string name = Tools::getUser();
-	Player *player = new Player(name, 0, 0);
-	list.addPlayer(player);
+	Player_SharedPtr player = std::make_shared<Player>(name, 0, 0);
+	list.addPlayer(std::move(player));
 	//!Creation
 
 	paquet->setLevel(player->getLevel());

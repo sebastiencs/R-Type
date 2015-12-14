@@ -69,7 +69,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
 					if (LP.getPlayer(std::get<1>(p)) == nullptr)
-						LP.addPlayer(new Player(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+						LP.addPlayer(std::make_shared<Player>(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
 				}
 				PS.deletePlayerListPackage();
 				DEBUG_MSG("Request received");
@@ -168,7 +168,7 @@ void LobbyMenu::updatePlayerList()
 	std::string ready = "Unready";
 	Color cReady = Color::Red;
 	size_t t = 0;
-	for (Player* p : playerList.getListPlayers()) {
+	for (auto &p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
 		tr.setScale((float)2.0, (float)2.0);
 		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
