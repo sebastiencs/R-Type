@@ -14,6 +14,7 @@
 # include <deque>
 # include <algorithm>
 # include "Mutex.hh"
+# include "Locker.hh"
 
 template<typename T>
 class				DequeSecure
@@ -28,77 +29,66 @@ public:
 
   template<typename... Args>
   void	push_back(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.push_back(args...);
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	emplace_back(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.emplace_back(std::move(args...));
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	remove(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.remove(args...);
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	erase(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.erase(args...);
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	remove_if(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.remove_if(args...);
-    _mutex.unlock();
   };
 
   void	clear() {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _deque.clear();
-    _mutex.unlock();
   };
 
   auto	front() const -> decltype(_deque.front()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _deque.front();
-    _mutex.unlock();
     return (val);
   };
 
   auto	empty() const -> decltype(_deque.empty()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _deque.empty();
-    _mutex.unlock();
     return (val);
   };
 
   auto	size() const -> decltype(_deque.size()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _deque.size();
-    _mutex.unlock();
     return (val);
   };
 
   auto	begin() const -> decltype(_deque.begin()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _deque.begin();
-    _mutex.unlock();
     return (val);
   };
 
   auto	end() const -> decltype(_deque.end()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _deque.end();
-    _mutex.unlock();
     return (val);
   };
 

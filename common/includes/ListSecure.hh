@@ -14,9 +14,10 @@
 # include <list>
 # include <algorithm>
 # include "Mutex.hh"
+# include "Locker.hh"
 
 template<typename T>
-class				ListSecure : public std::list<T>
+class				ListSecure
 {
 private:
   mutable Mutex	_mutex;
@@ -28,80 +29,69 @@ public:
 
   template<typename... Args>
   void	push_back(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _list.push_back(args...);
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	emplace_back(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _list.emplace_back(std::move(args...));
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	remove(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _list.remove(args...);
-    _mutex.unlock();
   };
 
   template<typename... Args>
   void	remove_if(Args&&... args) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _list.remove_if(args...);
-    _mutex.unlock();
   };
 
   void	clear() {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     _list.clear();
-    _mutex.unlock();
   };
 
   auto	front() const -> decltype(_list.front()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _list.front();
-    _mutex.unlock();
     return (val);
   };
 
   auto	empty() const -> decltype(_list.empty()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _list.empty();
-    _mutex.unlock();
     return (val);
   };
 
   auto	size() const -> decltype(_list.size()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _list.size();
-    _mutex.unlock();
     return (val);
   };
 
   auto	begin() const -> decltype(_list.begin()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _list.begin();
-    _mutex.unlock();
     return (val);
   };
 
   auto	end() const -> decltype(_list.end()) {
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&val = _list.end();
-    _mutex.unlock();
     return (val);
   };
 
   template <class U>
   auto findIn(const U &func) const -> T {
 
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     auto &&found = std::find_if(_list.begin(), _list.end(), func);
     auto ptr = (found == _list.end()) ? (nullptr) : (*found);
-    _mutex.unlock();
 
     return (ptr);
   };
@@ -118,9 +108,8 @@ public:
   template <class U>
   void for_each(const U &func) const {
 
-    _mutex.lock();
+    Locker<Mutex> { _mutex };
     std::for_each(_list.begin(), _list.end(), func);
-    _mutex.unlock();
 
   };
 
