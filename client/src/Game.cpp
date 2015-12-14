@@ -195,48 +195,8 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		uint16_t x = pos.x + (VESSEL_WIDTH / 2);
 		uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
 		_packager->createShotPackage(_LP.getId(), 1, x, y);
-		player->addBullet(std::make_shared<Bullet>(x, y));
+		player->addBullet(std::make_shared<Bullet>(x, y, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
 	}
-
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S) && pos.y >= 10) {
-		//		// Si S est appuyer en meme temps le mec bouge pas.
-		//		pos.y -= playerVelocity;
-		//		changed = true;
-		//	}
-		//}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && pos.x >= 10) {
-		//		pos.x -= playerVelocity;
-		//		changed = true;
-		//	}
-		//}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && pos.y <= 715) {
-		//		pos.y += playerVelocity;
-		//		changed = true;
-		//	}
-		//}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		//	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && pos.x <= 910) {
-		//		pos.x += playerVelocity;
-		//		changed = true;
-		//	}
-		//}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _shotCooldown->ms() > SHOT_COOLDOWN) {
-		//	audio.playSound(ISystemAudio::SIMPLE_SHOT);
-		//	_shotCooldown->reset();
-		//	bullet = true;
-		//}
-		//if (changed) {
-		//	player->setPosition(pos);
-		//	_packager->createMovementPackage(LP.getId(), pos.x, pos.y);
-		//}
-		//if (bullet) {
-		//	_packager->createShotPackage(LP.getId(), 1, pos.x, pos.y);
-		//	player->addBullet(Position(pos.x, pos.y));
-		//}
-
 }
 
 void	Game::run()
