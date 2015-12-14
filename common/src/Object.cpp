@@ -67,7 +67,17 @@ uint16_t	Object::getX() const
   return _pos.x;
 }
 
+uint16_t	&Object::getX()
+{
+  return _pos.x;
+}
+
 uint16_t	Object::getY() const
+{
+  return _pos.y;
+}
+
+uint16_t	&Object::getY()
 {
   return _pos.y;
 }

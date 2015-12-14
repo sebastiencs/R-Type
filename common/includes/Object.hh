@@ -36,7 +36,9 @@ public:
   void			setSizeX(const uint16_t sizeX);
   void			setSizeY(const uint16_t sizeY);
   uint16_t		getX() const;
+  uint16_t		&getX();
   uint16_t		getY() const;
+  uint16_t		&getY();
   uint16_t		getSizeX() const;
   uint16_t		getSizeY() const;
   void			setID(const uint8_t id);
