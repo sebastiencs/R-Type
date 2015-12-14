@@ -18,6 +18,8 @@ file (GLOB
   src/Mutex.cpp
   src/Enemy.cpp
   src/Object.cpp
+  src/Bullet.cpp
+  src/Obstacle.cpp
   src/TaskScheduler.cpp
   )
 
@@ -34,6 +36,8 @@ file (GLOB
   includes/PaquetTCP.hh
   includes/Patern.hh
   includes/Enemy.hh
+  includes/Bullet.hh
+  includes/Obstacle.hh
   includes/Object.hh
   includes/ListSecure.hh
   includes/Physics.hh
