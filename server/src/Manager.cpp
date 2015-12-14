@@ -41,7 +41,7 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
 void		Manager::deletePlayer(const Addr &addr)
 {
   {
-    auto &&player = Tools::findIn(_pWaiting, [&addr] (auto &p) { return (p->addr() == addr); });
+    auto &&player = _pWaiting.findIn([&addr] (auto &p) { return (p->addr() == addr); });
 
     if (player != nullptr) {
       _pWaiting.remove(player);
@@ -402,7 +402,7 @@ void		Manager::handlePaquet(PaquetFirstUDP *paquet, const Addr &addr)
 
   uint8_t	id = paquet->getId();
 
-  auto &&p = Tools::findIn(_pWaiting, [id] (auto &p) { return (p->getID() == id); });
+  auto &&p = _pWaiting.findIn([id] (auto &p) { return (p->getID() == id); });
 
   if (p) {
     p->addr().setPortUDP(addr.get().sin_port);

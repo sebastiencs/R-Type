@@ -54,5 +54,5 @@ const ListSecure<Enemy_SharedPtr> &ListEnemies::getListEnemies() const
 
 Enemy_SharedPtr ListEnemies::getEnemy(uint8_t id)
 {
-  return (Tools::findIn(_enemies, [id] (auto &e) { return (e->getID() == id); }));
+  return (_enemies.findIn([id] (auto &e) { return (e->getID() == id); }));
 }

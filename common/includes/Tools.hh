@@ -61,9 +61,9 @@ namespace		Tools
   }
 
   template<class T>
-  auto		findPlayer(const T &input, const Addr &addr) -> typename T::value_type
+  auto		findPlayer(const T &input, const Addr &addr)
   {
-    return (findIn(input, [&addr] (typename T::value_type p) { return (p->addr() == addr); }));
+    return (input.findIn([&addr] (auto &p) { return (p->addr() == addr); }));
   };
 
   int			random(int min, int max);
