@@ -12,7 +12,7 @@
 #include "Tools.hh"
 
 Enemy::Enemy()
-  : Object(0, 0, 0, 0, 0),
+  : Object(),
     _life(0),
     _type(0)
 {
@@ -20,7 +20,7 @@ Enemy::Enemy()
 }
 
 Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
-  : Object(id, Tools::random(1, 1024), Tools::random(1, 768), 0, 0),
+  : Object(id, Tools::random(1, 1024), Tools::random(1, 768)),
     _life(life),
     _type(type),
     _status(JUST_ENTERED)
@@ -33,7 +33,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
 }
 
 Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_t x, const uint16_t y)
-  : Object(id, x, y, 0, 0),
+  : Object(id, x, y),
     _life(life),
     _type(type),
     _status(JUST_ENTERED)

@@ -36,7 +36,7 @@ Player::Player(const std::string &name, uint8_t id,
 }
 
 Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &addr,
-	       const uint8_t sizeX, const uint8_t sizeY)
+	       const uint16_t sizeX, const uint16_t sizeY)
   : Object(id, 0, 0, sizeX, sizeY),
     _name(name),
     _level(level),

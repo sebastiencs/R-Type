@@ -27,18 +27,18 @@ class		Object
 {
 public:
   Object();
-  Object(const uint8_t id, const uint16_t posX = 0, const uint16_t posY = 0, const uint8_t sizeX = 0, const uint8_t sizeY = 0);
-  Object(const uint8_t id, const Position pos, const uint8_t sizeX = 0, const uint8_t sizeY = 0);
+  Object(const uint8_t id, const uint16_t posX = 0, const uint16_t posY = 0, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
+  Object(const uint8_t id, const Position pos, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
   virtual ~Object();
 
   void			setX(const uint16_t posX);
   void			setY(const uint16_t posY);
-  void			setSizeX(const uint8_t sizeX);
-  void			setSizeY(const uint8_t sizeY);
+  void			setSizeX(const uint16_t sizeX);
+  void			setSizeY(const uint16_t sizeY);
   uint16_t		getX() const;
   uint16_t		getY() const;
-  uint8_t		getSizeX() const;
-  uint8_t		getSizeY() const;
+  uint16_t		getSizeX() const;
+  uint16_t		getSizeY() const;
   void			setID(const uint8_t id);
   uint8_t		getID() const;
   const Position	&getPosition() const;
@@ -49,8 +49,8 @@ public:
 protected:
   uint8_t	_id;
   Position	_pos;
-  uint8_t	_sizeX;
-  uint8_t	_sizeY;
+  uint16_t	_sizeX;
+  uint16_t	_sizeY;
 };
 
 #endif /* !OBJECT_HH_ */
