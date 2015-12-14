@@ -114,7 +114,7 @@ void		Manager::handlePaquet(PaquetFirst *paquet, const Addr &addr)
 
     std::cout << addr << std::endl;
 
-    _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr));
+    _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr, 112, 49));
     p.setReturn(2);
     p.setData(id);
   }

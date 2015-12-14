@@ -35,8 +35,9 @@ Player::Player(const std::string &name, uint8_t id,
   DEBUG_MSG("Player created");
 }
 
-Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &addr)
-  : Object(id),
+Player::Player(const std::string &name, uint8_t id, uint8_t level, const Addr &addr,
+	       const uint8_t sizeX, const uint8_t sizeY)
+  : Object(id, 0, 0, sizeX, sizeY),
     _name(name),
     _level(level),
     _life(0),
