@@ -72,7 +72,7 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-		  player->addBullet(std::make_shared<Bullet>(0, shot->getX(), shot->getY()));
+		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY()));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);

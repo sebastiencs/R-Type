@@ -33,7 +33,7 @@ private:
 public:
   Player();
   Player(const std::string &, uint8_t, const Position &, uint8_t, int, bool);
-  Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
+  Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0, const uint16_t sizeX = 112, const uint16_t sizeY = 49);
   virtual ~Player();
 
   virtual const std::list<Bullet_SharedPtr> &getBullets() const;
