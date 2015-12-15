@@ -45,6 +45,11 @@ public:
     _deque.remove(args...);
   };
 
+  void	pop_front() {
+    Locker<Mutex> { _mutex };
+    _deque.pop_front();
+  };
+
   template<typename... Args>
   void	erase(Args&&... args) {
     Locker<Mutex> { _mutex };
