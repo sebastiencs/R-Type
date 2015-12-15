@@ -38,6 +38,40 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
   }
 }
 
+void		Manager::broadcast(const PlayerList &list, const Paquet &paquet)
+{
+  if (!_network.expired()) {
+
+    auto net = _network.lock();
+
+    list.for_each([&] (auto &p) {
+	net->write(paquet, p->addr());
+      });
+
+  }
+  else {
+    DEBUG_MSG("Try to send on null network");
+  }
+}
+
+void		Manager::broadcast_except(const PlayerList &list, const uint8_t id, const Paquet &paquet)
+{
+  if (!_network.expired()) {
+
+    auto net = _network.lock();
+
+    list.for_each([&, id] (auto &p) {
+	if (p->getID() != id) {
+	  net->write(paquet, p->addr());
+	}
+      });
+
+  }
+  else {
+    DEBUG_MSG("Try to send on null network");
+  }
+}
+
 void		Manager::deletePlayer(const Addr &addr)
 {
   {
@@ -52,36 +86,30 @@ void		Manager::deletePlayer(const Addr &addr)
     auto &&party = Tools::findIn(_parties, [&addr] (auto &p) { return (p->isPlayer(addr)); });
     uint8_t id = 0xFF;
 
-    if (party != nullptr) {
-      id = party->getIdFromAddr(addr);
-      party->deletePlayer(addr);
-    }
-    else {
+    if (!party) {
       return ;
     }
+
+    id = party->getIdFromAddr(addr);
+    party->deletePlayer(addr);
+
     if (party->getPlayers().empty()) {
       _parties.remove(party);
     }
     else {
+
+      auto &players = party->getPlayers();
+
+      std::shared_ptr<Paquet> paquet;
+
       if (party->isRunning()) {
-	PaquetLeave p;
-	p.setID(id);
-	p.createPaquet();
-	for (auto &player : party->getPlayers()) {
-	  write(p, player->addr());
-	}
+	paquet = std::make_shared<PaquetLeave>(id);
       }
       else {
-	auto &players = party->getPlayers();
-	PaquetListPlayers	paquet;
-	for (auto &p : players) {
-	  paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
-	}
-	paquet.createPaquet();
-	for (auto &p : players) {
-	  write(paquet, p->addr());
-	}
+	paquet = std::make_shared<PaquetListPlayers>(players);
       }
+
+      broadcast(players, *paquet);
     }
   }
 }
@@ -109,11 +137,7 @@ void		Manager::handlePaquet(PaquetFirst_SharedPtr paquet, const Addr &addr)
   DEBUG_MSG(*paquet);
 
   if (paquet->getVersion() == 1) {
-
     uint8_t id = getID();
-
-    std::cout << addr << std::endl;
-
     _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr, 112, 49));
     p.setReturn(2);
     p.setData(id);
@@ -143,14 +167,9 @@ void		Manager::handlePaquet(PaquetJoinParty_SharedPtr paquet, const Addr &addr)
     write(p, addr);
 
     auto &players = party->getPlayers();
-    PaquetListPlayers	paquet;
-    for (auto &p : players) {
-      paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
-    }
-    paquet.createPaquet();
-    for (auto &p : players) {
-      write(paquet, p->addr());
-    }
+    PaquetListPlayers	paquet(players);
+
+    broadcast(players, paquet);
   }
   else {
     p.setReturn(3);
@@ -225,17 +244,9 @@ void		Manager::handlePaquet(PaquetLeave_SharedPtr paquet, const Addr &addr UNUSE
     }
     else {
       auto &players = party->getPlayers();
-      PaquetListPlayers	paquet;
-      for (auto &p : players) {
-	paquet.addPlayer(p->getName(), p->getID(), p->getLevel());
-      }
-      paquet.createPaquet();
-      for (auto &p : players) {
-	write(paquet, p->addr());
-      }
-      // for (auto &player : players) {
-      // 	write(*paquet, player->addr());
-      // }
+      PaquetListPlayers	paquet(players);
+
+      broadcast(players, paquet);
     }
   }
   else {
@@ -323,20 +334,12 @@ void		Manager::handlePaquet(PaquetReady_SharedPtr paquet, const Addr &addr)
     party->setReady(id, paquet->getStatus());
     auto &players = party->getPlayers();
 
-    for (auto &player : players) {
-      if (player->getID() != id) {
-	write(*paquet, player->addr());
-      }
-      if (player->getReady()) {
-	size++;
-      }
-    }
+    broadcast_except(players, id, *paquet);
+    size = players.count_if([] (auto &p) { return (p->getReady()); });
+
     if (players.size() == size) {
-      p.createPaquet();
       party->setRunning(true);
-      for (auto &player : players) {
-	write(p, player->addr());
-      }
+      broadcast(players, p);
     }
   }
   else {
@@ -372,14 +375,8 @@ void		Manager::handlePaquet(PaquetRequestPlayers_SharedPtr paquet UNUSED, const 
   auto &&party = Tools::findIn(_parties, [&addr] (Party *p) { return (p->isPlayer(addr)); });
 
   if (party) {
-
-    const listPlayers &plist = party->getPlayers();
-
-    for (auto &player : plist) {
-      p.addPlayer(player->getName(), player->getID(), player->getLevel());
-    }
+    p = party->getPlayers();
   }
-  p.createPaquet();
   write(p, addr);
 }
 

@@ -13,6 +13,7 @@
 PaquetLaunch::PaquetLaunch()
   : _id(Paquet::LAUNCH)
 {
+  createPaquet();
 }
 
 PaquetLaunch::PaquetLaunch(const Buffer &buf)

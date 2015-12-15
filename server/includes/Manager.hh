@@ -69,6 +69,8 @@ public:
 
   void		deletePlayer(const Addr &);
   void		write(const Paquet &, const Addr &);
+  void		broadcast(const PlayerList &, const Paquet &);
+  void		broadcast_except(const PlayerList &, const uint8_t, const Paquet &);
   void		setNetwork(INetwork_SharedPtr &&);
   uint8_t	getID() const;
 

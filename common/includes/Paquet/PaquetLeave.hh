@@ -26,6 +26,11 @@ public:
   PaquetLeave(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetLeave();
 
+  PaquetLeave(uint8_t id) : _id(Paquet::LEAVE) {
+    _playerID = id;
+    createPaquet();
+  }
+
   void		setID(uint8_t);
 
   uint8_t	getID() const;

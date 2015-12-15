@@ -254,23 +254,23 @@ void			Party::setRunning(bool run)
     int i = 1;
 
     _players.for_each([&] (auto &player) {
-		pos = player->getPosition();
-		pos.y += 200 * i;
-		i += 1;
-		player->setPosition(pos);
-    });
+	pos = player->getPosition();
+	pos.y += 200 * i;
+	i += 1;
+	player->setPosition(pos);
+      });
 
     _players.for_each([&] (auto &player_a) {
 
-		_players.for_each_nolock([&] (auto &player) {
+	_players.for_each_nolock([&] (auto &player) {
 
-		    pos = player->getPosition();
-			paquet.setPlayerID(player->getID());
-			paquet.setPosition(pos.x, pos.y);
-			paquet.createPaquet();
-			this->write(paquet, player_a->addr());
+	    pos = player->getPosition();
+	    paquet.setPlayerID(player->getID());
+	    paquet.setPosition(pos.x, pos.y);
+	    paquet.createPaquet();
+	    this->write(paquet, player_a->addr());
 
-			});
+	  });
       });
   }
 }

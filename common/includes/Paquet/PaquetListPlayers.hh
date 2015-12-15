@@ -31,6 +31,23 @@ public:
   PaquetListPlayers(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetListPlayers();
 
+  template<typename T>
+  PaquetListPlayers(T &list) : _id(Paquet::LIST_PLAYERS) {
+    list.for_each([&] (auto &e) {
+	this->addPlayer(e->getName(), e->getID(), e->getLevel());
+      });
+    createPaquet();
+  }
+
+  template<typename T>
+  PaquetListPlayers &operator=(T &list) {
+    list.for_each([&] (auto &e) {
+	this->addPlayer(e->getName(), e->getID(), e->getLevel());
+      });
+    createPaquet();
+    return (*this);
+  }
+
   void		addPlayer(const std::string &, uint8_t, uint8_t);
 
   const std::list<PlayerIDLevel>	&getPlayers() const;

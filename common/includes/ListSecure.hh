@@ -25,6 +25,8 @@ private:
 
 public:
 
+  using value_type = T;
+
   ListSecure<T>	&operator=(ListSecure<T> &&) = delete;
 
   template<typename... Args>
@@ -84,6 +86,15 @@ public:
     Locker<Mutex> { _mutex };
     auto &&val = _list.end();
     return (val);
+  };
+
+  template <class U>
+  size_t count_if(const U &func) const {
+
+    Locker<Mutex> { _mutex };
+    auto n = std::count_if(_list.begin(), _list.end(), func);
+
+    return (n);
   };
 
   template <class U>

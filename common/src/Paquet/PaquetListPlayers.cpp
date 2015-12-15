@@ -14,6 +14,7 @@
 PaquetListPlayers::PaquetListPlayers()
   : _id(Paquet::LIST_PLAYERS)
 {
+  createPaquet();
 }
 
 PaquetListPlayers::PaquetListPlayers(const Buffer &buf)
