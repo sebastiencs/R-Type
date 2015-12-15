@@ -12,7 +12,7 @@ private:
   uint8_t _type;
   uint16_t _x;
   uint16_t _y;
-  uint8_t _speed;
+  uint16_t _speed;
 
 public:
   PaquetPlayerShot();
@@ -24,13 +24,13 @@ public:
   void setType(const uint8_t);
   void setPlayerID(const uint8_t);
   void setPosition(const uint16_t, const uint16_t);
-  void setSpeed(uint8_t);
+  void setSpeed(uint16_t);
 
   uint8_t getType() const;
   uint8_t getPlayerID() const;
   uint16_t getX() const;
   uint16_t getY() const;
-  uint8_t getSpeed() const;
+  uint16_t getSpeed() const;
 
   void		createPaquet();
   void		parsePaquet();

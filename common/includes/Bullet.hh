@@ -21,7 +21,7 @@ private:
 
 public:
   Bullet();
-  Bullet(const uint16_t x, const uint16_t y, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
+  Bullet(const uint16_t x, const uint16_t y, const uint16_t speed, const uint16_t sizeX = 0, const uint16_t sizeY = 0);
   virtual ~Bullet();
 
   uint16_t	getSpeed() const;

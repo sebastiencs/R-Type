@@ -18,7 +18,7 @@ public:
 	virtual ~Packager();
 
 	static void createMovementPackage(uint8_t _playerID, uint16_t _x,	uint16_t _y);
-	static void createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t _x, uint16_t _y);
+	static void createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t speed, uint16_t _x, uint16_t _y);
 
 	static void createGameListPackage();
 	static void createPlayerListPackage();

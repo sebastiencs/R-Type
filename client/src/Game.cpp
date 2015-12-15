@@ -71,7 +71,7 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY()));
+		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed()));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
@@ -112,7 +112,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : player->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet->getX() += (uint16_t)(600 * GraphicEngine::getDeltaTimeS());
+				bullet->getX() += (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
 			}
 
 			auto &bulletList = player->getBullets();
@@ -193,8 +193,8 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	if (bullet) {
 		uint16_t x = pos.x + (VESSEL_WIDTH / 2);
 		uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
-		_packager->createShotPackage(_LP.getId(), 1, x, y);
-		player->addBullet(std::make_shared<Bullet>(x, y, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+		_packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+		player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
 	}
 }
 

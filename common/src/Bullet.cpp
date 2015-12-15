@@ -16,10 +16,10 @@ Bullet::Bullet()
   _speed = 0;
 }
 
-Bullet::Bullet(const uint16_t x, const uint16_t y, const uint16_t sizeX, const uint16_t sizeY)
+Bullet::Bullet(const uint16_t x, const uint16_t y, const uint16_t speed, const uint16_t sizeX, const uint16_t sizeY)
   : Object(0, x, y, sizeX, sizeY)
 {
-  _speed = 0;
+  _speed = speed;
 }
 
 Bullet::~Bullet()

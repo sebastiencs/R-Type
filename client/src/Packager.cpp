@@ -25,12 +25,13 @@ void Packager::createFirstUDPPackage(uint8_t _playerID)
   PackageStorage::getInstance().storeToSendUDPPackage(first);
 }
 
-void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t _x, uint16_t _y)
+void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t speed, uint16_t _x, uint16_t _y)
 {
 	PaquetPlayerShot *shot = new PaquetPlayerShot();
 	shot->setPlayerID(_playerID);
 	shot->setType(_type);
 	shot->setPosition(_x, _y);
+	shot->setSpeed(speed);
 	shot->createPaquet();
 	PackageStorage::getInstance().storeToSendUDPPackage(shot);
 }

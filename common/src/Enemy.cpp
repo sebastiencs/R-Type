@@ -26,7 +26,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
     _status(JUST_ENTERED)
 {
   if (type == 0) {
-    _sizeX = 70;
+    _sizeX = 80;
     _sizeY = 50;
   }
   DEBUG_MSG("Enemy created");
@@ -39,7 +39,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
     _status(JUST_ENTERED)
 {
   if (type == 0) {
-    _sizeX = 70;
+    _sizeX = 80;
     _sizeY = 50;
   }
   DEBUG_MSG("Enemy created");

@@ -49,7 +49,7 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::REQUEST_PLAYERS]	= 0x01;
   _pSize[Paquet::LIST_PLAYERS]		= UNKNOWN_SIZE;
   _pSize[Paquet::COORD_PLAYER]		= 0x06;
-  _pSize[Paquet::PLAYER_SHOT]		= 0x08;
+  _pSize[Paquet::PLAYER_SHOT]		= 0x09;
   _pSize[Paquet::OBSTACLE]		= 0x06;
   _pSize[Paquet::READY]			= 0x03;
   _pSize[Paquet::LAUNCH]		= 0x01;

@@ -70,7 +70,7 @@ void			Party::run()
 
   for (;;) {
 
-    if (_enemies.empty() || _timerWave->ms() >= 10000) {
+    if (_enemies.empty()) {// || _timerWave->ms() >= 10000) {
       _wave->getSpawn();
       _enemies.for_each([this] (auto &enemy) {
     	  this->updateEnemy(enemy);

@@ -24,7 +24,7 @@ Selector::Selector(const Manager_SharedPtr &&manager)
   _func[Paquet::LEAVE]		 = [this](auto &buf, auto &addr) { call<PaquetLeave>		(buf, addr); };
   _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &addr) { call<PaquetObstacle>		(buf, addr); };
   _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &addr) { call<PaquetPlayerCoord>	(buf, addr); };
-  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { call<PaquetPlayerCoord>	(buf, addr); };
+  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { call<PaquetPlayerShot>	(buf, addr); };
   _func[Paquet::READY]		 = [this](auto &buf, auto &addr) { call<PaquetReady>		(buf, addr); };
   _func[Paquet::REQUEST_PARTIES] = [this](auto &buf, auto &addr) { call<PaquetRequestParties>	(buf, addr); };
   _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { call<PaquetRequestPlayers>	(buf, addr); };

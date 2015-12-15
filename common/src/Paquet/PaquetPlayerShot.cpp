@@ -33,7 +33,7 @@ void PaquetPlayerShot::setPosition(const uint16_t x, const uint16_t y)
 	_y = y;
 }
 
-void PaquetPlayerShot::setSpeed(uint8_t speed)
+void PaquetPlayerShot::setSpeed(uint16_t speed)
 {
 	_speed = speed;
 }
@@ -58,7 +58,7 @@ uint16_t PaquetPlayerShot::getY() const
 	return _y;
 }
 
-uint8_t PaquetPlayerShot::getSpeed() const
+uint16_t PaquetPlayerShot::getSpeed() const
 {
 	return (_speed);
 }
@@ -72,7 +72,7 @@ void			PaquetPlayerShot::parsePaquet()
 	_x = readData<uint16_t>(ptr);
 	_y = readData<uint16_t>(ptr);
 	_type = readData<uint8_t>(ptr);
-	_speed = readData<uint8_t>(ptr);
+	_speed = readData<uint16_t>(ptr);
 }
 
 void			PaquetPlayerShot::createPaquet()
@@ -84,7 +84,7 @@ void			PaquetPlayerShot::createPaquet()
 	writeData<uint16_t>(ptr, &_x);
 	writeData<uint16_t>(ptr, &_y);
 	writeData<uint8_t>(ptr, &_type);
-	writeData<uint8_t>(ptr, &_speed);
+	writeData<uint16_t>(ptr, &_speed);
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetPlayerShot &p)
