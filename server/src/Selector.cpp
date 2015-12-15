@@ -11,61 +11,42 @@
 #include "Selector.hh"
 #include "Manager.hh"
 
-Selector::Selector(const Manager_SharedPtr &&manager) {
-  _manager = std::move(manager);
+Selector::Selector(const Manager_SharedPtr &&manager)
+  : _manager(std::move(manager)),
+    _mPtr(manager.get()),
+    _func(0x100)
+{
+  std::fill(_func.begin(), _func.end(), [this] (auto &, auto &) -> void { std::cerr << "Unknown paquet" << std::endl; });
 
-  _selectorFunc[Paquet::FIRST] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      (_manager.lock().get()->*resolver<PaquetFirst *>(&Manager::handlePaquet))(new PaquetFirst(buf), addr);
-  };
-  _selectorFunc[Paquet::CREATE_PARTY] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetCreateParty *>(&Manager::handlePaquet))(new PaquetCreateParty(buf), addr);
-  };
-  _selectorFunc[Paquet::JOIN_PARTY] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetJoinParty *>(&Manager::handlePaquet))(new PaquetJoinParty(buf), addr);
-  };
-  _selectorFunc[Paquet::LEAVE] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetLeave *>(&Manager::handlePaquet))(new PaquetLeave(buf), addr);
-  };
-  _selectorFunc[Paquet::OBSTACLE] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetObstacle *>(&Manager::handlePaquet))(new PaquetObstacle(buf), addr);
-  };
-  _selectorFunc[Paquet::COORD_PLAYER] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetPlayerCoord *>(&Manager::handlePaquet))(new PaquetPlayerCoord(buf), addr);
-  };
-  _selectorFunc[Paquet::PLAYER_SHOT] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetPlayerShot *>(&Manager::handlePaquet))(new PaquetPlayerShot(buf), addr);
-  };
-  _selectorFunc[Paquet::READY] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetReady *>(&Manager::handlePaquet))(new PaquetReady(buf), addr);
-  };
-  _selectorFunc[Paquet::REQUEST_PARTIES] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetRequestParties *>(&Manager::handlePaquet))(new PaquetRequestParties(buf), addr);
-  };
-  _selectorFunc[Paquet::REQUEST_PLAYERS] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetRequestPlayers *>(&Manager::handlePaquet))(new PaquetRequestPlayers(buf), addr);
-  };
-  _selectorFunc[Paquet::RESPONSE] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetResponse *>(&Manager::handlePaquet))(new PaquetResponse(buf), addr);
-  };
-  _selectorFunc[Paquet::FIRST_UDP] = [this](const Buffer &buf, const Addr &addr) {
-    if (!_manager.expired())
-      ((_manager.lock()).get()->*resolver<PaquetFirstUDP *>(&Manager::handlePaquet))(new PaquetFirstUDP(buf), addr);
-  };
+  _func[Paquet::FIRST]		 = [this](auto &buf, auto &addr) { call<PaquetFirst>		(buf, addr); };
+  _func[Paquet::CREATE_PARTY]	 = [this](auto &buf, auto &addr) { call<PaquetCreateParty>	(buf, addr); };
+  _func[Paquet::JOIN_PARTY]	 = [this](auto &buf, auto &addr) { call<PaquetJoinParty>	(buf, addr); };
+  _func[Paquet::LEAVE]		 = [this](auto &buf, auto &addr) { call<PaquetLeave>		(buf, addr); };
+  _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &addr) { call<PaquetObstacle>		(buf, addr); };
+  _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &addr) { call<PaquetPlayerCoord>	(buf, addr); };
+  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { call<PaquetPlayerCoord>	(buf, addr); };
+  _func[Paquet::READY]		 = [this](auto &buf, auto &addr) { call<PaquetReady>		(buf, addr); };
+  _func[Paquet::REQUEST_PARTIES] = [this](auto &buf, auto &addr) { call<PaquetRequestParties>	(buf, addr); };
+  _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { call<PaquetRequestPlayers>	(buf, addr); };
+  _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { call<PaquetResponse>		(buf, addr); };
+  _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { call<PaquetFirstUDP>		(buf, addr); };
 }
 
 Selector::~Selector()
 {
+}
+
+template<class PaquetType>
+auto Selector::resolver(void (Manager::*func)(typename std::add_pointer<PaquetType>::type, const Addr &)) -> decltype(func) {
+  return func;
+}
+
+template <typename PaquetType>
+inline void	Selector::call(const Buffer &buf, const Addr &addr)
+{
+  if (!_manager.expired()) {
+    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(new PaquetType(buf), addr);
+  }
 }
 
 int		Selector::execFunc(const Buffer &buf, const Addr &addr)
@@ -77,14 +58,7 @@ int		Selector::execFunc(const Buffer &buf, const Addr &addr)
     return (-1);
   }
 
-  auto func = _selectorFunc.find(data[0]);
+  _func[data[0]](buf, addr);
 
-  if (func != _selectorFunc.end()) {
-    func->second(buf, addr);
-    return (0);
-  }
-  else {
-    std::cerr << "Unknown paquet" << std::endl;
-    return (-1);
-  }
+  return (0);
 }
