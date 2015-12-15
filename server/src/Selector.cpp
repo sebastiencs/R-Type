@@ -18,18 +18,18 @@ Selector::Selector(const Manager_SharedPtr &&manager)
 {
   std::fill(_func.begin(), _func.end(), [this] (auto &, auto &) -> void { std::cerr << "Unknown paquet" << std::endl; });
 
-  _func[Paquet::FIRST]		 = [this](auto &buf, auto &addr) { call<PaquetFirst>		(buf, addr); };
-  _func[Paquet::CREATE_PARTY]	 = [this](auto &buf, auto &addr) { call<PaquetCreateParty>	(buf, addr); };
-  _func[Paquet::JOIN_PARTY]	 = [this](auto &buf, auto &addr) { call<PaquetJoinParty>	(buf, addr); };
-  _func[Paquet::LEAVE]		 = [this](auto &buf, auto &addr) { call<PaquetLeave>		(buf, addr); };
-  _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &addr) { call<PaquetObstacle>		(buf, addr); };
-  _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &addr) { call<PaquetPlayerCoord>	(buf, addr); };
-  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { call<PaquetPlayerShot>	(buf, addr); };
-  _func[Paquet::READY]		 = [this](auto &buf, auto &addr) { call<PaquetReady>		(buf, addr); };
-  _func[Paquet::REQUEST_PARTIES] = [this](auto &buf, auto &addr) { call<PaquetRequestParties>	(buf, addr); };
-  _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { call<PaquetRequestPlayers>	(buf, addr); };
-  _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { call<PaquetResponse>		(buf, addr); };
-  _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { call<PaquetFirstUDP>		(buf, addr); };
+  _func[Paquet::FIRST]		 = [this](auto &buf, auto &addr) { this->call<PaquetFirst>		(buf, addr); };
+  _func[Paquet::CREATE_PARTY]	 = [this](auto &buf, auto &addr) { this->call<PaquetCreateParty>	(buf, addr); };
+  _func[Paquet::JOIN_PARTY]	 = [this](auto &buf, auto &addr) { this->call<PaquetJoinParty>	(buf, addr); };
+  _func[Paquet::LEAVE]		 = [this](auto &buf, auto &addr) { this->call<PaquetLeave>		(buf, addr); };
+  _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetObstacle>		(buf, addr); };
+  _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &addr) { this->call<PaquetPlayerCoord>	(buf, addr); };
+  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { this->call<PaquetPlayerShot>	(buf, addr); };
+  _func[Paquet::READY]		 = [this](auto &buf, auto &addr) { this->call<PaquetReady>		(buf, addr); };
+  _func[Paquet::REQUEST_PARTIES] = [this](auto &buf, auto &addr) { this->call<PaquetRequestParties>	(buf, addr); };
+  _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { this->call<PaquetRequestPlayers>	(buf, addr); };
+  _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetResponse>		(buf, addr); };
+  _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { this->call<PaquetFirstUDP>		(buf, addr); };
 }
 
 Selector::~Selector()
