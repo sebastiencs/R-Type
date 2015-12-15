@@ -8,14 +8,17 @@
 #include "Semaphore.hh"
 #include "DequeSecure.hh"
 
+typedef std::shared_ptr<Paquet> Paquet_SharedPtr;
+typedef std::shared_ptr<PaquetEnemy> PaquetEnemy_SharedPtr;
+
 class PackageStorage {
 private:
 
-	DequeSecure<Paquet *> received;
+	DequeSecure<Paquet_SharedPtr> received;
 	DequeSecure<Paquet *> toSendUDP;
 	DequeSecure<Paquet *> toSendTCP;
 	DequeSecure<PaquetPlayerCoord *> players;
-	DequeSecure<PaquetPlayerCoord *> enemies;
+	//DequeSecure<PaquetPlayerCoord *> enemies;
 	DequeSecure<PaquetObstacle *> obstacles;
 	DequeSecure<PaquetPlayerShot *> shots;
 	DequeSecure<PaquetReady *> ready;
@@ -24,7 +27,7 @@ private:
 	DequeSecure<PaquetResponse *> answers;
 	DequeSecure<PaquetLaunch *> launch;
 	DequeSecure<PaquetLeave *> leave;
-	DequeSecure<PaquetEnemy *> enemy;
+	DequeSecure<PaquetEnemy_SharedPtr> enemy;
 	DequeSecure<PaquetBonusMalus *> bonusmalus;
 
 	std::unique_ptr<ISemaphore>	_semOut;
@@ -54,7 +57,7 @@ public:
 	const PaquetEnemy *getEnemyPackage() const;
 	const PaquetBonusMalus *getBonusMalusPackage() const;
 
-	void storeReceivedPackage(Paquet *package);
+	void storeReceivedPackage(Paquet_SharedPtr package);
 	void storePlayersPackage(PaquetPlayerCoord *package);
 	void storeEnemiesPackage(PaquetPlayerCoord *package);
 	void storeObstaclesPackage(PaquetObstacle *package);
@@ -67,7 +70,7 @@ public:
 	void storeAnswersPackage(PaquetResponse *package);
 	void storeLaunchPackage(PaquetLaunch *package);
 	void storeLeavePackage(PaquetLeave *package);
-	void storeEnemyPackage(PaquetEnemy *package);
+	void storeEnemyPackage(PaquetEnemy_SharedPtr package);
 	void storeBonusMalusPackage(PaquetBonusMalus *package);
 
 	void deleteReceivedPackage();

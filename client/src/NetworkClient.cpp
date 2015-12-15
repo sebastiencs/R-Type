@@ -127,7 +127,7 @@ int NetworkClient::runRead()
 					if (fd.fd == _socketUDP->socket())
 					{
 						this->_socketUDP->read(buffer);
-						PS.storeReceivedPackage(new Paquet(buffer));
+						PS.storeReceivedPackage(std::make_shared<Paquet>(buffer));
 						break;
 					}
 					else if (fd.fd == _socketTCP->socket())
@@ -153,7 +153,7 @@ int NetworkClient::runRead()
 
 						if (n > 0) {
 							DEBUG_MSG(buffer);
-							PS.storeReceivedPackage(new Paquet(buffer));
+							PS.storeReceivedPackage(std::make_shared<Paquet>(buffer));
 						}
 						break;
 					}

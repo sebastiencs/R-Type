@@ -60,7 +60,7 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 	_tab[14] = [this](Paquet *paquet) {
-		PaquetEnemy *store = new PaquetEnemy(paquet->getData(), paquet->getSize());
+		auto store = std::make_shared<PaquetEnemy>(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeEnemyPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
@@ -93,13 +93,14 @@ void PackageSorter::sortPaquet()
 
     const Paquet *paquet = PackageStorage::getInstance().getReceivedPackage();
 
-    auto it = _tab.find(paquet->getData()[0]);
+    if (paquet) {
+      auto it = _tab.find(paquet->getData()[0]);
 
-    if (it != _tab.end()) {
-      it->second(const_cast<Paquet*>(paquet));
-    }
-    else {
-      std::cerr << "Unknown paquet" << std::endl;
+      if (it != _tab.end()) {
+        it->second(const_cast<Paquet *>(paquet));
+      }
+      else {
+        std::cerr << "Unknown paquet" << std::endl;
     }
   }
 }

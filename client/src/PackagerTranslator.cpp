@@ -13,7 +13,7 @@ PackageTranslator::~PackageTranslator()
 void PackageTranslator::BufferToPaquet(const Buffer& buff)
 {
 	Paquet*	paquet = new Paquet(buff.get(), buff.size());
-	PackageStorage::getInstance().storeReceivedPackage(paquet);
+	//PackageStorage::getInstance().storeReceivedPackage(paquet);
 }
 
 void PackageTranslator::PaquetToBuffer(const Paquet& paquet)
