@@ -13,52 +13,58 @@
 
 # include <queue>
 # include <algorithm>
+# include <memory>
 # include "Mutex.hh"
 # include "Locker.hh"
+
+typedef std::shared_ptr<IMutex>	IMutex_SharedPtr;
 
 template<typename T>
 class				QueueSecure
 {
 private:
-  mutable Mutex	_mutex;
+  mutable IMutex_SharedPtr	_mutex;
   std::queue<T>	_queue;
 
 public:
+
+  QueueSecure() : _mutex(std::make_shared<Mutex>()) {};
+  virtual ~QueueSecure() {};
 
   QueueSecure<T>	&operator=(QueueSecure<T> &&) = delete;
 
   template<typename... Args>
   void	push(Args&&... args) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     _queue.push(args...);
   };
 
   template<typename... Args>
   void	pop(Args&&... args) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     _queue.pop(args...);
   };
 
   template<typename... Args>
   void	emplace(Args&&... args) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     _queue.emplace(std::move(args...));
   };
 
   auto	front() const -> decltype(_queue.front()) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     auto &&val = _queue.front();
     return (val);
   };
 
   auto	empty() const -> decltype(_queue.empty()) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     auto &&val = _queue.empty();
     return (val);
   };
 
   auto	size() const -> decltype(_queue.size()) {
-    Locker<Mutex> { _mutex };
+    Locker<IMutex_SharedPtr> { _mutex };
     auto &&val = _queue.size();
     return (val);
   };

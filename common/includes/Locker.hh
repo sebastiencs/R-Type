@@ -12,24 +12,31 @@
 # define LOCKER_H_
 
 # include <iostream>
+# include "Debug.hh"
 
 template <typename T>
 class		Locker
 {
 private:
-  T		&e;
+  T	e;
 public:
-  Locker(T *elem) : e(*elem) {
-    elem->lock();
-  };
+
   Locker(T &elem) : e(elem) {
-    elem.lock();
+    try {
+      elem->lock();
+    }
+    catch (std::exception &) {
+      DEBUG_MSG("Locker: mutex unavailble");
+    }
   };
-  Locker(T &&elem) : e(elem) {
-    elem.lock();
-  };
+
   virtual ~Locker() {
-    e.unlock();
+    try {
+      e->unlock();
+    }
+    catch (std::exception &) {
+      DEBUG_MSG("Locker: mutex unavailble");
+    }
   }
 };
 
