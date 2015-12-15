@@ -19,11 +19,10 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager)
+Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex_SharedPtr mut, std::deque<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
 	_audio(SystemAudio::getInstance()),
 	_LP(ListPlayers::getInstance()),
-	_mutex(mutex),
 	_nickname(speudo),
 	_images(images),
 	_timer(new Timer()),
@@ -41,6 +40,7 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, s
 	_audio.stopMusic();
 	_timer->start();
 	_shotCooldown->start();
+	_mutex = mut;
 }
 
 Game::~Game()
@@ -72,11 +72,11 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed()));
+		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), 8, 7));
 		}
 		enem = _LE.getEnemy(shot->getPlayerID());
 		if (enem) {
-		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed()));
+		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), 8, 7));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
@@ -139,6 +139,7 @@ void	Game::updateGraphic()
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 				bullet->getX() -= (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
+				printf("X: %d Y: %d\n", bullet->getX(), bullet->getY());
 			}
 
 			auto &bulletList = enemy->getBullets();

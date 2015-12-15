@@ -8,6 +8,8 @@
 // Last update Tue Nov 10 23:46:38 2015 chapui_s
 //
 
+#include <iostream>
+#include "IOEvent.hh"
 #include "ThreadUnix.hh"
 
 ThreadUnix::ThreadUnix()
@@ -68,7 +70,14 @@ void	*jump(void *arg)
   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
 
-  auto value = f(const_cast<void *>(param));
+  void *value;
+
+  try {
+    value = f(const_cast<void *>(param));
+  }
+  catch (std::exception &) {
+    std::cerr << "Exception in thread" << std::endl;
+  }
 
   threadC->setReturn(value);
   threadC->setRunning(false);

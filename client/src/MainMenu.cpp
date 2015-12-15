@@ -46,6 +46,9 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 }
 
 MainMenu::~MainMenu() {
+
+	delete onlineMenu;
+
 	for (Drawable* b : elements)
 		if (b)
 			delete b;

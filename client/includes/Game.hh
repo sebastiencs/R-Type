@@ -32,9 +32,9 @@ private:
 	ISystemAudio	&_audio;
 	ListPlayers	&_LP;
 	ListEnemies	_LE;
-	IMutex		*_mutex;
 	std::deque<Text* > &_nickname;
 	std::deque<Sprite* > &_images;
+	IMutex_SharedPtr _mutex;
 	ITimer		*_timer;
 	int			_width;
 	int			_height;
@@ -43,7 +43,7 @@ private:
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:
-	Game(int width, int height, std::deque<Sprite* > &images, IMutex *mutex, std::deque<Text* > &speudo, Packager* packager);
+  Game(int width, int height, std::deque<Sprite* > &images, IMutex_SharedPtr mutex, std::deque<Text* > &speudo, Packager* packager);
 	virtual ~Game();
 
 	void	run();
@@ -78,7 +78,7 @@ public:
 
 	template<class T>
 	bool	remove_bullet_enemy(T &elem) {
-		if (elem->getX() < 0) {
+		if (elem->getX() > 2000) {
 			return true;
 		}
 		if (Physics::isContact(Physics::LOCK, elem, _LP.getListPlayers())) {

@@ -19,6 +19,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 
 OnlineMenu::~OnlineMenu()
 {
+	delete lobby;
 	if (scrollView)
 		delete(scrollView);
 

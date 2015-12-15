@@ -6,7 +6,7 @@ Mutex::Mutex()
   DEBUG_MSG("Mutex created");
 }
 
-Mutex::~Mutex()// TODO: plante chez moi sur un ALT-f4 ("unlock of unowned mutex"). Clement
+Mutex::~Mutex()
 {
   DEBUG_MSG("Mutex deleted");
   tryLock();

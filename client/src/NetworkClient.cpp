@@ -16,6 +16,9 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	list.addPlayer(std::move(player));
 	//!Creation
 
+	condR = 1;
+	condW = 1;
+
 	paquet->setLevel(player->getLevel());
 	paquet->setName(player->getName());
 	paquet->setVersion(1);
@@ -34,19 +37,17 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	_isConnect = true;
 
 	inGame = false;
-	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
-	threadWrite = new Thread(fptrWrite, this);
-	Callback_t fptrRead = [this](void *) {runRead(); return nullptr; };
-	threadRead = new Thread(fptrRead, this);
+	Callback_t fptrWrite = [this](void *c) {runWrite(reinterpret_cast<int *>(c)); return nullptr; };
+	threadWrite = new Thread(fptrWrite, &condW);
+	Callback_t fptrRead = [this](void *c) {runRead(reinterpret_cast<int *>(c)); return nullptr; };
+	threadRead = new Thread(fptrRead, &condR);
 }
 
 NetworkClient::~NetworkClient()
 {
+  	condR = 0;
+  	condW = 0;
 	if (_isConnect) {
-		threadRead->close();
-		DEBUG_MSG("ThreadRead close");
-		threadWrite->close();
-		DEBUG_MSG("ThreadWrite close");
 		delete threadWrite;
 		DEBUG_MSG("ThreadWrite deleted");
 		delete threadRead;
@@ -58,7 +59,7 @@ NetworkClient::~NetworkClient()
 	DEBUG_MSG("SocketUDP deleted");
 }
 
-int NetworkClient::runWrite()
+int NetworkClient::runWrite(int *cond)
 {
 	PackageStorage &PS = PackageStorage::getInstance();
 	Pollfd	fds(2);
@@ -68,7 +69,7 @@ int NetworkClient::runWrite()
 	fds[1].fd = _socketUDP->socket();
 	fds[1].events = POLLOUT;
 
-	while (1)
+	while (*cond)
 	{
 		PS.waitForPackage();
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
@@ -104,7 +105,7 @@ int NetworkClient::runWrite()
 	return (0);
 }
 
-int NetworkClient::runRead()
+int NetworkClient::runRead(int *cond)
 {
 	PackageStorage &PS = PackageStorage::getInstance();
 	Buffer buffer;
@@ -115,7 +116,7 @@ int NetworkClient::runRead()
 	fds[1].fd = _socketUDP->socket();
 	fds[1].events = POLLIN;
 
-	while (1)
+	while (*cond)
 	{
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
@@ -181,9 +182,9 @@ int NetworkClient::reconnect()
 	}
 	_isConnect = true;
 	inGame = false;
-	Callback_t fptrWrite = [this](void *) {runWrite(); return nullptr; };
+	Callback_t fptrWrite = [this](void *c) {runWrite(reinterpret_cast<int *>(c)); return nullptr; };
 	threadWrite = new Thread(fptrWrite, this);
-	Callback_t fptrRead = [this](void *) {runRead(); return nullptr; };
+	Callback_t fptrRead = [this](void *c) {runRead(reinterpret_cast<int *>(c)); return nullptr; };
 	threadRead = new Thread(fptrRead, this);
 	return (1);
 }

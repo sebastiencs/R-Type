@@ -27,12 +27,14 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	commands->addDrawable(new Button("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
+	cond = 1;
 }
 
 LobbyMenu::~LobbyMenu()
 {
 	if (threadReceivedListPlayers) {
-		threadReceivedListPlayers->close();
+		cond = 0;
+		threadReceivedListPlayers->join();
 		delete threadReceivedListPlayers;
 	}
 	if (left)
@@ -56,14 +58,15 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		return;
 	}
 
-	Callback_t fptr = [this](void *) {
+	Callback_t fptr = [this](void *cond) {
 		PackageStorage &PS = PackageStorage::getInstance();
 		ListPlayers &LP = ListPlayers::getInstance();
 
 		const PaquetListPlayers	*tmp = nullptr;
 		const PaquetReady	*tmp2 = nullptr;
+		int *c = reinterpret_cast<int *>(cond);
 
-		while (!tmp && !tmp2) {
+		while (*c && !tmp && !tmp2) {
 			IOEvent::wait(50);
 			if ((tmp = PS.getPlayerListPackage())) {
 				LP.clearList();
@@ -92,7 +95,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 	};
 
 	if (!threadReceivedListPlayers) {
-		threadReceivedListPlayers = new Thread(fptr, nullptr);
+		threadReceivedListPlayers = new Thread(fptr, &cond);
 		DEBUG_MSG("Request sent");
 	}
 }

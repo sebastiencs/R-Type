@@ -17,8 +17,8 @@ public:
   NetworkClient(const std::string&, const uint16_t);
   virtual ~NetworkClient();
 
-  virtual int	runWrite();
-  virtual int	runRead();
+  virtual int	runWrite(int *);
+  virtual int	runRead(int *);
   virtual int	stop();
 
   int reconnect();
@@ -61,6 +61,9 @@ private:
 
   bool inGame;
   bool _isConnect;
+
+  int		condR;
+  int		condW;
 };
 
 #endif /* !NETWORKCLIENT_H_ */

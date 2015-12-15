@@ -36,6 +36,7 @@ protected:
 	Button* readyb;
 	Button* unReadyb;
 	bool playerListChanged;
+	int cond;
 };
 
 #endif /* !LOBBY_HH_ */

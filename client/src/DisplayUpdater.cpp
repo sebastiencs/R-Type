@@ -1,11 +1,11 @@
 #include "DisplayUpdater.hh"
 #include "SystemAudio.hh"
 #include "Game.hh"
+#include "Locker.hh"
 
 DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false)
 {
 	threadGame = nullptr;
-	mutex = nullptr;
 	_game = nullptr;
 	packager = _packager;
 	graphicEngine = new GraphicEngine(packager);
@@ -16,15 +16,16 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGam
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
+	cond = 1;
 }
 
 DisplayUpdater::~DisplayUpdater()
 {
-	if (threadGame)
-		delete threadGame;
-	if (mutex)
-		delete mutex;
-	mutex = nullptr;
+  if (threadGame) {
+    cond = 0;
+    threadGame->join();
+    delete threadGame;
+  }
 	if (_game)
 		delete _game;
 	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
@@ -59,7 +60,7 @@ void DisplayUpdater::launchObserver()
 
 	if (launch != nullptr) {
 
-		mutex = new Mutex();
+		mutex = std::make_shared<Mutex>();
 
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
@@ -70,8 +71,8 @@ void DisplayUpdater::launchObserver()
 		graphicEngine->setMouseMovedCallback(nullptr);
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
-		threadGame = new Thread([this](void *) -> void * {
-			for (;;) {
+		threadGame = new Thread([&](void *) -> void * {
+			while (cond) {
 				_game->run();
 			}
 			return (nullptr);
@@ -96,18 +97,19 @@ void DisplayUpdater::game()
 	}
 	bg->draw();
 
-	if (mutex) {
-		mutex->lock();
-		for (Sprite *img : images) {
-			graphicEngine->drawSprite(*img);
-			delete img;
-		}
-		for (Text *text : _nickname) {
-			graphicEngine->drawText(*text);
-			delete text;
-		}
-		_nickname.clear();
-		images.clear();
-		mutex->unlock();
+	mutex->lock();
+
+	for (Sprite *img : images) {
+	  graphicEngine->drawSprite(*img);
+	  delete img;
 	}
+	for (Text *text : _nickname) {
+	  graphicEngine->drawText(*text);
+	  delete text;
+	}
+
+	mutex->unlock();
+
+	_nickname.clear();
+	images.clear();
 }

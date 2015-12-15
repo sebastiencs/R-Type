@@ -92,6 +92,7 @@ int		main(int argc, char **argv)
 #endif
 	}
 
+	delete &PackageStorage::getInstance();
 	delete &audio;
 
 #ifdef _WIN32

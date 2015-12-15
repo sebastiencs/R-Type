@@ -39,6 +39,7 @@ private:
     bool changed = true;
 
     for (auto &e : init_list) {
+
       if (e != nullptr) {
 	changed = false;
       }
@@ -106,7 +107,7 @@ public:
   template<typename... T, typename U>
   static bool			isContact(int lock, U &elem, T&... list) {
 
-    return ((!moveX(lock, elem, elem->getX(), list...) || !moveY(lock, elem, elem->getY(), list...)));
+    return (!moveX(lock, elem, elem->getX(), list...) || !moveY(lock, elem, elem->getY(), list...));
 
   }
 

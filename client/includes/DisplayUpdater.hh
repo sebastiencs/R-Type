@@ -45,8 +45,9 @@ private:
 	IThread *threadGame;
 	std::deque<Text* > _nickname;
 	std::deque<Sprite* > images;
-	IMutex *mutex;
+	int cond;
 	Game *_game;
+	IMutex_SharedPtr mutex;
 };
 
 #endif /* !DISPLAYUPDATER_HH */
