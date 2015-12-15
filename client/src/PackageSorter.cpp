@@ -101,6 +101,7 @@ void PackageSorter::sortPaquet()
       }
       else {
         std::cerr << "Unknown paquet" << std::endl;
+      }
     }
   }
 }
