@@ -76,6 +76,17 @@ public:
 		return false;
 	};
 
+	template<class T>
+	bool	remove_bullet_enemy(T &elem) {
+		if (elem->getX() < 0) {
+			return true;
+		}
+		if (Physics::isContact(Physics::LOCK, elem, _LP.getListPlayers())) {
+			return (true);
+		}
+		return false;
+	};
+
 };
 
 #endif /* !GAME_H_ */

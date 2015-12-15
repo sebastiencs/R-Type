@@ -103,6 +103,14 @@ void			Party::run()
 	  else if (focused && focused->getPosition().y > y + 3) {
 	    changed = Physics::moveY(Physics::NO_LOCK, enemy, y + 2, _enemies, _players);
 	  }
+
+	  if (enemy->hasToShot()) {
+	    PaquetPlayerShot shot(enemy);
+
+	    _players.for_each([&] (auto &p) {
+		this->write(shot, p->addr());
+	      });
+	  }
 	}
 
 	if (changed) {

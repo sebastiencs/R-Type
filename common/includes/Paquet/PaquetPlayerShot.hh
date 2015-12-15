@@ -21,6 +21,16 @@ public:
   PaquetPlayerShot(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetPlayerShot();
 
+  template<typename T>
+  PaquetPlayerShot(T &e) : _id(Paquet::PLAYER_SHOT) {
+    _playerID = e->getID();
+    _type = e->getType();
+    _x = e->getX();
+    _y = e->getY() + (e->getSizeY() / 2);
+    _speed = e->getShotSpeed();
+    createPaquet();
+  }
+
   void setType(const uint8_t);
   void setPlayerID(const uint8_t);
   void setPosition(const uint16_t, const uint16_t);

@@ -61,6 +61,7 @@ void	Game::handlingNetwork()
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
 
 	Player_SharedPtr player;
+	Enemy_SharedPtr enem;
 
 	if (obstacle != nullptr) {
 		//const PaquetObstacle* p = PackageStorage::getInstance().getObstaclesPackage();
@@ -72,6 +73,10 @@ void	Game::handlingNetwork()
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
 		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed()));
+		}
+		enem = _LE.getEnemy(shot->getPlayerID());
+		if (enem) {
+		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed()));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
@@ -129,6 +134,16 @@ void	Game::updateGraphic()
 		drawText(text);
 	}
 	for (auto &&enemy : _LE.getListEnemies()) {
+		if (!enemy->getBullets().empty()) {
+			for (auto &bullet : enemy->getBullets()) {
+				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
+				drawImage(sprite);
+				bullet->getX() -= (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
+			}
+
+			auto &bulletList = enemy->getBullets();
+			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
+		}
 		Transformation t(enemy->getX(), enemy->getY());
 		t.setScale(1.5, 1.5);
 		//DEBUG_MSG("type: " << (int)enemy->getType());

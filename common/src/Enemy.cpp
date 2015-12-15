@@ -14,21 +14,30 @@
 Enemy::Enemy()
   : Object(),
     _life(0),
-    _type(0)
+    _type(0),
+    _intervalShot(5000),
+    _shotSpeed(800),
+    _timer(std::make_shared<Timer>())
 {
   DEBUG_MSG("Enemy created");
+  _timer->start();
 }
 
 Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
   : Object(id, Tools::random(1, 1024), Tools::random(1, 768)),
     _life(life),
     _type(type),
-    _status(JUST_ENTERED)
+    _status(JUST_ENTERED),
+    _intervalShot(5000),
+    _shotSpeed(850),
+    _timer(std::make_shared<Timer>())
 {
   if (type == 0) {
     _sizeX = 80;
     _sizeY = 50;
+    _intervalShot = 1000;
   }
+  _timer->start();
   DEBUG_MSG("Enemy created");
 }
 
@@ -36,12 +45,17 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
   : Object(id, x, y),
     _life(life),
     _type(type),
-    _status(JUST_ENTERED)
+    _status(JUST_ENTERED),
+    _intervalShot(5000),
+    _shotSpeed(850),
+    _timer(std::make_shared<Timer>())
 {
   if (type == 0) {
     _sizeX = 80;
     _sizeY = 50;
+    _intervalShot = 1000;
   }
+  _timer->start();
   DEBUG_MSG("Enemy created");
 }
 
@@ -95,4 +109,60 @@ void	Enemy::nextAction()
 
   }
   _status = action;
+}
+
+const ITimer_SharedPtr &Enemy::timer() const
+{
+  return (_timer);
+}
+
+ITimer_SharedPtr &Enemy::timer()
+{
+  return (_timer);
+}
+
+int		Enemy::getIntervalShot() const
+{
+  return (_intervalShot);
+}
+
+void		Enemy::setIntervalShot(const int inter)
+{
+  _intervalShot = inter;
+}
+
+bool		Enemy::hasToShot()
+{
+  bool		yes = false;
+
+  if (_timer->ms() >= _intervalShot) {
+    yes = true;
+    _timer->reset();
+  }
+  return (yes);
+}
+
+uint16_t	Enemy::getShotSpeed() const
+{
+  return (_shotSpeed);
+}
+
+void		Enemy::setShotSpeed(const uint16_t speed)
+{
+  _shotSpeed = speed;
+}
+
+const std::list<Bullet_SharedPtr> &Enemy::getBullets() const
+{
+	return _bullets;
+}
+
+std::list<Bullet_SharedPtr> &Enemy::getBullets()
+{
+	return _bullets;
+}
+
+void Enemy::addBullet(Bullet_SharedPtr &&bullet)
+{
+  _bullets.push_back(bullet);
 }
