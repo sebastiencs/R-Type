@@ -37,7 +37,7 @@ Selector::~Selector()
 }
 
 template<class PaquetType>
-auto Selector::resolver(void (Manager::*func)(typename std::add_pointer<PaquetType>::type, const Addr &)) -> decltype(func) {
+auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, const Addr &)) -> decltype(func) {
   return func;
 }
 
@@ -45,7 +45,7 @@ template <typename PaquetType>
 inline void	Selector::call(const Buffer &buf, const Addr &addr)
 {
   if (!_manager.expired()) {
-    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(new PaquetType(buf), addr);
+    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr);
   }
 }
 

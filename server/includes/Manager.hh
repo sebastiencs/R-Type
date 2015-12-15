@@ -34,6 +34,24 @@ typedef std::shared_ptr<Manager>	Manager_SharedPtr;
 typedef std::unique_ptr<Manager>	Manager_UniquePtr;
 typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
+typedef std::shared_ptr<PaquetFirst>		PaquetFirst_SharedPtr;
+typedef std::shared_ptr<PaquetFirstUDP>		PaquetFirstUDP_SharedPtr;
+typedef std::shared_ptr<PaquetCreateParty>	PaquetCreateParty_SharedPtr;
+typedef std::shared_ptr<PaquetJoinParty>	PaquetJoinParty_SharedPtr;
+typedef std::shared_ptr<PaquetListParties>	PaquetListParties_SharedPtr;
+typedef std::shared_ptr<PaquetListPlayers>	PaquetListPlayers_SharedPtr;
+typedef std::shared_ptr<PaquetRequestParties>	PaquetRequestParties_SharedPtr;
+typedef std::shared_ptr<PaquetRequestPlayers>	PaquetRequestPlayers_SharedPtr;
+typedef std::shared_ptr<PaquetResponse>		PaquetResponse_SharedPtr;
+typedef std::shared_ptr<PaquetPlayerCoord>	PaquetPlayerCoord_SharedPtr;
+typedef std::shared_ptr<PaquetPlayerShot>	PaquetPlayerShot_SharedPtr;
+typedef std::shared_ptr<PaquetObstacle>		PaquetObstacle_SharedPtr;
+typedef std::shared_ptr<PaquetLaunch>		PaquetLaunch_SharedPtr;
+typedef std::shared_ptr<PaquetReady>		PaquetReady_SharedPtr;
+typedef std::shared_ptr<PaquetLeave>		PaquetLeave_SharedPtr;
+typedef std::shared_ptr<PaquetEnemy>		PaquetEnemy_SharedPtr;
+typedef std::shared_ptr<PaquetBonusMalus>	PaquetBonusMalus_SharedPtr;
+
 class		Manager : public std::enable_shared_from_this<Manager>
 {
 private:
@@ -54,18 +72,18 @@ public:
   void		setNetwork(INetwork_SharedPtr &&);
   uint8_t	getID() const;
 
-  void		handlePaquet(PaquetFirst *, const Addr &);
-  void		handlePaquet(PaquetJoinParty *, const Addr &);
-  void		handlePaquet(PaquetCreateParty *, const Addr &);
-  void		handlePaquet(PaquetLeave *, const Addr &);
-  void		handlePaquet(PaquetObstacle *, const Addr &);
-  void		handlePaquet(PaquetPlayerCoord *, const Addr &);
-  void		handlePaquet(PaquetPlayerShot *, const Addr &);
-  void		handlePaquet(PaquetReady *, const Addr &);
-  void		handlePaquet(PaquetRequestParties *, const Addr &);
-  void		handlePaquet(PaquetRequestPlayers *, const Addr &);
-  void		handlePaquet(PaquetResponse *, const Addr &);
-  void		handlePaquet(PaquetFirstUDP *, const Addr &);
+  void		handlePaquet(PaquetFirst_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetJoinParty_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetCreateParty_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetLeave_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetObstacle_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetPlayerCoord_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetPlayerShot_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetReady_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetRequestParties_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetRequestPlayers_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetResponse_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetFirstUDP_SharedPtr, const Addr &);
 };
 
 #endif /* !MANAGER_H_ */
