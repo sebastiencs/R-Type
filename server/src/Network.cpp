@@ -52,7 +52,7 @@ int	Network::run()
     if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0) {
 
       for (auto &fd : fds) {
-	if (fd.revents & POLLIN) {
+	if (fd.revents & POLLIN || fd.revents & POLLHUP){
 	  if (fd.fd == _socketUDP->socket()) {
 	    handleUDP();
 	    break ;
