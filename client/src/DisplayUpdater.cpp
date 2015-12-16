@@ -73,6 +73,10 @@ void DisplayUpdater::launchObserver()
 		graphicEngine->setUsableKeyPressedCallback(ptr);
 		threadGame = new Thread([&](void *) -> void * {
 			while (cond) {
+				if (mainmenu != nullptr) {
+					delete mainmenu;
+					mainmenu = nullptr;
+				}
 				_game->run();
 			}
 			return (nullptr);
