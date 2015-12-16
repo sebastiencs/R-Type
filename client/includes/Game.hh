@@ -60,7 +60,7 @@ public:
 	template<typename T>
 	void drawText(T args) {
 		Locker<IMutex_SharedPtr> { _mutex };
-		_nickname.emplace_back(args);
+		_nickname.push_back(args);
 	};
 
 	template<class T>
