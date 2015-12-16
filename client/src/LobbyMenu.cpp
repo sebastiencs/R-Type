@@ -34,7 +34,7 @@ LobbyMenu::~LobbyMenu()
 {
 	if (threadReceivedListPlayers) {
 		cond = 0;
-		threadReceivedListPlayers->close();
+		threadReceivedListPlayers->join();
 		delete threadReceivedListPlayers;
 	}
 	if (left)
