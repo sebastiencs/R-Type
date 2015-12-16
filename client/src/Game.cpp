@@ -139,7 +139,6 @@ void	Game::updateGraphic()
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 				bullet->getX() -= (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
-				printf("X: %d Y: %d\n", bullet->getX(), bullet->getY());
 			}
 
 			auto &bulletList = enemy->getBullets();

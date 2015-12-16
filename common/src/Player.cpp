@@ -128,6 +128,8 @@ std::ostream &operator<<(std::ostream &os, const Player &p)
      << ", level : " << (int)p.getLevel()
      << ", X : " << (int)pos.x
      << ", Y : " << (int)pos.y
+     << ", sizeX : " << (int)p.getSizeX()
+     << ", sizeY : " << (int)p.getSizeY()
      << " };";
   return (os);
 }

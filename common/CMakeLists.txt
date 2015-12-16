@@ -19,6 +19,7 @@ file (GLOB
   src/Enemy.cpp
   src/Object.cpp
   src/Bullet.cpp
+  src/Physics.cpp
   src/Obstacle.cpp
   src/TaskScheduler.cpp
   )

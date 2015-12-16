@@ -22,6 +22,8 @@ class		Physics
 public:
   enum { LOCK, NO_LOCK };
 
+  static int Bullet;
+
 private:
 
   template <typename... T, typename U>
@@ -61,7 +63,7 @@ public:
     uint8_t myID = elem->getID();
 
     auto func = [=] (auto &e) {
-      if (e->getID() != myID) {
+      if (Bullet || e->getID() != myID) {
 	uint16_t x = e->getX();
 	uint16_t y = e->getY();
 	if (newX < x + e->getSizeX() && newX + mySizeX > x
@@ -87,7 +89,7 @@ public:
     uint8_t myID = elem->getID();
 
     auto func = [=] (auto &e) {
-      if (e->getID() != myID) {
+      if (Bullet || e->getID() != myID) {
 	uint16_t y = e->getY();
 	uint16_t x = e->getX();
 	if (myX < x + e->getSizeX() && myX + mySizeX > x

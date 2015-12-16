@@ -81,9 +81,12 @@ public:
 		if (elem->getX() > 2000) {
 			return true;
 		}
+		Physics::Bullet = 1;
 		if (Physics::isContact(Physics::LOCK, elem, _LP.getListPlayers())) {
-			return (true);
+		  Physics::Bullet = 0;
+		  return (true);
 		}
+		Physics::Bullet = 0;
 		return false;
 	};
 
