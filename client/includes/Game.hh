@@ -51,18 +51,16 @@ public:
 	void	updateGraphic();
 	void	handlePlayerMovement(const std::deque<UsableKeys>& keysPressed);
 
-	template<typename... Args>
-	void drawImage(Args... args) {
-		_mutex->lock();
-		_images.emplace_back(args...);
-		_mutex->unlock();
+	template<typename T>
+	void drawImage(T args) {
+		Locker<IMutex_SharedPtr> { _mutex };
+		_images.push_back(args);
 	};
 
-	template<typename... Args>
-	void drawText(Args... args) {
-		_mutex->lock();
-		_nickname.emplace_back(args...);
-		_mutex->unlock();
+	template<typename T>
+	void drawText(T args) {
+		Locker<IMutex_SharedPtr> { _mutex };
+		_nickname.emplace_back(args);
 	};
 
 	template<class T>
