@@ -32,8 +32,8 @@ private:
 	ISystemAudio	&_audio;
 	ListPlayers	&_LP;
 	ListEnemies	_LE;
-	std::deque<Text* > &_nickname;
-	std::deque<Sprite* > &_images;
+	ListSecure<Text* > &_nickname;
+	ListSecure<Sprite* > &_images;
 	IMutex_SharedPtr _mutex;
 	ITimer		*_timer;
 	int			_width;
@@ -43,7 +43,7 @@ private:
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:
-  Game(int width, int height, std::deque<Sprite* > &images, IMutex_SharedPtr mutex, std::deque<Text* > &speudo, Packager* packager);
+  Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);
 	virtual ~Game();
 
 	void	run();
@@ -53,13 +53,11 @@ public:
 
 	template<typename T>
 	void drawImage(T args) {
-		Locker<IMutex_SharedPtr> { _mutex };
 		_images.push_back(args);
 	};
 
 	template<typename T>
 	void drawText(T args) {
-		Locker<IMutex_SharedPtr> { _mutex };
 		_nickname.push_back(args);
 	};
 

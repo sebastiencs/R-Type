@@ -60,11 +60,9 @@ void DisplayUpdater::launchObserver()
 
 	if (launch != nullptr) {
 
-		mutex = std::make_shared<Mutex>();
-
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
-		_game = new class Game(width, height, images, mutex, _nickname, packager);
+		_game = new class Game(width, height, images, _nickname, packager);
 
 		inGame = true;
 		graphicEngine->setMouseClickCallback(nullptr);	// In game, don't bother to call MainMenu::OnClick
@@ -101,18 +99,14 @@ void DisplayUpdater::game()
 	}
 	bg->draw();
 
-	mutex->lock();
-
-	for (Sprite *img : images) {
-	  graphicEngine->drawSprite(*img);
-	  delete img;
-	}
-	for (Text *text : _nickname) {
-	  graphicEngine->drawText(*text);
-	  delete text;
-	}
-
-	mutex->unlock();
+  images.for_each([&](auto &img) {
+    this->graphicEngine->drawSprite(*img);
+    delete img;
+  });
+  _nickname.for_each([&](auto &text) {
+    this->graphicEngine->drawText(*text);
+    delete text;
+  });
 
 	_nickname.clear();
 	images.clear();

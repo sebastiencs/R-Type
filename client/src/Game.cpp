@@ -19,7 +19,7 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex_SharedPtr mut, std::deque<Text* > &speudo, Packager* packager)
+Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
 	_audio(SystemAudio::getInstance()),
 	_LP(ListPlayers::getInstance()),
@@ -40,7 +40,6 @@ Game::Game(int width, int height, std::deque<Sprite* > &images, IMutex_SharedPtr
 	_audio.stopMusic();
 	_timer->start();
 	_shotCooldown->start();
-	_mutex = mut;
 }
 
 Game::~Game()

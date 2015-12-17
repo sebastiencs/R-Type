@@ -43,11 +43,10 @@ private:
 	bool inGame;
 
 	IThread *threadGame;
-	std::deque<Text* > _nickname;
-	std::deque<Sprite* > images;
+  ListSecure<Text *> _nickname;
+  ListSecure<Sprite *> images;
 	int cond;
 	Game *_game;
-	IMutex_SharedPtr mutex;
 };
 
 #endif /* !DISPLAYUPDATER_HH */
