@@ -76,4 +76,6 @@ public:
   uint8_t		getUniqueID() const;
 };
 
+typedef std::shared_ptr<Party>	Party_SharedPtr;
+
 #endif /* !PARTY_H_ */

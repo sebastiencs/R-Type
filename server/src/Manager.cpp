@@ -201,7 +201,7 @@ void		Manager::handlePaquet(PaquetCreateParty_SharedPtr paquet, const Addr &addr
   PaquetResponse	p;
 
   if (!party && player && name.size()) {
-    Party	*party(new Party(shared_from_this(), name));
+    auto party = std::make_shared<Party>(shared_from_this(), name);
 
     party->addPlayer(player);
     _pWaiting.remove(player);
@@ -229,7 +229,7 @@ void		Manager::handlePaquet(PaquetLeave_SharedPtr paquet, const Addr &addr UNUSE
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+  auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
 
   if (party) {
     Player_SharedPtr &&p = party->playerLeave(id);
@@ -266,7 +266,7 @@ void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet, const Addr &addr
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findIn(_parties, [id] (Party *p) { return (p->isPlayer(id)); });
+  auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
   auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
   if (party && pc) {
     party->setCoordPlayer(pc);
@@ -296,7 +296,7 @@ void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet, const Addr &addr 
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findIn(_parties, [id](Party *p) { return (p->isPlayer(id)); });
+  auto &&party = _parties.findIn([id](auto &p) { return (p->isPlayer(id)); });
   auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getSpeed(), paquet->getPlayerID());
   if (party && ps) {
     party->setPlayerShot(ps);
@@ -327,7 +327,7 @@ void		Manager::handlePaquet(PaquetReady_SharedPtr paquet, const Addr &addr)
   PaquetLaunch	p;
 
   uint8_t	id = paquet->getID();
-  auto &&party = Tools::findIn(_parties, [&addr](Party *p) { return (p->isPlayer(addr)); });
+  auto &&party = _parties.findIn([&addr](auto &p) { return (p->isPlayer(addr)); });
 
   if (party) {
 
@@ -372,7 +372,7 @@ void		Manager::handlePaquet(PaquetRequestPlayers_SharedPtr paquet UNUSED, const 
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findIn(_parties, [&addr] (Party *p) { return (p->isPlayer(addr)); });
+  auto &&party = _parties.findIn([&addr] (auto &p) { return (p->isPlayer(addr)); });
 
   if (party) {
     p = party->getPlayers();

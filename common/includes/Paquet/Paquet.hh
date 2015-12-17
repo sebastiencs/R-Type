@@ -166,6 +166,7 @@ public:
     }
 
     if (_size != paquet.getSize()) {
+      delete[] _data;
       _data = new uint8_t[paquet.getSize()];
       _size = paquet.getSize();
     }

@@ -22,7 +22,7 @@
 # include "PlayerShot.hh"
 # include "ListSecure.hh"
 
-typedef std::list<Party *>		PartyList;
+typedef ListSecure<Party_SharedPtr>	PartyList;
 typedef ListSecure<Player_SharedPtr>	PlayerList;
 
 class	INetwork;
