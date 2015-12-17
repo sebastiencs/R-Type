@@ -28,7 +28,6 @@ Bullet::~Bullet()
 
 uint16_t	Bullet::getSpeed() const
 {
-  printf("SIZE X %d SIZE Y %d\n", _sizeX, _sizeY);
   return (_speed);
 }
 
