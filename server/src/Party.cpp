@@ -270,7 +270,8 @@ void			Party::setRunning(bool run)
 
     _players.for_each([&] (auto &player_a) {
 
-	_players.for_each_nolock([&] (auto &player) {
+	for (auto &player : players) {
+	// _players.for_each_nolock([&] (auto &player) {
 
 	    pos = player->getPosition();
 	    paquet.setPlayerID(player->getID());
@@ -278,7 +279,9 @@ void			Party::setRunning(bool run)
 	    paquet.createPaquet();
 	    this->write(paquet, player_a->addr());
 
-	  });
+	}
+
+	  // });
       });
   }
 }
