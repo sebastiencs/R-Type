@@ -270,7 +270,7 @@ void			Party::setRunning(bool run)
 
     _players.for_each([&] (auto &player_a) {
 
-	for (auto &player : players) {
+	for (auto &player : _players) {
 	// _players.for_each_nolock([&] (auto &player) {
 
 	    pos = player->getPosition();
