@@ -119,7 +119,7 @@ void			Party::run()
 	  if (enemy->hasToShot()) {
 	    PaquetPlayerShot shot(enemy);
 
-	    broadcast(_players, shot);
+	    this->broadcast(_players, shot);
 	  }
 	}
 
