@@ -13,6 +13,7 @@
 
 # include <iostream>
 # include "Enemy.hh"
+# include "BonusMalus.hh"
 # include "Debug.hh"
 
 class		Party;
@@ -21,7 +22,8 @@ class		Wave
 public:
   Wave(Party &party);
   virtual	~Wave();
-  void		getSpawn();
+  void		getSpawnEnemy();
+  void		getSpawnBonusMalus();
 
 private:
   Party		&_party;

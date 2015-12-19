@@ -20,6 +20,7 @@
 # include "PlayerCoord.hh"
 # include "PlayerShot.hh"
 # include "Enemy.hh"
+# include "BonusMalus.hh"
 # include "Wave.hh"
 # include "ListSecure.hh"
 # include "Timer.hh"
@@ -32,6 +33,7 @@ typedef std::weak_ptr<Manager>		Manager_WeakPtr;
 
 typedef ListSecure<Player_SharedPtr>	listPlayers;
 typedef ListSecure<Enemy_SharedPtr>	listEnemies;
+typedef ListSecure<BonusMalus_SharedPtr>	listBonusMalus;
 
 typedef std::unique_ptr<Wave>		Wave_UniquePtr;
 
@@ -43,6 +45,7 @@ class			Party
   std::string		_name;
   listPlayers		_players;
   listEnemies		_enemies;
+  listBonusMalus	_bonusmalus;
   bool			_running;
   Wave_UniquePtr	_wave;
   ITimer_UniquePtr	_timerWave;
@@ -74,6 +77,7 @@ public:
   void			setRunning(bool);
   bool			addEnemy(Enemy *enemy);
   uint8_t		getUniqueID() const;
+  bool			addBonusMalus(BonusMalus *bm);
 };
 
 typedef std::shared_ptr<Party>	Party_SharedPtr;

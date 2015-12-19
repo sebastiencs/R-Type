@@ -42,6 +42,7 @@ Party::~Party()
 {
   _players.clear();
   _enemies.clear();
+  _bonusmalus.clear();
   DEBUG_MSG("Party deleted");
 }
 
@@ -70,8 +71,12 @@ void			Party::run()
 
   for (;;) {
 
+    if (_bonusmalus.empty()) { // faire un timer + reset
+      _wave->getSpawnBonusMalus();
+    }
+    
     if (_enemies.empty()) {// || _timerWave->ms() >= 10000) {
-      _wave->getSpawn();
+      _wave->getSpawnEnemy();
       _enemies.for_each([this] (auto &enemy) {
     	  this->updateEnemy(enemy);
     	});
@@ -164,9 +169,7 @@ bool			Party::addPlayer(Player_SharedPtr player)
     _players.emplace_back(player);
     return (true);
   }
-  else {
-    return (false);
-  }
+  return (false);
 }
 
 void			Party::deletePlayer(const Addr &addr)
@@ -310,4 +313,13 @@ uint8_t			Party::getUniqueID() const
     }
   }
   return (0xFF);
+}
+
+bool			Party::addBonusMalus(BonusMalus *bm)
+{
+  if (bm) {
+    _bonusmalus.emplace_back(bm);
+    return true;
+  }
+  return false;
 }
