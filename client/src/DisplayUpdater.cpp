@@ -18,8 +18,8 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGam
 	tBg1.setPosition(xBg1, 0);
 	xBg2 = 1920;
 	tBg2.setPosition(xBg2, 0);
-	bg1 = new Sprite("ingamebg.jpg", tBg1, graphicEngine);
-	bg2 = new Sprite("ingamebg.jpg", tBg2, graphicEngine);
+	bg1 = new Sprite("ingamebg.png", tBg1, graphicEngine);
+	bg2 = new Sprite("ingamebg.png", tBg2, graphicEngine);
 	bg1->setId("bg1");
 	bg2->setId("bg2");
 
@@ -98,32 +98,17 @@ void DisplayUpdater::launchObserver()
 
 void DisplayUpdater::game()
 {
-	/*static Sprite *bg = nullptr;
-
-	if (!bg) {
-		Transformation t;
-		t.setBounds(1024, 768);
-		t.setPosition(0, 0);
-		bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
-	}
-	bg->draw();*/
-
-
 
 	//UPDATE THE BACKGROUND
 	xBg1 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
-	if (xBg1 < -1920) {
-		xBg1 = 1920;
-	}
-	std::cout << "XBG1 ------------------ : " << xBg1 << std::endl;
+	xBg1 = xBg1 < -1920 ? 1920 : xBg1;
+
 	tBg1.setPosition(xBg1, 0);
 	bg1->setTransformation(tBg1);
 	bg1->draw();
 	xBg2 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
-	if (xBg2 < -1920) {
-		xBg2 = 1920;
-	}
-	std::cout << "XBG2 ------------------ : " << xBg2 << std::endl;
+
+	xBg2 = xBg2 < -1920 ? 1920 : xBg2;
 	tBg2.setPosition(xBg2, 0);
 	bg1->setTransformation(tBg2);
 	bg2->draw();
