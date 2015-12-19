@@ -43,10 +43,17 @@ private:
 	bool inGame;
 
 	IThread *threadGame;
-  ListSecure<Text *> _nickname;
-  ListSecure<Sprite *> images;
+	ListSecure<Text *> _nickname;
+	ListSecure<Sprite *> images;
 	int cond;
 	Game *_game;
+
+	int32_t xBg1;
+	int32_t xBg2;
+	Sprite *bg1;
+	Sprite *bg2;
+	Transformation tBg1;
+	Transformation tBg2;
 };
 
 #endif /* !DISPLAYUPDATER_HH */

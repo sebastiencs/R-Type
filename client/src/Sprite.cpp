@@ -51,6 +51,8 @@ void Sprite::setEngine(IGraphicEngine * engine)
 
 void Sprite::draw()
 {
+	if (_id == "bg1" || _id == "bg2")
+		int i = 1;
 	if (_visible && engine)
 		engine->drawSprite(sprite);
 }

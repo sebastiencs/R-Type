@@ -8,11 +8,21 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGam
 	threadGame = nullptr;
 	_game = nullptr;
 	packager = _packager;
+
 	graphicEngine = new GraphicEngine(packager);
 	mainmenu = new MainMenu(graphicEngine, net);
 	this->net = net;
 	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };
 	launchLoop = new TaskScheduler(fptr, 50);
+
+	xBg1 = 0;
+	tBg1.setPosition(xBg1, 0);
+	xBg2 = 1920;
+	tBg2.setPosition(xBg2, 0);
+	bg1 = new Sprite("ingamebg.jpg", tBg1, graphicEngine);
+	bg2 = new Sprite("ingamebg.jpg", tBg2, graphicEngine);
+	bg1->setId("bg1");
+	bg2->setId("bg2");
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
@@ -98,6 +108,25 @@ void DisplayUpdater::game()
 		bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
 	}
 	bg->draw();*/
+
+
+
+	//UPDATE THE BACKGROUND
+	xBg1 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
+	if (xBg1 < -1920) {
+		xBg1 = 1920;
+	}
+	std::cout << "XBG1 ------------------ : " << xBg1 << std::endl;
+	tBg1.setPosition(xBg1, 0);
+	bg1->draw();
+	xBg2 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
+	if (xBg2 < -1920) {
+		xBg2 = 1920;
+	}
+	std::cout << "XBG2 ------------------ : " << xBg2 << std::endl;
+	tBg2.setPosition(xBg2, 0);
+	bg2->draw();
+
 
   images.for_each([&](auto &img) {
     this->graphicEngine->drawSprite(*img);

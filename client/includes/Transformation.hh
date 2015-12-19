@@ -15,12 +15,12 @@ public:
 	};
 
 	Transformation();
-	Transformation(uint32_t x, uint32_t y);
+	Transformation(int32_t x, int32_t y);
 	Transformation(const Transformation& t);
 	Transformation& operator=(const Transformation& t);
 	~Transformation();
 
-	void setPosition(uint32_t x, uint32_t y);
+	void setPosition(int32_t x, int32_t y);
 	void setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t height);
 	void setRotation(uint16_t rotation);
 	void setScale(float x, float y);
@@ -42,8 +42,8 @@ public:
 	bool hasBounds() const;
 
 private:
-	uint32_t _posX;
-	uint32_t _posY;
+	int32_t _posX;
+	int32_t _posY;
 	bool _hasPos;
 
 	std::map<uint8_t, uint16_t> crop;

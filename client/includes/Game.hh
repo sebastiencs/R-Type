@@ -41,12 +41,6 @@ private:
 	Packager* _packager;
 	ITimer* _shotCooldown;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
-	uint32_t xBg1;
-	uint32_t xBg2;
-	Sprite *bg1;
-	Sprite *bg2;
-	Transformation tBg1;
-	Transformation tBg2;
 
 public:
   Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);

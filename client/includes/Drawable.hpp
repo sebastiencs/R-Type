@@ -21,7 +21,7 @@ public:
 	virtual const std::string& getId() const {
 		return _id;
 	}
-	virtual void setId(std::string& id) {
+	virtual void setId(const std::string& id) {
 		_id = id;
 	}
 	virtual void setVisible(bool visible) {

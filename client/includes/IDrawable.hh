@@ -14,7 +14,7 @@ public:
 	virtual const std::string& getId() const = 0;
 	virtual bool isVisible() const = 0;
 
-	virtual void setId(std::string&) = 0;
+	virtual void setId(const std::string&) = 0;
 	virtual void setTransformation(const Transformation&) = 0;
 	virtual void setVisible(bool) = 0;
 

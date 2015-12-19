@@ -20,7 +20,7 @@ Transformation::Transformation()
 	_height = 0;
 }
 
-Transformation::Transformation(uint32_t x, uint32_t y)
+Transformation::Transformation(int32_t x, int32_t y)
 {
 	setPosition(x, y);
 	_hasCrop = false;
@@ -107,7 +107,7 @@ Transformation::~Transformation()
 {
 }
 
-void Transformation::setPosition(uint32_t x, uint32_t y)
+void Transformation::setPosition(int32_t x, int32_t y)
 {
 	_hasPos = true;
 	_posX = x;
