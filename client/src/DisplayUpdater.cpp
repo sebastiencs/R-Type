@@ -89,7 +89,7 @@ void DisplayUpdater::launchObserver()
 
 void DisplayUpdater::game()
 {
-	static Sprite *bg = nullptr;
+	/*static Sprite *bg = nullptr;
 
 	if (!bg) {
 		Transformation t;
@@ -97,7 +97,7 @@ void DisplayUpdater::game()
 		t.setPosition(0, 0);
 		bg = new Sprite("menubackground8bit.png", t, graphicEngine, Color::None);
 	}
-	bg->draw();
+	bg->draw();*/
 
   images.for_each([&](auto &img) {
     this->graphicEngine->drawSprite(*img);

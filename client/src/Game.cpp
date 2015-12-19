@@ -117,18 +117,18 @@ void	Game::handlingNetwork()
 void	Game::updateGraphic()
 {
 	//UPDATE THE BACKGROUND
-	/*xBg1 -= (uint32_t) (200 * GraphicEngine::getDeltaTimeS());
-	if (xBg1 < 1920) {
-		xBg1 = 1920;
-	}
-	tBg1.setPosition(xBg1, 0);
-	drawImage(bg1);
-	xBg2 -= (uint32_t) (200 * GraphicEngine::getDeltaTimeS());
-	if (xBg2 < 1920) {
-		xBg2 = 1920;
-	}
-	tBg2.setPosition(xBg2, 0);
-	drawImage(bg2);*/
+	//xBg1 -= (uint32_t) (20 /** GraphicEngine::getDeltaTimeS()*/);
+	//if (xBg1 < 1920) {
+	//	xBg1 = 1920;
+	//}
+	//tBg1.setPosition(xBg1, 0);
+	//drawImage(bg1);
+	//xBg2 -= (uint32_t) (20 /** GraphicEngine::getDeltaTimeS()*/);
+	//if (xBg2 < 1920) {
+	//	xBg2 = 1920;
+	//}
+	//tBg2.setPosition(xBg2, 0);
+	//drawImage(bg2);
 
 	int i = 0;
 	for (auto &&player : _LP.getListPlayers()) {
