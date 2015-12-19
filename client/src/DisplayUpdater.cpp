@@ -115,7 +115,6 @@ void DisplayUpdater::game()
 	if (xBg1 < -1920) {
 		xBg1 = 1920;
 	}
-	std::cout << "XBG1 ------------------ : " << xBg1 << std::endl;
 	tBg1.setPosition(xBg1, 0);
 	bg1->setTransformation(tBg1);
 	bg1->draw();
@@ -123,9 +122,8 @@ void DisplayUpdater::game()
 	if (xBg2 < -1920) {
 		xBg2 = 1920;
 	}
-	std::cout << "XBG2 ------------------ : " << xBg2 << std::endl;
 	tBg2.setPosition(xBg2, 0);
-	bg1->setTransformation(tBg2);
+	bg2->setTransformation(tBg2);
 	bg2->draw();
 
 
