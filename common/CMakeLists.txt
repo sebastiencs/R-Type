@@ -21,6 +21,7 @@ file (GLOB
   src/Bullet.cpp
   src/Physics.cpp
   src/Obstacle.cpp
+  src/BonusMalus.cpp
   src/TaskScheduler.cpp
   )
 
@@ -38,6 +39,7 @@ file (GLOB
   includes/Patern.hh
   includes/Enemy.hh
   includes/Bullet.hh
+  includes/BonusMalus.hh
   includes/Obstacle.hh
   includes/Object.hh
   includes/ListSecure.hh
