@@ -19,7 +19,7 @@ public:
   PaquetLife();
   PaquetLife(const Buffer &);
   template <typename T>
-  PaquetLife(const T *data, size_t len) : Paquet(data, len) { parqePaquet(); }
+  PaquetLife(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetLife();
 
   void		setID(const uint8_t id);
