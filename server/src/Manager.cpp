@@ -300,14 +300,8 @@ void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet, const Addr &addr 
   if (party && ps) {
     party->setPlayerShot(ps);
 
-    // Solution temporaire
-    for (auto &player : party->getPlayers()) {
-      if (player->getID() != paquet->getPlayerID()) {
-	write(*paquet, player->addr());
-      }
-    }
-
-
+    auto &&players = party->getPlayers();
+    broadcast_except(players, id, *paquet);
   }
 #ifdef DEBUG
   else {
