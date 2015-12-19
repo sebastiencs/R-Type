@@ -276,14 +276,8 @@ void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet, const Addr &addr
     auto &&player = players.findIn([id] (auto &p) { return (p->getID() == id); });
 
     if (player) {
-
-      PaquetPlayerCoord paquet;
-      paquet = player;
-
-      players.for_each([&paquet, this] (auto &p) {
-	  this->write(paquet, p->addr());
-	});
-
+      PaquetPlayerCoord paquet(player);
+      broadcast_except(players, id, paquet);
     }
   }
 #ifdef DEBUG

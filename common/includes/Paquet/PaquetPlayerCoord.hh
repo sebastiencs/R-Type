@@ -20,6 +20,14 @@ public:
   virtual ~PaquetPlayerCoord();
 
   template <typename T>
+  PaquetPlayerCoord(T &p) {
+    _playerID = p->getID();
+    _x = p->getX();
+    _y = p->getY();
+    createPaquet();
+  }
+
+  template <typename T>
   PaquetPlayerCoord &operator=(T &p) {
     _playerID = p->getID();
     _x = p->getX();
