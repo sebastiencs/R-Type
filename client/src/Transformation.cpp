@@ -143,12 +143,12 @@ void Transformation::setBounds(uint16_t width, uint16_t height)
 	_height = height;
 }
 
-uint32_t Transformation::getX() const
+int32_t Transformation::getX() const
 {
 	return _posX;
 }
 
-uint32_t Transformation::getY() const
+int32_t Transformation::getY() const
 {
 	return _posY;
 }

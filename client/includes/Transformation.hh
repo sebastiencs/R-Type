@@ -26,8 +26,8 @@ public:
 	void setScale(float x, float y);
 	void setBounds(uint16_t width, uint16_t height);
 
-	uint32_t getX() const;
-	uint32_t getY() const;
+	int32_t getX() const;
+	int32_t getY() const;
 	const std::map<uint8_t, uint16_t>& getCrop() const;
 	uint16_t getRotation() const;
 	float getScaleX() const;
