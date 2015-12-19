@@ -110,7 +110,7 @@ void DisplayUpdater::game()
 
 	xBg2 = xBg2 < -1920 ? 1920 : xBg2;
 	tBg2.setPosition(xBg2, 0);
-	bg1->setTransformation(tBg2);
+	bg2->setTransformation(tBg2);
 	bg2->draw();
 
 
