@@ -56,7 +56,7 @@ void		PaquetLife::parsePaquet()
   _life = readData<uint8_t>(ptr);
 }
 
-void		PaqyetLife::createPaquet()
+void		PaquetLife::createPaquet()
 {
   size_t	ptr = 0;
 

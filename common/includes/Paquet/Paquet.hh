@@ -59,6 +59,7 @@ public:
     FIRST_UDP		= 0x0D,
     ENEMY		= 0x0E,
     BONUS_MALUS		= 0x0F,
+    LIFE	        = 0x10,
     RESPONSE		= 0xFF
   };
 
@@ -69,7 +70,7 @@ public:
 
       uint8_t id = _data[0];
 
-      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE || id == LEAVE || id == ENEMY) {
+      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE || id == LEAVE || id == ENEMY || id == LIFE) {
 	return (UDP);
       }
       else {
