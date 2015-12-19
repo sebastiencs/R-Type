@@ -21,7 +21,8 @@ Party::Party(const Manager_SharedPtr &&manager)
     _name("Unknwon"),
     _running(false),
     _wave(std::make_unique<Wave>(*this)),
-    _timerWave(std::make_unique<Timer>())
+    _timerWave(std::make_unique<Timer>()),
+    _timerBullet(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
 }
@@ -33,7 +34,8 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
     _name(name),
     _running(false),
     _wave(std::make_unique<Wave>(*this)),
-    _timerWave(std::make_unique<Timer>())
+    _timerWave(std::make_unique<Timer>()),
+    _timerBullet(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
 }
@@ -75,6 +77,7 @@ void			Party::run()
   PaquetEnemy	paquet;
 
   _timerWave->start();
+  _timerBullet->start();
 
   for (;;) {
 
@@ -118,16 +121,35 @@ void			Party::run()
 
 	  if (enemy->hasToShot()) {
 	    PaquetPlayerShot shot(enemy);
-
-	    broadcast(_players, shot);
+	    this->broadcast(_players, shot);
+	    enemy->addBullet(std::make_shared<Bullet>(shot.getX(), shot.getY(), shot.getSpeed(), shot.getType()));
 	  }
 	}
 
 	if (changed) {
 	  this->updateEnemy(enemy);
 	}
+
+	auto &bullets = enemy->getBullets();
+
+	Physics::Bullet = 1;
+	for (auto &bullet : bullets) {
+	  bullet->getX() -= (uint16_t)(bullet->getSpeed() * _timerBullet->secFloat());
+	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
+	    uint8_t id = Physics::idContact;
+	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
+	    player->getLife() -= 10;
+	    // TODO: Envoyer au client qu'il a été touché -> lui envoyer sa vie restante
+	  }
+	}
+	Physics::Bullet = 0;
+
+	// TODO: remove la bullet si elle touche un player
+	bullets.remove_if([] (auto &b) { return (b->getX() > 2000); });
+
       });
 
+    _timerBullet->reset();
     IOEvent::wait(20);
   }
 }

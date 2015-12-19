@@ -38,6 +38,11 @@ public:
   virtual bool		ns(long);
   virtual long		ns();
 
+  // Same in seconds
+  virtual bool		sec(long);
+  virtual long		sec();
+  virtual float		secFloat();
+
   // Same in minutes
   virtual bool		min(long);
   virtual long		min();

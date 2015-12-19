@@ -22,7 +22,6 @@ class Button;
 class Drawable;
 class Text;
 class Sprite;
-class Packager;
 class ITimer;
 class ICallback;
 class IDrawable;
@@ -30,7 +29,7 @@ class IDrawable;
 class GraphicEngine : public IGraphicEngine {
 
 public:
-	GraphicEngine(Packager* packager);
+	GraphicEngine();
 	~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
@@ -76,7 +75,6 @@ protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);
 
-	Packager* _packager;
 	ITimer* _timer;
 	static sf::Time elapsedTime;
 	callback call;

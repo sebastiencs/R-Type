@@ -8,8 +8,7 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGam
 	threadGame = nullptr;
 	_game = nullptr;
 	packager = _packager;
-
-	graphicEngine = new GraphicEngine(packager);
+	graphicEngine = new GraphicEngine();
 	mainmenu = new MainMenu(graphicEngine, net);
 	this->net = net;
 	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };

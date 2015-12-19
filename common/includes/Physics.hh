@@ -23,6 +23,7 @@ public:
   enum { LOCK, NO_LOCK };
 
   static int Bullet;
+  static uint8_t idContact;
 
 private:
 
@@ -68,6 +69,7 @@ public:
 	uint16_t y = e->getY();
 	if (newX < x + e->getSizeX() && newX + mySizeX > x
 	    && myY < y + e->getSizeY() && myY + mySizeY > y) {
+	  idContact = e->getID();
 	  return (true);
 	}
       }
@@ -94,6 +96,7 @@ public:
 	uint16_t x = e->getX();
 	if (myX < x + e->getSizeX() && myX + mySizeX > x
 	    && newY < y + e->getSizeY() && newY + mySizeY > y) {
+	  idContact = e->getID();
 	  return (true);
 	}
       }
