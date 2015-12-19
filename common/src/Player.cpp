@@ -83,6 +83,11 @@ int			Player::getLife() const
   return (_life);
 }
 
+int			&Player::getLife()
+{
+  return (_life);
+}
+
 void			Player::setLife(int life)
 {
   _life = life;

@@ -87,6 +87,36 @@ long		Timer::ns()
   return (static_cast<long>(diff.count()));
 }
 
+bool		Timer::sec(long s)
+{
+  std::chrono::high_resolution_clock::time_point	t2;
+  t2 = std::chrono::high_resolution_clock::now();
+
+  std::chrono::seconds diff = std::chrono::duration_cast<std::chrono::seconds>(t2 - _t);
+
+  return ((diff.count() >= s) ? (true) : (false));
+}
+
+long		Timer::sec()
+{
+  std::chrono::high_resolution_clock::time_point	t2;
+  t2 = std::chrono::high_resolution_clock::now();
+
+  std::chrono::seconds diff = std::chrono::duration_cast<std::chrono::seconds>(t2 - _t);
+
+  return (static_cast<long>(diff.count()));
+}
+
+float		Timer::secFloat()
+{
+  long ms = this->ms();
+
+  float sec = ms;
+  sec /= 1000;
+
+  return (sec);
+}
+
 #undef min
 
 bool		Timer::min(long ms)

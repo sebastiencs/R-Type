@@ -49,6 +49,7 @@ class			Party
   bool			_running;
   Wave_UniquePtr	_wave;
   ITimer_UniquePtr	_timerWave;
+  ITimer_UniquePtr	_timerBullet;
 
   void				write(const Paquet &, const Addr &) const;
   const Player_SharedPtr	focusOnClosestPlayer(const uint16_t yEnnemy) const;

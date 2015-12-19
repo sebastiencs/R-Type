@@ -44,6 +44,7 @@ public:
   virtual void			setLevel(uint8_t);
 
   virtual int			getLife() const;
+  virtual int			&getLife();
   virtual void			setLife(int);
 
   virtual const std::string	&getName() const;

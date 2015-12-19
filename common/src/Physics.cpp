@@ -11,3 +11,4 @@
 #include "Physics.hh"
 
 int Physics::Bullet = 0;
+uint8_t Physics::idContact = 0xFF;
