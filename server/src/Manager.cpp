@@ -269,25 +269,30 @@ void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet, const Addr &addr
   auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
   auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
   if (party && pc) {
+
     party->setCoordPlayer(pc);
 
+    auto &&players = party->getPlayers();
+    auto &&player = players.findIn([id] (auto &p) { return (p->getID() == id); });
 
-    // Solution temporaire
-    for (auto &player : party->getPlayers()) {
-      if (player->getID() != paquet->getPlayerID()) {
-	write(*paquet, player->addr());
-      }
+    if (player) {
+
+      PaquetPlayerCoord paquet;
+      paquet = player;
+
+      players.for_each([&paquet, this] (auto &p) {
+	  this->write(paquet, p->addr());
+	});
+
     }
-
-
   }
-  else {
 #ifdef DEBUG
+  else {
     if (!party) {
       std::cerr << "Can't find party" << std::endl;
     }
-#endif // !DEBUG
   }
+#endif // !DEBUG
 }
 
 void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet, const Addr &addr UNUSED)
@@ -310,13 +315,13 @@ void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet, const Addr &addr 
 
 
   }
-  else {
 #ifdef DEBUG
+  else {
     if (!party) {
       std::cerr << "Can't find party" << std::endl;
     }
-#endif // !DEBUG
   }
+#endif // !DEBUG
 }
 
 void		Manager::handlePaquet(PaquetReady_SharedPtr paquet, const Addr &addr)
