@@ -63,6 +63,13 @@ void			Party::updateEnemy(const Enemy_SharedPtr &e)
     });
 }
 
+void			Party::broadcast(const listPlayers &list, const Paquet &paquet)
+{
+  if (!_manager.expired()) {
+    _manager.lock()->broadcast(list, paquet);
+  }
+}
+
 void			Party::run()
 {
   PaquetEnemy	paquet;
@@ -74,7 +81,7 @@ void			Party::run()
     if (_bonusmalus.empty()) { // faire un timer + reset
       _wave->getSpawnBonusMalus();
     }
-    
+
     if (_enemies.empty()) {// || _timerWave->ms() >= 10000) {
       _wave->getSpawnEnemy();
       _enemies.for_each([this] (auto &enemy) {
@@ -112,9 +119,7 @@ void			Party::run()
 	  if (enemy->hasToShot()) {
 	    PaquetPlayerShot shot(enemy);
 
-	    _players.for_each([&] (auto &p) {
-		this->write(shot, p->addr());
-	      });
+	    broadcast(_players, shot);
 	  }
 	}
 
