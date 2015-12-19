@@ -50,19 +50,19 @@ void	        PlayerShot::setSpeed(const uint8_t speed) {
   _speed = speed;
 }
 
-void			PlayerShot::setID(const uint8_t id) {
+void		PlayerShot::setID(const uint8_t id) {
   _id = id;
 }
 
-uint16_t		PlayerShot::getX() const {
+uint16_t	PlayerShot::getX() const {
   return _x;
 }
 
-uint16_t		PlayerShot::getY() const {
+uint16_t	PlayerShot::getY() const {
   return _y;
 }
 
-uint8_t			PlayerShot::getType() const {
+uint8_t		PlayerShot::getType() const {
   return _type;
 }
 

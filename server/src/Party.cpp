@@ -246,7 +246,7 @@ void			Party::setPlayerShot(PlayerShot *ps)
   uint8_t id = ps->getID();
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
   if (player) {
-    player->addBullet(std::make_shared<Bullet>(ps->getX(), ps->getY(), ps->getSpeed(), 0, 0));
+    player->addBullet(std::make_shared<Bullet>(ps->getX(), ps->getY(), ps->getSpeed(), ps->getType()));
   }
   delete ps;
 }

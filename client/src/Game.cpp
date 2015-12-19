@@ -71,11 +71,11 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), 8, 7));
+		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
 		}
 		enem = _LE.getEnemy(shot->getPlayerID());
 		if (enem) {
-		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), 8, 7));
+		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
