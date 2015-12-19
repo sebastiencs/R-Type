@@ -1,14 +1,13 @@
 #include "GraphicEngine.hh"
 #include "Timer.hh"
 #include "ListPlayers.hh"
-#include "Packager.hh"
 #include "Sprite.hh"
 #include "Text.hh"
 #include "SystemAudio.hh"
 
 sf::Time GraphicEngine::elapsedTime;
 
-GraphicEngine::GraphicEngine(Packager* packager) : _packager(packager)
+GraphicEngine::GraphicEngine()
 {
 	callbackArg = nullptr;
 	call = nullptr;
