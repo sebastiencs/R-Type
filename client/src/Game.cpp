@@ -35,12 +35,12 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
 	obstacleTypeToSpriteString[2] = "enemy2.png"; // boss
 
-	xBg1 = 0;
+	/*xBg1 = 0;
 	tBg1.setPosition(xBg1, 0);
 	bg1 = new Sprite("ingamebg.jpg", tBg1);
 	xBg2 = 1920;
 	tBg2.setPosition(xBg2, 0);
-	bg2 = new Sprite("ingamebg.jpg", tBg2);
+	bg2 = new Sprite("ingamebg.jpg", tBg2);*/
 
 	DEBUG_MSG("Game created");
 	(void)_height;
@@ -117,7 +117,7 @@ void	Game::handlingNetwork()
 void	Game::updateGraphic()
 {
 	//UPDATE THE BACKGROUND
-	xBg1 -= (uint32_t) (200 * GraphicEngine::getDeltaTimeS());
+	/*xBg1 -= (uint32_t) (200 * GraphicEngine::getDeltaTimeS());
 	if (xBg1 < 1920) {
 		xBg1 = 1920;
 	}
@@ -128,7 +128,7 @@ void	Game::updateGraphic()
 		xBg2 = 1920;
 	}
 	tBg2.setPosition(xBg2, 0);
-	drawImage(bg2);
+	drawImage(bg2);*/
 
 	int i = 0;
 	for (auto &&player : _LP.getListPlayers()) {
