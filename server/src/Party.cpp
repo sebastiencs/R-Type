@@ -243,7 +243,11 @@ void			Party::setReady(uint8_t id, uint8_t status)
 
 void			Party::setPlayerShot(PlayerShot *ps)
 {
-  // TODO: Sauvegarder les tirs, comme avec setCoordPlayer
+  uint8_t id = ps->getID();
+  auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
+  if (player) {
+    player->addBullet(std::make_shared<Bullet>(ps->getX(), ps->getY(), ps->getSpeed(), 0, 0));
+  }
   delete ps;
 }
 

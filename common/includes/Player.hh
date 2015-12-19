@@ -49,7 +49,7 @@ public:
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
 
-  virtual const bool	&getReady() const;
+  virtual const bool		&getReady() const;
   virtual void			setReady(const bool &);
 
   virtual const Addr		&addr() const;
