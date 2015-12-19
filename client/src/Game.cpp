@@ -123,11 +123,20 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_elem(b)); });
 		}
 
-		Transformation t(player->getPosition().x, player->getPosition().y);
+		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
 		t.setScale(3.5, 3.5);
 		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
-		t.setPosition(t.getX(), t.getY() - 22);
+
+		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);		// Player HealthBar
+		t.setScale(10, 1);
+		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		drawImage(lifeBG);
+		t.setScale((float)(player->getLife() / 10.), 1.);
+		Sprite* life = new Sprite("life-fg.png", t);
+		drawImage(life);
+
+		t.setPosition(t.getX(), player->getPosition().y - 22);		// Player Name
 		t.setScale(1, 1);
 		Text* text = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);
@@ -143,11 +152,19 @@ void	Game::updateGraphic()
 			auto &bulletList = enemy->getBullets();
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
-		Transformation t(enemy->getX(), enemy->getY());
+		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
 		t.setScale(1.5, 1.5);
-		//DEBUG_MSG("type: " << (int)enemy->getType());
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
+
+		t.setPosition(t.getX(), t.getY() - 15);		// Enemy health bar
+		t.setScale(10., 1.);
+		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		drawImage(lifeBG);
+		t.setScale((float)(enemy->getLife() / 10.), 1.);
+		Sprite* life = new Sprite("life-fg.png", t);
+		drawImage(life);
+
 	}
 }
 
