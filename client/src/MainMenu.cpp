@@ -1,6 +1,7 @@
 #include "MainMenu.hh"
 #include "OnlineMenu.hh"
 #include "ListPlayers.hh"
+#include "CheckBox.hh"
 
 MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 {
