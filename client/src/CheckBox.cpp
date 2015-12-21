@@ -98,8 +98,7 @@ bool CheckBox::onAction(uint32_t x, uint32_t y)
 	if (_fptr && isPressed(x, y))
 	{
 		_check = (_check) ? false : true;
-		if (_check)
-			_fptr();
+		_fptr();
 		return true;
 	}
 	return false;
