@@ -140,15 +140,17 @@ void			Party::run()
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
 	    int life = static_cast<int>(player->getLife()) - 10;
+
+	    player->setLife(life);
+	    PaquetLife	paquet(player);
+	    this->broadcast(_players, paquet);
+
 	    if (life <= 0) {
 	      PaquetDeath paquet(player);
 	      this->broadcast(_players, paquet);
+	      player->setID(0xFF);
 	    }
 
-	    player->setLife(life);
-
-	    PaquetLife	paquet(player);
-	    this->broadcast(_players, paquet);
 	    bullet->setID(0xFF);
 	  }
 	}
@@ -157,6 +159,7 @@ void			Party::run()
 	bullets.remove_if([] (auto &b) { return (b->getX() > 2000 || b->getID() == 0xFF); });
 
       });
+
 
     _players.for_each([this] (auto &player) {
 	auto &bullets = player->getBullets();
@@ -169,15 +172,17 @@ void			Party::run()
 	    auto &&enemy = _enemies.findIn([id] (auto &p) { return (p->getID() == id); });
 
 	    int life = static_cast<int>(enemy->getLife()) - 10;
+
+	    enemy->setLife(life);
+	    PaquetLife	paquet(enemy);
+	    this->broadcast(_players, paquet);
+
 	    if (life <= 0) {
 	      PaquetDeath paquet(enemy);
 	      this->broadcast(_players, paquet);
+	      enemy->setID(0xFF);
 	    }
 
-	    enemy->setLife(life);
-
-	    PaquetLife	paquet(enemy);
-	    this->broadcast(_players, paquet);
 	    bullet->setID(0xFF);
 	  }
 	}
@@ -186,6 +191,9 @@ void			Party::run()
 	bullets.remove_if([] (auto &b) { return (b->getX() > 1500 || b->getID() == 0xFF); });
 
       });
+
+    _players.remove_if([] (auto &p) { return (p->getID() == 0xFF); });
+    _enemies.remove_if([] (auto &e) { return (e->getID() == 0xFF); });
 
     _timerBullet->reset();
     IOEvent::wait(20);
