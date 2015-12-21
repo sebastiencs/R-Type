@@ -59,6 +59,7 @@ void	Game::handlingNetwork()
 	auto &&enemy = _PS.getEnemyPackage();
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
 	auto &&life = _PS.getLifePackage();
+	auto &&death = _PS.getDeathPackage();
 
 	Player_SharedPtr player;
 	Enemy_SharedPtr enem;
@@ -111,6 +112,18 @@ void	Game::handlingNetwork()
 	    enem->getLife() = life->getLife();
 	  }
 	  _PS.deleteLifePackage();
+	}
+
+	if (death != nullptr) {
+	  player = _LP.getPlayer(death->getID());
+	  if (player) {
+	    std::cout << "A player is dead" << std::endl;
+	  }
+	  enem = _LE.getEnemy(death->getID());
+	  if (enem) {
+	    std::cout << "An enemy is dead" << std::endl;
+	  }
+	  _PS.deleteDeathPackage();
 	}
 
 	if (leave != nullptr) {

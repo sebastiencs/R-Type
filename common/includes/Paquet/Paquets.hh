@@ -29,5 +29,6 @@
 # include "PaquetEnemy.hh"
 # include "PaquetBonusMalus.hh"
 # include "PaquetLife.hh"
+# include "PaquetDeath.hh"
 
 #endif /* !PAQUETS_H_ */

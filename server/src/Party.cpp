@@ -127,7 +127,6 @@ void			Party::run()
 	}
 
 	if (changed) {
-	  std::cout << "Enemy move" << std::endl;
 	  this->updateEnemy(enemy);
 	}
 
@@ -139,7 +138,14 @@ void			Party::run()
 	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
-	    player->getLife() -= 5;
+
+	    int life = static_cast<int>(player->getLife()) - 10;
+	    if (life <= 0) {
+	      PaquetDeath paquet(player);
+	      this->broadcast(_players, paquet);
+	    }
+
+	    player->setLife(life);
 
 	    PaquetLife	paquet(player);
 	    this->broadcast(_players, paquet);
@@ -161,7 +167,14 @@ void			Party::run()
 	  if (Physics::isContact(Physics::LOCK, bullet, _enemies)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&enemy = _enemies.findIn([id] (auto &p) { return (p->getID() == id); });
-	    enemy->getLife() -= 20;
+
+	    int life = static_cast<int>(enemy->getLife()) - 10;
+	    if (life <= 0) {
+	      PaquetDeath paquet(enemy);
+	      this->broadcast(_players, paquet);
+	    }
+
+	    enemy->setLife(life);
 
 	    PaquetLife	paquet(enemy);
 	    this->broadcast(_players, paquet);

@@ -74,6 +74,11 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().storeLifePackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
+	_tab[17] = [this](Paquet *paquet) {
+		PaquetDeath *store = new PaquetDeath(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeDeathPackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
 	_tab[0xFF] = [this](Paquet *paquet) {
 		PaquetResponse *store = new PaquetResponse(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeAnswersPackage(store);
