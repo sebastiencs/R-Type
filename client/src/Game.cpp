@@ -199,7 +199,6 @@ void	Game::updateGraphic()
 
 	if (!_deadPlayersName.empty()) {	// List of dead players
 		int32_t y = 15;
-		//for (std::list<std::string>::iterator it = _deadPlayersName.begin(); it != _deadPlayersName.end(); ++it) {
 		std::list<std::string>::iterator it = _deadPlayersName.begin();
 		while (it != _deadPlayersName.end()) {
 			if (_deadPlayersTimer[*it] && _deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
