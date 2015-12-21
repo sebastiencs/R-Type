@@ -17,6 +17,7 @@ Enemy::Enemy()
     _type(0),
     _intervalShot(5000),
     _shotSpeed(800),
+    _column(700),
     _timer(std::make_shared<Timer>())
 {
   DEBUG_MSG("Enemy created");
@@ -30,6 +31,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
     _status(JUST_ENTERED),
     _intervalShot(5000),
     _shotSpeed(850),
+    _column(700),
     _timer(std::make_shared<Timer>())
 {
   if (type == 0) {
@@ -48,6 +50,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
     _status(JUST_ENTERED),
     _intervalShot(5000),
     _shotSpeed(850),
+    _column(700),
     _timer(std::make_shared<Timer>())
 {
   if (type == 0) {
@@ -170,4 +173,14 @@ std::list<Bullet_SharedPtr> &Enemy::getBullets()
 void Enemy::addBullet(Bullet_SharedPtr &&bullet)
 {
   _bullets.push_back(bullet);
+}
+
+uint16_t	Enemy::getColumn() const
+{
+  return (_column);
+}
+
+void		Enemy::setColumn(const uint16_t col)
+{
+  _column = col;
 }

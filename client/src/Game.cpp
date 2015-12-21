@@ -105,11 +105,11 @@ void	Game::handlingNetwork()
 	if (life != nullptr) {
 	  player = _LP.getPlayer(life->getID());
 	  if (player) {
-	    player->getLife() = life->getLife();
+	    player->setLife(life->getLife());
 	  }
 	  enem = _LE.getEnemy(life->getID());
 	  if (enem) {
-	    enem->getLife() = life->getLife();
+	    enem->setLife(life->getLife());
 	  }
 	  _PS.deleteLifePackage();
 	}

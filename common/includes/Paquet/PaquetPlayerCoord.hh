@@ -20,7 +20,7 @@ public:
   virtual ~PaquetPlayerCoord();
 
   template <typename T>
-  PaquetPlayerCoord(T &p) {
+  PaquetPlayerCoord(T &p) : _id(Paquet::COORD_PLAYER) {
     _playerID = p->getID();
     _x = p->getX();
     _y = p->getY();

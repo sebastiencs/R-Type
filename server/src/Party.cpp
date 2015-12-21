@@ -100,7 +100,7 @@ void			Party::run()
 	if (enemy->getStatus() == Enemy::JUST_ENTERED) {
 
 	  uint16_t x = enemy->getX();
-	  if (x > 700) {
+	  if (x > enemy->getColumn()) {
 	    changed = Physics::moveX(Physics::NO_LOCK, enemy, x - 2, _enemies, _players);
 	  }
 	  else {
@@ -192,7 +192,7 @@ void			Party::run()
 
       });
 
-    _players.remove_if([] (auto &p) { return (p->getID() == 0xFF); });
+    // _players.remove_if([] (auto &p) { return (p->getID() == 0xFF); });
     _enemies.remove_if([] (auto &e) { return (e->getID() == 0xFF); });
 
     _timerBullet->reset();

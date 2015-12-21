@@ -31,19 +31,24 @@ void		Wave::getSpawnEnemy()
   switch(_nbWaveEnemy)
     {
     case 2: // 2 enemies
+    case 3:
       {
 	while (++i < 2) {
 	  auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 400 + i * 200);
 	  e->pushAction(Enemy::FOLLOWING);
+	  e->setColumn(700 + i * 100);
 	  _party.addEnemy(e);
 	}
 	break;
       }
     case 4: // 4 enemies
+    case 6:
+    case 7:
       {
 	while (++i < 4) {
 	  auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 300 + i * 100);
 	  e->pushAction(Enemy::FOLLOWING);
+	  e->setColumn(600 + i * 100);
 	  _party.addEnemy(e);
 	}
 	break;
@@ -52,6 +57,7 @@ void		Wave::getSpawnEnemy()
       {
 	auto e = new Enemy(_party.getUniqueID(), 200, 1, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
 	_party.addEnemy(e);
 	break;
       }
@@ -59,6 +65,7 @@ void		Wave::getSpawnEnemy()
       {
 	auto e  = new Enemy(_party.getUniqueID(), 250, 2, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
 	_party.addEnemy(e);
 	break;
       }
@@ -66,6 +73,7 @@ void		Wave::getSpawnEnemy()
       {
 	auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
 	_party.addEnemy(e);
 	break;
       }
