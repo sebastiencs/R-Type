@@ -118,6 +118,7 @@ void	Game::handlingNetwork()
 	  player = _LP.getPlayer(death->getID());
 	  if (player) {
 	    std::cout << "A player is dead" << std::endl;
+			_LP.deletePlayer(player.get()->getID());
 	  }
 	  enem = _LE.getEnemy(death->getID());
 	  if (enem) {
