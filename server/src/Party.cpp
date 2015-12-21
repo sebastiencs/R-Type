@@ -343,7 +343,7 @@ void			Party::setRunning(bool run)
 
     _players.for_each([&] (auto &player) {
 	pos = player->getPosition();
-	pos.y += 200 * i;
+	pos.y += 100 + 100 * i;
 	i += 1;
 	player->setPosition(pos);
       });

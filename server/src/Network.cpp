@@ -132,10 +132,7 @@ int	Network::stop()
 
 bool	Network::write(const Paquet &paquet, const Addr &addr)
 {
-  PaquetClient	pc;
-
-  pc.paquet = paquet;
-  pc.addr = addr;
+  PaquetClient_SharedPtr	pc = std::make_shared<PaquetClient>(paquet, addr);
 
   _queuePaquet.push(pc);
   _sem->post();
@@ -149,10 +146,10 @@ bool	Network::write()
 
     if (_queuePaquet.size()) {
 
-      PaquetClient pc = _queuePaquet.front();
+      auto &pc = _queuePaquet.front();
 
-      if (pc.paquet.getType() == Paquet::UDP) {
-	if (_socketUDP->write(pc.paquet, pc.addr) >= 0) {
+      if (pc->paquet.getType() == Paquet::UDP) {
+	if (_socketUDP->write(pc->paquet, pc->addr) >= 0) {
 	  _queuePaquet.pop();
 	}
 	else {
@@ -160,7 +157,7 @@ bool	Network::write()
 	}
       }
       else {
-	if (_socketTCP->write(pc.paquet, pc.addr) >= 0) {
+	if (_socketTCP->write(pc->paquet, pc->addr) >= 0) {
 	  _queuePaquet.pop();
 	}
 	else {

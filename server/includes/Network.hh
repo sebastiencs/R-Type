@@ -37,10 +37,14 @@ typedef struct	s_paquet_client
 {
   Paquet	paquet;
   Addr		addr;
-  s_paquet_client(const struct s_paquet_client &pc)
+  s_paquet_client(const s_paquet_client &pc)
     : paquet(pc.paquet), addr(pc.addr) { }
+  s_paquet_client(const Paquet &p, const Addr &a)
+    : paquet(p), addr(a) { }
   s_paquet_client() { }
 }		PaquetClient;
+
+typedef std::shared_ptr<PaquetClient>	PaquetClient_SharedPtr;
 
 class				Network
   : public INetwork
@@ -53,7 +57,7 @@ private:
   Selector_UniquePtr		_selector;
   bool				_running;
   IThread_UniquePtr		_thread;
-  QueueSecure<PaquetClient>	_queuePaquet;
+  QueueSecure<PaquetClient_SharedPtr>	_queuePaquet;
   std::list<ISocketTCP_SharedPtr>	_socketClient;
   Manager_WeakPtr		_manager;
   Buffer			_buffer;
