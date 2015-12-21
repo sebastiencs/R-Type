@@ -35,6 +35,7 @@ public:
   void		deleteEnemy(uint8_t id);
 
   const ListSecure<Enemy_SharedPtr> &getListEnemies() const;
+  ListSecure<Enemy_SharedPtr> &getListEnemies();
   Enemy_SharedPtr	getEnemy(uint8_t id);
 
 };
