@@ -37,6 +37,9 @@ typedef struct	s_paquet_client
 {
   Paquet	paquet;
   Addr		addr;
+  s_paquet_client(const struct s_paquet_client &pc)
+    : paquet(pc.paquet), addr(pc.addr) { }
+  s_paquet_client() { }
 }		PaquetClient;
 
 class				Network

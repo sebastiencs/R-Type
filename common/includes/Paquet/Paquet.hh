@@ -82,12 +82,12 @@ public:
   }
 
 
-  Paquet() : _data(0) {
+  Paquet() : _data(nullptr) {
     _data = new uint8_t[Paquet::PAQUET_SIZE];
     _size = Paquet::PAQUET_SIZE;
   }
 
-  Paquet(const Paquet &paquet) : _data(0) {
+  Paquet(const Paquet &paquet) : _data(nullptr) {
     _data = new uint8_t[paquet.getSize()];
     _size = paquet.getSize();
 
@@ -96,7 +96,7 @@ public:
     writeData(ptr, reinterpret_cast<const uint8_t *>(data), _size);
   }
 
-  Paquet(const Buffer &buffer) : _data(0) {
+  Paquet(const Buffer &buffer) : _data(nullptr) {
     _data = new uint8_t[buffer.size()];
     _size = buffer.size();
 
@@ -106,7 +106,7 @@ public:
   }
 
   template<typename T>
-  Paquet(const T *data, size_t len) {
+  Paquet(const T *data, size_t len) : _data(nullptr) {
     size_t ptr = 0;
 
     _data = new uint8_t[len];
