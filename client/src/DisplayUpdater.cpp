@@ -3,7 +3,7 @@
 #include "Game.hh"
 #include "Locker.hh"
 
-DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false)
+DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false), cond(1)
 {
 	threadGame = nullptr;
 	_game = nullptr;
@@ -25,7 +25,6 @@ DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGam
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
-	cond = 1;
 }
 
 DisplayUpdater::~DisplayUpdater()
