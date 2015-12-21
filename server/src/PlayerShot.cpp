@@ -20,7 +20,7 @@ PlayerShot::PlayerShot()
   DEBUG_MSG("PlayerShot created");
 }
 
-PlayerShot::PlayerShot(const uint16_t x, const uint16_t y, const uint8_t type, const uint8_t speed, const uint8_t id)
+PlayerShot::PlayerShot(const uint16_t x, const uint16_t y, const uint8_t type, const uint16_t speed, const uint8_t id)
   : _x(x),
     _y(y),
     _type(type),
@@ -46,7 +46,7 @@ void		PlayerShot::setType(const uint8_t type) {
   _type = type;
 }
 
-void	        PlayerShot::setSpeed(const uint8_t speed) {
+void	        PlayerShot::setSpeed(const uint16_t speed) {
   _speed = speed;
 }
 
@@ -70,6 +70,6 @@ uint8_t		PlayerShot::getID() const {
   return _id;
 }
 
-uint8_t		PlayerShot::getSpeed() const {
+uint16_t	PlayerShot::getSpeed() const {
   return _speed;
 }

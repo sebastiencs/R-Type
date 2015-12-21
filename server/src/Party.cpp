@@ -139,7 +139,7 @@ void			Party::run()
 	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
-	    player->getLife() -= 20;
+	    player->getLife() -= 5;
 
 	    PaquetLife	paquet(player);
 	    this->broadcast(_players, paquet);
