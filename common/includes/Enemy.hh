@@ -47,6 +47,8 @@ public:
   bool		hasToShot();
   uint16_t	getShotSpeed() const;
   void		setShotSpeed(const uint16_t);
+  uint16_t	getColumn() const;
+  void		setColumn(const uint16_t);
 
   const std::list<Bullet_SharedPtr> &getBullets() const;
   std::list<Bullet_SharedPtr>	&getBullets();
@@ -66,6 +68,7 @@ private:
   int			_intervalShot;
   std::list<Bullet_SharedPtr> _bullets;
   uint16_t		_shotSpeed;
+  uint16_t		_column;
   ITimer_SharedPtr	_timer;
 };
 
