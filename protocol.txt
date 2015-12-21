@@ -385,14 +385,55 @@ Server: |    ID   |   Type  |   ID    |    X     |    Y     | Vitesse |
 	Type: unsigned char (8 bits)
 	   	Type de bonus/malus
 
-	X: unsigned char (16 bits)
+	X: unsigned short (16 bits)
 	   	Position en x du bonus/malus
 
-	Y: unsigned char (16 bits)
+	Y: unsigned short (16 bits)
 	   	Position en y du bonus/malus
 
 	Vitesse: unsigned char (8 bits)
 	   	Vitesse a laquelle le bonus/malus se deplace sur le terrain
+
+
+----------------------------------------------------
+
+17 - Vie du joueur / ennemi
+
+Le serveur envoi ce paquet pour indiqué la vie restante
+
+   	+---------+---------+---------+
+Server: |    ID   |   pID   |  Life   |
+	+---------+---------+---------+
+	| uint8_t | uint8_t | uint8_t |
+	+---------+---------+---------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 15
+
+	pID: unsigned char ( 8 bits )
+	   	Id du joueur / ennemi concerne
+
+	Life: unsigned char (8 bits)
+	   	Vie restante
+
+
+----------------------------------------------------
+
+18 - Mort d'un joueur / ennemi
+
+Le serveur envoi ce paquet pour indiqué que quelqu'un est mort
+
+   	+---------+---------+
+Server: |    ID   |   pID   |
+	+---------+---------+
+	| uint8_t | uint8_t |
+	+---------+---------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 15
+
+	pID: unsigned char ( 8 bits )
+	   	Id du joueur / ennemi concerne
 
 
 ----------------------------------------------------
