@@ -79,11 +79,11 @@ void DisplayUpdater::launchObserver()
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
 		threadGame = new Thread([&](void *) -> void * {
+			if (mainmenu != nullptr) {
+				delete mainmenu;
+				mainmenu = nullptr;
+			}
 			while (cond) {
-				if (mainmenu != nullptr) {
-					delete mainmenu;
-					mainmenu = nullptr;
-				}
 				_game->run();
 			}
 			return (nullptr);
@@ -114,11 +114,11 @@ void DisplayUpdater::game()
 	bg2->draw();
 
 
-  images.for_each([&](auto &img) {
+  images.for_each([&](Sprite* img) {
     this->graphicEngine->drawSprite(*img);
     delete img;
   });
-  _nickname.for_each([&](auto &text) {
+  _nickname.for_each([&](Text* text) {
     this->graphicEngine->drawText(*text);
     delete text;
   });
