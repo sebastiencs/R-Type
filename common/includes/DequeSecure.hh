@@ -75,8 +75,12 @@ public:
 
   auto	front() const -> decltype(_deque.front()) {
     Locker<IMutex_SharedPtr> { _mutex };
-    auto &&val = _deque.front();
-    return (val);
+    static decltype(_deque.front()) nul = nullptr;
+    if (_deque.size()) {
+      auto &&val = _deque.front();
+      return (val);
+    }
+    return (nul);
   };
 
   auto	empty() const -> decltype(_deque.empty()) {
