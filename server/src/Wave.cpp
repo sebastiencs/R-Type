@@ -12,7 +12,7 @@
 #include "Party.hh"
 
 Wave::Wave(Party &party)
-  :_party(party)
+  : _party(party), _nbWaveEnemy(0)
 {
   DEBUG_MSG("Wave created");
 }
@@ -24,12 +24,11 @@ Wave::~Wave()
 
 void		Wave::getSpawnEnemy()
 {
-  static int	nb_waves = 0;
   int	        i = -1;
 
   // Faire spawn les ennemies la ou y'a personne
 
-  switch(nb_waves)
+  switch(_nbWaveEnemy)
     {
     case 2: // 2 enemies
       {
@@ -72,7 +71,7 @@ void		Wave::getSpawnEnemy()
       }
   }
   i = -1;
-  nb_waves++;
+  _nbWaveEnemy++;
 }
 
 void		Wave::getSpawnBonusMalus()
