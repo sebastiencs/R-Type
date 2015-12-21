@@ -39,6 +39,8 @@ int		main(int argc, char **argv)
 	//std::string addr("84.102.232.137");
 	//seb2
 	//std::string addr("93.31.219.204");
+	//seb3
+	//std::string addr("86.74.56.198");
 
 	if (argc == 2 || (argc > 2 && !isNumber(argv[2]))) {
 		std::cerr << "usage: " << argv[0] << " <server> <port>" << std::endl;
