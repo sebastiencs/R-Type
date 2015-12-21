@@ -22,6 +22,13 @@ public:
   PaquetLife(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetLife();
 
+  template <typename T>
+  PaquetLife(const T &p) : _id(Paquet::LIFE) {
+    _pID = p->getID();
+    _life = p->getLife();
+    createPaquet();
+  }
+
   void		setID(const uint8_t id);
   void		setLife(const uint8_t life);
   uint8_t	getID() const;

@@ -79,6 +79,11 @@ int	Enemy::getLife() const
   return _life;
 }
 
+int	&Enemy::getLife()
+{
+  return _life;
+}
+
 uint8_t	Enemy::getType() const
 {
   return _type;

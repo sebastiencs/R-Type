@@ -34,6 +34,7 @@ public:
   void		setLife(const int life);
   void		setType(const uint8_t type);
   int		getLife() const;
+  int		&getLife();
   uint8_t       getType() const;
   int		getStatus() const;
   void		setStatus(const int status);

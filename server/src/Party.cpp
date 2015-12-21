@@ -127,6 +127,7 @@ void			Party::run()
 	}
 
 	if (changed) {
+	  std::cout << "Enemy move" << std::endl;
 	  this->updateEnemy(enemy);
 	}
 
@@ -138,14 +139,38 @@ void			Party::run()
 	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
-	    player->getLife() -= 10;
-	    // TODO: Envoyer au client qu'il a été touché -> lui envoyer sa vie restante
+	    player->getLife() -= 20;
+
+	    PaquetLife	paquet(player);
+	    this->broadcast(_players, paquet);
+	    bullet->setID(0xFF);
 	  }
 	}
 	Physics::Bullet = 0;
 
-	// TODO: remove la bullet si elle touche un player
-	bullets.remove_if([] (auto &b) { return (b->getX() > 2000); });
+	bullets.remove_if([] (auto &b) { return (b->getX() > 2000 || b->getID() == 0xFF); });
+
+      });
+
+    _players.for_each([this] (auto &player) {
+	auto &bullets = player->getBullets();
+
+	Physics::Bullet = 1;
+	for (auto &bullet : bullets) {
+	  bullet->getX() += (uint16_t)(bullet->getSpeed() * _timerBullet->secFloat());
+	  if (Physics::isContact(Physics::LOCK, bullet, _enemies)) {
+	    uint8_t id = Physics::idContact;
+	    auto &&enemy = _enemies.findIn([id] (auto &p) { return (p->getID() == id); });
+	    enemy->getLife() -= 20;
+
+	    PaquetLife	paquet(enemy);
+	    this->broadcast(_players, paquet);
+	    bullet->setID(0xFF);
+	  }
+	}
+	Physics::Bullet = 0;
+
+	bullets.remove_if([] (auto &b) { return (b->getX() > 1500 || b->getID() == 0xFF); });
 
       });
 

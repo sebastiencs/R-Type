@@ -103,6 +103,12 @@ const PaquetBonusMalus * PackageStorage::getBonusMalusPackage() const {
 	return bonusmalus.empty() ? nullptr : bonusmalus.front();
 }
 
+const PaquetLife * PackageStorage::getLifePackage() const {
+	if (!life.empty())
+		DEBUG_MSG(*life.front());
+	return life.empty() ? nullptr : life.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet_SharedPtr package) {
 	received.push_back(package);
 	_semIn->post();
@@ -178,6 +184,11 @@ void PackageStorage::storeEnemyPackage(PaquetEnemy_SharedPtr package)
 void PackageStorage::storeBonusMalusPackage(PaquetBonusMalus * package)
 {
 	bonusmalus.push_back(package);
+}
+
+void PackageStorage::storeLifePackage(PaquetLife * package)
+{
+	life.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -299,6 +310,14 @@ void PackageStorage::deleteBonusMalusPackage()
   if (!bonusmalus.empty()) {
     delete bonusmalus.front();
     bonusmalus.erase(bonusmalus.begin());
+  }
+}
+
+void PackageStorage::deleteLifePackage()
+{
+  if (!life.empty()) {
+    delete life.front();
+    life.erase(life.begin());
   }
 }
 

@@ -29,6 +29,7 @@ private:
 	DequeSecure<PaquetLeave *> leave;
 	DequeSecure<PaquetEnemy_SharedPtr> enemy;
 	DequeSecure<PaquetBonusMalus *> bonusmalus;
+	DequeSecure<PaquetLife *> life;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
@@ -56,6 +57,7 @@ public:
 	const PaquetLeave *getLeavePackage() const;
 	const PaquetEnemy *getEnemyPackage() const;
 	const PaquetBonusMalus *getBonusMalusPackage() const;
+	const PaquetLife *getLifePackage() const;
 
 	void storeReceivedPackage(Paquet_SharedPtr package);
 	void storePlayersPackage(PaquetPlayerCoord *package);
@@ -72,6 +74,7 @@ public:
 	void storeLeavePackage(PaquetLeave *package);
 	void storeEnemyPackage(PaquetEnemy_SharedPtr package);
 	void storeBonusMalusPackage(PaquetBonusMalus *package);
+	void storeLifePackage(PaquetLife *package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
@@ -88,6 +91,7 @@ public:
 	void deleteLeavePackage();
 	void deleteEnemyPackage();
 	void deleteBonusMalusPackage();
+	void deleteLifePackage();
 
 	void waitForReceivedPackage();
 	bool isThereReceivedPackage();

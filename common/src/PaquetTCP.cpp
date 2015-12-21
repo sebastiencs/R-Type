@@ -58,6 +58,7 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::FIRST_UDP]		= 0x02;
   _pSize[Paquet::ENEMY]			= 0x08;
   _pSize[Paquet::BONUS_MALUS]		= 0x08;
+  _pSize[Paquet::LIFE]			= 0x03;
 }
 
 ISocketTCP	*PaquetTCP::accept()

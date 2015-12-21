@@ -58,6 +58,7 @@ void	Game::handlingNetwork()
 	auto &&leave = _PS.getLeavePackage();
 	auto &&enemy = _PS.getEnemyPackage();
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
+	auto &&life = _PS.getLifePackage();
 
 	Player_SharedPtr player;
 	Enemy_SharedPtr enem;
@@ -98,6 +99,18 @@ void	Game::handlingNetwork()
 	if (bonusmalus != nullptr) {
 		DEBUG_MSG("BONUS/MALUS !");
 		_PS.deleteBonusMalusPackage();
+	}
+
+	if (life != nullptr) {
+	  player = _LP.getPlayer(life->getID());
+	  if (player) {
+	    player->getLife() = life->getLife();
+	  }
+	  enem = _LE.getEnemy(life->getID());
+	  if (enem) {
+	    enem->getLife() = life->getLife();
+	  }
+	  _PS.deleteLifePackage();
 	}
 
 	if (leave != nullptr) {
