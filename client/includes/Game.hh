@@ -23,6 +23,7 @@ class ListPlayers;
 # define SHOT_COOLDOWN 200
 # define VESSEL_WIDTH 112
 # define VESSEL_HEIGHT 49
+# define DEAD_PLAYER_DRAWTIME 3000
 
 class		Game
 {
@@ -40,6 +41,8 @@ private:
 	int			_height;
 	Packager* _packager;
 	ITimer* _shotCooldown;
+	std::list<std::string> _deadPlayersName;
+	std::map<std::string, Timer* > _deadPlayersTimer;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 
 public:

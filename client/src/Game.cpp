@@ -117,7 +117,10 @@ void	Game::handlingNetwork()
 	if (death != nullptr) {
 	  player = _LP.getPlayer(death->getID());
 	  if (player) {
-	    std::cout << "A player is dead" << std::endl;
+	    DEBUG_MSG(player->getName() << " is dead");
+			_deadPlayersName.push_back(player->getName());
+			_deadPlayersTimer[player->getName()] = new Timer();
+			_deadPlayersTimer[player->getName()]->start();
 			_LP.deletePlayer(player.get()->getID());
 		}
 	  enem = _LE.getEnemy(death->getID());
@@ -192,7 +195,22 @@ void	Game::updateGraphic()
 		t.setScale((float)(enemy->getLife() / 10.), 1.);
 		Sprite* life = new Sprite("life-fg.png", t);
 		drawImage(life);
+	}
 
+	if (!_deadPlayersName.empty()) {	// List of dead players
+		int32_t y = 15;
+		for (std::list<std::string>::iterator it = _deadPlayersName.begin(); it != _deadPlayersName.end(); ++it) {
+			if (_deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
+				_deadPlayersTimer.erase(*it);
+				delete _deadPlayersTimer[*it];
+				_deadPlayersName.erase(it--);
+			}
+			else {
+				Text* deadPlayer = new Text(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
+				drawText(deadPlayer);
+				y += 15;
+			}
+		}
 	}
 }
 
