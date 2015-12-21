@@ -53,6 +53,7 @@ public:
 	void	handlingNetwork();
 	void	updateGraphic();
 	void	handlePlayerMovement(const std::deque<UsableKeys>& keysPressed);
+	void	fixWalkingDead();
 
 	template<typename T>
 	void drawImage(T args) {

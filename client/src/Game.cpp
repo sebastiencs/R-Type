@@ -199,16 +199,19 @@ void	Game::updateGraphic()
 
 	if (!_deadPlayersName.empty()) {	// List of dead players
 		int32_t y = 15;
-		for (std::list<std::string>::iterator it = _deadPlayersName.begin(); it != _deadPlayersName.end(); ++it) {
-			if (_deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
+		//for (std::list<std::string>::iterator it = _deadPlayersName.begin(); it != _deadPlayersName.end(); ++it) {
+		std::list<std::string>::iterator it = _deadPlayersName.begin();
+		while (it != _deadPlayersName.end()) {
+			if (_deadPlayersTimer[*it] && _deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
 				delete _deadPlayersTimer[*it];
 				_deadPlayersTimer.erase(*it);
-				//it = _deadPlayersName.erase(it);
+				it = _deadPlayersName.erase(it);
 			}
 			else {
 				Text* deadPlayer = new Text(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
 				drawText(deadPlayer);
 				y += 15;
+				++it;
 			}
 		}
 	}
@@ -275,8 +278,16 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	}
 }
 
+void	Game::fixWalkingDead()
+{
+  auto &&enemies = _LE.getListEnemies();
+
+  enemies.remove_if([] (auto &e) { return (e->getLife() == 0); });
+}
+
 void	Game::run()
 {
+	fixWalkingDead();
 	handlingNetwork();
 
 	if (_timer->ms() >= MS_REFRESH) { // Don't go faster than GraphicEngine
