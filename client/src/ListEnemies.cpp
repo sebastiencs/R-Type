@@ -52,6 +52,11 @@ const ListSecure<Enemy_SharedPtr> &ListEnemies::getListEnemies() const
   return _enemies;
 }
 
+ListSecure<Enemy_SharedPtr> &ListEnemies::getListEnemies()
+{
+  return _enemies;
+}
+
 Enemy_SharedPtr ListEnemies::getEnemy(uint8_t id)
 {
   return (_enemies.findIn([id] (auto &e) { return (e->getID() == id); }));

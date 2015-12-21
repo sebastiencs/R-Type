@@ -257,8 +257,16 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	}
 }
 
+void	Game::fixWalkingDead()
+{
+  auto &&enemies = _LE.getListEnemies();
+
+  enemies.remove_if([] (auto &e) { return (e->getLife() == 0); });
+}
+
 void	Game::run()
 {
+	fixWalkingDead();
 	handlingNetwork();
 
 	if (_timer->ms() >= MS_REFRESH) { // Don't go faster than GraphicEngine
