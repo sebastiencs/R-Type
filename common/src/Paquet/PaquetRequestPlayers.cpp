@@ -19,7 +19,7 @@ PaquetRequestPlayers::PaquetRequestPlayers(const Buffer &buf)
 {
   size_t	ptr = 0;
 
-  writeData<char>(ptr, reinterpret_cast<const char *>(buf.get()), buf.size());
+  writeData(ptr, buf.get(), buf.size());
   parsePaquet();
 }
 

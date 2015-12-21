@@ -33,7 +33,8 @@ public:
   Buffer();
   virtual ~Buffer();
 
-  Data		*get() const;
+  const Data	*get() const;
+  Data		*get();
   Size		size() const;
   void		setSize(Size size);
   void		reset();

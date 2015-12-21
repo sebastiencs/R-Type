@@ -23,7 +23,12 @@ Buffer::~Buffer()
   DEBUG_MSG("Buffer deleted");
 }
 
-Data		*Buffer::get() const
+const Data	*Buffer::get() const
+{
+  return (_buffer.get());
+}
+
+Data		*Buffer::get()
 {
   return (_buffer.get());
 }
@@ -81,7 +86,7 @@ const Buffer	&Buffer::operator=(const Buffer *buf)
 
 std::ostream	&operator<<(std::ostream &os, const Buffer &b)
 {
-  unsigned char	*data;
+  const unsigned char	*data;
 
   data = b.get();
   os << "Buffer = { ";

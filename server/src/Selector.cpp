@@ -51,7 +51,7 @@ inline void	Selector::call(const Buffer &buf, const Addr &addr)
 
 int		Selector::execFunc(const Buffer &buf, const Addr &addr)
 {
-  Data		*data = buf.get();
+  const Data	*data = buf.get();
 
   if (!data || buf.size() <= 0) {
     std::cerr << "Wrong paquet size" << std::endl;
