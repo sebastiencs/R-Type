@@ -27,6 +27,7 @@ public:
 
 private:
   Party		&_party;
+  int		_nbWaveEnemy;
 };
 
 #endif /* !WAVE_HH_ */

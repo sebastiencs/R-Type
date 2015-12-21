@@ -109,6 +109,12 @@ const PaquetLife * PackageStorage::getLifePackage() const {
 	return life.empty() ? nullptr : life.front();
 }
 
+const PaquetDeath * PackageStorage::getDeathPackage() const {
+	if (!death.empty())
+		DEBUG_MSG(*death.front());
+	return death.empty() ? nullptr : death.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet_SharedPtr package) {
 	received.push_back(package);
 	_semIn->post();
@@ -189,6 +195,11 @@ void PackageStorage::storeBonusMalusPackage(PaquetBonusMalus * package)
 void PackageStorage::storeLifePackage(PaquetLife * package)
 {
 	life.push_back(package);
+}
+
+void PackageStorage::storeDeathPackage(PaquetDeath * package)
+{
+	death.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -318,6 +329,14 @@ void PackageStorage::deleteLifePackage()
   if (!life.empty()) {
     delete life.front();
     life.erase(life.begin());
+  }
+}
+
+void PackageStorage::deleteDeathPackage()
+{
+  if (!death.empty()) {
+    delete death.front();
+    death.erase(death.begin());
   }
 }
 

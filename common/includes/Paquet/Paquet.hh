@@ -60,6 +60,7 @@ public:
     ENEMY		= 0x0E,
     BONUS_MALUS		= 0x0F,
     LIFE	        = 0x10,
+    DEATH	        = 0x11,
     RESPONSE		= 0xFF
   };
 
