@@ -68,6 +68,9 @@ void DisplayUpdater::launchObserver()
 
 	if (launch != nullptr) {
 
+		Packager::createFirstUDPPackage(ListPlayers::getInstance().getId());
+		Packager::createFirstUDPPackage(ListPlayers::getInstance().getId());
+
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
 		_game = new class Game(width, height, images, _nickname, packager);

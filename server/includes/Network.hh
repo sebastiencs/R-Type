@@ -37,11 +37,8 @@ typedef struct	s_paquet_client
 {
   Paquet	paquet;
   Addr		addr;
-  s_paquet_client(const s_paquet_client &pc)
-    : paquet(pc.paquet), addr(pc.addr) { }
   s_paquet_client(const Paquet &p, const Addr &a)
     : paquet(p), addr(a) { }
-  s_paquet_client() { }
 }		PaquetClient;
 
 typedef std::shared_ptr<PaquetClient>	PaquetClient_SharedPtr;

@@ -148,7 +148,7 @@ bool	Network::write()
 
       auto &pc = _queuePaquet.front();
 
-      if (pc->paquet.getType() == Paquet::UDP) {
+      if (pc && pc->paquet.getType() == Paquet::UDP) {
 	if (_socketUDP->write(pc->paquet, pc->addr) >= 0) {
 	  _queuePaquet.pop();
 	}
@@ -156,7 +156,7 @@ bool	Network::write()
 	  _sem->post();
 	}
       }
-      else {
+      else if (pc) {
 	if (_socketTCP->write(pc->paquet, pc->addr) >= 0) {
 	  _queuePaquet.pop();
 	}
