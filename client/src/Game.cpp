@@ -201,9 +201,9 @@ void	Game::updateGraphic()
 		int32_t y = 15;
 		for (std::list<std::string>::iterator it = _deadPlayersName.begin(); it != _deadPlayersName.end(); ++it) {
 			if (_deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
-				_deadPlayersTimer.erase(*it);
 				delete _deadPlayersTimer[*it];
-				_deadPlayersName.erase(it--);
+				_deadPlayersTimer.erase(*it);
+				//it = _deadPlayersName.erase(it);
 			}
 			else {
 				Text* deadPlayer = new Text(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
