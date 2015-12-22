@@ -438,6 +438,29 @@ Server: |    ID   |   pID   |
 
 ----------------------------------------------------
 
+19 - Attribution d'un bonus
+
+Le serveur envoi ce paquet pour indiquer au joueur qu'il utilise un bonus
+
+   	+---------+---------+----------+
+Server: |    ID   |   pID   |   Time   |
+	+---------+---------+----------+
+	| uint8_t | uint8_t | uint16_t |
+	+---------+---------+----------+
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 16
+
+	pID: unsigned char ( 8 bits )
+	   	Id du joueur concerne
+
+	Time: unsigned char ( 16 bits )
+	   	Temps en millisecondes pendant lequel le bonus est attribue
+
+
+
+----------------------------------------------------
+
 
 XX - Retour du serveur
 
