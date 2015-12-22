@@ -142,6 +142,11 @@ void DisplayUpdater::game()
 				delete deathTimer;
 				deathTimer = nullptr;
 				dead = false;
+				threadGame->close();
+				graphicEngine->setUsableKeyPressedCallback(nullptr);
+				delete _game;
+				_game = nullptr;
+				graphicEngine->closeWindow();
 			}
 		}
 		else {

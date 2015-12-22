@@ -12,8 +12,8 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 
 TaskScheduler::~TaskScheduler()
 {
-	
-	delete timer;
+	if (timer)
+		delete timer;
 }
 
 void TaskScheduler::loop()
@@ -30,6 +30,7 @@ void TaskScheduler::stop()
 	running = false;
 	thread->close();
 	delete thread;
+	thread = nullptr;
 }
 
 void TaskScheduler::run()
