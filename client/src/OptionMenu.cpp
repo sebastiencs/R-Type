@@ -9,7 +9,6 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 {
 	engine = eng;
 	Transformation t(350, 150);
-	t.setBounds(300, 250);
 	VBox = new Box(Orientation::vertical, Transformation(200, 500), "commandBox");
 	VBox->setSpacing(25);
 	menu();
@@ -17,6 +16,8 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 
 OptionMenu::~OptionMenu()
 {
+	if (VBox)
+		delete VBox;
 }
 
 
@@ -42,12 +43,8 @@ void OptionMenu::MuteSound()
 {
 	static bool state = true;
 	ISystemAudio &audio = SystemAudio::getInstance();
-
-	if (state)
-		audio.stopMusic();
-	else
-		audio.playMusicRandom();
-	state = (state) ? false : true;
+	state ? audio.stopMusic() : audio.playMusicRandom();
+	state = !state;
 }
 
 void OptionMenu::menu()
