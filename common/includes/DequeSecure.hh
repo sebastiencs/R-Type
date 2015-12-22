@@ -74,7 +74,18 @@ public:
   };
 
   auto	front() const -> decltype(_deque.front()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    // Locker<IMutex_SharedPtr> { _mutex };
+
+    Locker<IMutex_SharedPtr> unused(_mutex);
+
+    if (_mutex->tryLock()) {
+      std::cout << "MUTEX WASN'T LOCKED" << std::endl;
+    }
+    else {
+      std::cout << "MUTEX WAS LOCKED" << std::endl;
+    }
+    exit(0);
+
     static decltype(_deque.front()) nul = nullptr;
     if (_deque.size()) {
       auto &&val = _deque.front();
