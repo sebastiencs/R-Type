@@ -150,7 +150,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : player->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet->getX() += static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS()));
+				bullet->setX(bullet->getX() + static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
 			}
 
 			auto &bulletList = player->getBullets();
@@ -180,7 +180,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : enemy->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet->getX() -= static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS()));
+				bullet->setX(bullet->getX() - static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
 			}
 
 			auto &bulletList = enemy->getBullets();
@@ -202,10 +202,10 @@ void	Game::updateGraphic()
 	for (auto &bm : _BM) {
 
 	  bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
-		Transformation t(bm->getX(), bm->getY());
-		t.setScale(0.5, 0.5);
-		Sprite* bonusMalus = new Sprite("bonus.png", t);
-		drawImage(bonusMalus);
+	  Transformation t(bm->getX(), bm->getY());
+	  t.setScale(0.5f, 0.5f);
+	  Sprite* bonusMalus = new Sprite("bonus.png", t);
+	  drawImage(bonusMalus);
 	}
 
 	_BM.remove_if([] (auto &b) { return (b->getX() > 2000); });
