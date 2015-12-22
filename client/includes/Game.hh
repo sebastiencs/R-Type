@@ -49,11 +49,12 @@ public:
   Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);
 	virtual ~Game();
 
-	void	run();
+	int	run();
 	void	handlingNetwork();
 	void	updateGraphic();
 	void	handlePlayerMovement(const std::deque<UsableKeys>& keysPressed);
 	void	fixWalkingDead();
+	int	AmIDead();
 
 	template<typename T>
 	void drawImage(T args) {

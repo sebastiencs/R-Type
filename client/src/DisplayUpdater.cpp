@@ -86,7 +86,9 @@ void DisplayUpdater::launchObserver()
 				mainmenu = nullptr;
 			}
 			while (cond) {
-				_game->run();
+				if (_game->run()) {
+					return (nullptr);
+				}
 			}
 			return (nullptr);
 		}, nullptr);

@@ -140,6 +140,9 @@ void			Party::run()
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
 	    int life = static_cast<int>(player->getLife()) - 10;
+	    if (life < 0) {
+	      life = 0;
+	    }
 
 	    player->setLife(life);
 	    PaquetLife	paquet(player);
@@ -148,7 +151,6 @@ void			Party::run()
 	    if (life <= 0) {
 	      PaquetDeath paquet(player);
 	      this->broadcast(_players, paquet);
-	      player->setID(0xFF);
 	    }
 
 	    bullet->setID(0xFF);

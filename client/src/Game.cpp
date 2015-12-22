@@ -121,7 +121,9 @@ void	Game::handlingNetwork()
 			_deadPlayersName.push_back(player->getName());
 			_deadPlayersTimer[player->getName()] = new Timer();
 			_deadPlayersTimer[player->getName()]->start();
-			_LP.deletePlayer(player.get()->getID());
+			if (player != _LP.getListPlayers().front()) {
+			  _LP.deletePlayer(player.get()->getID());
+			}
 		}
 	  enem = _LE.getEnemy(death->getID());
 	  if (enem) {
@@ -284,7 +286,23 @@ void	Game::fixWalkingDead()
   enemies.remove_if([] (auto &e) { return (e->getLife() == 0); });
 }
 
-void	Game::run()
+int	Game::AmIDead()
+{
+  auto &&players = _LP.getListPlayers();
+
+  if (players.size()) {
+
+    auto &&player = players.front();
+
+    if (player->getLife() == 0) {
+      Packager::createLeavePackage(player->getID());
+      return (1);
+    }
+  }
+  return (0);
+}
+
+int	Game::run()
 {
 	fixWalkingDead();
 	handlingNetwork();
@@ -293,4 +311,5 @@ void	Game::run()
 		updateGraphic();
 		_timer->reset();
 	}
+	return (AmIDead());
 }
