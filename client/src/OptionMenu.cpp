@@ -71,12 +71,12 @@ void OptionMenu::ChangeKeys()
 	}
 	case 2:
 	{
-		inputMode = "PAD";
+		inputMode = "Arrows";
 		break;
 	}
 	case 3:
 	{
-		inputMode = "Arrows";
+		inputMode = "PAD";
 		break;
 	}
 	default: 
