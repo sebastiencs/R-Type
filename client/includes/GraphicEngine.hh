@@ -26,6 +26,14 @@ class ITimer;
 class ICallback;
 class IDrawable;
 
+enum KeyAlias {
+	UP = 0,
+	RIGHT,
+	DOWN,
+	LEFT,
+	SPACEE
+};
+
 class GraphicEngine : public IGraphicEngine {
 
 public:
@@ -67,6 +75,8 @@ public:
 	static int32_t getDeltaTimeMS();
 	static float getDeltaTimeS();
 
+	virtual void setInputMode(InputMode mode);
+
 	static const sf::Texture* None;
 	static const sf::Font* NoneFont;
 
@@ -85,12 +95,12 @@ protected:
 	int windowHeight;
 	void* callbackArg;
 
+	std::map<KeyAlias, sf::Keyboard::Key> keyMap;
 	sf::RenderWindow* window;
 	std::list<ICallback *> elements;
 	std::list<IDrawable *> dElements;
 	std::map<std::string, sf::Texture*> cachedImages;
 	std::map<std::string, sf::Font*> cachedFonts;
-	std::map<uint8_t, std::string> playerIDToSpriteString;
 	std::map<uint8_t, std::string> shotTypeToSpriteString;
 };
 

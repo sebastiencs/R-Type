@@ -21,7 +21,7 @@ Party::Party(const Manager_SharedPtr &&manager)
     _name("Unknwon"),
     _running(false),
     _wave(std::make_unique<Wave>(*this)),
-    _timerWave(std::make_unique<Timer>()),
+    _timerBonus(std::make_unique<Timer>()),
     _timerBullet(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
@@ -34,7 +34,7 @@ Party::Party(const Manager_SharedPtr &&manager, const std::string &name)
     _name(name),
     _running(false),
     _wave(std::make_unique<Wave>(*this)),
-    _timerWave(std::make_unique<Timer>()),
+    _timerBonus(std::make_unique<Timer>()),
     _timerBullet(std::make_unique<Timer>())
 {
   DEBUG_MSG("Party created");
@@ -65,6 +65,16 @@ void			Party::updateEnemy(const Enemy_SharedPtr &e)
     });
 }
 
+void			Party::updateBonus(const BonusMalus_SharedPtr &e)
+{
+  PaquetBonusMalus	paquet;
+
+  paquet = e;
+  _players.for_each([&] (auto &p) {
+      this->write(paquet, p->addr());
+    });
+}
+
 void			Party::broadcast(const listPlayers &list, const Paquet &paquet)
 {
   if (!_manager.expired()) {
@@ -83,13 +93,17 @@ void			Party::run()
 {
   PaquetEnemy	paquet;
 
-  _timerWave->start();
+  _timerBonus->start();
   _timerBullet->start();
 
   for (;;) {
 
-    if (_bonusmalus.empty()) { // faire un timer + reset
+    if (_timerBonus->ms() >= 10000) {
       _wave->getSpawnBonusMalus();
+      _bonusmalus.for_each([this] (auto &b) {
+	  this->updateBonus(b);
+	});
+      _timerBonus->reset();
     }
 
     if (_enemies.empty()) {// || _timerWave->ms() >= 10000) {
@@ -97,7 +111,6 @@ void			Party::run()
       _enemies.for_each([this] (auto &enemy) {
     	  this->updateEnemy(enemy);
     	});
-      _timerWave->reset();
     }
 
     _enemies.for_each([&] (auto &enemy) {

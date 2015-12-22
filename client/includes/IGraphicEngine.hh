@@ -27,6 +27,13 @@ enum UsableKeys {
 	SPACE
 };
 
+enum InputMode {
+	ZQSD = 0,
+	WASD,
+	ARROWS,
+	PAD
+};
+
 typedef std::function<void()> callback;
 typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
 typedef std::function<void(const char)> textEnteredCallback;
@@ -53,11 +60,10 @@ public:
 	virtual void setTextEnteredCallback(textEnteredCallback) = 0;
 	virtual void setUsableKeyPressedCallback(usableKeyPressedCallback) = 0;
 
+	virtual void setInputMode(InputMode) = 0;
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
 
-	//virtual int32_t getDeltaTimeMS() = 0;
-	//virtual float getDeltaTimeS() = 0;
 	virtual int getWindowWidth() const = 0;
 	virtual int getWindowHeight() const = 0;
 

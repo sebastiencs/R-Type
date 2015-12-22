@@ -154,7 +154,7 @@ void		Manager::handlePaquet(PaquetFirst_SharedPtr paquet, const Addr &addr)
 
   if (paquet->getVersion() == 1) {
     uint8_t id = getID();
-    _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr, 112, 49));
+    _pWaiting.emplace_back(std::make_shared<Player>(paquet->getName(), id, paquet->getLevel(), addr, 80, 91));
     p.setReturn(2);
     p.setData(id);
   }

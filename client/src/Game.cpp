@@ -98,7 +98,7 @@ void	Game::handlingNetwork()
 	}
 
 	if (bonusmalus != nullptr) {
-		DEBUG_MSG("BONUS/MALUS !");
+		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
 		_PS.deleteBonusMalusPackage();
 	}
 
@@ -197,6 +197,12 @@ void	Game::updateGraphic()
 		t.setScale((float)(enemy->getLife() / 10.), 1.);
 		Sprite* life = new Sprite("life-fg.png", t);
 		drawImage(life);
+	}
+
+	for (auto &bm : _BM) {
+
+	  bm->getX() -= (uint16_t)(bm->getSpeed() * GraphicEngine::getDeltaTimeS());
+
 	}
 
 	if (!_deadPlayersName.empty()) {	// List of dead players

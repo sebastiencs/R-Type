@@ -16,12 +16,7 @@ GraphicEngine::GraphicEngine()
 	_usableKeyPressedCallback = nullptr;
 	_timer = new Timer();
 	_timer->start();
-
-	playerIDToSpriteString[0] = "r-typesheet42.gif";
-	playerIDToSpriteString[1] = "r-typesheet42.gif";
-	playerIDToSpriteString[2] = "r-typesheet42.gif";
-	playerIDToSpriteString[3] = "r-typesheet42.gif";
-	playerIDToSpriteString[4] = "r-typesheet42.gif";
+	setInputMode(ZQSD);
 
 	shotTypeToSpriteString[0] = "r-typesheet1.gif";
 	shotTypeToSpriteString[1] = "r-typesheet1.gif";
@@ -75,18 +70,48 @@ void GraphicEngine::handleMovements()
 	if (_usableKeyPressedCallback) {
 		std::deque<UsableKeys> keys;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+		if (sf::Keyboard::isKeyPressed(keyMap[UP]))
 			keys.push_back(UsableKeys::Z);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		if (sf::Keyboard::isKeyPressed(keyMap[LEFT]))
 			keys.push_back(UsableKeys::Q);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		if (sf::Keyboard::isKeyPressed(keyMap[DOWN]))
 			keys.push_back(UsableKeys::S);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		if (sf::Keyboard::isKeyPressed(keyMap[RIGHT]))
 			keys.push_back(UsableKeys::D);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if (sf::Keyboard::isKeyPressed(keyMap[SPACEE]))
 			keys.push_back(UsableKeys::SPACE);
 
 		_usableKeyPressedCallback(keys);
+	}
+}
+
+void GraphicEngine::setInputMode(InputMode mode)
+{
+	switch (mode) {
+		case ZQSD:
+			keyMap[KeyAlias::UP] = sf::Keyboard::Z;
+			keyMap[KeyAlias::RIGHT] = sf::Keyboard::D;
+			keyMap[KeyAlias::DOWN] = sf::Keyboard::S;
+			keyMap[KeyAlias::LEFT] = sf::Keyboard::Q;
+			keyMap[KeyAlias::SPACEE] = sf::Keyboard::Space;
+			break;
+		case ARROWS:
+			keyMap[KeyAlias::UP] = sf::Keyboard::Up;
+			keyMap[KeyAlias::RIGHT] = sf::Keyboard::Right;
+			keyMap[KeyAlias::DOWN] = sf::Keyboard::Down;
+			keyMap[KeyAlias::LEFT] = sf::Keyboard::Left;
+			keyMap[KeyAlias::SPACEE] = sf::Keyboard::Space;
+			break;
+		case WASD:
+			keyMap[KeyAlias::UP] = sf::Keyboard::W;
+			keyMap[KeyAlias::RIGHT] = sf::Keyboard::D;
+			keyMap[KeyAlias::DOWN] = sf::Keyboard::S;
+			keyMap[KeyAlias::LEFT] = sf::Keyboard::A;
+			keyMap[KeyAlias::SPACEE] = sf::Keyboard::Space;
+		case PAD:
+			break;
+		default:
+			break;
 	}
 }
 

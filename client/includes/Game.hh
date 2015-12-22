@@ -15,14 +15,15 @@
 # include "DisplayUpdater.hh"
 # include "ListEnemies.hh"
 # include "Physics.hh"
+# include "BonusMalus.hh"
 
 class PackageStorage;
 class ISystemAudio;
 class ListPlayers;
 
 # define SHOT_COOLDOWN 200
-# define VESSEL_WIDTH 112
-# define VESSEL_HEIGHT 49
+# define VESSEL_WIDTH 80
+# define VESSEL_HEIGHT 91
 # define DEAD_PLAYER_DRAWTIME 3000
 
 class		Game
@@ -33,6 +34,7 @@ private:
 	ISystemAudio	&_audio;
 	ListPlayers	&_LP;
 	ListEnemies	_LE;
+	ListSecure<BonusMalus_SharedPtr> _BM;
 	ListSecure<Text* > &_nickname;
 	ListSecure<Sprite* > &_images;
 	IMutex_SharedPtr _mutex;
