@@ -28,6 +28,7 @@ public:
 private:
   Party		&_party;
   int		_nbWaveEnemy;
+  int		_nbWaveBonusMalus;
 };
 
 #endif /* !WAVE_HH_ */

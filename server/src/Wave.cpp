@@ -84,30 +84,29 @@ void		Wave::getSpawnEnemy()
 
 void		Wave::getSpawnBonusMalus()
 {
-  static int	nb_waves = 0;
-
-  switch(nb_waves)
+  switch(_nbWaveBonusMalus)
     {
+    case 1:
+    case 2:
+    case 3:
     case 5:
+    case 7:
+    case 9:
       {
-	_party.addBonusMalus(new BonusMalus(1, 2, 1000, 300));
+	_party.addBonusMalus(new BonusMalus(BonusMalus::LIFE, 100, 500, 500));
 	break;
       }
+    case 4:
+    case 6:
+    case 8:
     case 10:
       {
-	_party.addBonusMalus(new BonusMalus(1, 4, 1000, 400));
-	break;
-      }
-    case 15:
-      {
-	_party.addBonusMalus(new BonusMalus(1, 8, 1000, 500));
-	break;
-      }
-    case 20:
-      {
-	_party.addBonusMalus(new BonusMalus(1, 16, 1000, 600));
+	_party.addBonusMalus(new BonusMalus(BonusMalus::INTERVAL_SHOT, 100, 500, 500));
 	break;
       }
     }
-  nb_waves++;
+  _nbWaveBonusMalus++;
+  if (_nbWaveBonusMalus > 10) {
+    _nbWaveBonusMalus = 0;
+  }
 }
