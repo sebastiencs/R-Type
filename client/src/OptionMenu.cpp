@@ -8,7 +8,7 @@
 OptionMenu::OptionMenu(IGraphicEngine* eng)
 {
 	engine = eng;
-	Transformation t(350, 150);
+	Transformation t(250, 300);
 	VBox = new Box(Orientation::vertical, Transformation(200, 500), "commandBox");
 	VBox->setSpacing(25);
 	menu();
@@ -50,17 +50,19 @@ void OptionMenu::MuteSound()
 void OptionMenu::menu()
 {
 	std::function<void()> fptr;
-	Transformation transformation(350, 525);
+	Transformation transformation(250, 300);
 
-	Box* box1 = new Box(Orientation::horizontal, Transformation(300, 200), "hBox");
-	box1->setSpacing(50);
-	box1->addDrawable(new TextField("Sound Mute : ", transformation, 50, DEFAULT_FONT, Color::Black, "Sound", engine));
+	Box* box1 = new Box(Orientation::horizontal, Transformation(250, 300), "hBox");
+	box1->setSpacing(30);
+	box1->addDrawable(new TextField("Sound Mute : ", transformation, 30, DEFAULT_FONT, Color::Black, "Sound", engine));
 	fptr = std::bind(&OptionMenu::MuteSound, this);
 	box1->addDrawable(new CheckBox("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
-	
-	Box* box2 = new Box(Orientation::horizontal, Transformation(300, 200), "hBox");
-	box2->setSpacing(50);
-	box2->addDrawable(new TextField("Change Touch ", transformation, 50, DEFAULT_FONT, Color::Black, "Touch", engine));
+
+	Box* box2 = new Box(Orientation::horizontal, Transformation(250, 300), "hBox");
+	box2->setSpacing(30);
+	box2->addDrawable(new TextField("Swap keys (Arrow [ ] - AQSD [X]): ", transformation, 30, DEFAULT_FONT, Color::Black, "SKeys", engine));
+	fptr = std::bind(&GraphicEngine::setInputMode(InputMode), engine);
+	box2->addDrawable(new CheckBox("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
 
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box2);
