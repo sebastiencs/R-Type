@@ -201,7 +201,7 @@ void	Game::updateGraphic()
 
 	for (auto &bm : _BM) {
 
-	  bm->getX() -= (uint16_t)(bm->getSpeed() * GraphicEngine::getDeltaTimeS());
+	  bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 
 	}
 
@@ -251,13 +251,13 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 			}
 			break;
 		case UsableKeys::S:
-			if (pos.y < 715) {
+			if (pos.y < 660) {
 				pos.y += playerVelocity;
 				changed = true;
 			}
 			break;
 		case UsableKeys::D:
-			if (pos.x <= 910) {
+			if (pos.x <= 935) {
 				pos.x += playerVelocity;
 				changed = true;
 			}
