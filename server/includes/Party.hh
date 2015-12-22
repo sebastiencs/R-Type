@@ -48,12 +48,13 @@ class			Party
   listBonusMalus	_bonusmalus;
   bool			_running;
   Wave_UniquePtr	_wave;
-  ITimer_UniquePtr	_timerWave;
+  ITimer_UniquePtr	_timerBonus;
   ITimer_UniquePtr	_timerBullet;
 
   void				write(const Paquet &, const Addr &) const;
   const Player_SharedPtr	focusOnClosestPlayer(const uint16_t yEnnemy) const;
   void				updateEnemy(const Enemy_SharedPtr &);
+  void				updateBonus(const BonusMalus_SharedPtr &);
 
 public:
   Party(const Manager_SharedPtr &&);
