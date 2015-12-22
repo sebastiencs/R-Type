@@ -408,7 +408,7 @@ Server: |    ID   |   pID   |  Life   |
 	+---------+---------+---------+
 
 	ID: unsigned char ( 8 bits )
-	        Valeur: 15
+	        Valeur: 16
 
 	pID: unsigned char ( 8 bits )
 	   	Id du joueur / ennemi concerne
@@ -430,7 +430,7 @@ Server: |    ID   |   pID   |
 	+---------+---------+
 
 	ID: unsigned char ( 8 bits )
-	        Valeur: 15
+	        Valeur: 17
 
 	pID: unsigned char ( 8 bits )
 	   	Id du joueur / ennemi concerne
@@ -449,7 +449,7 @@ Server: |    ID   |   pID   |   Time   |
 	+---------+---------+----------+
 
 	ID: unsigned char ( 8 bits )
-	        Valeur: 16
+	        Valeur: 18
 
 	pID: unsigned char ( 8 bits )
 	   	Id du joueur concerne
