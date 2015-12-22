@@ -346,7 +346,7 @@ void			Party::setRunning(bool run)
   _running = run;
   if (run == true) {
     Position pos;
-    PaquetPlayerCoord	paquet;
+    // PaquetPlayerCoord	paquet;
     int i = 1;
 
     _players.for_each([&] (auto &player) {
@@ -356,20 +356,22 @@ void			Party::setRunning(bool run)
 	player->setPosition(pos);
       });
 
-    _players.for_each([&] (auto &player_a) {
+    _players.for_each([&] (auto &player) {
 
-	for (auto &player : _players) {
-	  // _players.for_each_nolock([&] (auto &player) {
+	PaquetPlayerCoord paquet(player);
 
-	  pos = player->getPosition();
-	  paquet.setPlayerID(player->getID());
-	  paquet.setPosition(pos.x, pos.y);
-	  paquet.createPaquet();
-	  this->write(paquet, player_a->addr());
+	this->write(paquet, player->addr());
 
-	}
+	// for (auto &player : _players) {
 
-	// });
+	//   pos = player->getPosition();
+	//   paquet.setPlayerID(player->getID());
+	//   paquet.setPosition(pos.x, pos.y);
+	//   paquet.createPaquet();
+	//   this->write(paquet, player_a->addr());
+
+	// }
+
       });
     _thread->run([this](void *) -> void * { this->run(); return (0); }, 0);
   }
