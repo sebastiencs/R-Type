@@ -18,20 +18,26 @@
 class		BonusMalus : public Object
 {
 public:
+
+  enum {
+    LIFE,
+    INTERVAL_SHOT
+  };
+
   BonusMalus();
   BonusMalus(const uint8_t type, const uint8_t speed, const uint16_t x, const uint16_t y);
   virtual ~BonusMalus();
-  
+
   uint8_t	getSpeed() const;
   void		setSpeed(const uint8_t speed);
   uint8_t	getType() const;
   void		setType(const uint8_t type);
-  
+
 private:
   uint8_t	_speed;
   uint8_t	_type;
 };
 
 typedef std::shared_ptr<BonusMalus> BonusMalus_SharedPtr;
-  
+
 #endif /* !BONUSMALUS_HH_ */
