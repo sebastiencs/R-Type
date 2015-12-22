@@ -54,18 +54,6 @@ namespace		Tools
     return ((found != input.end()) ? (true) : (false));
   }
 
-  template<class T>
-  auto		findParty(const T &input, const std::string &name) -> typename T::value_type
-  {
-    return (findIn(input, [&name] (typename T::value_type p) { return (p->getName() == name); }));
-  }
-
-  template<class T>
-  auto		findPlayer(const T &input, const Addr &addr)
-  {
-    return (input.findIn([&addr] (auto &p) { return (p->addr() == addr); }));
-  };
-
   int			random(int min, int max);
   const std::string	&getUser();
 

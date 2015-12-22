@@ -83,7 +83,7 @@ void		Manager::deletePlayer(const Addr &addr)
     }
   }
   {
-    auto &&party = Tools::findIn(_parties, [&addr] (auto &p) { return (p->isPlayer(addr)); });
+    auto &&party = _parties.findIn([&addr] (auto &p) { return (p->isPlayer(addr)); });
     uint8_t id = 0xFF;
 
     if (!party) {
@@ -155,8 +155,8 @@ void		Manager::handlePaquet(PaquetJoinParty_SharedPtr paquet, const Addr &addr)
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findParty(_parties, name);
-  auto &&player = Tools::findPlayer(_pWaiting, addr);
+  auto &&party = _parties.findIn([&name] (auto &p) { return (p->getName() == name); });
+  auto &&player = _pWaiting.findIn([&addr] (auto &p) { return (p->addr() == addr); });
 
   PaquetResponse	p;
 
@@ -195,8 +195,8 @@ void		Manager::handlePaquet(PaquetCreateParty_SharedPtr paquet, const Addr &addr
 
   DEBUG_MSG(*paquet);
 
-  auto &&party = Tools::findParty(_parties, name);
-  auto &&player = Tools::findPlayer(_pWaiting, addr);
+  auto &&party = _parties.findIn([&name] (auto &p) { return (p->getName() == name); });
+  auto &&player = _pWaiting.findIn([&addr] (auto &p) { return (p->addr() == addr); });
 
   PaquetResponse	p;
 

@@ -88,13 +88,21 @@ public:
   };
 
   auto	begin() const -> decltype(_list.begin()) {
-    Locker<IMutex_SharedPtr> unused(_mutex);
+#ifdef DEBUG
+    if (_mutex->tryLock()) {
+      std::cerr << "[ListSecure] Use begin() with an unlock mutex" << std::endl;
+    }
+#endif
     auto &&val = _list.begin();
     return (val);
   };
 
   auto	end() const -> decltype(_list.end()) {
-    Locker<IMutex_SharedPtr> unused(_mutex);
+#ifdef DEBUG
+    if (_mutex->tryLock()) {
+      std::cerr << "[ListSecure] Use end() with an unlock mutex" << std::endl;
+    }
+#endif
     auto &&val = _list.end();
     return (val);
   };
