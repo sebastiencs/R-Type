@@ -72,6 +72,13 @@ void			Party::broadcast(const listPlayers &list, const Paquet &paquet)
   }
 }
 
+void			Party::broadcast_nolock(const listPlayers &list, const Paquet &paquet)
+{
+  if (!_manager.expired()) {
+    _manager.lock()->broadcast_nolock(list, paquet);
+  }
+}
+
 void			Party::run()
 {
   PaquetEnemy	paquet;
@@ -177,11 +184,11 @@ void			Party::run()
 
 	    enemy->setLife(life);
 	    PaquetLife	paquet(enemy);
-	    this->broadcast(_players, paquet);
+	    this->broadcast_nolock(_players, paquet);
 
 	    if (life <= 0) {
 	      PaquetDeath paquet(enemy);
-	      this->broadcast(_players, paquet);
+	      this->broadcast_nolock(_players, paquet);
 	      enemy->setID(0xFF);
 	    }
 

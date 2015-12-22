@@ -54,6 +54,22 @@ void		Manager::broadcast(const PlayerList &list, const Paquet &paquet)
   }
 }
 
+void		Manager::broadcast_nolock(const PlayerList &list, const Paquet &paquet)
+{
+  if (!_network.expired()) {
+
+    auto net = _network.lock();
+
+    for (auto &elem : list) {
+      net->write(paquet, elem->addr());
+    }
+
+  }
+  else {
+    DEBUG_MSG("Try to send on null network");
+  }
+}
+
 void		Manager::broadcast_except(const PlayerList &list, const uint8_t id, const Paquet &paquet)
 {
   if (!_network.expired()) {

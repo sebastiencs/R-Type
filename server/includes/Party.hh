@@ -80,6 +80,7 @@ public:
   uint8_t		getUniqueID() const;
   bool			addBonusMalus(BonusMalus *bm);
   void			broadcast(const listPlayers &, const Paquet &);
+  void			broadcast_nolock(const listPlayers &, const Paquet &);
 };
 
 typedef std::shared_ptr<Party>	Party_SharedPtr;
