@@ -91,6 +91,7 @@ public:
 #ifdef DEBUG
     if (_mutex->tryLock()) {
       std::cerr << "[ListSecure] Use begin() with an unlock mutex" << std::endl;
+      _mutex->unlock();
     }
 #endif
     auto &&val = _list.begin();
@@ -101,6 +102,7 @@ public:
 #ifdef DEBUG
     if (_mutex->tryLock()) {
       std::cerr << "[ListSecure] Use end() with an unlock mutex" << std::endl;
+      _mutex->unlock();
     }
 #endif
     auto &&val = _list.end();
