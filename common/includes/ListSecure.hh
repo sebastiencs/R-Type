@@ -37,64 +37,64 @@ public:
 
   template<typename... Args>
   void	push_back(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.push_back(args...);
   };
 
   template<typename... Args>
   void	emplace_back(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.emplace_back(std::move(args...));
   };
 
   template<typename... Args>
   void	remove(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.remove(args...);
   };
 
   template<typename... Args>
   void	remove_if(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.remove_if(args...);
   };
 
   void	clear() {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.clear();
   };
 
   void	pop_front() {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _list.pop_front();
   };
 
   auto	front() const -> decltype(_list.front()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _list.front();
     return (val);
   };
 
   auto	empty() const -> decltype(_list.empty()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _list.empty();
     return (val);
   };
 
   auto	size() const -> decltype(_list.size()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _list.size();
     return (val);
   };
 
   auto	begin() const -> decltype(_list.begin()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _list.begin();
     return (val);
   };
 
   auto	end() const -> decltype(_list.end()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _list.end();
     return (val);
   };
@@ -102,7 +102,7 @@ public:
   template <class U>
   size_t count_if(const U &func) const {
 
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto n = std::count_if(_list.begin(), _list.end(), func);
 
     return (n);
@@ -111,7 +111,7 @@ public:
   template <class U>
   auto findIn(const U &func) const -> T {
 
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&found = std::find_if(_list.begin(), _list.end(), func);
     auto ptr = (found == _list.end()) ? (nullptr) : (*found);
 
@@ -130,7 +130,7 @@ public:
   template <class U>
   void for_each(const U &func) const {
 
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     std::for_each(_list.begin(), _list.end(), func);
 
   };

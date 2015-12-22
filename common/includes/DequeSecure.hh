@@ -35,56 +35,46 @@ public:
 
   template<typename... Args>
   void	push_back(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.push_back(args...);
   };
 
   template<typename... Args>
   void	emplace_back(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.emplace_back(std::move(args...));
   };
 
   template<typename... Args>
   void	remove(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.remove(args...);
   };
 
   void	pop_front() {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.pop_front();
   };
 
   template<typename... Args>
   void	erase(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.erase(args...);
   };
 
   template<typename... Args>
   void	remove_if(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.remove_if(args...);
   };
 
   void	clear() {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _deque.clear();
   };
 
   auto	front() const -> decltype(_deque.front()) {
-    // Locker<IMutex_SharedPtr> { _mutex };
-
     Locker<IMutex_SharedPtr> unused(_mutex);
-
-    if (_mutex->tryLock()) {
-      std::cout << "MUTEX WASN'T LOCKED" << std::endl;
-    }
-    else {
-      std::cout << "MUTEX WAS LOCKED" << std::endl;
-    }
-    exit(0);
 
     static decltype(_deque.front()) nul = nullptr;
     if (_deque.size()) {
@@ -95,25 +85,25 @@ public:
   };
 
   auto	empty() const -> decltype(_deque.empty()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto val = _deque.empty();
     return (val);
   };
 
   auto	size() const -> decltype(_deque.size()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto val = _deque.size();
     return (val);
   };
 
   auto	begin() const -> decltype(_deque.begin()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _deque.begin();
     return (val);
   };
 
   auto	end() const -> decltype(_deque.end()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _deque.end();
     return (val);
   };

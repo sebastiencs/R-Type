@@ -35,36 +35,36 @@ public:
 
   template<typename... Args>
   void	push(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _queue.push(args...);
   };
 
   template<typename... Args>
   void	pop(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _queue.pop(args...);
   };
 
   template<typename... Args>
   void	emplace(Args&&... args) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     _queue.emplace(std::move(args...));
   };
 
   auto	front() const -> decltype(_queue.front()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _queue.front();
     return (val);
   };
 
   auto	empty() const -> decltype(_queue.empty()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _queue.empty();
     return (val);
   };
 
   auto	size() const -> decltype(_queue.size()) {
-    Locker<IMutex_SharedPtr> { _mutex };
+    Locker<IMutex_SharedPtr> unused(_mutex);
     auto &&val = _queue.size();
     return (val);
   };
