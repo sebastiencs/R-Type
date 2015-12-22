@@ -55,7 +55,7 @@ void		Wave::getSpawnEnemy()
       }
     case 5: // 1 mini boss
       {
-	auto e = new Enemy(_party.getUniqueID(), 200, 1, 1000, 400);
+	auto e = new Enemy(_party.getUniqueID(), 250, 1, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
 	e->setColumn(700);
 	_party.addEnemy(e);
@@ -63,7 +63,7 @@ void		Wave::getSpawnEnemy()
       }
     case 8: // 1 boss
       {
-	auto e  = new Enemy(_party.getUniqueID(), 250, 2, 1000, 400);
+	auto e  = new Enemy(_party.getUniqueID(), 350, 2, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
 	e->setColumn(700);
 	_party.addEnemy(e);
