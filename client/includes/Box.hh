@@ -14,7 +14,8 @@ enum Orientation {
 
 class Box : public Drawable, public ICallback {
 public:
-	Box(Orientation orientation, const Transformation& transformation, const std::string& id);
+	Box(Orientation orientation, const Transformation& transformation, const std::string& id, bool deleteChilds = true);
+	~Box();
 
 	void addDrawable(Drawable* drawable, int32_t pos = -1);
 	void removeDrawable(Drawable* drawable);
@@ -41,6 +42,7 @@ public:
 
 protected:
 	bool isUpdated;
+	bool shouldDeleteChilds;
 	Orientation orientation;
 	uint16_t spacing;
 	std::list<Drawable* > elementsList;

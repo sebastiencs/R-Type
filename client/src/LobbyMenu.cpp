@@ -39,8 +39,6 @@ LobbyMenu::~LobbyMenu()
 	}
 	if (left)
 		delete left;
-	if (commands)
-		delete commands;
 	if (right)
 		delete right;
 }

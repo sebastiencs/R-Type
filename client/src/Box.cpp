@@ -2,12 +2,21 @@
 #include "Box.hh"
 #include "Tools.hh"
 
-Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id)
-	: isUpdated(false), orientation(orientation), spacing(0)
+Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id, bool deleteChilds) :
+	isUpdated(false),
+	orientation(orientation),
+	spacing(0),
+	shouldDeleteChilds(deleteChilds)
 {
 	_transformation = transformation;
 	_id = id;
 	_visible = true;
+}
+
+Box::~Box()
+{
+	if (shouldDeleteChilds)
+		clearElements();
 }
 
 void Box::addDrawable(Drawable* drawable, int32_t pos)
@@ -55,9 +64,10 @@ const std::list<Drawable*>& Box::getElements() const
 
 void Box::clearElements()
 {
-	auto clearFunc = [] (Drawable *elem) { delete elem; return (true); };
+	auto clearFunc = [](Drawable *elem) { delete elem; elem = nullptr; return (true); };
 
 	elementsList.remove_if(clearFunc);
+	elementsList.clear();
 	isUpdated = false;
 }
 
