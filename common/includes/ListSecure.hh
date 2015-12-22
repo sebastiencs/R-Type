@@ -88,7 +88,7 @@ public:
   };
 
   auto	begin() const -> decltype(_list.begin()) {
-#ifdef DEBUG
+#if DEBUG >= 2
     if (_mutex->tryLock()) {
       std::cerr << "[ListSecure] Use begin() with an unlock mutex" << std::endl;
       _mutex->unlock();
@@ -99,7 +99,7 @@ public:
   };
 
   auto	end() const -> decltype(_list.end()) {
-#ifdef DEBUG
+#if DEBUG >= 2
     if (_mutex->tryLock()) {
       std::cerr << "[ListSecure] Use end() with an unlock mutex" << std::endl;
       _mutex->unlock();
