@@ -412,10 +412,10 @@ uint8_t			Party::getUniqueID() const
   return (0xFF);
 }
 
-bool			Party::addBonusMalus(BonusMalus *bm)
+bool			Party::addBonusMalus(const BonusMalus_SharedPtr &bm)
 {
   if (bm) {
-    _bonusmalus.emplace_back(bm);
+    _bonusmalus.push_back(bm);
     return true;
   }
   return false;

@@ -98,7 +98,7 @@ void	Game::handlingNetwork()
 	}
 
 	if (bonusmalus != nullptr) {
-		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
+		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getID(), bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
 		_PS.deleteBonusMalusPackage();
 	}
 

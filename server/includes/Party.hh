@@ -79,7 +79,7 @@ public:
   void			setRunning(bool);
   bool			addEnemy(Enemy *enemy);
   uint8_t		getUniqueID() const;
-  bool			addBonusMalus(BonusMalus *bm);
+  bool			addBonusMalus(const BonusMalus_SharedPtr &bm);
   void			broadcast(const listPlayers &, const Paquet &);
   void			broadcast_nolock(const listPlayers &, const Paquet &);
 };
