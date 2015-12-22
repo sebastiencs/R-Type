@@ -13,7 +13,7 @@
 #include "Bullet.hh"
 
 Player::Player()
-  : Object(0, 0, 0, 112, 49),
+  : Object(0, 0, 0, 80, 91),
     _name(""),
     _level(0),
     _life(100),
@@ -26,7 +26,7 @@ Player::Player()
 Player::Player(const std::string &name, uint8_t id,
 	       const Position &pos = Position(),
 	       uint8_t level = 0, int life = 100, bool ready = false)
-  : Object(id, pos, 112, 49),
+  : Object(id, pos, 80, 91),
     _name(name),
     _level(level),
     _life(life),
