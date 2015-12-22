@@ -13,6 +13,7 @@ public:
 
 	void loop();
 	void stop();
+	void run();
 
 private:
 	IThread *thread;
@@ -20,6 +21,7 @@ private:
 	Callback_t callcack;
 	ITimer *timer;
 	bool running;
+	Callback_t fptr;
 };
 
 #endif

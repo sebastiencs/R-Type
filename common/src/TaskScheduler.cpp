@@ -6,15 +6,13 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 	interval = _t;
 	timer = new Timer();
 	running = true;
-	Callback_t fptr = [this](void *) {this->loop(); return nullptr; };
-	thread = new Thread(fptr, nullptr);
-	thread->run(fptr, nullptr);
+	fptr = [this](void *) {this->loop(); return nullptr; };
+	run();
 }
 
 TaskScheduler::~TaskScheduler()
 {
-	thread->close();
-	delete thread;
+	
 	delete timer;
 }
 
@@ -30,4 +28,12 @@ void TaskScheduler::loop()
 void TaskScheduler::stop()
 {
 	running = false;
+	thread->close();
+	delete thread;
+}
+
+void TaskScheduler::run()
+{
+	thread = new Thread(fptr, nullptr);
+	thread->run(fptr, nullptr);
 }
