@@ -19,7 +19,7 @@ BonusMalus::BonusMalus()
 }
 
 BonusMalus::BonusMalus(const uint8_t id, const uint8_t type, const uint8_t speed, const uint16_t x, const uint16_t y)
-  : Object(id, x, y, 0, 0)
+  : Object(id, x, y, 125, 125)
 {
   _type = type;
   _speed = speed;

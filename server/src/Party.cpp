@@ -214,7 +214,16 @@ void			Party::run()
 
       });
 
-    // _players.remove_if([] (auto &p) { return (p->getID() == 0xFF); });
+    _bonusmalus.for_each([this] (auto &bonus) {
+
+	bonus->getX() -= (uint16_t)(bonus->getSpeed() * _timerBullet->secFloat());
+
+	if (Physics::isContact(Physics::LOCK, bonus, _players)) {
+	  std::cout << "Contact WITH BONUS" << std::endl;
+	}
+
+      });
+
     _enemies.remove_if([] (auto &e) { return (e->getID() == 0xFF); });
 
     _timerBullet->reset();
