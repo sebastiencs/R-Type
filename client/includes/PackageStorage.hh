@@ -7,6 +7,7 @@
 #include "Paquet.hh"
 #include "Semaphore.hh"
 #include "DequeSecure.hh"
+#include "ListSecure.hh"
 
 typedef std::shared_ptr<Paquet> Paquet_SharedPtr;
 typedef std::shared_ptr<PaquetEnemy> PaquetEnemy_SharedPtr;
@@ -14,7 +15,7 @@ typedef std::shared_ptr<PaquetEnemy> PaquetEnemy_SharedPtr;
 class PackageStorage {
 private:
 
-	DequeSecure<Paquet_SharedPtr> received;
+	ListSecure<Paquet_SharedPtr> received;
 	DequeSecure<Paquet *> toSendUDP;
 	DequeSecure<Paquet *> toSendTCP;
 	DequeSecure<PaquetPlayerCoord *> players;

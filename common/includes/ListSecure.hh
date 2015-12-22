@@ -64,6 +64,11 @@ public:
     _list.clear();
   };
 
+  void	pop_front() {
+    Locker<IMutex_SharedPtr> { _mutex };
+    _list.pop_front();
+  };
+
   auto	front() const -> decltype(_list.front()) {
     Locker<IMutex_SharedPtr> { _mutex };
     auto &&val = _list.front();
