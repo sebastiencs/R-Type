@@ -21,8 +21,8 @@ class ISystemAudio;
 class ListPlayers;
 
 # define SHOT_COOLDOWN 200
-# define VESSEL_WIDTH 112
-# define VESSEL_HEIGHT 49
+# define VESSEL_WIDTH 80
+# define VESSEL_HEIGHT 91
 # define DEAD_PLAYER_DRAWTIME 3000
 
 class		Game
