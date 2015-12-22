@@ -104,7 +104,7 @@ void MainMenu::draw()
 			Packager::createFirstUDPPackage(paquet->getData());
 			ListPlayers &list = ListPlayers::getInstance();
 			list.setId(paquet->getData());
-			std::cout << "------------> ID : " << (int)list.getId() << std::endl;
+			std::cout << "------------> ID : " << static_cast<int>(list.getId()) << std::endl;
 		}
 		PC.deleteAnswersPackage();
 	}

@@ -131,7 +131,7 @@ void OnlineMenu::joinButton()
 	PackageStorage &PS = PackageStorage::getInstance();
 	for (Drawable *c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
-			Packager::createJoinPartyPackage(static_cast<Cell *>(c)->getNameParty());
+			Packager::createJoinPartyPackage(static_cast<Cell*>(c)->getNameParty());
 
 			const PaquetResponse *paquet = nullptr;
 			ITimer *t = new Timer();
