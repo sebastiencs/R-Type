@@ -152,6 +152,12 @@ public:
 
   };
 
+  template <class U>
+  void sort(const U &func) {
+    Locker<IMutex_SharedPtr> unused(_mutex);
+    _list.sort(func);
+  };
+
 };
 
 #endif /* !LISTSECURE_H_ */
