@@ -15,6 +15,7 @@
 # include "DisplayUpdater.hh"
 # include "ListEnemies.hh"
 # include "Physics.hh"
+# include "BonusMalus.hh"
 
 class PackageStorage;
 class ISystemAudio;
@@ -33,6 +34,7 @@ private:
 	ISystemAudio	&_audio;
 	ListPlayers	&_LP;
 	ListEnemies	_LE;
+	ListSecure<BonusMalus_SharedPtr> _BM;
 	ListSecure<Text* > &_nickname;
 	ListSecure<Sprite* > &_images;
 	IMutex_SharedPtr _mutex;
