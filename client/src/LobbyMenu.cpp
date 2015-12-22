@@ -175,7 +175,7 @@ void LobbyMenu::updatePlayerList()
 	size_t t = 0;
 	for (auto &p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
-		tr.setScale((float)2.0, (float)2.0);
+		tr.setScale((float)0.5, (float)0.5);
 		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
 		tr.setScale((float)1, (float)1);
 		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);

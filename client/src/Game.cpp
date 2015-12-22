@@ -205,6 +205,8 @@ void	Game::updateGraphic()
 
 	}
 
+	_BM.remove_if([] (auto &b) { return (b->getX() > 2000); });
+
 	if (!_deadPlayersName.empty()) {	// List of dead players
 		int32_t y = 15;
 		std::list<std::string>::iterator it = _deadPlayersName.begin();
