@@ -30,6 +30,20 @@ public:
   PaquetBonusMalus(const T *data, size_t len) : Paquet(data, len) { parsePaquet(); }
   virtual ~PaquetBonusMalus();
 
+  template<typename T>
+  PaquetBonusMalus &operator=(T &e) {
+    if (e) {
+      _type = e->getType();
+      _eID = e->getID();
+      _x = e->getX();
+      _y = e->getY();
+      _type = e->getType();
+      _speed = e->getSpeed();
+      createPaquet();
+    }
+    return (*this);
+  }
+
   void	setType(const uint8_t);
   void	setID(const uint8_t);
   void	setPosition(const uint16_t, const uint16_t);
