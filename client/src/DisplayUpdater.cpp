@@ -40,8 +40,10 @@ DisplayUpdater::~DisplayUpdater()
 	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
 	if (mainmenu)
 		delete mainmenu;
-	if (launchLoop)
+	if (launchLoop) {
+		launchLoop->stop();
 		delete launchLoop;
+	}
 	if (deathTimer)
 		delete deathTimer;
 }
