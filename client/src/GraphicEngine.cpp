@@ -102,6 +102,12 @@ void GraphicEngine::setInputMode(InputMode mode)
 			keyMap[KeyAlias::LEFT] = sf::Keyboard::Left;
 			keyMap[KeyAlias::SPACEE] = sf::Keyboard::Space;
 			break;
+		case WASD:
+			keyMap[KeyAlias::UP] = sf::Keyboard::W;
+			keyMap[KeyAlias::RIGHT] = sf::Keyboard::D;
+			keyMap[KeyAlias::DOWN] = sf::Keyboard::S;
+			keyMap[KeyAlias::LEFT] = sf::Keyboard::A;
+			keyMap[KeyAlias::SPACEE] = sf::Keyboard::Space;
 		case PAD:
 			break;
 		default:

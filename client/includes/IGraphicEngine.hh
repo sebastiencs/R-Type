@@ -29,6 +29,7 @@ enum UsableKeys {
 
 enum InputMode {
 	ZQSD = 0,
+	WASD,
 	ARROWS,
 	PAD
 };
