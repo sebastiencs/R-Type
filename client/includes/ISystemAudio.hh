@@ -33,7 +33,8 @@ public:
   virtual void	stopSound() = 0;
 
   enum {
-    SIMPLE_SHOT = 1
+    SIMPLE_SHOT = 1,
+    JOIN = 2
   };
 
 };

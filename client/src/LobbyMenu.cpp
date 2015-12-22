@@ -1,5 +1,6 @@
 #include "LobbyMenu.hh"
 #include "ListPlayers.hh"
+#include "SystemAudio.hh"
 
 LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine)
 {
@@ -58,6 +59,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 
 	Callback_t fptr = [this](void *cond) {
 		PackageStorage &PS = PackageStorage::getInstance();
+		ISystemAudio &audio = SystemAudio::getInstance();
 		ListPlayers &LP = ListPlayers::getInstance();
 
 		const PaquetListPlayers	*tmp = nullptr;
@@ -69,8 +71,10 @@ void LobbyMenu::createRequestListPlayersPaquet()
 			if ((tmp = PS.getPlayerListPackage())) {
 				LP.clearList();
 				for (auto p : tmp->getPlayers()) {
-					if (LP.getPlayer(std::get<1>(p)) == nullptr)
-						LP.addPlayer(std::make_shared<Player>(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+				  if (LP.getPlayer(std::get<1>(p)) == nullptr) {
+				    LP.addPlayer(std::make_shared<Player>(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
+				    audio.playSound(ISystemAudio::JOIN);
+				  }
 				}
 				PS.deletePlayerListPackage();
 				DEBUG_MSG("Request received");
