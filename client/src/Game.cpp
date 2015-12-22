@@ -157,7 +157,7 @@ void	Game::updateGraphic()
 		}
 
 		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
-		t.setScale(3.5, 3.5);
+		// t.setScale(3.5, 3.5);
 		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
@@ -186,7 +186,7 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		t.setScale(1.5, 1.5);
+		// t.setScale(1.5, 1.5);
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
@@ -231,13 +231,13 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 	for (UsableKeys k : keysPressed) {
 		switch (k) {
 		case UsableKeys::Z:
-			if (pos.y > 10) {
+			if (pos.y > playerVelocity) {
 				pos.y -= playerVelocity;
 				changed = true;
 			}
 			break;
 		case UsableKeys::Q:
-			if (pos.x > 10) {
+			if (pos.x > playerVelocity) {
 				pos.x -= playerVelocity;
 				changed = true;
 			}

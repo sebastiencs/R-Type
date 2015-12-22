@@ -19,23 +19,24 @@ typedef int	MusicID;
 class		ISystemAudio
 {
 public:
-	virtual ~ISystemAudio() {};
+  virtual ~ISystemAudio() {};
 
-	virtual void	loadMusic(const std::string &file, int id) = 0;
-	virtual void	loadSound(const std::string &file, int id) = 0;
+  virtual void	loadMusic(const std::string &file, int id) = 0;
+  virtual void	loadSound(const std::string &file, int id) = 0;
 
-	virtual void	playMusic(int id) = 0;
-	virtual void	playSound(int id) = 0;
+  virtual void	playMusic(int id) = 0;
+  virtual void	playSound(int id) = 0;
 
-	virtual void	playMusicRandom() = 0;
+  virtual void	playMusicRandom() = 0;
 
-	virtual void	stopMusic() = 0;
-	virtual void	stopSound() = 0;
+  virtual void	stopMusic() = 0;
+  virtual void	stopSound() = 0;
 
 	enum {
 		SIMPLE_SHOT = 1,
+		JOIN,
 		DEATH
-	};
+  };
 
 };
 
