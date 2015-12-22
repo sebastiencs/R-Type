@@ -44,7 +44,7 @@ private:
     for (auto &e : init_list) {
 
       if (e != nullptr) {
-	changed = false;
+		changed = false;
       }
     }
 
@@ -58,8 +58,8 @@ public:
   template<typename... T, typename U>
   static bool			moveX(int lock, U &elem, uint16_t newX, T&... list) {
     bool changed = true;
-    uint8_t mySizeX = elem->getSizeX();
-    uint8_t mySizeY = elem->getSizeY();
+    uint16_t mySizeX = elem->getSizeX();
+	uint16_t mySizeY = elem->getSizeY();
     uint16_t myY = elem->getY();
     uint8_t myID = elem->getID();
 
@@ -85,8 +85,8 @@ public:
   template<typename... T, typename U>
   static bool			moveY(int lock, U &elem, uint16_t newY, T&... list) {
     bool changed = true;
-    uint8_t mySizeX = elem->getSizeX();
-    uint8_t mySizeY = elem->getSizeY();
+    uint16_t mySizeX = elem->getSizeX();
+	uint16_t mySizeY = elem->getSizeY();
     uint16_t myX = elem->getX();
     uint8_t myID = elem->getID();
 

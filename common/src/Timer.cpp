@@ -111,7 +111,7 @@ float		Timer::secFloat()
 {
   long ms = this->ms();
 
-  float sec = ms;
+  float sec = static_cast<float>(ms);
   sec /= 1000;
 
   return (sec);
