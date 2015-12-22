@@ -61,6 +61,7 @@ public:
     BONUS_MALUS		= 0x0F,
     LIFE	        = 0x10,
     DEATH	        = 0x11,
+    ATTR_BONUS		= 0x12,
     RESPONSE		= 0xFF
   };
 
