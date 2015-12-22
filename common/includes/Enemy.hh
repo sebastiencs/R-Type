@@ -70,6 +70,8 @@ private:
   uint16_t		_shotSpeed;
   uint16_t		_column;
   ITimer_SharedPtr	_timer;
+
+  void			setAttributes();
 };
 
 typedef std::shared_ptr<Enemy>	Enemy_SharedPtr;

@@ -34,21 +34,7 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
     _column(700),
     _timer(std::make_shared<Timer>())
 {
-  if (type == 0) {
-    _sizeX = 80;
-    _sizeY = 55;
-    _intervalShot = 1000;
-  }
-  else if (type == 1) {
-    _sizeX = 100;
-    _sizeY = 59;
-    _intervalShot = 1000;
-  }
-  else if (type == 2) {
-    _sizeX = 120;
-    _sizeY = 91;
-    _intervalShot = 1000;
-  }
+  setAttributes();
   _timer->start();
   DEBUG_MSG("Enemy created");
 }
@@ -63,23 +49,28 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
     _column(700),
     _timer(std::make_shared<Timer>())
 {
-  if (type == 0) {
+  setAttributes();
+  _timer->start();
+  DEBUG_MSG("Enemy created");
+}
+
+void			Enemy::setAttributes()
+{
+  if (_type == 0) {
     _sizeX = 80;
     _sizeY = 55;
     _intervalShot = 1000;
   }
-  else if (type == 1) {
-    _sizeX = 100;
-    _sizeY = 59;
-    _intervalShot = 1000;
-  }
-  else if (type == 2) {
+  else if (_type == 1) {
     _sizeX = 120;
-    _sizeY = 91;
-    _intervalShot = 1000;
+    _sizeY = 71;
+    _intervalShot = 800;
   }
-  _timer->start();
-  DEBUG_MSG("Enemy created");
+  else if (_type == 2) {
+    _sizeX = 220;
+    _sizeY = 167;
+    _intervalShot = 600;
+  }
 }
 
 Enemy::~Enemy()
