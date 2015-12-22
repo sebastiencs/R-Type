@@ -36,7 +36,17 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type)
 {
   if (type == 0) {
     _sizeX = 80;
-    _sizeY = 50;
+    _sizeY = 55;
+    _intervalShot = 1000;
+  }
+  else if (type == 1) {
+    _sizeX = 100;
+    _sizeY = 59;
+    _intervalShot = 1000;
+  }
+  else if (type == 2) {
+    _sizeX = 120;
+    _sizeY = 91;
     _intervalShot = 1000;
   }
   _timer->start();
@@ -55,7 +65,17 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
 {
   if (type == 0) {
     _sizeX = 80;
-    _sizeY = 50;
+    _sizeY = 55;
+    _intervalShot = 1000;
+  }
+  else if (type == 1) {
+    _sizeX = 100;
+    _sizeY = 59;
+    _intervalShot = 1000;
+  }
+  else if (type == 2) {
+    _sizeX = 120;
+    _sizeY = 91;
     _intervalShot = 1000;
   }
   _timer->start();
