@@ -72,6 +72,7 @@ int		main(int argc, char **argv)
 		audio.loadMusic("booba.ogg", 4);
 		audio.loadMusic("tupac.ogg", 5);
 		audio.loadSound("simple_shot.wav", ISystemAudio::SIMPLE_SHOT);
+		audio.loadSound("you_died.ogg", ISystemAudio::DEATH);
 	}
 	catch (ErrorLoadingFile &) {
 		DEBUG_MSG("Can't load music");

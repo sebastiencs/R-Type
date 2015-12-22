@@ -73,11 +73,11 @@ void	Game::handlingNetwork()
 	if (shot != nullptr) {
 		player = _LP.getPlayer(shot->getPlayerID());
 		if (player) {
-		  player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
+			player->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
 		}
 		enem = _LE.getEnemy(shot->getPlayerID());
 		if (enem) {
-		  enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
+			enem->addBullet(std::make_shared<Bullet>(shot->getX(), shot->getY(), shot->getSpeed(), shot->getType(), 8, 7));
 		}
 		_PS.deleteShotsPackage();
 		_audio.playSound(ISystemAudio::SIMPLE_SHOT);
@@ -103,34 +103,34 @@ void	Game::handlingNetwork()
 	}
 
 	if (life != nullptr) {
-	  player = _LP.getPlayer(life->getID());
-	  if (player) {
-	    player->setLife(life->getLife());
-	  }
-	  enem = _LE.getEnemy(life->getID());
-	  if (enem) {
-	    enem->setLife(life->getLife());
-	  }
-	  _PS.deleteLifePackage();
+		player = _LP.getPlayer(life->getID());
+		if (player) {
+			player->setLife(life->getLife());
+		}
+		enem = _LE.getEnemy(life->getID());
+		if (enem) {
+			enem->setLife(life->getLife());
+		}
+		_PS.deleteLifePackage();
 	}
 
 	if (death != nullptr) {
-	  player = _LP.getPlayer(death->getID());
-	  if (player) {
-	    DEBUG_MSG(player->getName() << " is dead");
+		player = _LP.getPlayer(death->getID());
+		if (player) {
+			DEBUG_MSG(player->getName() << " is dead");
 			_deadPlayersName.push_back(player->getName());
 			_deadPlayersTimer[player->getName()] = new Timer();
 			_deadPlayersTimer[player->getName()]->start();
 			if (player != _LP.getListPlayers().front()) {
-			  _LP.deletePlayer(player.get()->getID());
+				_LP.deletePlayer(player.get()->getID());
 			}
 		}
-	  enem = _LE.getEnemy(death->getID());
-	  if (enem) {
-	    std::cout << "An enemy is dead" << std::endl;
+		enem = _LE.getEnemy(death->getID());
+		if (enem) {
+			std::cout << "An enemy is dead" << std::endl;
 			_LE.deleteEnemy(enem.get()->getID());
 		}
-	  _PS.deleteDeathPackage();
+		_PS.deleteDeathPackage();
 	}
 
 	if (leave != nullptr) {
@@ -281,25 +281,26 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 
 void	Game::fixWalkingDead()
 {
-  auto &&enemies = _LE.getListEnemies();
+	auto &&enemies = _LE.getListEnemies();
 
-  enemies.remove_if([] (auto &e) { return (e->getLife() == 0); });
+	enemies.remove_if([] (auto &e) { return (e->getLife() == 0); });
 }
 
 int	Game::AmIDead()
 {
-  auto &&players = _LP.getListPlayers();
+	auto &&players = _LP.getListPlayers();
 
-  if (players.size()) {
+	if (players.size()) {
 
-    auto &&player = players.front();
+		auto &&player = players.front();
 
-    if (player->getLife() == 0) {
-      Packager::createLeavePackage(player->getID());
-      return (1);
-    }
-  }
-  return (0);
+		if (player->getLife() == 0) {
+			Packager::createLeavePackage(player->getID());
+			SystemAudio::getInstance().playSound(SystemAudio::DEATH);
+			return (1);
+		}
+	}
+	return (0);
 }
 
 int	Game::run()

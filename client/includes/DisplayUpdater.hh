@@ -47,6 +47,8 @@ private:
 	ListSecure<Sprite *> images;
 	int cond;
 	Game *_game;
+	bool dead;
+	ITimer* deathTimer;
 
 	int32_t xBg1;
 	int32_t xBg2;

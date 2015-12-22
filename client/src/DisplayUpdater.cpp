@@ -3,10 +3,11 @@
 #include "Game.hh"
 #include "Locker.hh"
 
-DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false), cond(1)
+DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false), cond(1), dead(false)
 {
 	threadGame = nullptr;
 	_game = nullptr;
+	deathTimer = nullptr;
 	packager = _packager;
 	graphicEngine = new GraphicEngine();
 	mainmenu = new MainMenu(graphicEngine, net);
@@ -41,6 +42,8 @@ DisplayUpdater::~DisplayUpdater()
 		delete mainmenu;
 	if (launchLoop)
 		delete launchLoop;
+	if (deathTimer)
+		delete deathTimer;
 }
 
 const Packager * DisplayUpdater::getPackager()
@@ -87,6 +90,7 @@ void DisplayUpdater::launchObserver()
 			}
 			while (cond) {
 				if (_game->run()) {
+					dead = true;
 					return (nullptr);
 				}
 			}
@@ -126,6 +130,25 @@ void DisplayUpdater::game()
     this->graphicEngine->drawText(*text);
     delete text;
   });
+
+	if (dead) {
+		if (deathTimer) {
+			Transformation t = Transformation((graphicEngine->getWindowWidth() / 2) - 80, (graphicEngine->getWindowHeight() / 2) - 50);
+			Text text = Text("YOU DIED", DEFAULT_FONT, 30, t, graphicEngine, Color(150, 0, 0));
+			if (deathTimer->ms() < 7000) {
+				graphicEngine->drawText(text);
+			}
+			else {
+				delete deathTimer;
+				deathTimer = nullptr;
+				dead = false;
+			}
+		}
+		else {
+			deathTimer = new Timer();
+			deathTimer->start();
+		}
+	}
 
 	_nickname.clear();
 	images.clear();
