@@ -71,7 +71,8 @@ public:
 
       uint8_t id = _data[0];
 
-      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE || id == LEAVE || id == ENEMY || id == LIFE) {
+      if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE
+	  || id == LEAVE || id == ENEMY || id == LIFE || id == DEATH) {
 	return (UDP);
       }
       else {
