@@ -47,7 +47,7 @@ void ScrollView::emptyCell()
 
 void ScrollView::incrBase()
 {
-	if (base < ((int)boxCells->getElements().size() - nbrDiplayCell))
+	if (base < (static_cast<int>(boxCells->getElements().size()) - nbrDiplayCell))
 		++base;
 }
 

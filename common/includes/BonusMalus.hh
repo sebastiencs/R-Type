@@ -25,7 +25,7 @@ public:
   };
 
   BonusMalus();
-  BonusMalus(const uint8_t type, const uint8_t speed, const uint16_t x, const uint16_t y);
+  BonusMalus(const uint8_t id, const uint8_t type, const uint8_t speed, const uint16_t x, const uint16_t y);
   virtual ~BonusMalus();
 
   uint8_t	getSpeed() const;

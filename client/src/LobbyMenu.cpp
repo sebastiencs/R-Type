@@ -140,7 +140,7 @@ void LobbyMenu::ready()
 		DEBUG_MSG("Couldn't retreive QuadPlayerBox");
 		return;
 	}
-	Box* player = dynamic_cast<Box* >(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
+	Box* player = dynamic_cast<Box*>(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
 	if (!player) {
 		DEBUG_MSG("Couldn't retreive Player Box: \"" << "Player" << std::to_string(list.getId()) << "Box" << "\"");
 		return;
@@ -175,9 +175,9 @@ void LobbyMenu::updatePlayerList()
 	size_t t = 0;
 	for (auto &p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
-		tr.setScale((float)0.5, (float)0.5);
+		tr.setScale(0.5f, 0.5f);
 		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
-		tr.setScale((float)1, (float)1);
+		tr.setScale(1.0f, 1.0f);
 		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
 		if (p->getReady()) {

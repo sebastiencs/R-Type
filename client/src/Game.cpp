@@ -35,9 +35,6 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
 	obstacleTypeToSpriteString[2] = "enemy2.png"; // boss
 
-	BonusTypeToSpriteString[0] = "bonus.png"; // Bonus/malus
-	BonusTypeToSpriteString[1] = "bonus.png"; // Bonus/malus
-
 	DEBUG_MSG("Game created");
 	(void)_height;
 	_audio.stopMusic();
@@ -102,7 +99,7 @@ void	Game::handlingNetwork()
 
 	if (bonusmalus != nullptr) {
 		DEBUG_MSG("Bonus !");
-		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
+		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getID(), bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
 		_PS.deleteBonusMalusPackage();
 	}
 
@@ -153,7 +150,7 @@ void	Game::updateGraphic()
 			for (auto &bullet : player->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet->getX() += (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
+				bullet->getX() += static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS()));
 			}
 
 			auto &bulletList = player->getBullets();
@@ -161,20 +158,20 @@ void	Game::updateGraphic()
 		}
 
 		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
-		// t.setScale(3.5, 3.5);
+		// t.setScale(3.5f, 3.5f);
 		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);		// Player HealthBar
-		t.setScale(10, 1);
+		t.setScale(10.0f, 1.0f);
 		Sprite* lifeBG = new Sprite("life-bg.png", t);
 		drawImage(lifeBG);
-		t.setScale((float)(player->getLife() / 10.), 1.);
+		t.setScale(static_cast<float>((player->getLife() / 10)), 1.0f);
 		Sprite* life = new Sprite("life-fg.png", t);
 		drawImage(life);
 
 		t.setPosition(t.getX(), player->getPosition().y - 22);		// Player Name
-		t.setScale(1, 1);
+		t.setScale(1.0f, 1.0f);
 		Text* text = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);
 	}
@@ -183,31 +180,31 @@ void	Game::updateGraphic()
 			for (auto &bullet : enemy->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
-				bullet->getX() -= (uint16_t)(bullet->getSpeed() * GraphicEngine::getDeltaTimeS());
+				bullet->getX() -= static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS()));
 			}
 
 			auto &bulletList = enemy->getBullets();
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-																											// t.setScale(1.5, 1.5);
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() - 15);		// Enemy health bar
-		t.setScale(10., 1.);
+		t.setScale(10.0f, 1.0f);
 		Sprite* lifeBG = new Sprite("life-bg.png", t);
 		drawImage(lifeBG);
-		t.setScale((float)(enemy->getLife() / 10.), 1.);
+		t.setScale(static_cast<float>((enemy->getLife() / 10)), 1.0f);
 		Sprite* life = new Sprite("life-fg.png", t);
 		drawImage(life);
 	}
 
 	for (auto &bm : _BM) {
 
-	  bm->getX() -= (uint16_t)(bm->getSpeed() * GraphicEngine::getDeltaTimeS());
+	  bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 		Transformation t(bm->getX(), bm->getY());
-		Sprite* bonusMalus = new Sprite(BonusTypeToSpriteString[bm->getType()], t);
+		t.setScale(0.5, 0.5);
+		Sprite* bonusMalus = new Sprite("bonus.png", t);
 		drawImage(bonusMalus);
 	}
 
@@ -241,7 +238,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		return;
 
 	Position pos = player->getPosition();
-	uint16_t playerVelocity = (uint16_t)(300 * GraphicEngine::getDeltaTimeS());
+	uint16_t playerVelocity = static_cast<uint16_t>((300 * GraphicEngine::getDeltaTimeS()));
 	for (UsableKeys k : keysPressed) {
 		switch (k) {
 		case UsableKeys::Z:
@@ -257,13 +254,13 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 			}
 			break;
 		case UsableKeys::S:
-			if (pos.y < 715) {
+			if (pos.y < 660) {
 				pos.y += playerVelocity;
 				changed = true;
 			}
 			break;
 		case UsableKeys::D:
-			if (pos.x <= 910) {
+			if (pos.x <= 935) {
 				pos.x += playerVelocity;
 				changed = true;
 			}

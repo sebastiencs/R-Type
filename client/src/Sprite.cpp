@@ -28,7 +28,7 @@ Sprite::Sprite(const Sprite & right) : sprite(right.sprite), img(right.img), eng
 	if (engine) {
 		sprite = sf::Sprite(this->engine->loadTexture(img));
 		transform(_transformation, color);
-		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+		_transformation.setBounds(static_cast<uint16_t>(sprite.getGlobalBounds().width), static_cast<uint16_t>(sprite.getGlobalBounds().height));
 	}
 }
 

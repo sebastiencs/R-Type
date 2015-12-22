@@ -46,7 +46,7 @@ const TextField* CreateGameMenu::getServerName() const
 void CreateGameMenu::draw()
 {
 	Transformation t(300, 330);
-	t.setScale((float)1.3, (float)1.3);
+	t.setScale(1.3f, 1.3f);
 	engine->drawImage("defaultTextZone.png", t);
 	sprite->draw();
 	serverName->draw();

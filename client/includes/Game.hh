@@ -46,7 +46,6 @@ private:
 	std::list<std::string> _deadPlayersName;
 	std::map<std::string, Timer* > _deadPlayersTimer;
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
-	std::map<uint8_t, std::string> BonusTypeToSpriteString;
 
 public:
   Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);

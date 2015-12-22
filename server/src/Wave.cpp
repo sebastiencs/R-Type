@@ -93,7 +93,7 @@ void		Wave::getSpawnBonusMalus()
     case 7:
     case 9:
       {
-	_party.addBonusMalus(new BonusMalus(BonusMalus::LIFE, 100, 500, 500));
+	_party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::LIFE, 100, 500, 500));
 	break;
       }
     case 4:
@@ -101,7 +101,7 @@ void		Wave::getSpawnBonusMalus()
     case 8:
     case 10:
       {
-	_party.addBonusMalus(new BonusMalus(BonusMalus::INTERVAL_SHOT, 100, 500, 500));
+	_party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::INTERVAL_SHOT, 100, 500, 500));
 	break;
       }
     }

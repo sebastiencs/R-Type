@@ -76,16 +76,24 @@ void DisplayUpdater::launchObserver()
 		ListPlayers &instance = ListPlayers::getInstance();
 
 		auto &list = const_cast<ListSecure<Player_SharedPtr>&>(instance.getListPlayers());
-		list.sort([] (auto &p1, auto &p2) -> bool { return (p1->getID() < p2->getID()); });
 
-		uint8_t me = 0;
-		uint8_t i = 1;
-		for (auto &p : instance.getListPlayers()) {
-		  if (p->getID() == instance.getId()) {
-		    me = i;
+		uint8_t myID = instance.getId();
+		uint8_t me = 1;
+
+		for (auto &p : list) {
+		  if (p->getID() < myID) {
+		    me += 1;
 		  }
-		  i += 1;
 		}
+		// list.sort([] (auto &p1, auto &p2) -> bool { return (p1->getID() < p2->getID()); });
+
+		// uint8_t i = 1;
+		// for (auto &p : instance.getListPlayers()) {
+		//   if (p->getID() == instance.getId()) {
+		//     me = i;
+		//   }
+		//   i += 1;
+		// }
 		auto &&player = instance.getPlayer(instance.getId());
 		player->setY(100 + 100 * me);
 
