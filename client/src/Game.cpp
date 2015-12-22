@@ -35,6 +35,9 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
 	obstacleTypeToSpriteString[2] = "enemy2.png"; // boss
 
+	BonusTypeToSpriteString[0] = "bonus.png"; // Bonus/malus
+	BonusTypeToSpriteString[1] = "bonus.png"; // Bonus/malus
+
 	DEBUG_MSG("Game created");
 	(void)_height;
 	_audio.stopMusic();
@@ -98,6 +101,7 @@ void	Game::handlingNetwork()
 	}
 
 	if (bonusmalus != nullptr) {
+		DEBUG_MSG("Bonus !");
 		_BM.push_back(std::make_shared<BonusMalus>(bonusmalus->getType(), bonusmalus->getSpeed(), bonusmalus->getX(), bonusmalus->getY()));
 		_PS.deleteBonusMalusPackage();
 	}
@@ -186,7 +190,7 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		// t.setScale(1.5, 1.5);
+																											// t.setScale(1.5, 1.5);
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
@@ -202,7 +206,9 @@ void	Game::updateGraphic()
 	for (auto &bm : _BM) {
 
 	  bm->getX() -= (uint16_t)(bm->getSpeed() * GraphicEngine::getDeltaTimeS());
-
+		Transformation t(bm->getX(), bm->getY());
+		Sprite* bonusMalus = new Sprite(BonusTypeToSpriteString[bm->getType()], t);
+		drawImage(bonusMalus);
 	}
 
 	_BM.remove_if([] (auto &b) { return (b->getX() > 2000); });
