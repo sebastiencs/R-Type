@@ -157,7 +157,7 @@ void	Game::updateGraphic()
 		}
 
 		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
-		t.setScale(3.5, 3.5);
+		// t.setScale(3.5, 3.5);
 		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
@@ -186,7 +186,7 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		t.setScale(1.5, 1.5);
+		// t.setScale(1.5, 1.5);
 		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
