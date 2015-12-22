@@ -23,9 +23,14 @@ public:
 	// CheckBox	
 	void MuteSound();
 
+	//Button
+	void ChangeKeys();
+
 private:
 	IGraphicEngine *engine;
 	Box* VBox;
+
+	std::string inputMode;
 };
 
 #endif // !OPTION_MENU_HH_

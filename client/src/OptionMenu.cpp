@@ -11,6 +11,7 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 	Transformation t(250, 300);
 	VBox = new Box(Orientation::vertical, Transformation(200, 500), "commandBox");
 	VBox->setSpacing(25);
+	inputMode = "ZQSD";
 	menu();
 }
 
@@ -47,6 +48,43 @@ void OptionMenu::MuteSound()
 	state = !state;
 }
 
+void OptionMenu::ChangeKeys()
+{
+	static int state = 0;
+
+	++state;
+	state %= 4;
+
+	engine->setInputMode(static_cast<InputMode>(state));
+
+	switch (state) {
+
+	case 0:
+	{
+		inputMode = "ZQSD";
+		break;
+	}
+	case 1:
+	{
+		inputMode = "WASD";
+		break;
+	}
+	case 2:
+	{
+		inputMode = "PAD";
+		break;
+	}
+	case 3:
+	{
+		inputMode = "Arrows";
+		break;
+	}
+	default: 
+		inputMode = "Unknow";
+	}
+	static_cast<TextField *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("TKeys"))->setText(inputMode);
+}
+
 void OptionMenu::menu()
 {
 	std::function<void()> fptr;
@@ -58,11 +96,12 @@ void OptionMenu::menu()
 	fptr = std::bind(&OptionMenu::MuteSound, this);
 	box1->addDrawable(new CheckBox("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
 
-	Box* box2 = new Box(Orientation::horizontal, Transformation(250, 300), "hBox");
+	Box* box2 = new Box(Orientation::horizontal, Transformation(250, 300), "Box2");
 	box2->setSpacing(30);
-	box2->addDrawable(new TextField("Swap keys (Arrow [ ] - AQSD [X]): ", transformation, 30, DEFAULT_FONT, Color::Black, "SKeys", engine));
-	fptr = std::bind(&GraphicEngine::setInputMode(InputMode), engine);
-	box2->addDrawable(new CheckBox("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
+	box2->addDrawable(new TextField("Swap keys : ", transformation, 30, DEFAULT_FONT, Color::Black, "SKeys", engine));
+	fptr = std::bind(&OptionMenu::ChangeKeys, this);
+	box2->addDrawable(new Button("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
+	box2->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::Black, "TKeys", engine));
 
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box2);
