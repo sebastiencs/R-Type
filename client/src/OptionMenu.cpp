@@ -8,8 +8,7 @@
 OptionMenu::OptionMenu(IGraphicEngine* eng)
 {
 	engine = eng;
-	Transformation t(250, 300);
-	VBox = new Box(Orientation::vertical, Transformation(200, 500), "commandBox");
+	VBox = new Box(Orientation::vertical, Transformation(350, 350), "commandBox");
 	VBox->setSpacing(25);
 	inputMode = "ZQSD";
 	menu();
@@ -88,20 +87,20 @@ void OptionMenu::ChangeKeys()
 void OptionMenu::menu()
 {
 	std::function<void()> fptr;
-	Transformation transformation(250, 300);
+	Transformation transformation(0, 0);
 
-	Box* box1 = new Box(Orientation::horizontal, Transformation(250, 300), "hBox");
+	Box* box1 = new Box(Orientation::horizontal, Transformation(0, 0), "hBox");
 	box1->setSpacing(30);
-	box1->addDrawable(new TextField("Sound Mute : ", transformation, 30, DEFAULT_FONT, Color::Black, "Sound", engine));
+	box1->addDrawable(new TextField("Mute music:\t", transformation, 30, DEFAULT_FONT, Color::White, "Sound", engine));
 	fptr = std::bind(&OptionMenu::MuteSound, this);
 	box1->addDrawable(new CheckBox("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
 
 	Box* box2 = new Box(Orientation::horizontal, Transformation(250, 300), "Box2");
 	box2->setSpacing(30);
-	box2->addDrawable(new TextField("Swap keys : ", transformation, 30, DEFAULT_FONT, Color::Black, "SKeys", engine));
+	box2->addDrawable(new TextField("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
 	fptr = std::bind(&OptionMenu::ChangeKeys, this);
 	box2->addDrawable(new Button("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
-	box2->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::Black, "TKeys", engine));
+	box2->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
 
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box2);
