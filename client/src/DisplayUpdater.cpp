@@ -12,7 +12,7 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 	graphicEngine = std::make_shared<GraphicEngine>();
 	mainmenu = std::make_shared<MainMenu>(graphicEngine, net);
 	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };
-	launchLoop = new TaskScheduler(fptr, 50);
+	launchLoop = std::make_shared<TaskScheduler>(fptr, 50);
 
 	xBg1 = 0;
 	tBg1.setPosition(xBg1, 0);
@@ -32,15 +32,10 @@ DisplayUpdater::~DisplayUpdater()
   if (threadGame) {
     cond = 0;
     threadGame->join();
-    delete threadGame;
   }
-	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
-	if (launchLoop) {
-		launchLoop->stop();
-		delete launchLoop;
-	}
-	if (deathTimer)
-		delete deathTimer;
+  if (launchLoop) {
+    launchLoop->stop();
+  }
 }
 
 IGraphicEngine_SharedPtr DisplayUpdater::getGraphicEngine()
@@ -99,7 +94,7 @@ void DisplayUpdater::launchObserver()
 		graphicEngine->setMouseMovedCallback(nullptr);
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
-		threadGame = new Thread([&](void *) -> void * {
+		threadGame = std::make_shared<Thread>([&](void *) -> void * {
 			mainmenu.reset();
 			while (cond) {
 				if (_game->run()) {
@@ -149,18 +144,16 @@ void DisplayUpdater::game()
 				graphicEngine->drawText(text);
 			}
 			else {
-				delete deathTimer;
 				deathTimer = nullptr;
 				dead = false;
 				threadGame->close();
 				graphicEngine->setUsableKeyPressedCallback(nullptr);
-				// delete _game;
 				_game = nullptr;
 				graphicEngine->closeWindow();
 			}
 		}
 		else {
-			deathTimer = new Timer();
+			deathTimer = std::make_shared<Timer>();
 			deathTimer->start();
 		}
 	}

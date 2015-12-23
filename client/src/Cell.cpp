@@ -15,13 +15,12 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 
 	std::string txt = '[' + name + ']' + "\t\t" + std::to_string(nbrPlayers) + "/4";
 
-	textField = new TextField(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
+	textField = std::make_shared<TextField>(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
 	_transformation.setBounds(textField->getTransformation().getWidth(), textField->getTransformation().getHeight());
 }
 
 Cell::~Cell()
 {
-	delete textField;
 }
 
 const std::string & Cell::getNameParty()

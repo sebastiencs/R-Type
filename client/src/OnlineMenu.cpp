@@ -4,11 +4,11 @@
 #include "ListPlayers.hh"
 
 OnlineMenu::OnlineMenu(IGraphicEngine_SharedPtr eng)
-  : engine(std::move(eng))
+  : engine(std::move(eng)), cond(1)
 {
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
-	scrollView = new ScrollView(t, 9, engine);
+	scrollView = std::make_shared<ScrollView>(t, 9, engine);
 	createGameMenu = nullptr;
 	threadReceivedParties = nullptr;
 	lobby = nullptr;
@@ -19,13 +19,9 @@ OnlineMenu::OnlineMenu(IGraphicEngine_SharedPtr eng)
 
 OnlineMenu::~OnlineMenu()
 {
-	if (scrollView)
-		delete(scrollView);
-
 	if (threadReceivedParties) {
-		threadReceivedParties->close();
-		delete threadReceivedParties;
-		threadReceivedParties = nullptr;
+		cond = 0;
+		threadReceivedParties->join();
 	}
 }
 
@@ -35,7 +31,9 @@ void OnlineMenu::createRequestPartiesPaquet()
 	if (threadReceivedParties && threadReceivedParties->isRunning()) {
 		DEBUG_MSG("Thread was already running, resetting it");
 		games.clear();
-		threadReceivedParties->close();
+		cond = 0;
+		threadReceivedParties->join();
+		cond = 1;
 		threadReceivedParties->reRun();
 		return;
 	}
@@ -48,8 +46,8 @@ void OnlineMenu::createRequestPartiesPaquet()
 		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
 		PaquetListParties_SharedPtr	tmp = nullptr;
-		while (!tmp) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		while (!tmp && this->cond) {
+			IOEvent::wait(50);
 			if ((tmp = PS.getGameListPackage())) {
 				for (auto &party : tmp->getParties()) {
 					list->push_back(party);
@@ -63,7 +61,8 @@ void OnlineMenu::createRequestPartiesPaquet()
 	};
 	if (!threadReceivedParties) {
 		games.clear();
-		threadReceivedParties = new Thread(fptr, &games);
+		cond = 1;
+		threadReceivedParties = std::make_shared<Thread>(fptr, &games);
 		DEBUG_MSG("Request sent");
 	}
 }
@@ -133,10 +132,9 @@ void OnlineMenu::joinButton()
 			Packager::createJoinPartyPackage(static_cast<Cell*>(c.get())->getNameParty());
 
 			PaquetResponse_SharedPtr paquet = nullptr;
-			ITimer *t = new Timer();
+			ITimer_SharedPtr t = std::make_shared<Timer>();
 			t->start();
 			do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
-			delete t;
 			if (paquet && paquet->getReturn() == 3) {
 				DEBUG_MSG("Can't join party");
 				PS.deleteAnswersPackage();
@@ -148,16 +146,16 @@ void OnlineMenu::joinButton()
 
 			if (lobby == nullptr) {
 				if (threadReceivedParties) {
-					threadReceivedParties->close();
-					delete threadReceivedParties;
-					threadReceivedParties = nullptr;
+					cond = 0;
+					threadReceivedParties->join();
+					threadReceivedParties.reset();
 				}
 
 				/* a changer? on att que le serv nous renvoie la liste des joueurs avant de rejoindre (= freeze)*/
 				ListPlayers &LP = ListPlayers::getInstance();
 				PaquetListPlayers_SharedPtr	paquetList = nullptr;
 
-				ITimer* t = new Timer();
+				ITimer_SharedPtr t = std::make_shared<Timer>();
 				t->start();
 				while (!paquetList && t->ms() < 3000) {
 					if ((paquetList = PS.getPlayerListPackage())) {
@@ -168,9 +166,8 @@ void OnlineMenu::joinButton()
 						PS.deletePlayerListPackage();
 					}
 				}
-				delete t;
 				/* ! */
-				lobby = std::make_shared<LobbyMenu>(engine, this);
+				lobby = std::make_shared<LobbyMenu>(engine, shared_from_this());
 				return;
 			}
 		}
@@ -178,7 +175,7 @@ void OnlineMenu::joinButton()
 
 void OnlineMenu::backButtonGameMenu()
 {
-	delete createGameMenu;
+	createGameMenu.reset();
 	createGameMenu = nullptr;
 }
 
@@ -198,14 +195,12 @@ void OnlineMenu::onCreateGame()
 	Packager::createCreatePartyPackage(createGameMenu->getServerName()->getText());
 	PackageStorage &PS = PackageStorage::getInstance();
 
-	delete createGameMenu;
-	createGameMenu = nullptr;
+	createGameMenu.reset();
 
 	PaquetResponse_SharedPtr paquet = nullptr;
-	ITimer *t = new Timer();
+	ITimer_SharedPtr t = std::make_shared<Timer>();
 	t->start();
 	do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
-	delete t;
 
 	if (!paquet) {
 	  std::cerr << "Answer not received" << std::endl;
@@ -222,18 +217,18 @@ void OnlineMenu::onCreateGame()
 	inLobby = true;
 	if (lobby == nullptr) {
 		if (threadReceivedParties) {
-			threadReceivedParties->close();
-			delete threadReceivedParties;
+			cond = 0;
+			threadReceivedParties->join();
 			threadReceivedParties = nullptr;
 		}
-		lobby = std::make_shared<LobbyMenu>(engine, this);
+		lobby = std::make_shared<LobbyMenu>(engine, shared_from_this());
 	}
 }
 
 void OnlineMenu::createButton()
 {
 	if (createGameMenu == nullptr)
-		createGameMenu = new CreateGameMenu(engine, this);
+		createGameMenu = std::make_shared<CreateGameMenu>(engine, shared_from_this());
 }
 
 void OnlineMenu::menu()
@@ -242,7 +237,7 @@ void OnlineMenu::menu()
 	Transformation transformation(350, 525);
 	transformation.setScale((float)0.8, (float)0.8);
 
-	onlineChoiseBox = new Box(Orientation::horizontal, transformation, "onlineBox");
+	onlineChoiseBox = std::make_shared<Box>(Orientation::horizontal, transformation, "onlineBox");
 	onlineChoiseBox->setSpacing(25);
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
 	onlineChoiseBox->addDrawable(std::make_shared<Button>("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));

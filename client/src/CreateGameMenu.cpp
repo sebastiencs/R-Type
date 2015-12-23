@@ -1,12 +1,11 @@
 #include "CreateGameMenu.hh"
 
-CreateGameMenu::CreateGameMenu(IGraphicEngine_SharedPtr eng, OnlineMenu *_superview)
-  : engine(std::move(eng))
+CreateGameMenu::CreateGameMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_SharedPtr _superview)
+  : engine(std::move(eng)), superView(std::move(_superview))
 {
 	callback fptr;
 	textEnteredCallback tptr;
 	Color color(255, 255, 255, 255);
-	superView = _superview;
 
 	Transformation t(340, 360);
 	tptr = std::bind(&CreateGameMenu::getText, this, std::placeholders::_1);

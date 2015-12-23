@@ -19,6 +19,9 @@ using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
 using OptionMenu_SharedPtr = std::shared_ptr<OptionMenu>;
 using Credits_SharedPtr = std::shared_ptr<Credits>;
 using Button_SharedPtr = std::shared_ptr<Button>;
+using Box_SharedPtr = std::shared_ptr<Box>;
+using TextField_SharedPtr = std::shared_ptr<TextField>;
+using Drawable_SharedPtr = std::shared_ptr<Drawable>;
 
 class MainMenu
 {
@@ -48,9 +51,9 @@ private:
 	Credits_SharedPtr creditsMenu;
 	Button_SharedPtr onlineButton;
 
-	Box* mainChoiceBox;
-	TextField *rTypeLabel;
-	std::list<Drawable* > elements;
+	Box_SharedPtr mainChoiceBox;
+	TextField_SharedPtr rTypeLabel;
+	std::list<Drawable_SharedPtr> elements;
 	int currentPage;
 };
 

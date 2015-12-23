@@ -13,6 +13,8 @@
 class IGraphicEngine;
 class TextField;
 
+using TextField_SharedPtr = std::shared_ptr<TextField>;
+
 class Cell : public Drawable, public ICallback
 {
 public:
@@ -36,7 +38,7 @@ public:
 	virtual const callback& getCallback() const;
 
 private:
-	TextField *textField;
+	TextField_SharedPtr textField;
 
 	std::string nameParty;
 	int nbrPlayers;

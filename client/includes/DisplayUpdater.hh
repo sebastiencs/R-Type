@@ -39,16 +39,16 @@ private:
 	NetworkClient_SharedPtr net;
 	MainMenu_SharedPtr mainmenu;
 	OnlineMenu_SharedPtr onlineMenu;
-	TaskScheduler *launchLoop;
+	TaskScheduler_SharedPtr launchLoop;
 	bool inGame;
 
-	IThread *threadGame;
-	ListSecure<Text *> _nickname;
-	ListSecure<Sprite *> images;
+	IThread_SharedPtr threadGame;
+	ListSecure<Text_SharedPtr> _nickname;
+	ListSecure<Sprite_SharedPtr> images;
 	int cond;
 	Game_SharedPtr _game;
 	bool dead;
-	ITimer* deathTimer;
+	ITimer_SharedPtr deathTimer;
 
 	int32_t xBg1;
 	int32_t xBg2;

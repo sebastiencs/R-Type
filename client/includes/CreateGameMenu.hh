@@ -13,7 +13,7 @@ class OnlineMenu;
 
 class CreateGameMenu {
 public:
-	CreateGameMenu(IGraphicEngine_SharedPtr engine, OnlineMenu *_superView);
+	CreateGameMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_SharedPtr _superView);
 	virtual ~CreateGameMenu();
 
 
@@ -26,7 +26,7 @@ public:
 
 private:
 	IGraphicEngine_SharedPtr engine;
-	OnlineMenu *superView;
+	OnlineMenu_SharedPtr superView;
 
 	TextField_SharedPtr serverName;
 
@@ -34,5 +34,7 @@ private:
 	Button_SharedPtr back;
 	Sprite_SharedPtr sprite;
 };
+
+using CreateGameMenu_SharedPtr = std::shared_ptr<CreateGameMenu>;
 
 #endif

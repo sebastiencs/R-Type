@@ -15,7 +15,10 @@
 class CreateGameMenu;
 class LobbyMenu;
 
-class OnlineMenu {
+using CreateGameMenu_SharedPtr = std::shared_ptr<CreateGameMenu>;
+
+class OnlineMenu : public std::enable_shared_from_this<OnlineMenu>
+{
 public:
 	OnlineMenu(IGraphicEngine_SharedPtr eng);
 	~OnlineMenu();
@@ -39,11 +42,12 @@ public:
 private:
 	IGraphicEngine_SharedPtr engine;
 	LobbyMenu_SharedPtr lobby;
-	CreateGameMenu *createGameMenu;
-	IThread *threadReceivedParties;
+	CreateGameMenu_SharedPtr createGameMenu;
+	IThread_SharedPtr threadReceivedParties;
+	int cond;
 
-	ScrollView *scrollView;
-	Box *onlineChoiseBox;
+	ScrollView_SharedPtr scrollView;
+	Box_SharedPtr onlineChoiseBox;
 
 	std::list<Button* > buttons;
 	std::list<PartyNB> games;

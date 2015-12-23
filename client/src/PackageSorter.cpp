@@ -92,14 +92,13 @@ PackageSorter::PackageSorter()
 	};
 
 	Callback_t fptr = [this](void *c) {this->sortPaquet(c); return nullptr; };
-	thread = new Thread(fptr, &cond);
+	thread = std::make_shared<Thread>(fptr, &cond);
 }
 
 PackageSorter::~PackageSorter()
 {
 	cond = 0;
 	thread->join();
-	delete thread;
 }
 
 void PackageSorter::sortPaquet(void *c)

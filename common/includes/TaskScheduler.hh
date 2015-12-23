@@ -24,4 +24,6 @@ private:
 	Callback_t fptr;
 };
 
+using TaskScheduler_SharedPtr = std::shared_ptr<TaskScheduler>;
+
 #endif

@@ -64,4 +64,8 @@ private:
 	const std::string &getData(const std::string& categorie, const std::string& variable);
 };
 
+# include <memory>
+
+using ParserIni_SharedPtr = std::shared_ptr<ParserIni>;
+
 #endif /* !PARSER_INI_HH_*/

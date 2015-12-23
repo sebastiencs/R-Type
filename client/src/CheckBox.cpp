@@ -7,16 +7,14 @@ CheckBox::CheckBox(const std::string & text, const std::string& img, const Trans
 	_transformation = t;
 	_id = id;
 	_visible = true;
-	_sprite = new Sprite(img, t, std::move(engine), color);
-	_spriteCheck = new Sprite("CheckBoxCheck.png", t, std::move(engine), color);
+	_sprite = std::make_unique<Sprite>(img, t, std::move(engine), color);
+	_spriteCheck = std::make_unique<Sprite>("CheckBoxCheck.png", t, std::move(engine), color);
 	_transformation.setBounds(_sprite->getTransformation().getWidth(), _sprite->getTransformation().getHeight());
 	_check = false;
 }
 
 CheckBox::~CheckBox()
 {
-	if (_sprite)
-		delete _sprite;
 }
 
 bool CheckBox::isPressed(uint32_t x, uint32_t y) const

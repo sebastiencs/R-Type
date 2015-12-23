@@ -3,9 +3,9 @@
 #include "SystemAudio.hh"
 #include "OnlineMenu.hh"
 
-LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu *superview) : engine(std::move(eng)), cond(1)
+LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_SharedPtr superview)
+  : engine(std::move(eng)), _superview(std::move(superview)), cond(1)
 {
-	_superview = superview;
 	right = nullptr;
 	threadReceivedListPlayers = nullptr;
 	playerListChanged = true;
@@ -36,7 +36,6 @@ LobbyMenu::~LobbyMenu()
 	if (threadReceivedListPlayers) {
 		cond = 0;
 		threadReceivedListPlayers->join();
-		delete threadReceivedListPlayers;
 	}
 }
 
@@ -93,7 +92,7 @@ void LobbyMenu::createRequestListPlayersPaquet()
 	};
 
 	if (!threadReceivedListPlayers) {
-		threadReceivedListPlayers = new Thread(fptr, &cond);
+		threadReceivedListPlayers = std::make_shared<Thread>(fptr, &cond);
 		DEBUG_MSG("Request sent");
 	}
 }
