@@ -191,7 +191,7 @@ void			Party::run()
 	    uint8_t id = Physics::idContact;
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
-	    int life = static_cast<int>(player->getLife()) - 10;
+	    int life = static_cast<int>(player->getLife()) - 7;
 	    if (life < 0) {
 	      life = 0;
 	    }
