@@ -28,8 +28,7 @@ void OptionMenu::initVariables()
 {
 	ListPlayers &list = ListPlayers::getInstance();
 	ISystemAudio &audio = SystemAudio::getInstance();
-
-	list.getPlayer(list.getId())->setName(parser->getText("player", "name"));
+	try {
 	inputMode = parser->getText("config", "command");
 
 	if (inputMode == "ZQSD")
@@ -45,7 +44,8 @@ void OptionMenu::initVariables()
 
 	muteMusic  = (parser->getValue("music", "mute") == 1 ? true : false);
 	muteMusic ? audio.stopMusic() : audio.playMusicRandom();
-
+	}
+	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 }
 
 void OptionMenu::draw()
@@ -68,10 +68,13 @@ void OptionMenu::onHover(uint32_t x, uint32_t y)
 
 void OptionMenu::MuteSound()
 {
-	parser->setValue("music", "mute", muteMusic);
 	ISystemAudio &audio = SystemAudio::getInstance();
 	muteMusic ? audio.stopMusic() : audio.playMusicRandom();
 	muteMusic = !muteMusic;
+	try {
+		parser->setValue("music", "mute", muteMusic);
+	}
+	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 }
 
 void OptionMenu::ChangeKeys()
@@ -108,7 +111,10 @@ void OptionMenu::ChangeKeys()
 	default:
 		inputMode = "ZQSD";
 	}
-	parser->setText("config", "command", inputMode);
+	try {
+		parser->setText("config", "command", inputMode);
+	}
+	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 	static_cast<TextField *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("TKeys"))->setText(inputMode);
 }
 
