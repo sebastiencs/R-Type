@@ -112,7 +112,6 @@ void DisplayUpdater::launchObserver()
 
 		callback fptr = std::bind(&DisplayUpdater::game, this);
 		graphicEngine->setCallbackFunction(fptr, nullptr);
-		delete launch;
 		launchLoop->stop();
 	}
 }

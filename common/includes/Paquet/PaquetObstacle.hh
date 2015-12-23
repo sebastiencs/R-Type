@@ -32,4 +32,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetObstacle &);
 
+using PaquetObstacle_SharedPtr = std::shared_ptr<PaquetObstacle>;
+
 #endif /* !PAQUETOBSTACLE_H_ */

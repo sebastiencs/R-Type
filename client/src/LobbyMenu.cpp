@@ -58,8 +58,8 @@ void LobbyMenu::createRequestListPlayersPaquet()
 		ISystemAudio &audio = SystemAudio::getInstance();
 		ListPlayers &LP = ListPlayers::getInstance();
 
-		const PaquetListPlayers	*tmp = nullptr;
-		const PaquetReady	*tmp2 = nullptr;
+		PaquetListPlayers_SharedPtr	tmp = nullptr;
+		PaquetReady_SharedPtr	tmp2 = nullptr;
 		int *c = reinterpret_cast<int *>(cond);
 
 		while (*c && !tmp && !tmp2) {

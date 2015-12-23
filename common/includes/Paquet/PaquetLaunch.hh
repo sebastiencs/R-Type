@@ -31,4 +31,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetLaunch &);
 
+using PaquetLaunch_SharedPtr = std::shared_ptr<PaquetLaunch>;
+
 #endif /* !PAQUETLAUNCH_H_ */

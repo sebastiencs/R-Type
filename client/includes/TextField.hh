@@ -10,6 +10,8 @@
 class GraphicEngine;
 class Text;
 
+using Text_UniquePtr = std::unique_ptr<Text>;
+
 class TextField : public Drawable {
 public:
 	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine_SharedPtr &_engine);
@@ -26,7 +28,7 @@ public:
 
 private:
 	IGraphicEngine_SharedPtr &engine;
-	Text *text;
+	Text_UniquePtr text;
 	Color color;
 	uint16_t size;
 

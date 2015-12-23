@@ -47,7 +47,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 	Callback_t fptr = [this](void* param) {
 		std::list<PartyNB>* list = reinterpret_cast<std::list<PartyNB>*>(param);
 		PackageStorage &PS = PackageStorage::getInstance();
-		const PaquetListParties	*tmp = nullptr;
+		PaquetListParties_SharedPtr	tmp = nullptr;
 		while (!tmp) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 			if ((tmp = PS.getGameListPackage())) {
@@ -132,7 +132,7 @@ void OnlineMenu::joinButton()
 		if (c->getId() == scrollView->getSelectCell()) {
 			Packager::createJoinPartyPackage(static_cast<Cell*>(c.get())->getNameParty());
 
-			const PaquetResponse *paquet = nullptr;
+			PaquetResponse_SharedPtr paquet = nullptr;
 			ITimer *t = new Timer();
 			t->start();
 			do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
@@ -155,7 +155,7 @@ void OnlineMenu::joinButton()
 
 				/* a changer? on att que le serv nous renvoie la liste des joueurs avant de rejoindre (= freeze)*/
 				ListPlayers &LP = ListPlayers::getInstance();
-				const PaquetListPlayers	*paquetList = nullptr;
+				PaquetListPlayers_SharedPtr	paquetList = nullptr;
 
 				ITimer* t = new Timer();
 				t->start();
@@ -201,7 +201,7 @@ void OnlineMenu::onCreateGame()
 	delete createGameMenu;
 	createGameMenu = nullptr;
 
-	const PaquetResponse *paquet = nullptr;
+	PaquetResponse_SharedPtr paquet = nullptr;
 	ITimer *t = new Timer();
 	t->start();
 	do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);

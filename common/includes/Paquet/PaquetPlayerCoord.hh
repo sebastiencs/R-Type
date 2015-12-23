@@ -49,4 +49,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetPlayerCoord &);
 
+using PaquetPlayerCoord_SharedPtr = std::shared_ptr<PaquetPlayerCoord>;
+
 #endif /* !PAQUETPLAYERCOORD_H_ */

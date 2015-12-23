@@ -58,4 +58,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetListPlayers &);
 
+using PaquetListPlayers_SharedPtr = std::shared_ptr<PaquetListPlayers>;
+
 #endif /* !PAQUETLISTPLAYERS_H_ */

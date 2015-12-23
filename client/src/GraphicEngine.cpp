@@ -14,7 +14,7 @@ GraphicEngine::GraphicEngine()
 	window = nullptr;
 	_textEnteredcallback = nullptr;
 	_usableKeyPressedCallback = nullptr;
-	_timer = new Timer();
+	_timer = std::make_unique<Timer>();
 	_timer->start();
 	setInputMode(ZQSD);
 
@@ -27,29 +27,20 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
-	if (window)
-		delete window;
-	for (std::map<std::string, sf::Texture *>::iterator it = cachedImages.begin(); it != cachedImages.end(); ++it)
-		if (it->second)
-			delete it->second;
 	cachedImages.clear();
-	if (_timer)
-		delete _timer;
 }
 
 void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
 {
 	windowHeight = sizeY;
 	windowWidth = sizeX;
-	window = new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), title, sf::Style::Titlebar | sf::Style::Close);
+	window = std::make_unique<sf::RenderWindow>(sf::VideoMode(sizeX, sizeY), title, sf::Style::Titlebar | sf::Style::Close);
 	window->setFramerateLimit(60);
 }
 
 void GraphicEngine::handleEvents()
 {
 	sf::Event event;
-	// ListPlayers &LP = ListPlayers::getInstance();
-	// Player *player = LP.getPlayer(LP.getId());
 	while (window->pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
@@ -137,7 +128,7 @@ void GraphicEngine::launch()
 
 			GraphicEngine::elapsedTime = clock.restart();
 			_timer->reset();
-						
+
 		}
 	}
 }
@@ -226,9 +217,8 @@ bool GraphicEngine::loadImageFromFile(const std::string& file)
 	if (cachedImages.find(file) != cachedImages.end())
 		return true;
 
-	sf::Texture* texture = new sf::Texture();
+	Texture_SharedPtr texture = std::make_shared<sf::Texture>();
 	if (!texture->loadFromFile(RS_PATH + file)) {
-		delete texture;
 		return false;
 	}
 	cachedImages[file] = texture;
@@ -240,9 +230,8 @@ bool GraphicEngine::loadFontFromFile(const std::string & file)
 	if (cachedFonts.find(file) != cachedFonts.end())
 		return true;
 
-	sf::Font* font = new sf::Font();
+	Font_SharedPtr font = std::make_shared<sf::Font>();
 	if (!font->loadFromFile(FONT_PATH + file)) {
-		delete font;
 		return false;
 	}
 	cachedFonts[file] = font;

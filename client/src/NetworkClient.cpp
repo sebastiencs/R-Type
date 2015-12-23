@@ -7,7 +7,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	: _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
 	_socketTCP(new PaquetTCP(SocketTCP::CLIENT))
 {
-	PaquetFirst *paquet = new PaquetFirst();
+	auto &&paquet = std::make_shared<PaquetFirst>();
 
 	// Creation du player
 	ListPlayers &list = ListPlayers::getInstance();
@@ -84,7 +84,7 @@ int NetworkClient::runWrite(int *cond)
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						const Paquet *paquet = PS.getToSendUDPPackage();
+						auto &paquet = PS.getToSendUDPPackage();
 						if (paquet != nullptr) {
 //							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
@@ -94,7 +94,7 @@ int NetworkClient::runWrite(int *cond)
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						const Paquet *paquet = PS.getToSendTCPPackage();
+						auto &paquet = PS.getToSendTCPPackage();
 						if (paquet != nullptr) {
 //							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);

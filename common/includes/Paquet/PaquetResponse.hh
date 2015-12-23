@@ -39,4 +39,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetResponse &);
 
+using PaquetResponse_SharedPtr = std::shared_ptr<PaquetResponse>;
+
 #endif /* !PAQUETRESPONSE_H_ */

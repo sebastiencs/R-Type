@@ -42,4 +42,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetListParties &);
 
+using PaquetListParties_SharedPtr = std::shared_ptr<PaquetListParties>;
+
 #endif /* !PAQUETLISTPARTIES_H_ */

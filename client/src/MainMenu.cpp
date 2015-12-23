@@ -93,7 +93,7 @@ void MainMenu::draw()
 		creditsMenu->draw();
 
 	PackageStorage& PC = PackageStorage::getInstance();
-	const PaquetResponse *paquet = PC.getAnswersPackage();
+	auto &paquet = PC.getAnswersPackage();
 	if (paquet) {
 		if (paquet->getReturn() == 2) {
 			Packager::createFirstUDPPackage(paquet->getData());

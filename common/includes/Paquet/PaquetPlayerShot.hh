@@ -48,4 +48,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetPlayerShot &);
 
+using PaquetPlayerShot_SharedPtr = std::shared_ptr<PaquetPlayerShot>;
+
 #endif /* !PAQUETPLAYERSHOT_H_ */

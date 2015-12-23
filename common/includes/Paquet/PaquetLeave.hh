@@ -41,4 +41,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetLeave &);
 
+using PaquetLeave_SharedPtr = std::shared_ptr<PaquetLeave>;
+
 #endif /* !PAQUETLEAVE_H_ */

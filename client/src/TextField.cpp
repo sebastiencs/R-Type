@@ -10,14 +10,12 @@ TextField::TextField(const std::string & _text, const Transformation & t, uint16
 
 	size = _size;
 	font = _font;
-	text = new Text(_text, _font, _size, t, std::move(_eng), color);
+	text = std::make_unique<Text>(_text, _font, _size, t, std::move(_eng), color);
 	_transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }
 
 TextField::~TextField()
 {
-	if (text)
-		delete text;
 }
 
 Color & TextField::getColor()

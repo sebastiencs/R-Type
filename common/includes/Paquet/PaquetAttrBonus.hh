@@ -48,4 +48,6 @@ private:
 
 std::ostream	&operator<<(std::ostream &, PaquetAttrBonus &);
 
+using PaquetAttrBonus_SharedPtr = std::shared_ptr<PaquetAttrBonus>;
+
 #endif /* !PAQUETATTRBONUS_HH_ */
