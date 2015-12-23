@@ -18,7 +18,7 @@ public:
 
 private:
 	IGraphicEngine_SharedPtr engine;
-	std::list<TextField *> authors;
+	std::list<TextField_SharedPtr> authors;
 };
 
 #endif /* !CREDITS_HH */

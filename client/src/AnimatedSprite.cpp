@@ -62,7 +62,7 @@ void AnimatedSprite::setEngine(IGraphicEngine * engine)
 	if ((this->engine = dynamic_cast<GraphicEngine*>(engine))) {
 		sprite = sf::Sprite(this->engine->loadTexture(img), _subRect);
 		transform(_transformation, color);
-		_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+		_transformation.setBounds(static_cast<uint16_t>(sprite.getGlobalBounds().width), static_cast<uint16_t>(sprite.getGlobalBounds().height));
 	}
 	else
 		throw std::runtime_error("Sprite: wrong GraphicEngine");

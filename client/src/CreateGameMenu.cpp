@@ -25,7 +25,7 @@ CreateGameMenu::CreateGameMenu(IGraphicEngine_SharedPtr eng, OnlineMenu *_superv
 	back = std::make_shared<Button>("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 
 	Transformation t2(300, 330);
-	t2.setScale((float)1.3, (float)4.5);
+	t2.setScale(1.3f, 4.5f);
 	engine->drawImage("backgroundButton.png", t2);
 	sprite = std::make_shared<Sprite>("backgroundButton.png", t2, std::move(engine), Color::None);
 }
