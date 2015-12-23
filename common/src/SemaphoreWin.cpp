@@ -38,7 +38,6 @@ bool	SemaphoreWin::wait()
 {
 	//WaitForSingleObject//WaitForMultipleObjects
 	if (WaitForSingleObject(_sem, INFINITE) == WAIT_FAILED) {
-		DEBUG_MSG("WaitForSingleObject Error: " << GetLastError());
 		return (false);
 	}
 	return (true);
@@ -47,7 +46,6 @@ bool	SemaphoreWin::wait()
 bool	SemaphoreWin::tryWait()
 {
 	if ((WaitForSingleObject(_sem, 1)) == WAIT_TIMEOUT) {
-		DEBUG_MSG("WaitForSingleObject Error: " << GetLastError());
 		return (true);
 	}
 	return (true);
