@@ -21,15 +21,16 @@
 
 Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
-	_audio(SystemAudio::getInstance()),
-	_LP(ListPlayers::getInstance()),
-	_nickname(speudo),
-	_images(images),
-	_timer(new Timer()),
-	_width(width),
-	_height(height),
-	_packager(packager),
-	_shotCooldown(new Timer())
+	  _audio(SystemAudio::getInstance()),
+	  _LP(ListPlayers::getInstance()),
+	  _nickname(speudo),
+	  _images(images),
+	  _timer(new Timer()),
+	  _width(width),
+	  _height(height),
+	  _packager(packager),
+	  _shotCooldown(new Timer()),
+	  _interval_shot(200)
 {
 	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
@@ -60,6 +61,7 @@ void	Game::handlingNetwork()
 	auto &&bonusmalus = _PS.getBonusMalusPackage();
 	auto &&life = _PS.getLifePackage();
 	auto &&death = _PS.getDeathPackage();
+	auto &&attrbonus = _PS.getAttrBonusPackage();
 
 	Player_SharedPtr player;
 	Enemy_SharedPtr enem;
@@ -132,6 +134,27 @@ void	Game::handlingNetwork()
 			_LE.deleteEnemy(enem.get()->getID());
 		}
 		_PS.deleteDeathPackage();
+	}
+
+	if (attrbonus != nullptr) {
+
+	  uint8_t type = attrbonus->getBonusType();
+
+	  if (type == BonusMalus::LIFE) {
+	    player = _LP.getPlayer(attrbonus->getID());
+	    if (player) {
+	      player->setLife(100);
+	    }
+	  }
+	  else if (type == BonusMalus::INTERVAL_SHOT) {
+	    _interval_shot /= 2;
+
+	    ITimer_SharedPtr timer = std::make_shared<Timer>();
+	    _bonusState.push_back(std::make_shared<BonusState>(type, timer, attrbonus->getTime()));
+	    timer->start();
+
+	  }
+	  _PS.deleteAttrBonusPackage();
 	}
 
 	if (leave != nullptr) {
@@ -208,7 +231,7 @@ void	Game::updateGraphic()
 	  drawImage(bonusMalus);
 	}
 
-	_BM.remove_if([] (auto &b) { return (b->getX() > 2000); });
+	_BM.remove_if([this] (auto &b) { return (this->remove_bonus(b)); });
 
 	if (!_deadPlayersName.empty()) {	// List of dead players
 		int32_t y = 15;
@@ -266,7 +289,7 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 			}
 			break;
 		case UsableKeys::SPACE:
-			if (_shotCooldown->ms() > SHOT_COOLDOWN) {
+			if (_shotCooldown->ms() > _interval_shot) {
 				SystemAudio::getInstance().playSound(ISystemAudio::SIMPLE_SHOT);
 				_shotCooldown->reset();
 				bullet = true;
@@ -314,8 +337,26 @@ int	Game::AmIDead()
 	return (0);
 }
 
+void	Game::removeDeadBonus()
+{
+  _bonusState.for_each([this] (auto &bonus) {
+
+      if (bonus->timer->ms() >= bonus->time) {
+
+	bonus->expired = 1;
+
+	if (bonus->type == BonusMalus::INTERVAL_SHOT) {
+	  _interval_shot *= 2;
+	}
+      }
+    });
+
+  _bonusState.remove_if([] (auto &bonus) { return (bonus->expired == 1); });
+}
+
 int	Game::run()
 {
+	removeDeadBonus();
 	fixWalkingDead();
 	handlingNetwork();
 

@@ -25,13 +25,16 @@ public:
   template <typename T>
   PaquetAttrBonus(const T &p) : _id(Paquet::ATTR_BONUS) {
     _pID = p->getID();
-    _time = p->getTime();
+    _type = 0;
+    _time = 0;
     createPaquet();
   }
 
   void		setID(const uint8_t id);
+  void		setBonusType(const uint8_t type);
   void		setTime(const uint16_t time);
   uint8_t	getID() const;
+  uint8_t	getBonusType() const;
   uint16_t	getTime() const;
   void		createPaquet();
   void		parsePaquet();
@@ -39,6 +42,7 @@ public:
 private:
   uint8_t	_id;
   uint8_t	_pID;
+  uint8_t	_type;
   uint16_t	_time;
 };
 

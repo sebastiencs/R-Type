@@ -115,6 +115,12 @@ const PaquetDeath * PackageStorage::getDeathPackage() const {
 	return death.empty() ? nullptr : death.front();
 }
 
+const PaquetAttrBonus * PackageStorage::getAttrBonusPackage() const {
+	if (!attrbonus.empty())
+		DEBUG_MSG(*attrbonus.front());
+	return attrbonus.empty() ? nullptr : attrbonus.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet_SharedPtr package) {
 	received.push_back(package);
 	_semIn->post();
@@ -200,6 +206,11 @@ void PackageStorage::storeLifePackage(PaquetLife * package)
 void PackageStorage::storeDeathPackage(PaquetDeath * package)
 {
 	death.push_back(package);
+}
+
+void PackageStorage::storeAttrBonusPackage(PaquetAttrBonus * package)
+{
+	attrbonus.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -337,6 +348,14 @@ void PackageStorage::deleteDeathPackage()
   if (!death.empty()) {
     delete death.front();
     death.erase(death.begin());
+  }
+}
+
+void PackageStorage::deleteAttrBonusPackage()
+{
+  if (!attrbonus.empty()) {
+    delete attrbonus.front();
+    attrbonus.erase(attrbonus.begin());
   }
 }
 

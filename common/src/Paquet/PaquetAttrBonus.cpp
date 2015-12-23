@@ -32,6 +32,11 @@ void		PaquetAttrBonus::setID(const uint8_t id)
   _pID = id;
 }
 
+void		PaquetAttrBonus::setBonusType(const uint8_t type)
+{
+  _type = type;
+}
+
 void		PaquetAttrBonus::setTime(const uint16_t time)
 {
   _time = time;
@@ -40,6 +45,11 @@ void		PaquetAttrBonus::setTime(const uint16_t time)
 uint8_t		PaquetAttrBonus::getID() const
 {
   return _pID;
+}
+
+uint8_t		PaquetAttrBonus::getBonusType() const
+{
+  return _type;
 }
 
 uint16_t	PaquetAttrBonus::getTime() const
@@ -53,6 +63,7 @@ void		PaquetAttrBonus::parsePaquet()
 
   _id = readData<uint8_t>(ptr);
   _pID = readData<uint8_t>(ptr);
+  _type = readData<uint8_t>(ptr);
   _time = readData<uint16_t>(ptr);
 }
 
@@ -62,6 +73,7 @@ void		PaquetAttrBonus::createPaquet()
 
   writeData<uint8_t>(ptr, &_id);
   writeData<uint8_t>(ptr, &_pID);
+  writeData<uint8_t>(ptr, &_type);
   writeData<uint16_t>(ptr, &_time);
 }
 
@@ -70,6 +82,7 @@ std::ostream	&operator<<(std::ostream &os, PaquetAttrBonus &p)
   p.parsePaquet();
   os << "PaquetAttrBonus = "
      << " { ID : " << (int)p.getID()
+     << ", Type : " << (int)p.getBonusType()
      << ", Time : " << (int)p.getTime()
      << " };";
   return (os);

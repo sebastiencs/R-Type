@@ -219,11 +219,35 @@ void			Party::run()
 	bonus->getX() -= (uint16_t)(bonus->getSpeed() * _timerBullet->secFloat());
 
 	if (Physics::isContact(Physics::LOCK, bonus, _players)) {
-	  std::cout << "Contact WITH BONUS" << std::endl;
+
+	  uint8_t id = Physics::idContact;
+
+	  auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
+
+	  if (player) {
+	    PaquetAttrBonus paquet(player);
+
+	    if (bonus->getType() == BonusMalus::INTERVAL_SHOT) {
+	      paquet.setBonusType(BonusMalus::INTERVAL_SHOT);
+	      paquet.setTime(5 * 1000);
+	      paquet.createPaquet();
+	    }
+	    else if (bonus->getType() == BonusMalus::LIFE) {
+	      paquet.setBonusType(BonusMalus::LIFE);
+	      player->setLife(100);
+	    }
+
+	    std::cout << paquet << std::endl;
+
+	    this->write(paquet, player->addr());
+	  }
+
+	  bonus->setID(0xFF);
 	}
 
       });
 
+    _bonusmalus.remove_if([] (auto &b) { return (b->getID() == 0xFF); });
     _enemies.remove_if([] (auto &e) { return (e->getID() == 0xFF); });
 
     _timerBullet->reset();

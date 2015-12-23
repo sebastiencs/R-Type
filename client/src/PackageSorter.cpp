@@ -79,6 +79,11 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().storeDeathPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
+	_tab[18] = [this](Paquet *paquet) {
+		PaquetAttrBonus *store = new PaquetAttrBonus(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeAttrBonusPackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
 	_tab[0xFF] = [this](Paquet *paquet) {
 		PaquetResponse *store = new PaquetResponse(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeAnswersPackage(store);
