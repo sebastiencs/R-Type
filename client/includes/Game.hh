@@ -16,6 +16,7 @@
 # include "ListEnemies.hh"
 # include "Physics.hh"
 # include "BonusMalus.hh"
+# include "SystemAudio.hh"
 
 class PackageStorage;
 class ISystemAudio;

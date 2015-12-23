@@ -101,7 +101,7 @@ void ParserIni::setText(const std::string & categorie, const std::string& variab
 			if (line.size() > variable.size() + 1 && _file.is_open())
 			{
 				std::cout << _file.tellp() << std::endl;
-				_file.seekp((_file.tellp().seekpos() - line.size()), std::ios::beg);
+				// _file.seekp((_file.tellp().seekpos() - line.size()), std::ios::beg);
 				std::string tmp = (variable + '=' + value);
 				_file.write(tmp.c_str(), tmp.size());
 			}
