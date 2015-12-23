@@ -38,6 +38,11 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 	enemyTypeToSpriteString[Enemy::MID_BOSS] = "enemy2.png"; // mid boss
 	enemyTypeToSpriteString[Enemy::BOSS] = "enemy3.png"; // boss
 
+	bonusTypeToSpriteString[BonusMalus::LIFE] = "life-bonus.png";
+	bonusTypeToSpriteString[BonusMalus::INTERVAL_SHOT] = "shot-bonus.png";
+	bonusTypeToSpriteString[BonusMalus::DOUBLE_SHOT] = "shot-bonus.png";
+	bonusTypeToSpriteString[BonusMalus::TRIPLE_SHOT] = "shot-bonus.png";
+
 	DEBUG_MSG("Game created");
 	(void)_height;
 	_audio.stopMusic();
@@ -267,8 +272,7 @@ void	Game::updateGraphic()
 
 		bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 		Transformation t(bm->getX(), bm->getY());
-		t.setScale(0.5f, 0.5f);
-		Sprite* bonusMalus = new Sprite("bonus.png", t);
+		Sprite* bonusMalus = new Sprite(bonusTypeToSpriteString[bm->getType()], t);
 		drawImage(bonusMalus);
 	}
 

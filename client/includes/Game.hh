@@ -54,6 +54,7 @@ private:
 	std::list<std::string> _deadPlayersName;
 	std::map<std::string, Timer* > _deadPlayersTimer;
 	std::map<uint8_t, std::string> enemyTypeToSpriteString;
+	std::map<uint8_t, std::string> bonusTypeToSpriteString;
 	long _interval_shot;
 	ListSecure<BonusState_SharedPtr> _bonusState;
 	int _nbShots;
