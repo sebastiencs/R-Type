@@ -1,6 +1,7 @@
 #ifndef SPRITE_HH_
 # define SPRITE_HH_
 
+# include <memory>
 # include <SFML/Graphics/Sprite.hpp>
 # include "GraphicEngine.hh"
 # include "Drawable.hpp"

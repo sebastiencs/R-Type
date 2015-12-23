@@ -19,17 +19,17 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager)
+Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager)
 	: _PS(PackageStorage::getInstance()),
 		_audio(SystemAudio::getInstance()),
 		_LP(ListPlayers::getInstance()),
 		_nickname(speudo),
 		_images(images),
-		_timer(new Timer()),
+		_timer(std::make_unique<Timer>()),
 		_width(width),
 		_height(height),
-		_packager(packager),
-		_shotCooldown(new Timer()),
+		_packager(std::move(packager)),
+		_shotCooldown(std::make_unique<Timer>()),
 		_interval_shot(200),
 		_nbShots(1)
 {
@@ -47,9 +47,6 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 
 Game::~Game()
 {
-	delete _timer;
-	if (_shotCooldown)
-		delete _shotCooldown;
 	DEBUG_MSG("Game deleted");
 }
 

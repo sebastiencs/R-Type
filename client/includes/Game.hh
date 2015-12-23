@@ -46,11 +46,11 @@ private:
 	ListSecure<Text* > &_nickname;
 	ListSecure<Sprite* > &_images;
 	IMutex_SharedPtr _mutex;
-	ITimer		*_timer;
+	ITimer_UniquePtr	_timer;
 	int			_width;
 	int			_height;
-	Packager* _packager;
-	ITimer* _shotCooldown;
+	Packager_SharedPtr _packager;
+	ITimer_UniquePtr _shotCooldown;
 	std::list<std::string> _deadPlayersName;
 	std::map<std::string, Timer* > _deadPlayersTimer;
 	std::map<uint8_t, std::string> enemyTypeToSpriteString;
@@ -59,7 +59,7 @@ private:
 	int _nbShots;
 
 public:
-	Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);
+	Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager);
 	virtual ~Game();
 
 	int	run();
