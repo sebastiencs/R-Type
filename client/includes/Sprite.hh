@@ -1,6 +1,7 @@
 #ifndef SPRITE_HH_
 # define SPRITE_HH_
 
+# include <memory>
 # include <SFML/Graphics/Sprite.hpp>
 # include "GraphicEngine.hh"
 # include "Drawable.hpp"
@@ -34,4 +35,7 @@ protected:
 	GraphicEngine* engine;
 	Color color;
 };
+
+typedef std::shared_ptr<Sprite>	Sprite_SharedPtr;
+
 #endif /* !SPRITE_HH_ */

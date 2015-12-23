@@ -18,8 +18,8 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 	tBg1.setPosition(xBg1, 0);
 	xBg2 = 1920;
 	tBg2.setPosition(xBg2, 0);
-	bg1 = new Sprite("ingamebg.png", tBg1, graphicEngine);
-	bg2 = new Sprite("ingamebg.png", tBg2, graphicEngine);
+	bg1 = std::make_shared<Sprite>("ingamebg.png", tBg1, graphicEngine);
+	bg2 = std::make_shared<Sprite>("ingamebg.png", tBg2, graphicEngine);
 	bg1->setId("bg1");
 	bg2->setId("bg2");
 
@@ -161,7 +161,7 @@ void DisplayUpdater::game()
 				threadGame->close();
 				graphicEngine->setUsableKeyPressedCallback(nullptr);
 				// delete _game;
-				// _game = nullptr;
+				_game = nullptr;
 				graphicEngine->closeWindow();
 			}
 		}

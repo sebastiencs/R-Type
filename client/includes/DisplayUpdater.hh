@@ -52,8 +52,8 @@ private:
 
 	int32_t xBg1;
 	int32_t xBg2;
-	Sprite *bg1;
-	Sprite *bg2;
+	Sprite_SharedPtr bg1;
+	Sprit_SharedPtr bg2;
 	Transformation tBg1;
 	Transformation tBg2;
 };
