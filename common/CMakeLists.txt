@@ -23,6 +23,7 @@ file (GLOB
   src/Obstacle.cpp
   src/BonusMalus.cpp
   src/TaskScheduler.cpp
+  src/ParserIni.cpp
   )
 
 file (GLOB
@@ -48,6 +49,7 @@ file (GLOB
   includes/QueueSecure.hh
   includes/Disconnected.hh
   includes/TaskScheduler.hh
+  includes/ParserIni.hh
   )
 
 file(GLOB

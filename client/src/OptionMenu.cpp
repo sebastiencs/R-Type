@@ -10,6 +10,11 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 	engine = eng;
 	Transformation t(250, 300);
 	VBox = new Box(Orientation::vertical, Transformation(200, 500), "commandBox");
+//	parser = new ParserIni("conf.ini");
+//	DEBUG_MSG(parser->getValue("tamere", "name"));
+//	parser->setValue("tamere", "name", 42);
+//	parser->setText("tamere", "name", "Alex");
+//	DEBUG_MSG(parser->getText("tamere", "name"));
 	VBox->setSpacing(25);
 	inputMode = "ZQSD";
 	menu();

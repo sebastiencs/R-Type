@@ -8,6 +8,7 @@
 # include "LobbyMenu.hh"
 # include "IOEvent.hh"
 # include "Box.hh"
+# include "ParserIni.hh"
 
 class OptionMenu {
 public:
@@ -29,6 +30,7 @@ public:
 private:
 	IGraphicEngine *engine;
 	Box* VBox;
+	ParserIni* parser;
 
 	std::string inputMode;
 };
