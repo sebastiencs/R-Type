@@ -67,9 +67,6 @@ void	*jump(void *arg)
   Callback_t f = threadC->getCallback();
   const void *param = threadC->getParam();
 
-  pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, 0);
-  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, 0);
-
   void *value;
 
   try {
@@ -107,6 +104,7 @@ bool	ThreadUnix::close()
 bool	ThreadUnix::join()
 {
   if (_running) {
+
     if (pthread_join(_thread, 0)) {
       DEBUG_MSG("pthread join failed");
       return (false);

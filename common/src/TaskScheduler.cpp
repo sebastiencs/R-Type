@@ -28,8 +28,8 @@ void TaskScheduler::loop()
 void TaskScheduler::stop()
 {
 	running = false;
-	thread->close();
-	delete thread;
+	// thread->close(); // Can't close our own thread -> segfault
+	// delete thread;
 	thread = nullptr;
 }
 

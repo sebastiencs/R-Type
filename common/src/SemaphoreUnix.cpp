@@ -43,7 +43,6 @@ bool	SemaphoreUnix::wait()
 bool	SemaphoreUnix::tryWait()
 {
   if (sem_trywait(&_sem)) {
-    DEBUG_MSG("sem_trywait() failed");
     return (false);
   }
   return (true);

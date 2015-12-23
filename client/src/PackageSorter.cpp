@@ -13,6 +13,7 @@
 #include "Debug.hh"
 
 PackageSorter::PackageSorter()
+  : cond (1)
 {
 	_tab[0] = [this](Paquet *paquet UNUSED) {};
 	_tab[1] = [this](Paquet *paquet UNUSED) {};
@@ -90,19 +91,22 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
 
-	Callback_t fptr = [this](void *) {this->sortPaquet(); return nullptr; };
-	thread = new Thread(fptr, nullptr);
+	Callback_t fptr = [this](void *c) {this->sortPaquet(c); return nullptr; };
+	thread = new Thread(fptr, &cond);
 }
 
 PackageSorter::~PackageSorter()
 {
-	thread->close();
+	cond = 0;
+	thread->join();
 	delete thread;
 }
 
-void PackageSorter::sortPaquet()
+void PackageSorter::sortPaquet(void *c)
 {
-  while (1)
+  int *condition = reinterpret_cast<int *>(c);
+
+  while (*condition)
   {
     PackageStorage::getInstance().waitForReceivedPackage();
 

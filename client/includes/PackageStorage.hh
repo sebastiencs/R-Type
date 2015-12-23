@@ -103,7 +103,7 @@ public:
 
 	void waitForReceivedPackage();
 	bool isThereReceivedPackage();
-	void waitForPackage();
+	bool waitForPackage();
 };
 
 #endif

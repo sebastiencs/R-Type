@@ -1,5 +1,6 @@
 #include "PackageStorage.hh"
 #include "Debug.hh"
+#include "IOEvent.hh"
 
 PackageStorage & PackageStorage::getInstance()
 {
@@ -366,10 +367,22 @@ bool PackageStorage::isThereReceivedPackage()
 
 void PackageStorage::waitForReceivedPackage()
 {
-  _semIn->wait();
+  if (_semIn->tryWait() == false) {
+    IOEvent::wait(5);
+  }
 }
 
-void PackageStorage::waitForPackage()
+bool PackageStorage::waitForPackage()
 {
-  _semOut->wait();
+  if (_semOut->tryWait() == false) {
+    IOEvent::wait(5);
+    if (_semOut->tryWait() == true) {
+      return (true);
+    }
+    else {
+      return (false);
+    }
+  }
+  return (true);
+  // _semOut->wait();
 }

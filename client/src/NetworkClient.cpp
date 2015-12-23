@@ -48,8 +48,10 @@ NetworkClient::~NetworkClient()
   	condR = 0;
   	condW = 0;
 	if (_isConnect) {
+		threadWrite->join();
 		delete threadWrite;
 		DEBUG_MSG("ThreadWrite deleted");
+		threadRead->join();
 		delete threadRead;
 		DEBUG_MSG("ThreadRead deleted");
 	}
@@ -71,7 +73,9 @@ int NetworkClient::runWrite(int *cond)
 
 	while (*cond)
 	{
-		PS.waitForPackage();
+		if (PS.waitForPackage() == false) {
+			continue ;
+		}
 		if (IOEvent::poll(fds, IOEvent::POLL_WAIT) > 0)
 		{
 			for (auto &fd : fds)
