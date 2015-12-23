@@ -56,19 +56,24 @@ Enemy::Enemy(const uint8_t id, const int life, const uint8_t type, const uint16_
 
 void			Enemy::setAttributes()
 {
-  if (_type == 0) {
+  if (_type == Enemy::NORMAL) {
     _sizeX = 80;
     _sizeY = 55;
     _intervalShot = 1000;
   }
-  else if (_type == 1) {
-    _sizeX = 120;
-    _sizeY = 71;
+  else if (_type == Enemy::MID_NORMAL) {
+    _sizeX = 80;
+    _sizeY = 79;
+    _intervalShot = 900;
+  }
+  else if (_type == Enemy::MID_BOSS) {
+    _sizeX = 180;
+    _sizeY = 177;
     _intervalShot = 800;
   }
-  else if (_type == 2) {
-    _sizeX = 220;
-    _sizeY = 167;
+  else if (_type == Enemy::BOSS) {
+    _sizeX = 280;
+    _sizeY = 190;
     _intervalShot = 600;
   }
 }

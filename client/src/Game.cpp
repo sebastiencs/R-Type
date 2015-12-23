@@ -34,9 +34,9 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 		_nbShots(1)
 {
 	enemyTypeToSpriteString[Enemy::NORMAL] = "enemy0.png"; // normal
-	enemyTypeToSpriteString[Enemy::MID_NORMAL] = "enemy0.png"; // mid normal
-	enemyTypeToSpriteString[Enemy::MID_BOSS] = "enemy1.png"; // mid boss
-	enemyTypeToSpriteString[Enemy::BOSS] = "enemy2.png"; // boss
+	enemyTypeToSpriteString[Enemy::MID_NORMAL] = "enemy1.png"; // mid normal
+	enemyTypeToSpriteString[Enemy::MID_BOSS] = "enemy2.png"; // mid boss
+	enemyTypeToSpriteString[Enemy::BOSS] = "enemy3.png"; // boss
 
 	DEBUG_MSG("Game created");
 	(void)_height;
