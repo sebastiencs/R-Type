@@ -66,4 +66,6 @@ private:
   int		condW;
 };
 
+using NetworkClient_SharedPtr = std::shared_ptr<NetworkClient>;
+
 #endif /* !NETWORKCLIENT_H_ */

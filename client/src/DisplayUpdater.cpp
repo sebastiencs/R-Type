@@ -3,15 +3,14 @@
 #include "Game.hh"
 #include "Locker.hh"
 
-DisplayUpdater::DisplayUpdater(Packager * _packager, NetworkClient *net) : inGame(false), cond(1), dead(false)
+DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_SharedPtr _net)
+  : packager(std::move(_packager)), net(std::move(_net)), inGame(false), cond(1), dead(false)
 {
 	threadGame = nullptr;
 	_game = nullptr;
 	deathTimer = nullptr;
-	packager = _packager;
 	graphicEngine = new GraphicEngine();
 	mainmenu = new MainMenu(graphicEngine, net);
-	this->net = net;
 	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };
 	launchLoop = new TaskScheduler(fptr, 50);
 
@@ -46,11 +45,6 @@ DisplayUpdater::~DisplayUpdater()
 	}
 	if (deathTimer)
 		delete deathTimer;
-}
-
-const Packager * DisplayUpdater::getPackager()
-{
-	return packager;
 }
 
 IGraphicEngine * DisplayUpdater::getGraphicEngine()

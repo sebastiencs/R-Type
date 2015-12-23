@@ -22,12 +22,10 @@ class Game;
 
 class DisplayUpdater {
 public:
-	DisplayUpdater(Packager *_packager, NetworkClient *net);
+	DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_SharedPtr net);
 	~DisplayUpdater();
 
 	IGraphicEngine *getGraphicEngine();
-
-	const Packager *getPackager();
 
 	void mainMenu();
 	void game();
@@ -35,8 +33,8 @@ public:
 
 private:
 	IGraphicEngine *graphicEngine;
-	NetworkClient *net;
-	Packager *packager;
+	Packager_SharedPtr packager;
+	NetworkClient_SharedPtr net;
 	MainMenu *mainmenu;
 	OnlineMenu *onlineMenu;
 	TaskScheduler *launchLoop;

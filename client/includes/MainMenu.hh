@@ -1,8 +1,7 @@
 #ifndef MAIN_MENU_HH_
 # define MAIN_MENU_HH_
 
-//# include "DisplayUpdater.hh"
-//# include "Box.hh"
+#include "NetworkClient.hh"
 #include <iostream>
 #include <list>
 
@@ -11,7 +10,6 @@ class OptionMenu;
 class Credits;
 class TextField;
 class IGraphicEngine;
-class NetworkClient;
 class Box;
 class Drawable;
 class Button;
@@ -19,7 +17,7 @@ class Button;
 class MainMenu
 {
 public:
-	MainMenu(IGraphicEngine *eng, NetworkClient *net);
+	MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr net);
 	~MainMenu();
 
 	void setDisplayOnline();
@@ -38,7 +36,7 @@ public:
 
 private:
 	IGraphicEngine *engine;
-	NetworkClient *net;
+	NetworkClient_SharedPtr net;
 	OnlineMenu *onlineMenu;
 	OptionMenu *optionMenu;
 	Credits *creditsMenu;

@@ -4,10 +4,10 @@
 #include "CheckBox.hh"
 #include "OptionMenu.hh"
 
-MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
+MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr _net)
+  : net(std::move(_net))
 {
 	engine = eng;
-	this->net = net;
 	currentPage = 0;
 	onlineMenu = new OnlineMenu(engine);
 	creditsMenu = new Credits(engine);

@@ -82,13 +82,11 @@ int		main(int argc, char **argv)
 	audio.playMusicRandom();
 
 	try {
-		Packager *packager = new Packager();
-		NetworkClient* network = new NetworkClient(addr, port);
+		Packager_SharedPtr packager = std::make_shared<Packager>();
+		NetworkClient_SharedPtr network = std::make_shared<NetworkClient>(addr, port);
 		PackageSorter sorter;
 		DisplayUpdater updater(packager, network);
 
-		delete packager;
-		delete network;
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
