@@ -3,7 +3,6 @@
 
 # include <iostream>
 # include <string>
-//# include "IGraphicEngine.hh"
 # include "TextField.hh"
 # include "Drawable.hpp"
 # include "ICallBack.hh"

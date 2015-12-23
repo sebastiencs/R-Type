@@ -15,7 +15,7 @@ class Button;
 using Button_SharedPtr = std::shared_ptr<Button>;
 using Box_SharedPtr = std::shared_ptr<Box>;
 
-class ScrollView : public Drawable, public ICallback
+class ScrollView : public Drawable, public ICallback, public std::enable_shared_from_this<ScrollView>
 {
 public:
 	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr engine);
