@@ -3,9 +3,9 @@
 #include "Timer.hh"
 #include "ListPlayers.hh"
 
-OnlineMenu::OnlineMenu(IGraphicEngine* eng)
+OnlineMenu::OnlineMenu(IGraphicEngine_SharedPtr eng)
+  : engine(std::move(eng))
 {
-	engine = eng;
 	Transformation t(350, 150);
 	t.setBounds(300, 250);
 	scrollView = new ScrollView(t, 9, engine);
@@ -19,7 +19,6 @@ OnlineMenu::OnlineMenu(IGraphicEngine* eng)
 
 OnlineMenu::~OnlineMenu()
 {
-	delete lobby;
 	if (scrollView)
 		delete(scrollView);
 
@@ -129,9 +128,9 @@ void OnlineMenu::onHover(uint32_t x, uint32_t y)
 void OnlineMenu::joinButton()
 {
 	PackageStorage &PS = PackageStorage::getInstance();
-	for (Drawable *c : scrollView->getListCell())
+	for (auto &c : scrollView->getListCell())
 		if (c->getId() == scrollView->getSelectCell()) {
-			Packager::createJoinPartyPackage(static_cast<Cell*>(c)->getNameParty());
+			Packager::createJoinPartyPackage(static_cast<Cell*>(c.get())->getNameParty());
 
 			const PaquetResponse *paquet = nullptr;
 			ITimer *t = new Timer();
@@ -171,7 +170,7 @@ void OnlineMenu::joinButton()
 				}
 				delete t;
 				/* ! */
-				lobby = new LobbyMenu(engine, this);
+				lobby = std::make_shared<LobbyMenu>(engine, this);
 				return;
 			}
 		}
@@ -188,8 +187,7 @@ void OnlineMenu::backButtonLobbyMenu()
 	ListPlayers &list = ListPlayers::getInstance();
 	Packager::createLeavePackage(list.getId());
 	list.clearList();
-	delete lobby;
-	lobby = nullptr;
+	lobby.reset();
 	inLobby = false;
 	createRequestPartiesPaquet();
 	DEBUG_MSG("You just left the lobby");
@@ -228,7 +226,7 @@ void OnlineMenu::onCreateGame()
 			delete threadReceivedParties;
 			threadReceivedParties = nullptr;
 		}
-		lobby = new LobbyMenu(engine, this);
+		lobby = std::make_shared<LobbyMenu>(engine, this);
 	}
 }
 
@@ -247,11 +245,11 @@ void OnlineMenu::menu()
 	onlineChoiseBox = new Box(Orientation::horizontal, transformation, "onlineBox");
 	onlineChoiseBox->setSpacing(25);
 	fptr = std::bind(&OnlineMenu::createRequestPartiesPaquet, this);
-	onlineChoiseBox->addDrawable(new Button("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
+	onlineChoiseBox->addDrawable(std::make_shared<Button>("Refresh", "refreshButton.png", transformation, Color::None, fptr, "Refresh", engine));
 
 	fptr = std::bind(&OnlineMenu::joinButton, this);
-	onlineChoiseBox->addDrawable(new Button("Join", "joinButton.png", transformation, Color::None, fptr, "Join", engine));
+	onlineChoiseBox->addDrawable(std::make_shared<Button>("Join", "joinButton.png", transformation, Color::None, fptr, "Join", engine));
 
 	fptr = std::bind(&OnlineMenu::createButton, this);
-	onlineChoiseBox->addDrawable(new Button("Info", "infoButton.png", transformation, Color::None, fptr, "Info", engine));
+	onlineChoiseBox->addDrawable(std::make_shared<Button>("Info", "infoButton.png", transformation, Color::None, fptr, "Info", engine));
 }

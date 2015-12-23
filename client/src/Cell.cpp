@@ -2,7 +2,7 @@
 #include "TextField.hh"
 #include "Debug.hh"
 
-Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine, ScrollView *_superView)
+Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine_SharedPtr &engine, ScrollView *_superView)
 {
 	_id = id;
 	_transformation = transformation;

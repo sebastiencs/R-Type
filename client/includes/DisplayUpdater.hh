@@ -25,18 +25,18 @@ public:
 	DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_SharedPtr net);
 	~DisplayUpdater();
 
-	IGraphicEngine *getGraphicEngine();
+	IGraphicEngine_SharedPtr getGraphicEngine();
 
 	void mainMenu();
 	void game();
 	void launchObserver();
 
 private:
-	IGraphicEngine *graphicEngine;
+	IGraphicEngine_SharedPtr graphicEngine;
 	Packager_SharedPtr packager;
 	NetworkClient_SharedPtr net;
-	MainMenu *mainmenu;
-	OnlineMenu *onlineMenu;
+	MainMenu_SharedPtr mainmenu;
+	OnlineMenu_SharedPtr onlineMenu;
 	TaskScheduler *launchLoop;
 	bool inGame;
 
@@ -50,8 +50,8 @@ private:
 
 	int32_t xBg1;
 	int32_t xBg2;
-	Sprite *bg1;
-	Sprite *bg2;
+	Sprite_SharedPtr bg1;
+	Sprite_SharedPtr bg2;
 	Transformation tBg1;
 	Transformation tBg2;
 };

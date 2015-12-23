@@ -4,14 +4,13 @@
 #include "CheckBox.hh"
 #include "OptionMenu.hh"
 
-MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr _net)
-  : net(std::move(_net))
+MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
+  : engine(std::move(eng)), net(std::move(_net))
 {
-	engine = eng;
 	currentPage = 0;
-	onlineMenu = new OnlineMenu(engine);
-	creditsMenu = new Credits(engine);
-	optionMenu = new OptionMenu(engine);
+	onlineMenu = std::make_shared<OnlineMenu>(engine);
+	creditsMenu = std::make_shared<Credits>(engine);
+	optionMenu = std::make_shared<OptionMenu>(engine);
 
 	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
@@ -22,16 +21,16 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr _net)
 
 	mainChoiceBox = new Box(Orientation::vertical, transformation, "mainBox");
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	onlineButton = new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
+	onlineButton = std::make_shared<Button>("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
 	mainChoiceBox->addDrawable(onlineButton);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
-	mainChoiceBox->addDrawable(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
-	mainChoiceBox->addDrawable(new Button("Options", "optionButton.png", transformation, Color::None, fptr, "Options", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Options", "optionButton.png", transformation, Color::None, fptr, "Options", engine));
 	fptr = std::bind(&MainMenu::setDisplayCredits, this);
-	mainChoiceBox->addDrawable(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
 	fptr = std::bind(&MainMenu::myexit, this);
-	mainChoiceBox->addDrawable(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 	elements.push_back(mainChoiceBox);
 
 	transformation.setPosition(800, 75);
@@ -50,16 +49,12 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr _net)
 
 MainMenu::~MainMenu() {
 
-	delete onlineMenu;
-
 	for (Drawable* b : elements)
 		if (b)
 			delete b;
 	elements.clear();
 	if (rTypeLabel)
 		delete rTypeLabel;
-
-	delete optionMenu;
 }
 
 void MainMenu::changedMenu()

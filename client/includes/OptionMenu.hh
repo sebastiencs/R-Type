@@ -12,7 +12,7 @@
 
 class OptionMenu {
 public:
-	OptionMenu(IGraphicEngine* eng);
+	OptionMenu(IGraphicEngine_SharedPtr eng);
 	~OptionMenu();
 
 	void menu();
@@ -21,15 +21,15 @@ public:
 	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 
-	// CheckBox	
+	// CheckBox
 	void MuteSound();
 
 	//Button
 	void ChangeKeys();
 
 private:
-	IGraphicEngine *engine;
-	Box* VBox;
+	IGraphicEngine_SharedPtr engine;
+	Box_SharedPtr VBox;
 	ParserIni* parser;
 
 	std::string inputMode;

@@ -70,4 +70,8 @@ public:
 	virtual void closeWindow() = 0;
 };
 
+# include <memory>
+
+using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
+
 #endif /* !IGRAPHICENGINE */

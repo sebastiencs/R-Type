@@ -3,12 +3,12 @@
 #include "Button.hh"
 #include "Box.hh"
 
-ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine)
+ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr eng)
+  : engine(std::move(eng))
 {
 	callback fptr;
 
 	this->nbrDiplayCell = nbrDiplayCell;
-	this->engine = engine;
 	this->_transformation = transformation;
 	this->_id = "ScrollView";
 	this->_visible = true;
@@ -34,7 +34,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, this));
+	boxCells->addDrawable(std::make_shared<Cell>(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, this));
 	++nbrCell;
 }
 
@@ -57,7 +57,7 @@ void ScrollView::decrBase()
 		--base;
 }
 
-const std::list<Drawable*>& ScrollView::getListCell() const
+const std::list<Drawable_SharedPtr>& ScrollView::getListCell() const
 {
 	return boxCells->getElements();
 }
@@ -77,7 +77,7 @@ void ScrollView::draw()
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
 			c->setVisible(true);
 			c->draw();
@@ -93,9 +93,9 @@ bool ScrollView::onAction(uint32_t x, uint32_t y)
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell))
-			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c.get()))
 				if (tmp->onAction(x, y)) {
 					return true;
 				}
@@ -113,9 +113,9 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
-			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c.get()))
 				tmp->onHover(x, y);
 		}
 		++i;

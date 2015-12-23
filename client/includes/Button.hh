@@ -8,10 +8,12 @@
 class GraphicEngine;
 class TextField;
 
+using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
+
 class Button : public Drawable, public ICallback
 {
 public:
-	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine* engine);
+	Button(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine_SharedPtr &engine);
 	virtual ~Button();
 
 	// ICallback
@@ -32,7 +34,7 @@ public:
 	void setEnabled(bool enabled);
 
 private:
-	IGraphicEngine* _engine;
+	IGraphicEngine_SharedPtr &_engine;
 	Color _color;
 	callback _fptr;
 	Sprite* _sprite;
@@ -42,5 +44,7 @@ private:
   	bool _enabled;
 
 };
+
+using Button_SharedPtr = std::shared_ptr<Button>;
 
 #endif /* !BUTTON_H_ */

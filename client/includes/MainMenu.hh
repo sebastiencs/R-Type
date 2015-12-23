@@ -14,10 +14,16 @@ class Box;
 class Drawable;
 class Button;
 
+using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
+using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
+using OptionMenu_SharedPtr = std::shared_ptr<OptionMenu>;
+using Credits_SharedPtr = std::shared_ptr<Credits>;
+using Button_SharedPtr = std::shared_ptr<Button>;
+
 class MainMenu
 {
 public:
-	MainMenu(IGraphicEngine *eng, NetworkClient_SharedPtr net);
+	MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr net);
 	~MainMenu();
 
 	void setDisplayOnline();
@@ -35,17 +41,19 @@ public:
 	void onHover(uint32_t x, uint32_t y);
 
 private:
-	IGraphicEngine *engine;
+	IGraphicEngine_SharedPtr engine;
 	NetworkClient_SharedPtr net;
-	OnlineMenu *onlineMenu;
-	OptionMenu *optionMenu;
-	Credits *creditsMenu;
-	Button* onlineButton;
+	OnlineMenu_SharedPtr onlineMenu;
+	OptionMenu_SharedPtr optionMenu;
+	Credits_SharedPtr creditsMenu;
+	Button_SharedPtr onlineButton;
 
 	Box* mainChoiceBox;
 	TextField *rTypeLabel;
 	std::list<Drawable* > elements;
 	int currentPage;
 };
+
+using MainMenu_SharedPtr = std::shared_ptr<MainMenu>;
 
 #endif /* !MAIN_MENU_HH_ */

@@ -1,15 +1,14 @@
 #include "Sprite.hh"
 
-Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine * engine, const Color& color) : color(color)
+Sprite::Sprite(const std::string & img, const Transformation & t, IGraphicEngine_SharedPtr &&engine, const Color& color) : color(color)
 {
 	_transformation = t;
 	_id = img;
 	_visible = true;
 
 	this->img = img;
-	this->engine = nullptr;
 	if (engine) {
-		this->engine = dynamic_cast<GraphicEngine*>(engine);
+		this->engine = dynamic_cast<GraphicEngine*>(engine.get());
 		if (!engine)
 			throw std::runtime_error("GraphicEngine not set");
 		sprite = sf::Sprite(this->engine->loadTexture(img));

@@ -1,15 +1,18 @@
 #ifndef LOBBY_HH_
 # define LOBBY_HH_
 
-# include "OnlineMenu.hh"
+// # include "OnlineMenu.hh"
 # include "Box.hh"
 # include "Sprite.hh"
 # include "Button.hh"
 # include "TextField.hh"
 
+class OnlineMenu;
+class IThread;
+
 class LobbyMenu {
 public:
-	LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview);
+	LobbyMenu(IGraphicEngine_SharedPtr engine, OnlineMenu *superview);
 	~LobbyMenu();
 
 	void createRequestListPlayersPaquet();
@@ -25,18 +28,20 @@ private:
 	void updatePlayerList();
 
 protected:
-	IGraphicEngine* engine;
+	IGraphicEngine_SharedPtr engine;
 	OnlineMenu *_superview;
 	IThread *threadReceivedListPlayers;
 	IThread *threadReceivedReadyPlayers;
-	Box* quadPlayerBox;
-	Box* left;
-	Box* commands;
-	Box* right;
-	Button* readyb;
-	Button* unReadyb;
+	Box_SharedPtr quadPlayerBox;
+	Box_SharedPtr left;
+	Box_SharedPtr commands;
+	Box_SharedPtr right;
+	Button_SharedPtr readyb;
+	Button_SharedPtr unReadyb;
 	bool playerListChanged;
 	int cond;
 };
+
+using LobbyMenu_SharedPtr = std::shared_ptr<LobbyMenu>;
 
 #endif /* !LOBBY_HH_ */

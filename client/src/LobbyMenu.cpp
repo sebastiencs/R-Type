@@ -1,31 +1,32 @@
 #include "LobbyMenu.hh"
 #include "ListPlayers.hh"
 #include "SystemAudio.hh"
+#include "OnlineMenu.hh"
 
-LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine), cond(1)
+LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu *superview) : engine(std::move(eng)), cond(1)
 {
 	_superview = superview;
 	right = nullptr;
 	threadReceivedListPlayers = nullptr;
 	playerListChanged = true;
 	Packager::createPlayerListPackage();
-	left = new Box(Orientation::vertical, Transformation(250, 200), "leftBox");
+	left = std::make_shared<Box>(Orientation::vertical, Transformation(250, 200), "leftBox");
 	left->setSpacing(80);
-	quadPlayerBox = new Box(Orientation::vertical, Transformation(0, 0), "quadPlayerBox");
+	quadPlayerBox = std::make_shared<Box>(Orientation::vertical, Transformation(0, 0), "quadPlayerBox");
 	quadPlayerBox->setSpacing(80);
 
 	createRequestListPlayersPaquet();
 
 	left->addDrawable(quadPlayerBox);
-	commands = new Box(Orientation::horizontal, Transformation(200, 500), "commandBox");
+	commands = std::make_shared<Box>(Orientation::horizontal, Transformation(200, 500), "commandBox");
 	commands->setSpacing(100);
 	callback fptr;
 	fptr = std::bind(&LobbyMenu::ready, this);
-	readyb = new Button("Ready", "readyButton.png", Transformation(0, 0), Color::None, fptr, "readyButton", engine);
-	unReadyb = new Button("Unready", "unreadyButton.png", Transformation(0, 0), Color::None, fptr, "unreadyButton", engine);
+	readyb = std::make_shared<Button>("Ready", "readyButton.png", Transformation(0, 0), Color::None, fptr, "readyButton", engine);
+	unReadyb = std::make_shared<Button>("Unready", "unreadyButton.png", Transformation(0, 0), Color::None, fptr, "unreadyButton", engine);
 
 	fptr = std::bind(&OnlineMenu::backButtonLobbyMenu, _superview);
-	commands->addDrawable(new Button("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
+	commands->addDrawable(std::make_shared<Button>("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
 }
@@ -37,10 +38,6 @@ LobbyMenu::~LobbyMenu()
 		threadReceivedListPlayers->join();
 		delete threadReceivedListPlayers;
 	}
-	if (left)
-		delete left;
-	if (right)
-		delete right;
 }
 
 void LobbyMenu::createRequestListPlayersPaquet()
@@ -134,17 +131,17 @@ void LobbyMenu::setPlayerListChanged(bool changed)
 void LobbyMenu::ready()
 {
 	ListPlayers &list = ListPlayers::getInstance();
-	Box* players = dynamic_cast<Box* >(left->getElement("quadPlayerBox"));
+	Box_SharedPtr players = std::dynamic_pointer_cast<Box>(left->getElement("quadPlayerBox"));
 	if (!players) {
 		DEBUG_MSG("Couldn't retreive QuadPlayerBox");
 		return;
 	}
-	Box* player = dynamic_cast<Box*>(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
+	Box_SharedPtr player = std::dynamic_pointer_cast<Box>(players->getElement("Player" + std::to_string(list.getId()) + "Box"));
 	if (!player) {
 		DEBUG_MSG("Couldn't retreive Player Box: \"" << "Player" << std::to_string(list.getId()) << "Box" << "\"");
 		return;
 	}
-	TextField* ready = dynamic_cast<TextField*>(player->getElement("Ready"));
+	TextField_SharedPtr ready = std::dynamic_pointer_cast<TextField>(player->getElement("Ready"));
 	if (!ready)
 		return;
 	if (ready->getText() == "Ready") {
@@ -175,10 +172,10 @@ void LobbyMenu::updatePlayerList()
 	for (auto &p : playerList.getListPlayers()) {
 		Transformation tr(0, 0);
 		tr.setScale(0.5f, 0.5f);
-		Sprite* playerVessel = new Sprite("vessel" + std::to_string(t) + ".png", tr, engine);
+		Sprite_SharedPtr playerVessel = std::make_shared<Sprite>("vessel" + std::to_string(t) + ".png", tr, std::move(engine));
 		tr.setScale(1.0f, 1.0f);
-		TextField* playerName = new TextField(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
-		TextField* playerLVL = new TextField("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
+		TextField_SharedPtr playerName = std::make_shared<TextField>(p->getName(), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
+		TextField_SharedPtr playerLVL = std::make_shared<TextField>("0", tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "LVL", engine);
 		if (p->getReady()) {
 			ready = "Ready";
 			cReady = Color::Green;
@@ -187,13 +184,13 @@ void LobbyMenu::updatePlayerList()
 			ready = "Unready";
 			cReady = Color::Red;
 		}
-		TextField* playerStatus = new TextField(ready, tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, cReady, "Ready", engine);
-		Box* box = new Box(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
+		TextField_SharedPtr playerStatus = std::make_shared<TextField>(ready, tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, cReady, "Ready", engine);
+		Box_SharedPtr box = std::make_shared<Box>(Orientation::horizontal, Transformation(200, 200), "Player" + std::to_string(p->getID()) + "Box");
 		box->setSpacing(50);
 		box->addDrawable(playerVessel);
 		box->addDrawable(playerName);
 #ifdef DEBUG
-		TextField* playerID = new TextField("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
+		TextField_SharedPtr playerID = std::make_shared<TextField>("ID: " + std::to_string(p->getID()), tr, DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, p->getName(), engine);
 		box->addDrawable(playerID);
 #endif // !DEBUG
 		box->addDrawable(playerLVL);
@@ -202,7 +199,7 @@ void LobbyMenu::updatePlayerList()
 		++t;
 	}
 	while (t < 4) {
-		TextField* empty = new TextField("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
+		TextField_SharedPtr empty = std::make_shared<TextField>("EMPTY", Transformation(0, 0), DEFAULT_FONT_SIZE + 10, DEFAULT_FONT, Color::White, "EMPTY", engine);
 		quadPlayerBox->addDrawable(empty);
 		++t;
 	}

@@ -1,9 +1,8 @@
 #include "Credits.hh"
 
-Credits::Credits(IGraphicEngine * engine)
+Credits::Credits(IGraphicEngine_SharedPtr eng)
+  : engine(std::move(eng))
 {
-	this->engine = engine;
-
 	authors.push_front(new TextField("Developpement :", Transformation(250, 300 + 35 * 0), 32, "Fipps.otf", Color::White, "DevTitle", engine));
 	authors.push_front(new TextField("", Transformation(250, 300 + 35 * 1), 32, "Fipps.otf", Color::White, "DevTitle", engine));
 	authors.push_front(new TextField("                Sebastien Chapuis", Transformation(250, 300 + 35 * 2), 32, "Fipps.otf", Color::White, "DChapuis", engine));

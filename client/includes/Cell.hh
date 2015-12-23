@@ -17,7 +17,7 @@ class Cell : public Drawable, public ICallback
 {
 public:
 	Cell(const std::string&  id, const Transformation& transformation,
-		const std::string& name, const int nbrPlayers, IGraphicEngine *engine,
+		const std::string& name, const int nbrPlayers, IGraphicEngine_SharedPtr &engine,
 		ScrollView *_superView);
 	virtual ~Cell();
 

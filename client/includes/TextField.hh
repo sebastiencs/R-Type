@@ -12,7 +12,7 @@ class Text;
 
 class TextField : public Drawable {
 public:
-	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine *_engine);
+	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine_SharedPtr &_engine);
 	virtual ~TextField();
 
 	//Drawable
@@ -25,12 +25,14 @@ public:
 	void setText(const std::string& txt);
 
 private:
-	IGraphicEngine *engine;
+	IGraphicEngine_SharedPtr &engine;
 	Text *text;
 	Color color;
 	uint16_t size;
 
 	std::string font;
 };
+
+using TextField_SharedPtr = std::shared_ptr<TextField>;
 
 #endif /* !TEXTFIELD_HH */

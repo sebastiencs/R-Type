@@ -9,8 +9,8 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 	threadGame = nullptr;
 	_game = nullptr;
 	deathTimer = nullptr;
-	graphicEngine = new GraphicEngine();
-	mainmenu = new MainMenu(graphicEngine, net);
+	graphicEngine = std::make_shared<GraphicEngine>();
+	mainmenu = std::make_shared<MainMenu>(graphicEngine, net);
 	Callback_t fptr = [this](void *) {this->launchObserver(); return nullptr; };
 	launchLoop = new TaskScheduler(fptr, 50);
 
@@ -18,8 +18,8 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 	tBg1.setPosition(xBg1, 0);
 	xBg2 = 1920;
 	tBg2.setPosition(xBg2, 0);
-	bg1 = new Sprite("ingamebg.png", tBg1, graphicEngine);
-	bg2 = new Sprite("ingamebg.png", tBg2, graphicEngine);
+	bg1 = std::make_shared<Sprite>("ingamebg.png", tBg1, std::move(graphicEngine));
+	bg2 = std::make_shared<Sprite>("ingamebg.png", tBg2, std::move(graphicEngine));
 	bg1->setId("bg1");
 	bg2->setId("bg2");
 
@@ -37,8 +37,6 @@ DisplayUpdater::~DisplayUpdater()
 	if (_game)
 		delete _game;
 	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
-	if (mainmenu)
-		delete mainmenu;
 	if (launchLoop) {
 		launchLoop->stop();
 		delete launchLoop;
@@ -47,7 +45,7 @@ DisplayUpdater::~DisplayUpdater()
 		delete deathTimer;
 }
 
-IGraphicEngine * DisplayUpdater::getGraphicEngine()
+IGraphicEngine_SharedPtr DisplayUpdater::getGraphicEngine()
 {
 	return graphicEngine;
 }
@@ -104,10 +102,7 @@ void DisplayUpdater::launchObserver()
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
 		threadGame = new Thread([&](void *) -> void * {
-			if (mainmenu != nullptr) {
-				delete mainmenu;
-				mainmenu = nullptr;
-			}
+			mainmenu.reset();
 			while (cond) {
 				if (_game->run()) {
 					dead = true;
@@ -154,7 +149,7 @@ void DisplayUpdater::game()
 	if (dead) {
 		if (deathTimer) {
 			Transformation t = Transformation((graphicEngine->getWindowWidth() / 2) - 80, (graphicEngine->getWindowHeight() / 2) - 50);
-			Text text = Text("YOU DIED", DEFAULT_FONT, 30, t, graphicEngine, Color(150, 0, 0));
+			Text text = Text("YOU DIED", DEFAULT_FONT, 30, t, std::move(graphicEngine), Color(150, 0, 0));
 			if (deathTimer->ms() < 7000) {
 				graphicEngine->drawText(text);
 			}

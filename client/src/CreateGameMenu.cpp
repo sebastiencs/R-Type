@@ -1,44 +1,41 @@
 #include "CreateGameMenu.hh"
 
-CreateGameMenu::CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superview)
+CreateGameMenu::CreateGameMenu(IGraphicEngine_SharedPtr eng, OnlineMenu *_superview)
+  : engine(std::move(eng))
 {
 	callback fptr;
 	textEnteredCallback tptr;
 	Color color(255, 255, 255, 255);
 	superView = _superview;
-	this->engine = engine;
 
 	Transformation t(340, 360);
 	tptr = std::bind(&CreateGameMenu::getText, this, std::placeholders::_1);
 	engine->setTextEnteredCallback(tptr);
 	t.setBounds(200, 30);
-	serverName = new TextField("", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
+	serverName = std::make_shared<TextField>("", t, 22, "Fipps.otf", color, "createGameMenuNameField", engine);
 
 	t.setPosition(600, 500);
 	t.setBounds(100, 50);
 	fptr = std::bind(&OnlineMenu::onCreateGame, superView);
-	ok = new Button("Create", "createButton.png", t, Color::None, fptr, "createServerButton2", engine);
+	ok = std::make_shared<Button>("Create", "createButton.png", t, Color::None, fptr, "createServerButton2", engine);
 
 	t.setPosition(400, 500);
 	t.setBounds(100, 50);
 	fptr = std::bind(&OnlineMenu::backButtonGameMenu, superView);
-	back = new Button("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
+	back = std::make_shared<Button>("Back", "cancelButton.png", t, Color::None, fptr, "backButton", engine);
 
 	Transformation t2(300, 330);
 	t2.setScale((float)1.3, (float)4.5);
 	engine->drawImage("backgroundButton.png", t2);
-	sprite = new Sprite("backgroundButton.png", t2, engine, Color::None);
+	sprite = std::make_shared<Sprite>("backgroundButton.png", t2, std::move(engine), Color::None);
 }
 
 CreateGameMenu::~CreateGameMenu()
 {
 	engine->setTextEnteredCallback(nullptr);
-	delete serverName;
-	delete ok;
-	delete back;
 }
 
-const TextField* CreateGameMenu::getServerName() const
+const TextField_SharedPtr &CreateGameMenu::getServerName() const
 {
 	return serverName;
 }

@@ -15,7 +15,7 @@ class Button;
 class ScrollView : public Drawable, public ICallback
 {
 public:
-	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine);
+	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr engine);
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
@@ -25,7 +25,7 @@ public:
 	void incrBase();
 	void decrBase();
 
-	const std::list<Drawable*>& getListCell() const;
+	const std::list<Drawable_SharedPtr>& getListCell() const;
 	const std::string& getSelectCell() const;
 
 	void setSelectedCell(const std::string& id);
@@ -40,7 +40,7 @@ public:
 	virtual const callback& getCallback() const;
 
 private:
-	IGraphicEngine *engine;
+	IGraphicEngine_SharedPtr engine;
 	Box *boxCells;
 
 	std::list<Button* > buttons;

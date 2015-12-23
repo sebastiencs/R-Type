@@ -17,7 +17,7 @@ class LobbyMenu;
 
 class OnlineMenu {
 public:
-	OnlineMenu(IGraphicEngine* eng);
+	OnlineMenu(IGraphicEngine_SharedPtr eng);
 	~OnlineMenu();
 
 	void menu();
@@ -37,8 +37,8 @@ public:
 	void createButton();
 
 private:
-	IGraphicEngine *engine;
-	LobbyMenu *lobby;
+	IGraphicEngine_SharedPtr engine;
+	LobbyMenu_SharedPtr lobby;
 	CreateGameMenu *createGameMenu;
 	IThread *threadReceivedParties;
 

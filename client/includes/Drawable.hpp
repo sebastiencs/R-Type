@@ -34,4 +34,8 @@ protected:
 	bool _visible;
 };
 
+# include <memory>
+
+using Drawable_SharedPtr = std::shared_ptr<Drawable>;
+
 #endif /* !DRAWABLE_HPP_ */

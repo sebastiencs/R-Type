@@ -2,7 +2,7 @@
 #include "Text.hh"
 #include "IGraphicEngine.hh"
 
-TextField::TextField(const std::string & _text, const Transformation & t, uint16_t _size, const std::string & _font, const Color & _color, const std::string& id, IGraphicEngine * _engine) : color(_color)
+TextField::TextField(const std::string & _text, const Transformation & t, uint16_t _size, const std::string & _font, const Color & _color, const std::string& id, IGraphicEngine_SharedPtr &_eng) : engine(_eng), color(_color)
 {
 	_id = id;
 	_transformation = t;
@@ -10,8 +10,7 @@ TextField::TextField(const std::string & _text, const Transformation & t, uint16
 
 	size = _size;
 	font = _font;
-	engine = _engine;
-	text = new Text(_text, _font, _size, t, _engine, color);
+	text = new Text(_text, _font, _size, t, std::move(_eng), color);
 	_transformation.setBounds(text->getTransformation().getWidth(), text->getTransformation().getHeight());
 }
 
