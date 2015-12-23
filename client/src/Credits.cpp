@@ -23,6 +23,6 @@ Credits::~Credits()
 
 void Credits::draw()
 {
-	for (auto t : authors)
+	for (auto &t : authors)
 		t->draw();
 }
