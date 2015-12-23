@@ -110,6 +110,7 @@ public:
 			return true;
 		}
 		if (Physics::isContact(Physics::LOCK, elem, _LP.getListPlayers())) {
+			SystemAudio::getInstance().playSound(ISystemAudio::BONUS);
 		  return (true);
 		}
 		return false;

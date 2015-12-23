@@ -35,7 +35,8 @@ public:
 	enum {
 		SIMPLE_SHOT = 1,
 		JOIN,
-		DEATH
+		DEATH,
+		BONUS
   };
 
 };

@@ -262,7 +262,7 @@ void	Game::updateGraphic()
 		drawImage(life);
 	}
 
-	for (auto &bm : _BM) {
+	for (auto &bm : _BM) {	// BONUS/MALUS
 
 		bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 		Transformation t(bm->getX(), bm->getY());
