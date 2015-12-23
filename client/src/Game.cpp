@@ -33,9 +33,10 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 		_interval_shot(200),
 		_nbShots(1)
 {
-	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
-	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
-	obstacleTypeToSpriteString[2] = "enemy2.png"; // boss
+	enemyTypeToSpriteString[Enemy::NORMAL] = "enemy0.png"; // normal
+	enemyTypeToSpriteString[Enemy::MID_NORMAL] = "enemy0.png"; // mid normal
+	enemyTypeToSpriteString[Enemy::MID_BOSS] = "enemy1.png"; // mid boss
+	enemyTypeToSpriteString[Enemy::BOSS] = "enemy2.png"; // boss
 
 	DEBUG_MSG("Game created");
 	(void)_height;
@@ -250,7 +251,7 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		Sprite* vesselSprite = new Sprite(obstacleTypeToSpriteString[enemy->getType()], t);
+		Sprite* vesselSprite = new Sprite(enemyTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() - 15);		// Enemy health bar

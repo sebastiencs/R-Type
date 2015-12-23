@@ -106,7 +106,7 @@ void			Party::run()
       _timerBonus->reset();
     }
 
-    if (_enemies.empty()) {// || _timerWave->ms() >= 10000) {
+    if (_enemies.empty()) {
       _wave->getSpawnEnemy();
       _enemies.for_each([this] (auto &enemy) {
     	  this->updateEnemy(enemy);
@@ -186,7 +186,7 @@ void			Party::run()
 	    }
 	  }
 
-	  bullet->getX() -= (uint16_t)(bullet->getSpeed() * _timerBullet->secFloat());
+	  bullet->setX(bullet->getX() - static_cast<uint16_t>((bullet->getSpeed() * _timerBullet->secFloat())));
 	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
@@ -220,12 +220,15 @@ void			Party::run()
 
 	Physics::Bullet = 1;
 	for (auto &bullet : bullets) {
-	  bullet->getX() += (uint16_t)(bullet->getSpeed() * _timerBullet->secFloat());
+	  bullet->setX(bullet->getX() + static_cast<uint16_t>((bullet->getSpeed() * _timerBullet->secFloat())));
 	  if (Physics::isContact(Physics::LOCK, bullet, _enemies)) {
 	    uint8_t id = Physics::idContact;
 	    auto &&enemy = _enemies.findIn([id] (auto &p) { return (p->getID() == id); });
 
 	    int life = static_cast<int>(enemy->getLife()) - 10;
+	    if (life < 0) {
+	      life = 0;
+	    }
 
 	    enemy->setLife(life);
 	    PaquetLife	paquet(enemy);
@@ -248,7 +251,7 @@ void			Party::run()
 
     _bonusmalus.for_each([this] (auto &bonus) {
 
-	bonus->getX() -= (uint16_t)(bonus->getSpeed() * _timerBullet->secFloat());
+	bonus->setX(bonus->getX() - static_cast<uint16_t>((bonus->getSpeed() * _timerBullet->secFloat())));
 
 	if (Physics::isContact(Physics::LOCK, bonus, _players)) {
 
@@ -416,7 +419,6 @@ void			Party::setRunning(bool run)
   _running = run;
   if (run == true) {
     Position pos;
-    // PaquetPlayerCoord	paquet;
     int i = 1;
 
     _players.for_each([&] (auto &player) {
@@ -432,22 +434,12 @@ void			Party::setRunning(bool run)
 
 	this->write(paquet, player->addr());
 
-	// for (auto &player : _players) {
-
-	//   pos = player->getPosition();
-	//   paquet.setPlayerID(player->getID());
-	//   paquet.setPosition(pos.x, pos.y);
-	//   paquet.createPaquet();
-	//   this->write(paquet, player_a->addr());
-
-	// }
-
       });
     _thread->run([this](void *) -> void * { this->run(); return (0); }, 0);
   }
 }
 
-bool			Party::addEnemy(Enemy *enemy)
+bool			Party::addEnemy(const Enemy_SharedPtr &enemy)
 {
   if (enemy) {
     _enemies.emplace_back(enemy);
@@ -462,7 +454,8 @@ uint8_t			Party::getUniqueID() const
 
   for (id = 0; id < 255; id += 1) {
     if (_players.findIn([id] (auto &p) { return (p->getID() == id); }) == nullptr
-	&& _enemies.findIn([id] (auto &e) { return (e->getID() == id); }) == nullptr) {
+	&& _enemies.findIn([id] (auto &e) { return (e->getID() == id); }) == nullptr
+	&& _bonusmalus.findIn([id] (auto &bm) { return (bm->getID() == id); }) == nullptr) {
       return (id);
     }
   }

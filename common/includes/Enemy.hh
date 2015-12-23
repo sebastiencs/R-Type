@@ -60,6 +60,13 @@ public:
     FOLLOWING
   };
 
+  enum {
+    NORMAL,
+    MID_NORMAL,
+    MID_BOSS,
+    BOSS
+  };
+
 private:
   int			_life;
   uint8_t		_type;

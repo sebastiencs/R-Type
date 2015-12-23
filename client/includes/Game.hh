@@ -15,6 +15,7 @@
 # include "DisplayUpdater.hh"
 # include "ListEnemies.hh"
 # include "Physics.hh"
+# include "Enemy.hh"
 # include "BonusMalus.hh"
 # include "SystemAudio.hh"
 
@@ -52,7 +53,7 @@ private:
 	ITimer* _shotCooldown;
 	std::list<std::string> _deadPlayersName;
 	std::map<std::string, Timer* > _deadPlayersTimer;
-	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
+	std::map<uint8_t, std::string> enemyTypeToSpriteString;
 	long _interval_shot;
 	ListSecure<BonusState_SharedPtr> _bonusState;
 	int _nbShots;

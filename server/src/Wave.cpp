@@ -34,7 +34,7 @@ void		Wave::getSpawnEnemy()
     case 3:
       {
 	while (++i < 2) {
-	  auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 400 + i * 200);
+	  auto e = std::make_shared<Enemy>(_party.getUniqueID(), 100, Enemy::NORMAL, 1000, 400 + i * 200);
 	  e->pushAction(Enemy::FOLLOWING);
 	  e->setColumn(700 + i * 100);
 	  _party.addEnemy(e);
@@ -46,7 +46,7 @@ void		Wave::getSpawnEnemy()
     case 7:
       {
 	while (++i < 4) {
-	  auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 300 + i * 100);
+	  auto e = std::make_shared<Enemy>(_party.getUniqueID(), 120, Enemy::MID_NORMAL, 1000, 300 + i * 100);
 	  e->pushAction(Enemy::FOLLOWING);
 	  e->setColumn(600 + i * 100);
 	  _party.addEnemy(e);
@@ -55,7 +55,7 @@ void		Wave::getSpawnEnemy()
       }
     case 5: // 1 mini boss
       {
-	auto e = new Enemy(_party.getUniqueID(), 250, 1, 1000, 400);
+	auto e = std::make_shared<Enemy>(_party.getUniqueID(), 250, Enemy::MID_BOSS, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
 	e->setColumn(700);
 	_party.addEnemy(e);
@@ -63,7 +63,7 @@ void		Wave::getSpawnEnemy()
       }
     case 8: // 1 boss
       {
-	auto e  = new Enemy(_party.getUniqueID(), 350, 2, 1000, 400);
+	auto e = std::make_shared<Enemy>(_party.getUniqueID(), 350, Enemy::BOSS, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
 	e->setColumn(700);
 	_party.addEnemy(e);
@@ -71,7 +71,7 @@ void		Wave::getSpawnEnemy()
       }
     default: // 1 enemy par defaut
       {
-	auto e = new Enemy(_party.getUniqueID(), 100, 0, 1000, 400);
+	auto e = std::make_shared<Enemy>(_party.getUniqueID(), 100, Enemy::NORMAL, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
 	e->setColumn(700);
 	_party.addEnemy(e);

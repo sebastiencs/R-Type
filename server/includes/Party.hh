@@ -77,7 +77,7 @@ public:
   void			setPlayerShot(PlayerShot *ps);
   bool			isRunning() const;
   void			setRunning(bool);
-  bool			addEnemy(Enemy *enemy);
+  bool			addEnemy(const Enemy_SharedPtr &enemy);
   uint8_t		getUniqueID() const;
   bool			addBonusMalus(const BonusMalus_SharedPtr &bm);
   void			broadcast(const listPlayers &, const Paquet &);
