@@ -5,7 +5,6 @@
 # include "Color.hh"
 # include "GraphicEngine.hh"
 # include "Drawable.hpp"
-//# include "Text.hh"
 
 class GraphicEngine;
 class Text;
@@ -17,7 +16,6 @@ public:
 	TextField(const std::string& _text, const Transformation& _t, uint16_t _size, const std::string& _font, const Color& _color, const std::string& _id, IGraphicEngine_SharedPtr &_engine);
 	virtual ~TextField();
 
-	//Drawable
 	virtual void draw();
 	virtual void setTransformation(const Transformation& t);
 	virtual void setColor(const Color& c);
