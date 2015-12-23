@@ -21,7 +21,9 @@ public:
 
   enum {
     LIFE,
-    INTERVAL_SHOT
+    INTERVAL_SHOT,
+    DOUBLE_SHOT,
+    TRIPLE_SHOT
   };
 
   BonusMalus();

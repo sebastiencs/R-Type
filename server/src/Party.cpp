@@ -227,17 +227,9 @@ void			Party::run()
 	  if (player) {
 	    PaquetAttrBonus paquet(player);
 
-	    if (bonus->getType() == BonusMalus::INTERVAL_SHOT) {
-	      paquet.setBonusType(BonusMalus::INTERVAL_SHOT);
-	      paquet.setTime(5 * 1000);
-	      paquet.createPaquet();
-	    }
-	    else if (bonus->getType() == BonusMalus::LIFE) {
-	      paquet.setBonusType(BonusMalus::LIFE);
-	      player->setLife(100);
-	    }
-
-	    std::cout << paquet << std::endl;
+	    paquet.setBonusType(bonus->getType());
+	    paquet.setTime(7 * 1000);
+	    paquet.createPaquet();
 
 	    this->write(paquet, player->addr());
 	  }

@@ -54,6 +54,7 @@ private:
 	std::map<uint8_t, std::string> obstacleTypeToSpriteString;
 	long _interval_shot;
 	ListSecure<BonusState_SharedPtr> _bonusState;
+	int _nbShots;
 
 public:
 	Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);

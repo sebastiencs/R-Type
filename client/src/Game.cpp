@@ -30,7 +30,8 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 	  _height(height),
 	  _packager(packager),
 	  _shotCooldown(new Timer()),
-	  _interval_shot(200)
+	  _interval_shot(200),
+	  _nbShots(1)
 {
 	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
@@ -146,14 +147,21 @@ void	Game::handlingNetwork()
 	      player->setLife(100);
 	    }
 	  }
-	  else if (type == BonusMalus::INTERVAL_SHOT) {
-	    _interval_shot /= 2;
-
+	  else {
+	    if (type == BonusMalus::INTERVAL_SHOT) {
+	      _interval_shot /= 2;
+	    }
+	    else if (type == BonusMalus::DOUBLE_SHOT) {
+	      _nbShots = 2;
+	    }
+	    else if (type == BonusMalus::TRIPLE_SHOT) {
+	      _nbShots = 3;
+	    }
 	    ITimer_SharedPtr timer = std::make_shared<Timer>();
 	    _bonusState.push_back(std::make_shared<BonusState>(type, timer, attrbonus->getTime()));
 	    timer->start();
-
 	  }
+
 	  _PS.deleteAttrBonusPackage();
 	}
 
@@ -306,10 +314,26 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (bullet) {
-		uint16_t x = pos.x + (VESSEL_WIDTH / 2);
-		uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
-		_packager->createShotPackage(_LP.getId(), 1, 600, x, y);
-		player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+	  if (_nbShots == 2 || _nbShots == 3) {
+	    {
+	      uint16_t x = pos.x;
+	      uint16_t y = pos.y;
+	      _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+	      player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+	    }
+	    {
+	      uint16_t x = pos.x + VESSEL_WIDTH;
+	      uint16_t y = pos.y + VESSEL_HEIGHT;
+	      _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+	      player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+	    }
+	  }
+	  if (_nbShots != 2) {
+	    uint16_t x = pos.x + (VESSEL_WIDTH / 2);
+	    uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
+	    _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+	    player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+	  }
 	}
 }
 
@@ -347,6 +371,12 @@ void	Game::removeDeadBonus()
 
 	if (bonus->type == BonusMalus::INTERVAL_SHOT) {
 	  _interval_shot *= 2;
+	}
+	else if (bonus->type == BonusMalus::DOUBLE_SHOT) {
+	  _nbShots = 1;
+	}
+	else if (bonus->type == BonusMalus::TRIPLE_SHOT) {
+	  _nbShots = 1;
 	}
       }
     });
