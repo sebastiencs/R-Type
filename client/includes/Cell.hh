@@ -13,6 +13,8 @@
 class IGraphicEngine;
 class TextField;
 
+using TextField_SharedPtr = std::shared_ptr<TextField>;
+
 class Cell : public Drawable, public ICallback
 {
 public:

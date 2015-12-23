@@ -9,7 +9,7 @@ OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
   : engine(std::move(eng))
 {
 	VBox = std::make_shared<Box>(Orientation::vertical, Transformation(350, 350), "commandBox");
-	parser = new ParserIni("conf.ini");
+	parser = std::make_shared<ParserIni>("conf.ini");
 //	DEBUG_MSG(parser->getValue("tamere", "name"));
 //	parser->setValue("tamere", "name", 42);
 //	parser->setText("tamere", "name", "Alex");
@@ -21,7 +21,6 @@ OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
 
 OptionMenu::~OptionMenu()
 {
-	delete parser;
 }
 
 

@@ -15,21 +15,19 @@ ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, 
 
 	nbrCell = 0;
 	base = 0;
-	boxCells = new Box(Orientation::vertical, _transformation, _id + "Box");
+	boxCells = std::make_shared<Box>(Orientation::vertical, _transformation, _id + "Box");
 
 	fptr = std::bind(&ScrollView::decrBase, this);
-	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
+	buttons.push_back(std::make_shared<Button>("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
 
 	fptr = std::bind(&ScrollView::incrBase, this);
-	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY() + transformation.getHeight()), Color::None, fptr, "Down", engine));
+	buttons.push_back(std::make_shared<Button>("Down", "ArrowDown.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY() + transformation.getHeight()), Color::None, fptr, "Down", engine));
 }
 
 ScrollView::~ScrollView()
 {
 	boxCells->clearElements();
-	delete boxCells;
-	for (Button *b : buttons)
-		delete(b);
+	buttons.clear();
 }
 
 void ScrollView::createCell(const std::string& name, int nbr)
@@ -84,7 +82,7 @@ void ScrollView::draw()
 		}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		b->draw();
 }
 
@@ -101,7 +99,7 @@ bool ScrollView::onAction(uint32_t x, uint32_t y)
 				}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		if (b->onAction(x, y)) {
 			return true;
 		}
@@ -120,7 +118,7 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 		}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		b->onHover(x, y);
 }
 

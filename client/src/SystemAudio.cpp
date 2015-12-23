@@ -28,9 +28,9 @@ SystemAudio::~SystemAudio()
 
 SystemAudio &SystemAudio::getInstance()
 {
-  static SystemAudio *ptr = nullptr;
+  static std::unique_ptr<SystemAudio> ptr = nullptr;
 
-  return ((ptr) ? (*ptr) : (*(ptr = new SystemAudio)));
+  return ((ptr) ? (*ptr) : (*(ptr = std::make_unique<SystemAudio>())));
 }
 
 void	SystemAudio::loadMusic(const std::string &file, int id)
@@ -41,20 +41,19 @@ void	SystemAudio::loadMusic(const std::string &file, int id)
     return ;
   }
 
-  sf::Music *sfmusic = new sf::Music();
+  auto &&sfmusic = std::make_shared<sf::Music>();
 
   if (sfmusic->openFromFile(RS_PATH + file)) {
 
-    Music	*music = new Music;
+    auto &&music = std::make_shared<Music>();
 
     music->id = id;
-    music->music.reset(sfmusic);
+    music->music = sfmusic;
 
-    _musics.push_back(UMusic(music));
+    _musics.push_back(music);
 
   }
   else {
-    delete sfmusic;
     throw ErrorLoadingFile(file);
   }
 }
@@ -67,25 +66,24 @@ void	SystemAudio::loadSound(const std::string &file, int id)
     return ;
   }
 
-  sf::SoundBuffer *buffer = new sf::SoundBuffer;
+  auto &&buffer = std::make_shared<sf::SoundBuffer>();
 
   if (buffer->loadFromFile(RS_PATH + file)) {
 
-    sf::Sound *sfsound = new sf::Sound();
+    auto &&sfsound = std::make_shared<sf::Sound>();
 
     sfsound->setBuffer(*buffer);
 
-    Sound *sound = new Sound();
+    auto &&sound = std::make_shared<Sound>();
 
     sound->id = id;
-    sound->buffer.reset(buffer);
-    sound->sound.reset(sfsound);
+    sound->buffer = buffer;
+    sound->sound = sfsound;
 
     _sounds.push_back(USound(sound));
 
   }
   else {
-    delete buffer;
     throw ErrorLoadingFile(file);
   }
 }
@@ -96,7 +94,7 @@ void	SystemAudio::playMusic(int id)
 
   if (it != _musics.end()) {
     (*it)->music->play();
-    _currentMusic = (*it)->music.get();
+    _currentMusic = (*it)->music;
   }
   else {
     DEBUG_MSG("Music not found");
@@ -109,7 +107,7 @@ void	SystemAudio::playSound(int id)
 
   if (it != _sounds.end()) {
     (*it)->sound->play();
-    _currentSound = (*it)->sound.get();
+    _currentSound = (*it)->sound;
   }
   else {
     DEBUG_MSG("Music not found");
@@ -130,7 +128,7 @@ void	SystemAudio::playMusicRandom()
   for (auto &music : _musics) {
     if (i == n) {
       music->music->play();
-      _currentMusic = music->music.get();
+      _currentMusic = music->music;
       break ;
     }
     i += 1;

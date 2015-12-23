@@ -39,5 +39,6 @@ protected:
 };
 
 using Sprite_SharedPtr = std::shared_ptr<Sprite>;
+using Sprite_UniquePtr = std::unique_ptr<Sprite>;
 
 #endif /* !SPRITE_HH_ */

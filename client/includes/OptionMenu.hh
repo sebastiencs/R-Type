@@ -30,7 +30,7 @@ public:
 private:
 	IGraphicEngine_SharedPtr engine;
 	Box_SharedPtr VBox;
-	ParserIni* parser;
+	ParserIni_SharedPtr parser;
 
 	std::string inputMode;
 };

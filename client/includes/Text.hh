@@ -41,4 +41,7 @@ private:
 	Color color;
 	GraphicEngine* engine;
 };
+
+using Text_SharedPtr = std::shared_ptr<Text>;
+
 #endif /* !TEXT_HH_ */

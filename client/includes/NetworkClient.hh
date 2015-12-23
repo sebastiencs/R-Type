@@ -53,8 +53,8 @@ private:
   std::unique_ptr<ISocketUDP>	_socketUDP;
   std::unique_ptr<ISocketTCP>	_socketTCP;
 
-  Thread*	threadWrite;
-  Thread*	threadRead;
+  IThread_SharedPtr	threadWrite;
+  IThread_SharedPtr	threadRead;
 
   std::string _ip;
   int _port;

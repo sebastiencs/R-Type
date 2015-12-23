@@ -12,14 +12,14 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
 	creditsMenu = std::make_shared<Credits>(engine);
 	optionMenu = std::make_shared<OptionMenu>(engine);
 
-	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
+	rTypeLabel = std::make_shared<TextField>("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
 	uint16_t baseX = 50;
 	uint16_t baseY = 500;
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
 
-	mainChoiceBox = new Box(Orientation::vertical, transformation, "mainBox");
+	mainChoiceBox = std::make_shared<Box>(Orientation::vertical, transformation, "mainBox");
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
 	onlineButton = std::make_shared<Button>("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
 	mainChoiceBox->addDrawable(onlineButton);
@@ -35,7 +35,7 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
 
 	transformation.setPosition(800, 75);
 	fptr = std::bind(&NetworkClient::reconnect, this->net);
-	elements.push_back(new Button("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));
+	elements.push_back(std::make_shared<Button>("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);
@@ -49,12 +49,7 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
 
 MainMenu::~MainMenu() {
 
-	for (Drawable* b : elements)
-		if (b)
-			delete b;
 	elements.clear();
-	if (rTypeLabel)
-		delete rTypeLabel;
 }
 
 void MainMenu::changedMenu()
@@ -76,7 +71,7 @@ void MainMenu::draw()
 	if (onlineButton)
 		onlineButton->setEnabled(net->getIsConnect());
 
-	for (Drawable* b : elements)
+	for (auto &b : elements)
 		if (b->getId() == "Reconnect") {
 			if (!net->getIsConnect())
 				b->draw();
@@ -110,8 +105,8 @@ void MainMenu::draw()
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
 {
-	for (Drawable *d : elements) {
-		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+	for (auto &d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
 			if (d->getId() == "Reconnect") {
 				if (!net->getIsConnect())
 					if (b->onAction(x, y))
@@ -135,8 +130,8 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
-	for (Drawable *d : elements) {
-		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+	for (auto &d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
 			if (d->getId() == "Reconnect") {
 				if (!net->getIsConnect())
 					b->onHover(x, y);

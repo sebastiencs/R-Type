@@ -12,8 +12,8 @@ PackageStorage & PackageStorage::getInstance()
 }
 
 PackageStorage::PackageStorage()
-  : _semOut(new Semaphore()),
-    _semIn(new Semaphore())
+  : _semOut(std::make_unique<Semaphore>()),
+    _semIn(std::make_unique<Semaphore>())
 {
 }
 
