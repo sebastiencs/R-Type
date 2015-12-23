@@ -34,8 +34,6 @@ DisplayUpdater::~DisplayUpdater()
     threadGame->join();
     delete threadGame;
   }
-	if (_game)
-		delete _game;
 	//	delete graphicEngine;   // Problem de thread. Je comprends pas l'erreur. Seb
 	if (mainmenu)
 		delete mainmenu;
@@ -96,7 +94,7 @@ void DisplayUpdater::launchObserver()
 
 		int width = getGraphicEngine()->getWindowWidth();
 		int height = getGraphicEngine()->getWindowHeight();
-		_game = new class Game(width, height, images, _nickname, packager);
+		_game = std::make_shared<Game>(width, height, images, _nickname, packager);
 
 		inGame = true;
 		graphicEngine->setMouseClickCallback(nullptr);	// In game, don't bother to call MainMenu::OnClick
@@ -126,15 +124,13 @@ void DisplayUpdater::launchObserver()
 
 void DisplayUpdater::game()
 {
-
-	//UPDATE THE BACKGROUND
-	xBg1 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
+	xBg1 -= static_cast<uint32_t>((200 * GraphicEngine::getDeltaTimeS()));
 	xBg1 = xBg1 < -1920 ? 1920 : xBg1;
 
 	tBg1.setPosition(xBg1, 0);
 	bg1->setTransformation(tBg1);
 	bg1->draw();
-	xBg2 -= (uint32_t)(200 * GraphicEngine::getDeltaTimeS());
+	xBg2 -= static_cast<uint32_t>((200 * GraphicEngine::getDeltaTimeS()));
 
 	xBg2 = xBg2 < -1920 ? 1920 : xBg2;
 	tBg2.setPosition(xBg2, 0);
@@ -164,8 +160,8 @@ void DisplayUpdater::game()
 				dead = false;
 				threadGame->close();
 				graphicEngine->setUsableKeyPressedCallback(nullptr);
-				delete _game;
-				_game = nullptr;
+				// delete _game;
+				// _game = nullptr;
 				graphicEngine->closeWindow();
 			}
 		}

@@ -20,6 +20,8 @@ class OnlineMenu;
 class NetworkClient;
 class Game;
 
+typedef std::shared_ptr<Game>	Game_SharedPtr;
+
 class DisplayUpdater {
 public:
 	DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_SharedPtr net);
@@ -44,7 +46,7 @@ private:
 	ListSecure<Text *> _nickname;
 	ListSecure<Sprite *> images;
 	int cond;
-	Game *_game;
+	Game_SharedPtr _game;
 	bool dead;
 	ITimer* deathTimer;
 
