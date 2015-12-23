@@ -2,7 +2,7 @@
 #include "ListPlayers.hh"
 #include "SystemAudio.hh"
 
-LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine)
+LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine), cond(1)
 {
 	_superview = superview;
 	right = nullptr;
@@ -28,7 +28,6 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	commands->addDrawable(new Button("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
-	cond = 1;
 }
 
 LobbyMenu::~LobbyMenu()
