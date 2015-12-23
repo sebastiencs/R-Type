@@ -9,7 +9,7 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 {
 	engine = eng;
 	VBox = new Box(Orientation::vertical, Transformation(350, 350), "commandBox");
-//	parser = new ParserIni("conf.ini");
+	parser = new ParserIni("conf.ini");
 //	DEBUG_MSG(parser->getValue("tamere", "name"));
 //	parser->setValue("tamere", "name", 42);
 //	parser->setText("tamere", "name", "Alex");
@@ -23,6 +23,7 @@ OptionMenu::~OptionMenu()
 {
 	if (VBox)
 		delete VBox;
+	delete parser;
 }
 
 
@@ -83,7 +84,7 @@ void OptionMenu::ChangeKeys()
 		inputMode = "PAD";
 		break;
 	}
-	default: 
+	default:
 		inputMode = "Unknow";
 	}
 	static_cast<TextField *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("TKeys"))->setText(inputMode);

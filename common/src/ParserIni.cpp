@@ -1,110 +1,123 @@
 #include "ParserIni.hh"
+#include <algorithm>
 
-ParserIni::ParserIni(const std::string& file) : _nameFile(file), _file(_nameFile, std::ios::in | std::ios::out | std::ios::ate)
+ParserIni::ParserIni(const std::string& filename) : _nameFile(filename)
 {
-	if (!_file)
-		DEBUG_MSG("File couldn't be open");
+  std::fstream file(_nameFile, std::ios::in);
+
+  if (!file)
+    DEBUG_MSG("File couldn't be open");
+  else {
+
+    file.seekg(0);
+
+    std::string currentCat;
+    std::string line;
+
+    while (std::getline(file, line)) {
+
+      std::remove_if(line.begin(), line.end(), [] (char c) { return (c == ' '); });
+
+      if (line.empty()) {
+	continue ;
+      }
+
+      if (line.front() == '[' && line.back() == ']') {
+	currentCat = std::string(line.begin() + 1, line.end() - 1);
+      }
+      else {
+
+	if (currentCat.empty()) {
+	  throw ParserException("catergory missing");
+	}
+
+	if (!std::count(line.begin(), line.end(), '=')) {
+	  throw ParserException("Missing '=' token");
+	}
+
+	if (std::count(line.begin(), line.end(), '=') > 1) {
+	  throw ParserException("Too much '=' token");
+	}
+
+	size_t equal = line.find("=");
+
+	std::string var = line.substr(0, equal);
+	std::string value = line.substr(equal + 1, std::string::npos);
+
+	_values[currentCat][var] = value;
+      }
+    }
+
+    for (auto &cat : _values) {
+
+      for (auto &val : cat.second) {
+	std::cout << "CAT: " << cat.first << std::endl;
+	std::cout << "\t" << "VAL: " << val.first << std::endl;
+	std::cout << "\t" << "VAR: " << val.second << std::endl;
+      }
+    }
+
+    file.close();
+  }
 }
 
 ParserIni::~ParserIni()
 {
-	_file.close();
+  DEBUG_MSG("ParserIni destructed");
+
+  std::fstream file(_nameFile, std::ios::out);
+
+  if (file.is_open()) {
+
+    for (auto &cat : _values) {
+
+      file << "[" << cat.first << "]" << std::endl;
+
+      for (auto &val : cat.second) {
+	file << val.first << "=" << val.second << std::endl;
+      }
+
+      file << std::endl;
+    }
+
+    file.close();
+  }
+
+}
+
+const std::string &ParserIni::getData(const std::string& categorie, const std::string& variable)
+{
+  auto val_var = _values.find(categorie);
+
+  if (val_var == _values.end()) {
+    throw ParserUnavaibleException("Category doesn't exist");
+  }
+
+  auto value = val_var->second.find(variable);
+
+  if (value == val_var->second.end()) {
+    throw ParserUnavaibleException("Variable doesn't exist");
+  }
+
+  return (value->second);
 }
 
 int ParserIni::getValue(const std::string& categorie, const std::string& variable)
 {
-	std::string line;
-	_file.seekg(0);
-
-	while (std::getline(_file, line))
-	{
-		if (line == ("[" + categorie + "]"))
-			break;
-	}
-	while (std::getline(_file, line) && line[0] != '\0')
-	{
-		if (line.compare(0, variable.size(), variable) == 0)
-		{
-			if (line.size() > variable.size() + 2)
-			{
-				line = line.substr(variable.size() + 1, line.size());
-				return atoi(line.c_str());
-			}
-		}
-	}
-	return -1;
+  return (std::stoi(getData(categorie, variable)));
 }
 
-const std::string ParserIni::getText(const std::string& categorie, const std::string& variable)
+const std::string &ParserIni::getText(const std::string& categorie, const std::string& variable)
 {
-	std::string line;
-	_file.seekg(0);
-
-	while (std::getline(_file, line))
-	{
-		if (line == ("[" + categorie + "]"))
-			break;
-	}
-	while (std::getline(_file, line) && line[0] != '\0')
-	{
-		if (line.compare(0, variable.size(), variable) == 0)
-		{
-			if (line.size() > variable.size() + 2)
-			{
-				line = line.substr(variable.size() + 1, line.size());
-				return line;
-			}
-		}
-	}
-	line.clear();
-	return line;
+  return (getData(categorie, variable));
 }
 
 void ParserIni::setValue(const std::string & categorie, const std::string& variable, int value)
 {
-	std::string line;
-	_file.seekg(0);
-
-	while (std::getline(_file, line))
-	{
-		if (line == ("[" + categorie + "]"))
-			break;
-	}
-	while (std::getline(_file, line) && line[0] != '\0')
-	{
-		if (line.compare(0, variable.size(), variable) == 0)
-		{
-			if (line.size() > variable.size() + 1 && _file.is_open())
-			{
-				std::string s = std::to_string(value);
-				std::string tmp = (variable + '=' + s);
-				_file.write(tmp.c_str(), tmp.size());
-			}
-		}
-	}
+  _values[categorie][variable] = std::to_string(value);
 }
 
 void ParserIni::setText(const std::string & categorie, const std::string& variable, const std::string & value)
 {
-	std::string line;
-	_file.seekg(0);
-
-	while (std::getline(_file, line))
-	{
-		if (line == ("[" + categorie + "]"))
-			break;
-	}
-	while (std::getline(_file, line) && line[0] != '\0')
-	{
-		if (line.compare(0, variable.size(), variable) == 0)
-		{
-			if (line.size() > variable.size() + 1 && _file.is_open())
-			{
-				std::cout << _file.tellp() << std::endl;
-				// _file.seekp((_file.tellp().seekpos() - line.size()), std::ios::beg);
-				std::string tmp = (variable + '=' + value);
-				_file.write(tmp.c_str(), tmp.size());
-			}
-		}
-	}
+  _values[categorie][variable] = value;
 }

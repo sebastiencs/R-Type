@@ -58,6 +58,8 @@ MainMenu::~MainMenu() {
 	elements.clear();
 	if (rTypeLabel)
 		delete rTypeLabel;
+
+	delete optionMenu;
 }
 
 void MainMenu::changedMenu()

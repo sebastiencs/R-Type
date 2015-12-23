@@ -4,7 +4,44 @@
 # include <iostream>
 # include <fstream>
 # include <string>
+# include <map>
 # include "Debug.hh"
+
+class ParserException : public std::logic_error
+{
+public:
+  ParserException()
+    : std::logic_error("Parser Exception")
+    {
+    }
+
+  ParserException(const std::string &str)
+    : std::logic_error(str)
+    {
+    }
+
+  virtual ~ParserException()
+    {
+    }
+};
+
+class ParserUnavaibleException : public std::logic_error
+{
+public:
+  ParserUnavaibleException()
+    : std::logic_error("Parser Exception")
+    {
+    }
+
+  ParserUnavaibleException(const std::string &str)
+    : std::logic_error(str)
+    {
+    }
+
+  virtual ~ParserUnavaibleException()
+    {
+    }
+};
 
 class ParserIni
 {
@@ -14,14 +51,17 @@ public:
 
 	// Parsing
 	int getValue(const std::string& categorie, const std::string& variable);
-	const std::string getText(const std::string& categorie, const std::string& variable);
+	const std::string &getText(const std::string& categorie, const std::string& variable);
 
 	void setValue(const std::string& categorie, const std::string& variable, int value);
 	void setText(const std::string& categorie, const std::string& variable, const std::string& value);
 
 private:
 	std::string _nameFile;
-	std::fstream _file;
+	std::map<std::string, std::map<std::string, std::string>> _values;
+	//       Category              Variable     Value
+
+	const std::string &getData(const std::string& categorie, const std::string& variable);
 };
 
 #endif /* !PARSER_INI_HH_*/
