@@ -37,7 +37,7 @@ private:
 	IGraphicEngine_SharedPtr &_engine;
 	Color _color;
 	callback _fptr;
-	Sprite* _sprite;
+	Sprite_SharedPtr _sprite;
 
 	std::string _text;
 	std::string _textureName;
