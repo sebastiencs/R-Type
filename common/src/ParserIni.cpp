@@ -90,13 +90,15 @@ const std::string &ParserIni::getData(const std::string& categorie, const std::s
   auto val_var = _values.find(categorie);
 
   if (val_var == _values.end()) {
-    throw ParserUnavaibleException("Category doesn't exist");
+		std::string t = "Category " + categorie + " doesn't exist";
+    throw ParserUnavaibleException(t);
   }
 
   auto value = val_var->second.find(variable);
 
   if (value == val_var->second.end()) {
-    throw ParserUnavaibleException("Variable doesn't exist");
+		std::string t = "Variable " + variable + " doesn't exist";
+		throw ParserUnavaibleException(t);
   }
 
   return (value->second);
