@@ -17,8 +17,6 @@
 # include "Thread.hh"
 # include "Debug.hh"
 # include "Player.hh"
-# include "PlayerCoord.hh"
-# include "PlayerShot.hh"
 # include "Enemy.hh"
 # include "BonusMalus.hh"
 # include "Wave.hh"
@@ -72,9 +70,9 @@ public:
   bool			isPlayer(const Addr &) const;
   uint8_t		getIdFromAddr(const Addr &) const;
   bool			isPlayer(uint8_t id) const;
-  void			setCoordPlayer(PlayerCoord *pc);
+  void			setCoordPlayer(uint8_t id, uint16_t x, uint16_t y);
   void			setReady(uint8_t id, uint8_t status);
-  void			setPlayerShot(PlayerShot *ps);
+  void			setPlayerShot(uint8_t id, uint16_t x, uint16_t y, uint16_t speed, uint8_t type);
   bool			isRunning() const;
   void			setRunning(bool);
   bool			addEnemy(const Enemy_SharedPtr &enemy);

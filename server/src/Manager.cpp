@@ -283,10 +283,9 @@ void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet, const Addr &addr
   DEBUG_MSG(*paquet);
 
   auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
-  auto pc = new PlayerCoord(paquet->getX(), paquet->getY(), paquet->getPlayerID());
-  if (party && pc) {
+  if (party) {
 
-    party->setCoordPlayer(pc);
+    party->setCoordPlayer(paquet->getPlayerID(), paquet->getX(), paquet->getY());
 
     auto &&players = party->getPlayers();
     auto &&player = players.findIn([id] (auto &p) { return (p->getID() == id); });
@@ -312,9 +311,8 @@ void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet, const Addr &addr 
   DEBUG_MSG(*paquet);
 
   auto &&party = _parties.findIn([id](auto &p) { return (p->isPlayer(id)); });
-  auto ps = new PlayerShot(paquet->getX(), paquet->getY(), paquet->getType(), paquet->getSpeed(), paquet->getPlayerID());
-  if (party && ps) {
-    party->setPlayerShot(ps);
+  if (party) {
+    party->setPlayerShot(paquet->getPlayerID(), paquet->getX(), paquet->getY(), paquet->getSpeed(), paquet->getType());
 
     auto &&players = party->getPlayers();
     broadcast_except(players, id, *paquet);

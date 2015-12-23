@@ -372,23 +372,18 @@ bool			Party::isPlayer(uint8_t id) const
   return (_players.findIn([id] (auto &p) { return (p->getID() == id); }) != nullptr);
 }
 
-void			Party::setCoordPlayer(PlayerCoord *pc)
+void			Party::setCoordPlayer(uint8_t id, uint16_t x, uint16_t y)
 {
-  uint8_t id = pc->getID();
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
   PaquetPlayerCoord	paquet;
 
   if (player) {
-
-    uint16_t x = pc->getX();
-    uint16_t y = pc->getY();
 
     if (Physics::move(Physics::LOCK, player, x, y, _players, _enemies) == false) {
       paquet = player;
       write(paquet, player->addr());
     }
   }
-  delete pc;
 }
 
 void			Party::setReady(uint8_t id, uint8_t status)
@@ -399,14 +394,12 @@ void			Party::setReady(uint8_t id, uint8_t status)
   }
 }
 
-void			Party::setPlayerShot(PlayerShot *ps)
+void			Party::setPlayerShot(uint8_t id, uint16_t x, uint16_t y, uint16_t speed, uint8_t type)
 {
-  uint8_t id = ps->getID();
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
   if (player) {
-    player->addBullet(std::make_shared<Bullet>(ps->getX(), ps->getY(), ps->getSpeed(), ps->getType()));
+    player->addBullet(std::make_shared<Bullet>(x, y, speed, type));
   }
-  delete ps;
 }
 
 bool			Party::isRunning() const

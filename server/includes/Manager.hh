@@ -18,8 +18,6 @@
 # include "Paquets.hh"
 # include "Player.hh"
 # include "Addr.hh"
-# include "PlayerCoord.hh"
-# include "PlayerShot.hh"
 # include "ListSecure.hh"
 
 typedef ListSecure<Party_SharedPtr>	PartyList;
