@@ -67,6 +67,7 @@ public:
 	void	fixWalkingDead();
 	int	AmIDead();
 	void	removeDeadBonus();
+	const Player_SharedPtr	focusOnClosestPlayer(const uint16_t yOther) const;
 
 	template<typename T>
 	void drawImage(T args) {

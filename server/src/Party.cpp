@@ -154,6 +154,38 @@ void			Party::run()
 
 	Physics::Bullet = 1;
 	for (auto &bullet : bullets) {
+
+	  if (bullet->getType()) {
+
+	    uint16_t y = bullet->getY();
+	    uint16_t x = bullet->getX();
+
+	    auto focused = this->focusOnClosestPlayer(y);
+
+	    uint16_t distanceX = 0xFFFF;
+
+	    if (focused->getPosition().x < x) {
+	      distanceX = x - focused->getPosition().x;
+	    }
+
+	    if (focused && focused->getPosition().y < y) {
+	      if (distanceX < 100) {
+		bullet->getY() -= 5;
+	      }
+	      else if (distanceX < 400) {
+		bullet->getY() -= 3;
+	      }
+	    }
+	    else if (focused && focused->getPosition().y > y) {
+	      if (distanceX < 100) {
+		bullet->getY() += 5;
+	      }
+	      if (distanceX < 400) {
+		bullet->getY() += 3;
+	      }
+	    }
+	  }
+
 	  bullet->getX() -= (uint16_t)(bullet->getSpeed() * _timerBullet->secFloat());
 	  if (Physics::isContact(Physics::LOCK, bullet, _players)) {
 	    uint8_t id = Physics::idContact;

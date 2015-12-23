@@ -211,6 +211,38 @@ void	Game::updateGraphic()
 			for (auto &bullet : enemy->getBullets()) {
 				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
+
+				if (bullet->getType() > 0) {
+
+				  uint16_t y = bullet->getY();
+				  uint16_t x = bullet->getX();
+
+				  auto focused = this->focusOnClosestPlayer(y);
+
+				  uint16_t distanceX = 0xFFFF;
+
+				  if (focused->getPosition().x < x) {
+				    distanceX = x - focused->getPosition().x;
+				  }
+
+				  if (focused && focused->getPosition().y < y) {
+				    if (distanceX < 100) {
+				      bullet->getY() -= 5;
+				    }
+				    else if (distanceX < 400) {
+				      bullet->getY() -= 3;
+				    }
+				  }
+				  else if (focused && focused->getPosition().y > y) {
+				    if (distanceX < 100) {
+				      bullet->getY() += 5;
+				    }
+				    if (distanceX < 400) {
+				      bullet->getY() += 3;
+				    }
+				  }
+				}
+
 				bullet->setX(bullet->getX() - static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
 			}
 
@@ -258,6 +290,24 @@ void	Game::updateGraphic()
 			}
 		}
 	}
+}
+
+const Player_SharedPtr	Game::focusOnClosestPlayer(const uint16_t yOther) const
+{
+  uint8_t idClosest = 0xFF;
+  uint16_t distance = 0xFFFF;
+
+  auto &players = _LP.getListPlayers();
+
+  players.for_each([&] (auto &p) mutable {
+      uint16_t tmp = std::abs(p->getPosition().y - yOther);
+      if (tmp < distance) {
+	idClosest = p->getID();
+	distance = tmp;
+      }
+    });
+
+  return (players.findIn([idClosest] (auto &p) { return (p->getID() == idClosest); }));
 }
 
 void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
