@@ -52,4 +52,6 @@ private:
 	int base;
 };
 
+using ScrollView_SharedPtr = std::shared_ptr<ScrollView>;
+
 #endif /* !SCROLL_VIEW_HH_ */
