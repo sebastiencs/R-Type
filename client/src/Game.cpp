@@ -21,17 +21,17 @@
 
 Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager)
 	: _PS(PackageStorage::getInstance()),
-	  _audio(SystemAudio::getInstance()),
-	  _LP(ListPlayers::getInstance()),
-	  _nickname(speudo),
-	  _images(images),
-	  _timer(new Timer()),
-	  _width(width),
-	  _height(height),
-	  _packager(packager),
-	  _shotCooldown(new Timer()),
-	  _interval_shot(200),
-	  _nbShots(1)
+		_audio(SystemAudio::getInstance()),
+		_LP(ListPlayers::getInstance()),
+		_nickname(speudo),
+		_images(images),
+		_timer(new Timer()),
+		_width(width),
+		_height(height),
+		_packager(packager),
+		_shotCooldown(new Timer()),
+		_interval_shot(200),
+		_nbShots(1)
 {
 	obstacleTypeToSpriteString[0] = "enemy0.png"; // normal
 	obstacleTypeToSpriteString[1] = "enemy1.png"; // mini boss
@@ -139,30 +139,30 @@ void	Game::handlingNetwork()
 
 	if (attrbonus != nullptr) {
 
-	  uint8_t type = attrbonus->getBonusType();
+		uint8_t type = attrbonus->getBonusType();
 
-	  if (type == BonusMalus::LIFE) {
-	    player = _LP.getPlayer(attrbonus->getID());
-	    if (player) {
-	      player->setLife(100);
-	    }
-	  }
-	  else {
-	    if (type == BonusMalus::INTERVAL_SHOT) {
-	      _interval_shot /= 2;
-	    }
-	    else if (type == BonusMalus::DOUBLE_SHOT) {
-	      _nbShots = 2;
-	    }
-	    else if (type == BonusMalus::TRIPLE_SHOT) {
-	      _nbShots = 3;
-	    }
-	    ITimer_SharedPtr timer = std::make_shared<Timer>();
-	    _bonusState.push_back(std::make_shared<BonusState>(type, timer, attrbonus->getTime()));
-	    timer->start();
-	  }
+		if (type == BonusMalus::LIFE) {
+			player = _LP.getPlayer(attrbonus->getID());
+			if (player) {
+				player->setLife(100);
+			}
+		}
+		else {
+			if (type == BonusMalus::INTERVAL_SHOT) {
+				_interval_shot /= 2;
+			}
+			else if (type == BonusMalus::DOUBLE_SHOT) {
+				_nbShots = 2;
+			}
+			else if (type == BonusMalus::TRIPLE_SHOT) {
+				_nbShots = 3;
+			}
+			ITimer_SharedPtr timer = std::make_shared<Timer>();
+			_bonusState.push_back(std::make_shared<BonusState>(type, timer, attrbonus->getTime()));
+			timer->start();
+		}
 
-	  _PS.deleteAttrBonusPackage();
+		_PS.deleteAttrBonusPackage();
 	}
 
 	if (leave != nullptr) {
@@ -214,33 +214,33 @@ void	Game::updateGraphic()
 
 				if (bullet->getType() > 0) {
 
-				  uint16_t y = bullet->getY();
-				  uint16_t x = bullet->getX();
+					uint16_t y = bullet->getY();
+					uint16_t x = bullet->getX();
 
-				  auto focused = this->focusOnClosestPlayer(y);
+					auto focused = this->focusOnClosestPlayer(y);
 
-				  uint16_t distanceX = 0xFFFF;
+					uint16_t distanceX = 0xFFFF;
 
-				  if (focused->getPosition().x < x) {
-				    distanceX = x - focused->getPosition().x;
-				  }
+					if (focused->getPosition().x < x) {
+						distanceX = x - focused->getPosition().x;
+					}
 
-				  if (focused && focused->getPosition().y < y) {
-				    if (distanceX < 100) {
-				      bullet->getY() -= 5;
-				    }
-				    else if (distanceX < 400) {
-				      bullet->getY() -= 3;
-				    }
-				  }
-				  else if (focused && focused->getPosition().y > y) {
-				    if (distanceX < 100) {
-				      bullet->getY() += 5;
-				    }
-				    if (distanceX < 400) {
-				      bullet->getY() += 3;
-				    }
-				  }
+					if (focused && focused->getPosition().y < y) {
+						if (distanceX < 100) {
+							bullet->getY() -= 5;
+						}
+						else if (distanceX < 400) {
+							bullet->getY() -= 3;
+						}
+					}
+					else if (focused && focused->getPosition().y > y) {
+						if (distanceX < 100) {
+							bullet->getY() += 5;
+						}
+						if (distanceX < 400) {
+							bullet->getY() += 3;
+						}
+					}
 				}
 
 				bullet->setX(bullet->getX() - static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
@@ -262,13 +262,13 @@ void	Game::updateGraphic()
 		drawImage(life);
 	}
 
-	for (auto &bm : _BM) {
+	for (auto &bm : _BM) {	// BONUS/MALUS
 
-	  bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
-	  Transformation t(bm->getX(), bm->getY());
-	  t.setScale(0.5f, 0.5f);
-	  Sprite* bonusMalus = new Sprite("bonus.png", t);
-	  drawImage(bonusMalus);
+		bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
+		Transformation t(bm->getX(), bm->getY());
+		t.setScale(0.5f, 0.5f);
+		Sprite* bonusMalus = new Sprite("bonus.png", t);
+		drawImage(bonusMalus);
 	}
 
 	_BM.remove_if([this] (auto &b) { return (this->remove_bonus(b)); });
@@ -294,20 +294,20 @@ void	Game::updateGraphic()
 
 const Player_SharedPtr	Game::focusOnClosestPlayer(const uint16_t yOther) const
 {
-  uint8_t idClosest = 0xFF;
-  uint16_t distance = 0xFFFF;
+	uint8_t idClosest = 0xFF;
+	uint16_t distance = 0xFFFF;
 
-  auto &players = _LP.getListPlayers();
+	auto &players = _LP.getListPlayers();
 
-  players.for_each([&] (auto &p) mutable {
-      uint16_t tmp = std::abs(p->getPosition().y - yOther);
-      if (tmp < distance) {
+	players.for_each([&] (auto &p) mutable {
+			uint16_t tmp = std::abs(p->getPosition().y - yOther);
+			if (tmp < distance) {
 	idClosest = p->getID();
 	distance = tmp;
-      }
-    });
+			}
+		});
 
-  return (players.findIn([idClosest] (auto &p) { return (p->getID() == idClosest); }));
+	return (players.findIn([idClosest] (auto &p) { return (p->getID() == idClosest); }));
 }
 
 void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
@@ -364,26 +364,26 @@ void Game::handlePlayerMovement(const std::deque<UsableKeys>& keysPressed)
 		}
 	}
 	if (bullet) {
-	  if (_nbShots == 2 || _nbShots == 3) {
-	    {
-	      uint16_t x = pos.x;
-	      uint16_t y = pos.y;
-	      _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
-	      player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
-	    }
-	    {
-	      uint16_t x = pos.x + VESSEL_WIDTH;
-	      uint16_t y = pos.y + VESSEL_HEIGHT;
-	      _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
-	      player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
-	    }
-	  }
-	  if (_nbShots != 2) {
-	    uint16_t x = pos.x + (VESSEL_WIDTH / 2);
-	    uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
-	    _packager->createShotPackage(_LP.getId(), 1, 600, x, y);
-	    player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
-	  }
+		if (_nbShots == 2 || _nbShots == 3) {
+			{
+				uint16_t x = pos.x;
+				uint16_t y = pos.y;
+				_packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+				player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+			}
+			{
+				uint16_t x = pos.x + VESSEL_WIDTH;
+				uint16_t y = pos.y + VESSEL_HEIGHT;
+				_packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+				player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+			}
+		}
+		if (_nbShots != 2) {
+			uint16_t x = pos.x + (VESSEL_WIDTH / 2);
+			uint16_t y = pos.y + (VESSEL_HEIGHT / 2);
+			_packager->createShotPackage(_LP.getId(), 1, 600, x, y);
+			player->addBullet(std::make_shared<Bullet>(x, y, 600, 8, 7)); // les 2 derniers params sont a modifier en fonctions du type de balles.
+		}
 	}
 }
 
@@ -413,25 +413,25 @@ int	Game::AmIDead()
 
 void	Game::removeDeadBonus()
 {
-  _bonusState.for_each([this] (auto &bonus) {
+	_bonusState.for_each([this] (auto &bonus) {
 
-      if (bonus->timer->ms() >= bonus->time) {
+			if (bonus->timer->ms() >= bonus->time) {
 
 	bonus->expired = 1;
 
 	if (bonus->type == BonusMalus::INTERVAL_SHOT) {
-	  _interval_shot *= 2;
+		_interval_shot *= 2;
 	}
 	else if (bonus->type == BonusMalus::DOUBLE_SHOT) {
-	  _nbShots = 1;
+		_nbShots = 1;
 	}
 	else if (bonus->type == BonusMalus::TRIPLE_SHOT) {
-	  _nbShots = 1;
+		_nbShots = 1;
 	}
-      }
-    });
+			}
+		});
 
-  _bonusState.remove_if([] (auto &bonus) { return (bonus->expired == 1); });
+	_bonusState.remove_if([] (auto &bonus) { return (bonus->expired == 1); });
 }
 
 int	Game::run()
