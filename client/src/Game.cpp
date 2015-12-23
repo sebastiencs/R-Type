@@ -19,12 +19,12 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager)
+Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager)
 	: _PS(PackageStorage::getInstance()),
 		_audio(SystemAudio::getInstance()),
 		_LP(ListPlayers::getInstance()),
 		_nickname(speudo),
-		_images(images),
+		_images(std::move(images)),
 		_timer(std::make_unique<Timer>()),
 		_width(width),
 		_height(height),

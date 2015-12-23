@@ -44,7 +44,7 @@ private:
 	ListEnemies	_LE;
 	ListSecure<BonusMalus_SharedPtr> _BM;
 	ListSecure<Text* > &_nickname;
-	ListSecure<Sprite* > &_images;
+	ListSecure<Sprite_SharedPtr> &_images;
 	IMutex_SharedPtr _mutex;
 	ITimer_UniquePtr	_timer;
 	int			_width;
@@ -59,7 +59,7 @@ private:
 	int _nbShots;
 
 public:
-	Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager);
+	Game(int width, int height, ListSecure<Sprite_SharedPtr > &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager);
 	virtual ~Game();
 
 	int	run();
