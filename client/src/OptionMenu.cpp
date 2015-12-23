@@ -10,12 +10,10 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 	engine = eng;
 	VBox = new Box(Orientation::vertical, Transformation(350, 350), "commandBox");
 	parser = new ParserIni("conf.ini");
-//	DEBUG_MSG(parser->getValue("tamere", "name"));
-//	parser->setValue("tamere", "name", 42);
-//	parser->setText("tamere", "name", "Alex");
-//	DEBUG_MSG(parser->getText("tamere", "name"));
 	VBox->setSpacing(25);
 	inputMode = "ZQSD";
+	muteMusic = false;
+	initVariables();
 	menu();
 }
 
@@ -26,6 +24,29 @@ OptionMenu::~OptionMenu()
 	delete parser;
 }
 
+void OptionMenu::initVariables()
+{
+	ListPlayers &list = ListPlayers::getInstance();
+	ISystemAudio &audio = SystemAudio::getInstance();
+
+	list.getPlayer(list.getId())->setName(parser->getText("player", "name"));
+	inputMode = parser->getText("config", "command");
+
+	if (inputMode == "ZQSD")
+		engine->setInputMode(InputMode::ZQSD);
+	else if (inputMode == "WASD")
+		engine->setInputMode(InputMode::WASD);
+	else if (inputMode == "ARROWS")
+		engine->setInputMode(InputMode::ARROWS);
+	else if (inputMode == "PAD")
+		engine->setInputMode(InputMode::PAD);
+	else
+		engine->setInputMode(InputMode::ZQSD);
+
+	muteMusic  = (parser->getValue("music", "mute") == 1 ? true : false);
+	muteMusic ? audio.stopMusic() : audio.playMusicRandom();
+
+}
 
 void OptionMenu::draw()
 {
@@ -47,10 +68,10 @@ void OptionMenu::onHover(uint32_t x, uint32_t y)
 
 void OptionMenu::MuteSound()
 {
-	static bool state = true;
+	parser->setValue("music", "mute", muteMusic);
 	ISystemAudio &audio = SystemAudio::getInstance();
-	state ? audio.stopMusic() : audio.playMusicRandom();
-	state = !state;
+	muteMusic ? audio.stopMusic() : audio.playMusicRandom();
+	muteMusic = !muteMusic;
 }
 
 void OptionMenu::ChangeKeys()
@@ -76,7 +97,7 @@ void OptionMenu::ChangeKeys()
 	}
 	case 2:
 	{
-		inputMode = "Arrows";
+		inputMode = "ARROWS";
 		break;
 	}
 	case 3:
@@ -85,8 +106,9 @@ void OptionMenu::ChangeKeys()
 		break;
 	}
 	default:
-		inputMode = "Unknow";
+		inputMode = "ZQSD";
 	}
+	parser->setText("config", "command", inputMode);
 	static_cast<TextField *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("TKeys"))->setText(inputMode);
 }
 

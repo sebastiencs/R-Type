@@ -16,10 +16,13 @@ public:
 	~OptionMenu();
 
 	void menu();
+	void initVariables();
 
+	// Drawable
 	void draw();
 	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
+
 
 	// CheckBox	
 	void MuteSound();
@@ -33,6 +36,7 @@ private:
 	ParserIni* parser;
 
 	std::string inputMode;
+	bool muteMusic;
 };
 
 #endif // !OPTION_MENU_HH_
