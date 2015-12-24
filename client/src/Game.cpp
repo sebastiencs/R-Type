@@ -281,8 +281,7 @@ void	Game::updateGraphic()
 				it = _deadPlayersName.erase(it);
 			}
 			else {
-				Text* deadPlayer = new Text(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
-				drawText(deadPlayer);
+				drawText(std::make_shared<Text>(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y)));
 				y += 15;
 				++it;
 			}
