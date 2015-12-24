@@ -21,6 +21,7 @@ OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
 
 OptionMenu::~OptionMenu()
 {
+  std::cerr << "OPTION MENU DESTRUCTED" << std::endl;
 }
 
 

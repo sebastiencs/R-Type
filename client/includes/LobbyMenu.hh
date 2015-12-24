@@ -11,11 +11,12 @@ class OnlineMenu;
 class IThread;
 
 using IThread_SharedPtr = std::shared_ptr<IThread>;
-using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
+//using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
+using OnlineMenu_WeakPtr = std::weak_ptr<OnlineMenu>;
 
 class LobbyMenu {
 public:
-	LobbyMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_SharedPtr superview);
+	LobbyMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_WeakPtr superview);
 	virtual ~LobbyMenu();
 
 	void createRequestListPlayersPaquet();
@@ -32,7 +33,8 @@ private:
 
 protected:
 	IGraphicEngine_SharedPtr engine;
-	OnlineMenu_SharedPtr _superview;
+	OnlineMenu_WeakPtr _superview;
+	// OnlineMenu_SharedPtr _superview;
 	IThread_SharedPtr threadReceivedListPlayers;
 	IThread_SharedPtr threadReceivedReadyPlayers;
 	Box_SharedPtr quadPlayerBox;

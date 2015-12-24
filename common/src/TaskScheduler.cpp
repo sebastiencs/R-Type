@@ -12,6 +12,9 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 
 TaskScheduler::~TaskScheduler()
 {
+  if (thread) {
+    thread->join();
+  }
 }
 
 void TaskScheduler::loop()
@@ -28,7 +31,7 @@ void TaskScheduler::stop()
 	running = false;
 	// thread->close(); // Can't close our own thread -> segfault
 	// delete thread;
-	thread = nullptr;
+	// thread = nullptr;
 }
 
 void TaskScheduler::run()

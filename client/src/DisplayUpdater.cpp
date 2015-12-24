@@ -95,8 +95,14 @@ void DisplayUpdater::launchObserver()
 		graphicEngine->setMouseMovedCallback(nullptr);
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
+
+		callback fptr = std::bind(&DisplayUpdater::game, this);
+		graphicEngine->setCallbackFunction(fptr, nullptr);
+
+		mainmenu.reset();
+
 		threadGame = std::make_shared<Thread>([&](void *) -> void * {
-			mainmenu.reset();
+			// mainmenu.reset();
 			while (cond) {
 				if (_game->run()) {
 					dead = true;
@@ -106,8 +112,6 @@ void DisplayUpdater::launchObserver()
 			return (nullptr);
 		}, nullptr);
 
-		callback fptr = std::bind(&DisplayUpdater::game, this);
-		graphicEngine->setCallbackFunction(fptr, nullptr);
 		launchLoop->stop();
 	}
 }

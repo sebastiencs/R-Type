@@ -19,6 +19,7 @@ Credits::Credits(IGraphicEngine_SharedPtr eng)
 
 Credits::~Credits()
 {
+  std::cerr << "CREDIT DESTRUCTED" << std::endl;
 }
 
 void Credits::draw()

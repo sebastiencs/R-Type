@@ -3,7 +3,7 @@
 #include "SystemAudio.hh"
 #include "OnlineMenu.hh"
 
-LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_SharedPtr superview)
+LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
   : engine(std::move(eng)), _superview(std::move(superview)), cond(1)
 {
 	right = nullptr;
@@ -25,7 +25,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_SharedPtr supervie
 	readyb = std::make_shared<Button>("Ready", "readyButton.png", Transformation(0, 0), Color::None, fptr, "readyButton", engine);
 	unReadyb = std::make_shared<Button>("Unready", "unreadyButton.png", Transformation(0, 0), Color::None, fptr, "unreadyButton", engine);
 
-	fptr = std::bind(&OnlineMenu::backButtonLobbyMenu, _superview);
+	fptr = std::bind(&OnlineMenu::backButtonLobbyMenu, _superview.lock().get());
 	commands->addDrawable(std::make_shared<Button>("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
@@ -35,7 +35,6 @@ LobbyMenu::~LobbyMenu()
 {
   std::cerr << "LOBBY DESTRUCTED" << std::endl;
 	if (threadReceivedListPlayers) {
-  std::cerr << "LOBBY ......" << std::endl;
 		cond = 0;
 		threadReceivedListPlayers->join();
 	}

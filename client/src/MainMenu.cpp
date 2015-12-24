@@ -51,6 +51,7 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
 MainMenu::~MainMenu() {
 
   std::cerr << "MAIN MANU DESTRUCTED" << std::endl;
+  std::cerr << "Online COUNT: " << onlineMenu.use_count() << std::endl;
   // delete onlineMenu;
   // onlineMenu.reset();
 	elements.clear();
