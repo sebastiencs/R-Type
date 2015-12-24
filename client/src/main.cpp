@@ -65,8 +65,6 @@ int		main(int argc, char **argv)
 
 	ISystemAudio &audio = SystemAudio::getInstance();
 
-	auto &&PS = new PackageStorage();
-
 	try {
 		audio.loadMusic("test.ogg", 1);
 		audio.loadMusic("crazyfrog.ogg", 2);
@@ -96,11 +94,6 @@ int		main(int argc, char **argv)
 		system("pause");
 #endif
 	}
-
-	// delete &PackageStorage::getInstance();
-	// delete &audio;
-	std::cerr << "ICIIII" << std::endl;
-	delete PS;
 
 #ifdef _WIN32
 	WSA::clean();

@@ -25,9 +25,9 @@ ThreadUnix::ThreadUnix(const Callback_t &func, void *arg = 0)
 
 ThreadUnix::~ThreadUnix()
 {
-  // if (_running) {
-  //   close();
-  // }
+  if (_running) {
+    close();
+  }
 }
 
 bool	ThreadUnix::run(const Callback_t &func, void *arg = 0)
