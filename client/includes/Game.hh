@@ -52,7 +52,7 @@ private:
 	Packager_SharedPtr _packager;
 	ITimer_UniquePtr _shotCooldown;
 	std::list<std::string> _deadPlayersName;
-	std::map<std::string, Timer* > _deadPlayersTimer;
+	std::map<std::string, ITimer_SharedPtr > _deadPlayersTimer;
 	std::map<uint8_t, std::string> enemyTypeToSpriteString;
 	long _interval_shot;
 	ListSecure<BonusState_SharedPtr> _bonusState;

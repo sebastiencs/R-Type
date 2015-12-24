@@ -121,7 +121,7 @@ void	Game::handlingNetwork()
 		if (player) {
 			DEBUG_MSG(player->getName() << " is dead");
 			_deadPlayersName.push_back(player->getName());
-			_deadPlayersTimer[player->getName()] = new Timer();
+			_deadPlayersTimer[player->getName()] = std::make_shared<Timer>();
 			_deadPlayersTimer[player->getName()]->start();
 			if (player != _LP.getListPlayers().front()) {
 				_LP.deletePlayer(player.get()->getID());
@@ -276,7 +276,6 @@ void	Game::updateGraphic()
 		std::list<std::string>::iterator it = _deadPlayersName.begin();
 		while (it != _deadPlayersName.end()) {
 			if (_deadPlayersTimer[*it] && _deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
-				delete _deadPlayersTimer[*it];
 				_deadPlayersTimer.erase(*it);
 				it = _deadPlayersName.erase(it);
 			}
