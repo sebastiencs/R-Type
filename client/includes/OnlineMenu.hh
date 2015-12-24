@@ -21,7 +21,7 @@ class OnlineMenu : public std::enable_shared_from_this<OnlineMenu>
 {
 public:
 	OnlineMenu(IGraphicEngine_SharedPtr eng);
-	~OnlineMenu();
+	virtual ~OnlineMenu();
 
 	void menu();
 	void createRequestPartiesPaquet();

@@ -29,6 +29,7 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 
 DisplayUpdater::~DisplayUpdater()
 {
+  std::cerr << "DISPLAY UPDATE DESTRUCTED" << std::endl;
   if (threadGame) {
     cond = 0;
     threadGame->join();
@@ -144,7 +145,9 @@ void DisplayUpdater::game()
 			else {
 				deathTimer = nullptr;
 				dead = false;
-				threadGame->close();
+				cond = 0;
+				threadGame->join();
+				// threadGame->close();
 				graphicEngine->setUsableKeyPressedCallback(nullptr);
 				_game = nullptr;
 				graphicEngine->closeWindow();

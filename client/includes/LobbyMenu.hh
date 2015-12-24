@@ -16,7 +16,7 @@ using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
 class LobbyMenu {
 public:
 	LobbyMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_SharedPtr superview);
-	~LobbyMenu();
+	virtual ~LobbyMenu();
 
 	void createRequestListPlayersPaquet();
 

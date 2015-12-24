@@ -15,7 +15,7 @@ enum Orientation {
 class Box : public Drawable, public ICallback {
 public:
 	Box(Orientation orientation, const Transformation& transformation, const std::string& id, bool deleteChilds = true);
-	~Box();
+	virtual ~Box();
 
 	void addDrawable(Drawable_SharedPtr drawable, int32_t pos = -1);
 	void removeDrawable(Drawable_SharedPtr drawable);

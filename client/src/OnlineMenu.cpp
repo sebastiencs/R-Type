@@ -19,6 +19,7 @@ OnlineMenu::OnlineMenu(IGraphicEngine_SharedPtr eng)
 
 OnlineMenu::~OnlineMenu()
 {
+  std::cerr << "ONLINE MENU DESTRUCTED" << std::endl;
 	if (threadReceivedParties) {
 		cond = 0;
 		threadReceivedParties->join();

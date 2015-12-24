@@ -33,7 +33,9 @@ LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_SharedPtr supervie
 
 LobbyMenu::~LobbyMenu()
 {
+  std::cerr << "LOBBY DESTRUCTED" << std::endl;
 	if (threadReceivedListPlayers) {
+  std::cerr << "LOBBY ......" << std::endl;
 		cond = 0;
 		threadReceivedListPlayers->join();
 	}
@@ -43,7 +45,9 @@ void LobbyMenu::createRequestListPlayersPaquet()
 {
 	if (threadReceivedListPlayers && threadReceivedListPlayers->isRunning()) {
 		DEBUG_MSG("Thread was already running, resetting it");
-		threadReceivedListPlayers->close();
+		cond = 0;
+		threadReceivedListPlayers->join();
+		cond = 1;
 		threadReceivedListPlayers->reRun();
 		return;
 	}

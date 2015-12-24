@@ -42,7 +42,7 @@ class GraphicEngine : public IGraphicEngine {
 
 public:
 	GraphicEngine();
-	~GraphicEngine();
+	virtual ~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
 

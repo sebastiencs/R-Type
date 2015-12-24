@@ -145,10 +145,12 @@ int NetworkClient::runRead(int *cond)
 
 							_isConnect = false;
 							inGame = false;
-							threadWrite->close();
+							condW = 0;
+							condR = 0;
+							// threadWrite->close();
 							_socketTCP.reset(nullptr);
 							_socketUDP.reset(nullptr);
-							threadRead->close();
+							// threadRead->close();
 							return (0);
 
 						}

@@ -9,7 +9,7 @@
 class TaskScheduler {
 public:
 	TaskScheduler(Callback_t _callback, long _t);
-	~TaskScheduler();
+	virtual ~TaskScheduler();
 
 	void loop();
 	void stop();

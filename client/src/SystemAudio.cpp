@@ -22,6 +22,12 @@ SystemAudio::SystemAudio()
 SystemAudio::~SystemAudio()
 {
   DEBUG_MSG("SystemAudio deleted");
+  if (_currentMusic) {
+    _currentMusic->stop();
+  }
+  if (_currentSound) {
+    _currentSound->stop();
+  }
   _musics.clear();
   _sounds.clear();
 }

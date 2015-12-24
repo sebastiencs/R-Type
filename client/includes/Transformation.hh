@@ -18,7 +18,7 @@ public:
 	Transformation(int32_t x, int32_t y);
 	Transformation(const Transformation& t);
 	Transformation& operator=(const Transformation& t);
-	~Transformation();
+	virtual ~Transformation();
 
 	void setPosition(int32_t x, int32_t y);
 	void setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t height);

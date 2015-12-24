@@ -25,7 +25,7 @@ typedef std::shared_ptr<Game>	Game_SharedPtr;
 class DisplayUpdater {
 public:
 	DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_SharedPtr net);
-	~DisplayUpdater();
+	virtual ~DisplayUpdater();
 
 	IGraphicEngine_SharedPtr getGraphicEngine();
 

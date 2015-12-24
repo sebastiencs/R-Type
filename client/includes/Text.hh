@@ -16,7 +16,7 @@ class Text : public Drawable {
 public:
 	Text(const std::string& text, const std::string& font, uint16_t size, const Transformation& t, IGraphicEngine_SharedPtr &&engine = nullptr, const Color& color = Color::None);
 	Text(const Text& r);
-	~Text() {};
+	virtual ~Text() {};
 
 	// Drawable
 	virtual void draw();

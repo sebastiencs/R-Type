@@ -13,7 +13,7 @@
 class OptionMenu {
 public:
 	OptionMenu(IGraphicEngine_SharedPtr eng);
-	~OptionMenu();
+	virtual ~OptionMenu();
 
 	void menu();
 

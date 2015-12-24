@@ -27,7 +27,7 @@ class MainMenu
 {
 public:
 	MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr net);
-	~MainMenu();
+	virtual ~MainMenu();
 
 	void setDisplayOnline();
 	void setDisplayOffline();
@@ -46,6 +46,7 @@ public:
 private:
 	IGraphicEngine_SharedPtr engine;
 	NetworkClient_SharedPtr net;
+	// OnlineMenu* onlineMenu;
 	OnlineMenu_SharedPtr onlineMenu;
 	OptionMenu_SharedPtr optionMenu;
 	Credits_SharedPtr creditsMenu;

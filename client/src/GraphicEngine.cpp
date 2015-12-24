@@ -27,6 +27,7 @@ GraphicEngine::GraphicEngine()
 
 GraphicEngine::~GraphicEngine()
 {
+  std::cerr << "GRAPHIC ENGINE DELETED" << std::endl;
 	cachedImages.clear();
 }
 
