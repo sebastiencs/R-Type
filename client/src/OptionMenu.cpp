@@ -26,7 +26,6 @@ OptionMenu::~OptionMenu()
 
 void OptionMenu::initVariables()
 {
-	ListPlayers &list = ListPlayers::getInstance();
 	ISystemAudio &audio = SystemAudio::getInstance();
 	try {
 	inputMode = parser->getText("config", "command");
