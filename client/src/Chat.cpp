@@ -53,6 +53,7 @@ Chat::~Chat()
 		delete chatBox;
 	if (userTextField)
 		delete userTextField;
+	engine->setTextEnteredCallback(nullptr);
 }
 
 void Chat::draw()
