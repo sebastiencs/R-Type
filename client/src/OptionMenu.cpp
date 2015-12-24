@@ -155,6 +155,7 @@ void OptionMenu::ChangeName()
 		PS.storeToSendTCPPackage(name);
 	}
 	isWritting = !isWritting;
+	static_cast<CheckBox *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
 }
 
 void OptionMenu::getText(const char c)
@@ -168,10 +169,9 @@ void OptionMenu::getText(const char c)
 		std::string tmp = textField->getText();
 		textField->setText(tmp.substr(0, tmp.size() - 1));
 	}
-	else if (c == '\n')
+	else if (c == '\n' || c == '\r')
 	{
-		static_cast<CheckBox *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(0);
-		isWritting = !isWritting;
+		ChangeName();
 	}
 	else if (validChar(c) && textField->getText().size() < 16)
 		textField->setText(textField->getText() + c);
