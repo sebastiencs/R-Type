@@ -40,7 +40,7 @@ private:
 protected:
 	ListSecure<std::string> logs;
 	ListSecure<std::string> newLogs;
-	TaskScheduler* messageReceiver;
+	TaskScheduler_SharedPtr messageReceiver;
 	IGraphicEngine_SharedPtr eng;
 	Sprite_SharedPtr chatBackground;
 	Box_SharedPtr chatBox;

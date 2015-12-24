@@ -21,7 +21,7 @@ Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr engine) :
 	textEnteredCallback tptr = std::bind(&Chat::getText, this, std::placeholders::_1);
 	eng->setTextEnteredCallback(tptr);
 
-	messageReceiver = new TaskScheduler([&](void*) {		// check if a new message is pending every x ms
+	messageReceiver = std::make_shared<TaskScheduler>([&](void*) {		// check if a new message is pending every x ms
 		std::string text = "";
 		// HERE: NETWORK CODE
 		text = "coucou";
@@ -39,7 +39,6 @@ Chat::~Chat()
 {
 	if (messageReceiver) {
 		messageReceiver->stop();
-		delete messageReceiver;
 	}
 	eng->setTextEnteredCallback(nullptr);
 }
