@@ -35,8 +35,6 @@ private:
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
 
-	static PackageStorage *me;
-
 public:
 
   	PackageStorage();

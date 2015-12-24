@@ -2,30 +2,23 @@
 #include "Debug.hh"
 #include "IOEvent.hh"
 
-PackageStorage *PackageStorage::me = nullptr;
-
 PackageStorage & PackageStorage::getInstance()
 {
-  // struct MakeShared : public PackageStorage { };
+  struct MakeShared : public PackageStorage { };
 
-  // static PackageStorage_SharedPtr instance = nullptr;
+  static PackageStorage_SharedPtr instance = nullptr;
 
-  // if (instance == nullptr) {
-  //   instance = std::make_shared<MakeShared>();
-  // }
+  if (instance == nullptr) {
+    instance = std::make_shared<MakeShared>();
+  }
 
-  // return *instance;
-
-  return (*me);
+  return *instance;
 }
 
 PackageStorage::PackageStorage()
   : _semOut(std::make_unique<Semaphore>()),
     _semIn(std::make_unique<Semaphore>())
 {
-  if (me == nullptr) {
-    me = this;
-  }
 }
 
 PackageStorage::~PackageStorage()
