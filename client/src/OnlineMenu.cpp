@@ -160,7 +160,7 @@ void OnlineMenu::joinButton()
 				t->start();
 				while (!paquetList && t->ms() < 3000) {
 					if ((paquetList = PS.getPlayerListPackage())) {
-						for (auto p : paquetList->getPlayers()) {
+						for (auto &p : paquetList->getPlayers()) {
 							if (LP.getPlayer(std::get<1>(p)) == nullptr)
 							  LP.addPlayer(std::make_shared<Player>(std::get<0>(p), std::get<1>(p), std::get<2>(p)));
 						}
@@ -236,7 +236,7 @@ void OnlineMenu::menu()
 {
 	std::function<void()> fptr;
 	Transformation transformation(350, 525);
-	transformation.setScale((float)0.8, (float)0.8);
+	transformation.setScale(0.8f, 0.8f);
 
 	onlineChoiseBox = std::make_shared<Box>(Orientation::horizontal, transformation, "onlineBox");
 	onlineChoiseBox->setSpacing(25);
