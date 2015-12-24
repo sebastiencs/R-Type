@@ -44,7 +44,7 @@ protected:
 	bool isUpdated;
 	Orientation orientation;
 	uint16_t spacing;
-  	bool shouldDeleteChilds;
+	bool shouldDeleteChilds;
 	std::list<Drawable* > elementsList;
 };
 

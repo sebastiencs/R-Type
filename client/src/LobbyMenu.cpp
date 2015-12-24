@@ -1,6 +1,7 @@
 #include "LobbyMenu.hh"
 #include "ListPlayers.hh"
 #include "SystemAudio.hh"
+#include "Chat.hh"
 
 LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(engine), cond(1)
 {
@@ -9,7 +10,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	threadReceivedListPlayers = nullptr;
 	playerListChanged = true;
 	Packager::createPlayerListPackage();
-	left = new Box(Orientation::vertical, Transformation(250, 200), "leftBox");
+	left = new Box(Orientation::vertical, Transformation(210, 200), "leftBox");
 	left->setSpacing(80);
 	quadPlayerBox = new Box(Orientation::vertical, Transformation(0, 0), "quadPlayerBox");
 	quadPlayerBox->setSpacing(80);
@@ -28,6 +29,8 @@ LobbyMenu::LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview) : engine(eng
 	commands->addDrawable(new Button("Leave", "leaveButton.png", Transformation(0, 0), Color::None, fptr, "leaveButton", engine));
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
+
+	chat = new Chat(Transformation(750, 200), engine);
 }
 
 LobbyMenu::~LobbyMenu()
@@ -41,6 +44,8 @@ LobbyMenu::~LobbyMenu()
 		delete left;
 	if (right)
 		delete right;
+	if (chat)
+		delete chat;
 }
 
 void LobbyMenu::createRequestListPlayersPaquet()
@@ -109,6 +114,8 @@ void LobbyMenu::draw()
 		left->draw();
 	if (right)
 		right->draw();
+	if (chat)
+		chat->draw();
 }
 
 void LobbyMenu::onHover(uint32_t x, uint32_t y)

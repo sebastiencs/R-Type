@@ -7,6 +7,8 @@
 # include "Button.hh"
 # include "TextField.hh"
 
+class Chat;
+
 class LobbyMenu {
 public:
 	LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview);
@@ -37,6 +39,7 @@ protected:
 	Button* unReadyb;
 	bool playerListChanged;
 	int cond;
+	Chat* chat;
 };
 
 #endif /* !LOBBY_HH_ */
