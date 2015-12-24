@@ -32,7 +32,7 @@ ScrollView::~ScrollView()
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-  boxCells->addDrawable(std::make_shared<Cell>(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, this));
+  boxCells->addDrawable(std::make_shared<Cell>(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, shared_from_this()));
 	++nbrCell;
 }
 

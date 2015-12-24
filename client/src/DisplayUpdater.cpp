@@ -127,13 +127,11 @@ void DisplayUpdater::game()
 	bg2->draw();
 
 
-  images.for_each([&](Sprite* img) {
+  images.for_each([&](auto &img) {
     this->graphicEngine->drawSprite(*img);
-    delete img;
   });
-  _nickname.for_each([&](Text* text) {
+  _nickname.for_each([&](auto &text) {
     this->graphicEngine->drawText(*text);
-    delete text;
   });
 
 	if (dead) {
