@@ -15,72 +15,72 @@ class PackageStorage {
 private:
 
 	DequeSecure<Paquet_SharedPtr> received;
-	DequeSecure<Paquet *> toSendUDP;
-	DequeSecure<Paquet *> toSendTCP;
-	DequeSecure<PaquetPlayerCoord *> players;
-	//DequeSecure<PaquetPlayerCoord *> enemies;
-	DequeSecure<PaquetObstacle *> obstacles;
-	DequeSecure<PaquetPlayerShot *> shots;
-	DequeSecure<PaquetReady *> ready;
-	DequeSecure<PaquetListParties *> gameList;
-	DequeSecure<PaquetListPlayers *> playerList;
-	DequeSecure<PaquetResponse *> answers;
-	DequeSecure<PaquetLaunch *> launch;
-	DequeSecure<PaquetLeave *> leave;
+	DequeSecure<Paquet_SharedPtr> toSendUDP;
+	DequeSecure<Paquet_SharedPtr> toSendTCP;
+	DequeSecure<PaquetPlayerCoord_SharedPtr> players;
+	DequeSecure<PaquetObstacle_SharedPtr> obstacles;
+	DequeSecure<PaquetPlayerShot_SharedPtr> shots;
+	DequeSecure<PaquetReady_SharedPtr> ready;
+	DequeSecure<PaquetListParties_SharedPtr> gameList;
+	DequeSecure<PaquetListPlayers_SharedPtr> playerList;
+	DequeSecure<PaquetResponse_SharedPtr> answers;
+	DequeSecure<PaquetLaunch_SharedPtr> launch;
+	DequeSecure<PaquetLeave_SharedPtr> leave;
 	DequeSecure<PaquetEnemy_SharedPtr> enemy;
-	DequeSecure<PaquetBonusMalus *> bonusmalus;
-	DequeSecure<PaquetLife *> life;
-	DequeSecure<PaquetDeath *> death;
-	DequeSecure<PaquetAttrBonus *> attrbonus;
+	DequeSecure<PaquetBonusMalus_SharedPtr> bonusmalus;
+	DequeSecure<PaquetLife_SharedPtr> life;
+	DequeSecure<PaquetDeath_SharedPtr> death;
+	DequeSecure<PaquetAttrBonus_SharedPtr> attrbonus;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
 
-	PackageStorage();
+ 	PackageStorage();
 
 public:
 
+ 
 	static PackageStorage& getInstance();
 
 	virtual ~PackageStorage();
 
-	const Paquet *getReceivedPackage() const;
-	const PaquetPlayerCoord *getPlayersPackage() const;
-	const PaquetPlayerCoord *getEnemiesPackage() const;
-	const PaquetObstacle *getObstaclesPackage() const;
-	const PaquetPlayerShot *getShotsPackage() const;
-	const PaquetReady *getReadyPackage() const;
-	const Paquet *getToSendUDPPackage() const;
-	const Paquet *getToSendTCPPackage() const;
-	const PaquetListParties *getGameListPackage() const;
-	const PaquetListPlayers *getPlayerListPackage() const;
-	const PaquetResponse *getAnswersPackage() const;
-	const PaquetLaunch *getLaunchPackage() const;
-	const PaquetLeave *getLeavePackage() const;
-	const PaquetEnemy *getEnemyPackage() const;
-	const PaquetBonusMalus *getBonusMalusPackage() const;
-	const PaquetLife *getLifePackage() const;
-	const PaquetDeath *getDeathPackage() const;
-	const PaquetAttrBonus *getAttrBonusPackage() const;
+	const Paquet_SharedPtr getReceivedPackage() const;
+	const PaquetPlayerCoord_SharedPtr getPlayersPackage() const;
+	const PaquetPlayerCoord_SharedPtr getEnemiesPackage() const;
+	const PaquetObstacle_SharedPtr getObstaclesPackage() const;
+	const PaquetPlayerShot_SharedPtr getShotsPackage() const;
+	const PaquetReady_SharedPtr getReadyPackage() const;
+	const Paquet_SharedPtr getToSendUDPPackage() const;
+	const Paquet_SharedPtr getToSendTCPPackage() const;
+	const PaquetListParties_SharedPtr getGameListPackage() const;
+	const PaquetListPlayers_SharedPtr getPlayerListPackage() const;
+	const PaquetResponse_SharedPtr getAnswersPackage() const;
+	const PaquetLaunch_SharedPtr getLaunchPackage() const;
+	const PaquetLeave_SharedPtr getLeavePackage() const;
+	const PaquetEnemy_SharedPtr getEnemyPackage() const;
+	const PaquetBonusMalus_SharedPtr getBonusMalusPackage() const;
+	const PaquetLife_SharedPtr getLifePackage() const;
+	const PaquetDeath_SharedPtr getDeathPackage() const;
+	const PaquetAttrBonus_SharedPtr getAttrBonusPackage() const;
 
 	void storeReceivedPackage(Paquet_SharedPtr package);
-	void storePlayersPackage(PaquetPlayerCoord *package);
-	void storeEnemiesPackage(PaquetPlayerCoord *package);
-	void storeObstaclesPackage(PaquetObstacle *package);
-	void storeShotsPackage(PaquetPlayerShot *package);
-	void storeReadyPackage(PaquetReady *package);
-	void storeToSendUDPPackage(Paquet *package);
-	void storeToSendTCPPackage(Paquet *package);
-	void storeGameListPackage(PaquetListParties *package);
-	void storePlayerListPackage(PaquetListPlayers *package);
-	void storeAnswersPackage(PaquetResponse *package);
-	void storeLaunchPackage(PaquetLaunch *package);
-	void storeLeavePackage(PaquetLeave *package);
+	void storePlayersPackage(PaquetPlayerCoord_SharedPtr package);
+	void storeEnemiesPackage(PaquetPlayerCoord_SharedPtr package);
+	void storeObstaclesPackage(PaquetObstacle_SharedPtr package);
+	void storeShotsPackage(PaquetPlayerShot_SharedPtr package);
+	void storeReadyPackage(PaquetReady_SharedPtr package);
+	void storeToSendUDPPackage(Paquet_SharedPtr package);
+	void storeToSendTCPPackage(Paquet_SharedPtr package);
+	void storeGameListPackage(PaquetListParties_SharedPtr package);
+	void storePlayerListPackage(PaquetListPlayers_SharedPtr package);
+	void storeAnswersPackage(PaquetResponse_SharedPtr package);
+	void storeLaunchPackage(PaquetLaunch_SharedPtr package);
+	void storeLeavePackage(PaquetLeave_SharedPtr package);
 	void storeEnemyPackage(PaquetEnemy_SharedPtr package);
-	void storeBonusMalusPackage(PaquetBonusMalus *package);
-	void storeLifePackage(PaquetLife *package);
-	void storeDeathPackage(PaquetDeath *package);
-	void storeAttrBonusPackage(PaquetAttrBonus *package);
+	void storeBonusMalusPackage(PaquetBonusMalus_SharedPtr package);
+	void storeLifePackage(PaquetLife_SharedPtr package);
+	void storeDeathPackage(PaquetDeath_SharedPtr package);
+	void storeAttrBonusPackage(PaquetAttrBonus_SharedPtr package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
@@ -105,5 +105,7 @@ public:
 	bool isThereReceivedPackage();
 	bool waitForPackage();
 };
+
+typedef std::shared_ptr<PackageStorage> PackageStorage_SharedPtr;
 
 #endif

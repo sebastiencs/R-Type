@@ -3,22 +3,23 @@
 
 # include <iostream>
 # include <string>
-//# include "IGraphicEngine.hh"
-//# include "TextField.hh"
+# include "TextField.hh"
 # include "Drawable.hpp"
 # include "ICallBack.hh"
 # include "SFML/Graphics/Sprite.hpp"
-#include "ScrollView.hh"
+# include "ScrollView.hh"
 
 class IGraphicEngine;
 class TextField;
+
+using TextField_SharedPtr = std::shared_ptr<TextField>;
 
 class Cell : public Drawable, public ICallback
 {
 public:
 	Cell(const std::string&  id, const Transformation& transformation,
-		const std::string& name, const int nbrPlayers, IGraphicEngine *engine,
-		ScrollView *_superView);
+		const std::string& name, const int nbrPlayers, IGraphicEngine_SharedPtr &engine,
+		ScrollView_SharedPtr _superView);
 	virtual ~Cell();
 
 	const std::string& getNameParty();
@@ -36,11 +37,11 @@ public:
 	virtual const callback& getCallback() const;
 
 private:
-	TextField *textField;
+	TextField_SharedPtr textField;
 
 	std::string nameParty;
 	int nbrPlayers;
-	ScrollView *superView;
+	ScrollView_SharedPtr superView;
 };
 
 #endif

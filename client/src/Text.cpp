@@ -1,7 +1,7 @@
 #include "Text.hh"
 #include "GraphicEngine.hh"
 
-Text::Text(const std::string & text, const std::string & font, uint16_t size, const Transformation& t, IGraphicEngine * gengine, const Color& color) : color(color)
+Text::Text(const std::string & text, const std::string & font, uint16_t size, const Transformation& t, IGraphicEngine_SharedPtr &&gengine, const Color& color) : color(color)
 {
 	this->font = font;
 	textString = text;
@@ -10,7 +10,7 @@ Text::Text(const std::string & text, const std::string & font, uint16_t size, co
 	_visible = true;
 	this->engine = nullptr;
 	if (gengine) {
-		engine = dynamic_cast<GraphicEngine*>(gengine);
+		engine = dynamic_cast<GraphicEngine*>(gengine.get());
 		if (!engine)
 			throw std::runtime_error("GraphicEngine is not set");
 		this->text = sf::Text(text, engine->loadFont(font));

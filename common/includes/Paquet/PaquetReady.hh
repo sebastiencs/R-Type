@@ -39,4 +39,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetReady &);
 
+using PaquetReady_SharedPtr = std::shared_ptr<PaquetReady>;
+
 #endif /* !PAQUETREADY_H_ */

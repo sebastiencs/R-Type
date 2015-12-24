@@ -9,19 +9,21 @@
 class TaskScheduler {
 public:
 	TaskScheduler(Callback_t _callback, long _t);
-	~TaskScheduler();
+	virtual ~TaskScheduler();
 
 	void loop();
 	void stop();
 	void run();
 
 private:
-	IThread *thread;
+	IThread_SharedPtr thread;
 	long interval;
 	Callback_t callcack;
-	ITimer *timer;
+	ITimer_SharedPtr timer;
 	bool running;
 	Callback_t fptr;
 };
+
+using TaskScheduler_SharedPtr = std::shared_ptr<TaskScheduler>;
 
 #endif

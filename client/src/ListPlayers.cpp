@@ -3,9 +3,9 @@
 
 ListPlayers & ListPlayers::getInstance()
 {
-	static ListPlayers *instance = nullptr;
+	static ListPlayers_SharedPtr instance = nullptr;
 	if (instance == nullptr) {
-		instance = new ListPlayers();
+		instance = std::make_shared<ListPlayers>();
 	}
 	return *instance;
 }

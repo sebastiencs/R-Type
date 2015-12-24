@@ -4,39 +4,39 @@
 #include "CheckBox.hh"
 #include "OptionMenu.hh"
 
-MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
+MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
+  : engine(std::move(eng)), net(std::move(_net))
 {
-	engine = eng;
-	this->net = net;
 	currentPage = 0;
-	onlineMenu = new OnlineMenu(engine);
-	creditsMenu = new Credits(engine);
-	optionMenu = new OptionMenu(engine);
+	// onlineMenu = new OnlineMenu(engine);
+	onlineMenu = std::make_shared<OnlineMenu>(engine);
+	creditsMenu = std::make_shared<Credits>(engine);
+	optionMenu = std::make_shared<OptionMenu>(engine);
 
-	rTypeLabel = new TextField("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
+	rTypeLabel = std::make_shared<TextField>("R-Type", Transformation(50, 100), DEFAULT_FONT_SIZE + 30, "Fipps.otf", Color::None, "rtypeLabel", engine);
 
 	uint16_t baseX = 50;
 	uint16_t baseY = 500;
 	Transformation transformation(baseX, baseY);
 	std::function<void()> fptr;
 
-	mainChoiceBox = new Box(Orientation::vertical, transformation, "mainBox");
+	mainChoiceBox = std::make_shared<Box>(Orientation::vertical, transformation, "mainBox");
 	fptr = std::bind(&MainMenu::setDisplayOnline, this);
-	onlineButton = new Button("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
+	onlineButton = std::make_shared<Button>("Online", "onlineButton.png", transformation, Color::None, fptr, "Online", engine);
 	mainChoiceBox->addDrawable(onlineButton);
 	fptr = std::bind(&MainMenu::setDisplayOffline, this);
-	mainChoiceBox->addDrawable(new Button("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Offline", "offlineButton.png", transformation, Color::None, fptr, "Offline", engine));
 	fptr = std::bind(&MainMenu::setDisplayOption, this);
-	mainChoiceBox->addDrawable(new Button("Options", "optionButton.png", transformation, Color::None, fptr, "Options", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Options", "optionButton.png", transformation, Color::None, fptr, "Options", engine));
 	fptr = std::bind(&MainMenu::setDisplayCredits, this);
-	mainChoiceBox->addDrawable(new Button("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Credits", "creditsButton.png", transformation, Color::None, fptr, "Credits", engine));
 	fptr = std::bind(&MainMenu::myexit, this);
-	mainChoiceBox->addDrawable(new Button("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
+	mainChoiceBox->addDrawable(std::make_shared<Button>("Exit", "exitButton.png", transformation, Color::None, fptr, "Exit", engine));
 	elements.push_back(mainChoiceBox);
 
 	transformation.setPosition(800, 75);
 	fptr = std::bind(&NetworkClient::reconnect, this->net);
-	elements.push_back(new Button("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));
+	elements.push_back(std::make_shared<Button>("Reconnect", "refreshButton.png", transformation, Color::None, fptr, "Reconnect", engine));
 
 	fptr = std::bind(&MainMenu::draw, this);
 	engine->setCallbackFunction(fptr, this);
@@ -50,16 +50,11 @@ MainMenu::MainMenu(IGraphicEngine *eng, NetworkClient *net)
 
 MainMenu::~MainMenu() {
 
-	delete onlineMenu;
-
-	for (Drawable* b : elements)
-		if (b)
-			delete b;
+  std::cerr << "MAIN MANU DESTRUCTED" << std::endl;
+  std::cerr << "Online COUNT: " << onlineMenu.use_count() << std::endl;
+  // delete onlineMenu;
+  // onlineMenu.reset();
 	elements.clear();
-	if (rTypeLabel)
-		delete rTypeLabel;
-
-	delete optionMenu;
 }
 
 void MainMenu::changedMenu()
@@ -81,7 +76,7 @@ void MainMenu::draw()
 	if (onlineButton)
 		onlineButton->setEnabled(net->getIsConnect());
 
-	for (Drawable* b : elements)
+	for (auto &b : elements)
 		if (b->getId() == "Reconnect") {
 			if (!net->getIsConnect())
 				b->draw();
@@ -98,7 +93,7 @@ void MainMenu::draw()
 		creditsMenu->draw();
 
 	PackageStorage& PC = PackageStorage::getInstance();
-	const PaquetResponse *paquet = PC.getAnswersPackage();
+	auto &paquet = PC.getAnswersPackage();
 	if (paquet) {
 		if (paquet->getReturn() == 2) {
 			Packager::createFirstUDPPackage(paquet->getData());
@@ -115,8 +110,8 @@ void MainMenu::draw()
 
 void MainMenu::onClick(uint32_t x, uint32_t y)
 {
-	for (Drawable *d : elements) {
-		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+	for (auto &d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
 			if (d->getId() == "Reconnect") {
 				if (!net->getIsConnect())
 					if (b->onAction(x, y))
@@ -140,8 +135,8 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 
 void MainMenu::onHover(uint32_t x, uint32_t y)
 {
-	for (Drawable *d : elements) {
-		if (ICallback* b = dynamic_cast<ICallback*>(d)) {
+	for (auto &d : elements) {
+		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
 			if (d->getId() == "Reconnect") {
 				if (!net->getIsConnect())
 					b->onHover(x, y);

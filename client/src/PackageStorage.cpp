@@ -4,119 +4,118 @@
 
 PackageStorage & PackageStorage::getInstance()
 {
-	static PackageStorage *instance = nullptr;
-	if (instance == nullptr) {
-		instance = new PackageStorage();
-	}
-	return *instance;
+  struct MakeShared : public PackageStorage { };
+
+  static PackageStorage_SharedPtr instance = nullptr;
+
+  if (instance == nullptr) {
+    instance = std::make_shared<MakeShared>();
+  }
+
+  return *instance;
 }
 
 PackageStorage::PackageStorage()
-  : _semOut(new Semaphore()),
-    _semIn(new Semaphore())
+  : _semOut(std::make_unique<Semaphore>()),
+    _semIn(std::make_unique<Semaphore>())
 {
 }
 
 PackageStorage::~PackageStorage()
 {
+  std::cerr << "DESTRUCTOR" << std::endl;
 }
 
-const Paquet *PackageStorage::getReceivedPackage() const {
-	return received.empty() ? nullptr : received.front().get();
+const Paquet_SharedPtr PackageStorage::getReceivedPackage() const {
+	return received.empty() ? nullptr : received.front();
 }
 
-const PaquetPlayerCoord *PackageStorage::getPlayersPackage() const {
+const PaquetPlayerCoord_SharedPtr PackageStorage::getPlayersPackage() const {
 	if (!players.empty())
 		DEBUG_MSG(*players.front());
 	return players.empty() ? nullptr : players.front();
 }
 
-// const PaquetPlayerCoord *PackageStorage::getEnemiesPackage() const {
-// 	if (!obstacles.empty())
-// 		DEBUG_MSG(*enemies.front());
-// 	return enemies.empty() ? nullptr : enemies.front();
-// }
-
-const PaquetObstacle *PackageStorage::getObstaclesPackage() const {
+const PaquetObstacle_SharedPtr PackageStorage::getObstaclesPackage() const {
 	if (!obstacles.empty())
 		DEBUG_MSG(*obstacles.front());
 	return obstacles.empty() ? nullptr : obstacles.front();
 }
 
-const PaquetPlayerShot * PackageStorage::getShotsPackage() const {
+const PaquetPlayerShot_SharedPtr  PackageStorage::getShotsPackage() const {
 	if (!shots.empty())
 		DEBUG_MSG(*shots.front());
 	return shots.empty() ? nullptr : shots.front();
 }
 
-const PaquetReady * PackageStorage::getReadyPackage() const
+const PaquetReady_SharedPtr  PackageStorage::getReadyPackage() const
 {
 	return ready.empty() ? nullptr : ready.front();
 }
 
-const Paquet * PackageStorage::getToSendUDPPackage() const {
+const Paquet_SharedPtr PackageStorage::getToSendUDPPackage() const {
 	return toSendUDP.empty() ? nullptr : toSendUDP.front();
 }
 
-const Paquet * PackageStorage::getToSendTCPPackage() const {
+const Paquet_SharedPtr PackageStorage::getToSendTCPPackage() const {
 	return toSendTCP.empty() ? nullptr : toSendTCP.front();
 }
 
-const PaquetListParties * PackageStorage::getGameListPackage() const {
+const PaquetListParties_SharedPtr  PackageStorage::getGameListPackage() const {
 	if (!gameList.empty())
 		DEBUG_MSG(*gameList.front());
 	return gameList.empty() ? nullptr : gameList.front();
 }
 
-const PaquetListPlayers * PackageStorage::getPlayerListPackage() const {
+const PaquetListPlayers_SharedPtr  PackageStorage::getPlayerListPackage() const {
 	if (!playerList.empty())
 		DEBUG_MSG(*playerList.front());
 	return playerList.empty() ? nullptr : playerList.front();
 }
 
-const PaquetResponse * PackageStorage::getAnswersPackage() const {
+const PaquetResponse_SharedPtr  PackageStorage::getAnswersPackage() const {
 	if (!answers.empty())
 		DEBUG_MSG(*answers.front());
 	return answers.empty() ? nullptr : answers.front();
 }
 
-const PaquetLaunch * PackageStorage::getLaunchPackage() const {
+const PaquetLaunch_SharedPtr  PackageStorage::getLaunchPackage() const {
 	if (!launch.empty())
 		DEBUG_MSG(*launch.front());
 	return launch.empty() ? nullptr : launch.front();
 }
 
-const PaquetLeave * PackageStorage::getLeavePackage() const {
+const PaquetLeave_SharedPtr  PackageStorage::getLeavePackage() const {
 	if (!leave.empty())
 		DEBUG_MSG(*leave.front());
 	return leave.empty() ? nullptr : leave.front();
 }
 
-const PaquetEnemy * PackageStorage::getEnemyPackage() const {
+const PaquetEnemy_SharedPtr  PackageStorage::getEnemyPackage() const {
 	if (!enemy.empty())
 		DEBUG_MSG(*enemy.front());
-	return enemy.empty() ? nullptr : enemy.front().get();
+	return enemy.empty() ? nullptr : enemy.front();
 }
 
-const PaquetBonusMalus * PackageStorage::getBonusMalusPackage() const {
+const PaquetBonusMalus_SharedPtr  PackageStorage::getBonusMalusPackage() const {
 	if (!bonusmalus.empty())
 		DEBUG_MSG(*bonusmalus.front());
 	return bonusmalus.empty() ? nullptr : bonusmalus.front();
 }
 
-const PaquetLife * PackageStorage::getLifePackage() const {
+const PaquetLife_SharedPtr  PackageStorage::getLifePackage() const {
 	if (!life.empty())
 		DEBUG_MSG(*life.front());
 	return life.empty() ? nullptr : life.front();
 }
 
-const PaquetDeath * PackageStorage::getDeathPackage() const {
+const PaquetDeath_SharedPtr  PackageStorage::getDeathPackage() const {
 	if (!death.empty())
 		DEBUG_MSG(*death.front());
 	return death.empty() ? nullptr : death.front();
 }
 
-const PaquetAttrBonus * PackageStorage::getAttrBonusPackage() const {
+const PaquetAttrBonus_SharedPtr  PackageStorage::getAttrBonusPackage() const {
 	if (!attrbonus.empty())
 		DEBUG_MSG(*attrbonus.front());
 	return attrbonus.empty() ? nullptr : attrbonus.front();
@@ -127,64 +126,64 @@ void PackageStorage::storeReceivedPackage(Paquet_SharedPtr package) {
 	_semIn->post();
 }
 
-void PackageStorage::storePlayersPackage(PaquetPlayerCoord * package)
+void PackageStorage::storePlayersPackage(PaquetPlayerCoord_SharedPtr package)
 {
 	players.push_back(package);
 }
 
-// void PackageStorage::storeEnemiesPackage(PaquetPlayerCoord * package)
+// void PackageStorage::storeEnemiesPackage(PaquetPlayerCoord_SharedPtr package)
 // {
 // 	enemies.push_back(package);
 // }
 
-void PackageStorage::storeObstaclesPackage(PaquetObstacle * package)
+void PackageStorage::storeObstaclesPackage(PaquetObstacle_SharedPtr package)
 {
 	obstacles.push_back(package);
 }
 
-void PackageStorage::storeShotsPackage(PaquetPlayerShot * package)
+void PackageStorage::storeShotsPackage(PaquetPlayerShot_SharedPtr package)
 {
 	shots.push_back(package);
 }
 
-void PackageStorage::storeReadyPackage(PaquetReady * package)
+void PackageStorage::storeReadyPackage(PaquetReady_SharedPtr package)
 {
 	ready.push_back(package);
 }
 
-void PackageStorage::storeToSendUDPPackage(Paquet * package)
+void PackageStorage::storeToSendUDPPackage(Paquet_SharedPtr package)
 {
 	toSendUDP.push_back(package);
 	_semOut->post();
 }
 
-void PackageStorage::storeToSendTCPPackage(Paquet * package)
+void PackageStorage::storeToSendTCPPackage(Paquet_SharedPtr package)
 {
 	toSendTCP.push_back(package);
 	_semOut->post();
 }
 
-void PackageStorage::storeGameListPackage(PaquetListParties * package)
+void PackageStorage::storeGameListPackage(PaquetListParties_SharedPtr package)
 {
 	gameList.push_back(package);
 }
 
-void PackageStorage::storePlayerListPackage(PaquetListPlayers * package)
+void PackageStorage::storePlayerListPackage(PaquetListPlayers_SharedPtr package)
 {
 	playerList.push_back(package);
 }
 
-void PackageStorage::storeAnswersPackage(PaquetResponse * package)
+void PackageStorage::storeAnswersPackage(PaquetResponse_SharedPtr package)
 {
 	answers.push_back(package);
 }
 
-void PackageStorage::storeLaunchPackage(PaquetLaunch * package)
+void PackageStorage::storeLaunchPackage(PaquetLaunch_SharedPtr package)
 {
 	launch.push_back(package);
 }
 
-void PackageStorage::storeLeavePackage(PaquetLeave * package)
+void PackageStorage::storeLeavePackage(PaquetLeave_SharedPtr package)
 {
 	leave.push_back(package);
 }
@@ -194,22 +193,22 @@ void PackageStorage::storeEnemyPackage(PaquetEnemy_SharedPtr package)
 	enemy.push_back(package);
 }
 
-void PackageStorage::storeBonusMalusPackage(PaquetBonusMalus * package)
+void PackageStorage::storeBonusMalusPackage(PaquetBonusMalus_SharedPtr package)
 {
 	bonusmalus.push_back(package);
 }
 
-void PackageStorage::storeLifePackage(PaquetLife * package)
+void PackageStorage::storeLifePackage(PaquetLife_SharedPtr package)
 {
 	life.push_back(package);
 }
 
-void PackageStorage::storeDeathPackage(PaquetDeath * package)
+void PackageStorage::storeDeathPackage(PaquetDeath_SharedPtr package)
 {
 	death.push_back(package);
 }
 
-void PackageStorage::storeAttrBonusPackage(PaquetAttrBonus * package)
+void PackageStorage::storeAttrBonusPackage(PaquetAttrBonus_SharedPtr package)
 {
 	attrbonus.push_back(package);
 }
@@ -226,8 +225,7 @@ void PackageStorage::deleteReceivedPackage()
 void PackageStorage::deletePlayersPackage()
 {
   if (!players.empty()) {
-    delete players.front();
-    players.erase(players.begin());
+    players.pop_front();
   }
 }
 
@@ -242,127 +240,111 @@ void PackageStorage::deletePlayersPackage()
 void PackageStorage::deleteObstaclesPackage()
 {
   if (!obstacles.empty()) {
-    delete obstacles.front();
-    obstacles.erase(obstacles.begin());
+    obstacles.pop_front();
   }
 }
 
 void PackageStorage::deleteShotsPackage()
 {
   if (!shots.empty()) {
-    delete shots.front();
-    shots.erase(shots.begin());
+    shots.pop_front();
   }
 }
 
 void PackageStorage::deleteReadyPackage()
 {
   if (!ready.empty()) {
-    delete ready.front();
-    ready.erase(ready.begin());
+    ready.pop_front();
   }
 }
 
 void PackageStorage::deleteToSendUDPPackage()
 {
   if (!toSendUDP.empty()) {
-    delete toSendUDP.front();
-    toSendUDP.erase(toSendUDP.begin());
+    toSendUDP.pop_front();
   }
 }
 
 void PackageStorage::deleteToSendTCPPackage()
 {
   if (!toSendTCP.empty()) {
-    delete toSendTCP.front();
-    toSendTCP.erase(toSendTCP.begin());
+    toSendTCP.pop_front();
   }
 }
 
 void PackageStorage::deleteGameListPackage()
 {
   if (!gameList.empty()) {
-    delete gameList.front();
-    gameList.erase(gameList.begin());
+    gameList.pop_front();
   }
 }
 
 void PackageStorage::deletePlayerListPackage()
 {
   if (!playerList.empty()) {
-    delete playerList.front();
-    playerList.erase(playerList.begin());
+    playerList.pop_front();
   }
 }
 
 void PackageStorage::deleteAnswersPackage()
 {
   if (!answers.empty()) {
-    delete answers.front();
-    answers.erase(answers.begin());
+    answers.pop_front();
   }
 }
 
 void PackageStorage::deleteLaunchPackage()
 {
   if (!launch.empty()) {
-    delete launch.front();
-    launch.erase(launch.begin());
+    launch.pop_front();
   }
 }
 
 void PackageStorage::deleteEnemyPackage()
 {
   if (!enemy.empty()) {
-    //delete enemy.front();
     enemy.pop_front();
-//    enemy.erase(enemy.begin());
   }
 }
 
 void PackageStorage::deleteLeavePackage()
 {
   if (!leave.empty()) {
-    delete leave.front();
-    leave.erase(leave.begin());
+    leave.pop_front();
   }
 }
 
 void PackageStorage::deleteBonusMalusPackage()
 {
   if (!bonusmalus.empty()) {
-    delete bonusmalus.front();
-    bonusmalus.erase(bonusmalus.begin());
+    bonusmalus.pop_front();
   }
 }
 
 void PackageStorage::deleteLifePackage()
 {
   if (!life.empty()) {
-    delete life.front();
-    life.erase(life.begin());
+    life.pop_front();
   }
 }
 
 void PackageStorage::deleteDeathPackage()
 {
   if (!death.empty()) {
-    delete death.front();
-    death.erase(death.begin());
+    death.pop_front();
   }
 }
 
 void PackageStorage::deleteAttrBonusPackage()
 {
   if (!attrbonus.empty()) {
-    delete attrbonus.front();
-    attrbonus.erase(attrbonus.begin());
+    attrbonus.pop_front();
   }
 }
 
 bool PackageStorage::isThereReceivedPackage()
 {
-	return !received.empty();
+  return !received.empty();
 }
 
 void PackageStorage::waitForReceivedPackage()

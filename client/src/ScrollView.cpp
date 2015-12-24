@@ -3,38 +3,36 @@
 #include "Button.hh"
 #include "Box.hh"
 
-ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine)
+ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr eng)
+  : engine(std::move(eng))
 {
 	callback fptr;
 
 	this->nbrDiplayCell = nbrDiplayCell;
-	this->engine = engine;
 	this->_transformation = transformation;
 	this->_id = "ScrollView";
 	this->_visible = true;
 
 	nbrCell = 0;
 	base = 0;
-	boxCells = new Box(Orientation::vertical, _transformation, _id + "Box");
+	boxCells = std::make_shared<Box>(Orientation::vertical, _transformation, _id + "Box");
 
 	fptr = std::bind(&ScrollView::decrBase, this);
-	buttons.push_back(new Button("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
+	buttons.push_back(std::make_shared<Button>("Up", "ArrowUp.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY()), Color::None, fptr, "Up", engine));
 
 	fptr = std::bind(&ScrollView::incrBase, this);
-	buttons.push_back(new Button("Down", "ArrowDown.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY() + transformation.getHeight()), Color::None, fptr, "Down", engine));
+	buttons.push_back(std::make_shared<Button>("Down", "ArrowDown.png", Transformation(transformation.getX() + transformation.getWidth(), transformation.getY() + transformation.getHeight()), Color::None, fptr, "Down", engine));
 }
 
 ScrollView::~ScrollView()
 {
 	boxCells->clearElements();
-	delete boxCells;
-	for (Button *b : buttons)
-		delete(b);
+	buttons.clear();
 }
 
 void ScrollView::createCell(const std::string& name, int nbr)
 {
-	boxCells->addDrawable(new Cell(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, this));
+  boxCells->addDrawable(std::make_shared<Cell>(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, shared_from_this()));
 	++nbrCell;
 }
 
@@ -57,7 +55,7 @@ void ScrollView::decrBase()
 		--base;
 }
 
-const std::list<Drawable*>& ScrollView::getListCell() const
+const std::list<Drawable_SharedPtr>& ScrollView::getListCell() const
 {
 	return boxCells->getElements();
 }
@@ -77,14 +75,14 @@ void ScrollView::draw()
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
 			c->setVisible(true);
 			c->draw();
 		}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		b->draw();
 }
 
@@ -93,15 +91,15 @@ bool ScrollView::onAction(uint32_t x, uint32_t y)
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell))
-			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c.get()))
 				if (tmp->onAction(x, y)) {
 					return true;
 				}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		if (b->onAction(x, y)) {
 			return true;
 		}
@@ -113,14 +111,14 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 	int i = 0;
 
 	boxCells->updateTransformation();
-	for (Drawable *c : boxCells->getElements()) {
+	for (auto &c : boxCells->getElements()) {
 		if (i >= base && i < (base + nbrDiplayCell)) {
-			if (ICallback *tmp = dynamic_cast<ICallback*>(c))
+			if (ICallback *tmp = dynamic_cast<ICallback*>(c.get()))
 				tmp->onHover(x, y);
 		}
 		++i;
 	}
-	for (Button *b : buttons)
+	for (auto &b : buttons)
 		b->onHover(x, y);
 }
 

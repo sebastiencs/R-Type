@@ -1,20 +1,18 @@
 #include "Button.hh"
 #include "Debug.hh"
 
-Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine* engine)
+Button::Button(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine_SharedPtr &engine)
 	: _engine(engine), _color(color), _fptr(fptr), _text(text), _textureName(img), _enabled(true)
 {
 	_transformation = t;
 	_id = id;
 	_visible = true;
-	_sprite = new Sprite(img, t, engine, color);
+	_sprite = std::make_shared<Sprite>(img, t, std::move(engine), color);
 	_transformation.setBounds(_sprite->getTransformation().getWidth(), _sprite->getTransformation().getHeight());
 }
 
 Button::~Button()
 {
-	if (_sprite)
-		delete _sprite;
 }
 
 bool Button::isPressed(uint32_t x, uint32_t y) const

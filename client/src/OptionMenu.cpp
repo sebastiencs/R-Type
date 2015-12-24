@@ -7,14 +7,14 @@
 #include "SystemAudio.hh"
 #include "PaquetRename.hh"
 
-OptionMenu::OptionMenu(IGraphicEngine* eng)
+OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
+  : engine(std::move(eng))
 {
 	ListPlayers& PL = ListPlayers::getInstance();
 	engine = eng;
-	VBox = new Box(Orientation::vertical, Transformation(350, 350), "commandBox");
-	parser = new ParserIni("conf.ini");
+	VBox = std::make_shared<Box>(Orientation::vertical, Transformation(350, 350), "commandBox");
+	parser = std::make_shared<ParserIni>("conf.ini");
 	textField = new TextField("", Transformation(0, 0), 30, DEFAULT_FONT, Color::None, "NameTextField", engine);
-
 	VBox->setSpacing(25);
 	initVariables();
 	menu();
@@ -22,9 +22,7 @@ OptionMenu::OptionMenu(IGraphicEngine* eng)
 
 OptionMenu::~OptionMenu()
 {
-	if (VBox)
-		delete VBox;
-	delete parser;
+  std::cerr << "OPTION MENU DESTRUCTED" << std::endl;
 }
 
 void OptionMenu::initVariables()
@@ -125,7 +123,10 @@ void OptionMenu::ChangeKeys()
 		parser->setText("config", "command", inputMode);
 	}
 	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
-	static_cast<TextField *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("TKeys"))->setText(inputMode);
+
+	auto box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"));
+	auto field = std::dynamic_pointer_cast<TextField>(box->getElement("TKeys"));
+	field->setText(inputMode);
 }
 
 void OptionMenu::ChangeName()
@@ -182,24 +183,47 @@ void OptionMenu::menu()
 	std::function<void()> fptr;
 	Transformation transformation(0, 0);
 
-	Box* box1 = new Box(Orientation::horizontal, Transformation(0, 0), "Box1");
+	Box_SharedPtr box1 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box1");
 	box1->setSpacing(30);
-	box1->addDrawable(new TextField("Mute music:\t", transformation, 30, DEFAULT_FONT, Color::White, "Sound", engine));
+	box1->addDrawable(std::make_shared<TextField>("Mute music:\t", transformation, 30, DEFAULT_FONT, Color::White, "Sound", engine));
 	fptr = std::bind(&OptionMenu::MuteSound, this);
-	box1->addDrawable(new CheckBox("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
+	box1->addDrawable(std::make_shared<CheckBox>("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
 
-	Box* box2 = new Box(Orientation::horizontal, Transformation(0, 0), "Box2");
+	Box_SharedPtr box2 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box2");
 	box2->setSpacing(30);
 	fptr = std::bind(&OptionMenu::ChangeName, this);
-	box2->addDrawable(new CheckBox("Change", "CheckBox.png", transformation, Color::None, fptr, "ChangeName", engine));
-	box2->addDrawable(new TextField("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
+	box2->addDrawable(std::make_shared<CheckBox>("Change", "CheckBox.png", transformation, Color::None, fptr, "ChangeName", engine));
+	box2->addDrawable(std::make_shared<TextField>("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
 	box2->addDrawable(textField);
 
-	Box* box3 = new Box(Orientation::horizontal, Transformation(250, 300), "Box3");
+	Box_SharedPtr box3 = std::make_shared<Box>(Orientation::horizontal, Transformation(250, 300), "Box3");
 	box3->setSpacing(30);
-	box3->addDrawable(new TextField("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
-	box3->addDrawable(new Button("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
-	box3->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
+	box3->addDrawable(std::make_shared<TextField>("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
+	box3->addDrawable(std::make_shared<Button>("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
+	box3->addDrawable(std::make_shared<TextField>(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
+
+// <<<<<<< HEAD
+// 	Box* box2 = new Box(Orientation::horizontal, Transformation(0, 0), "Box2");
+// 	box2->setSpacing(30);
+// 	fptr = std::bind(&OptionMenu::ChangeName, this);
+// 	box2->addDrawable(new CheckBox("Change", "CheckBox.png", transformation, Color::None, fptr, "ChangeName", engine));
+// 	box2->addDrawable(new TextField("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
+// 	box2->addDrawable(textField);
+
+// 	Box* box3 = new Box(Orientation::horizontal, Transformation(250, 300), "Box3");
+// 	box3->setSpacing(30);
+// 	box3->addDrawable(new TextField("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
+// 	box3->addDrawable(new Button("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
+// 	box3->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
+// =======
+// 	// Box* box2 = new Box(Orientation::horizontal, Transformation(0, 0), "Box2");
+// 	Box_SharedPtr box2 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box2");
+// 	box2->setSpacing(30);
+// 	box2->addDrawable(std::make_shared<TextField>("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
+// 	fptr = std::bind(&OptionMenu::ChangeKeys, this);
+// 	box2->addDrawable(std::make_shared<Button>("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
+// 	box2->addDrawable(std::make_shared<TextField>(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
+// >>>>>>> RAII
 
 	VBox->addDrawable(box2);
 	VBox->addDrawable(box1);

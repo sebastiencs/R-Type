@@ -1,18 +1,24 @@
 #ifndef LOBBY_HH_
 # define LOBBY_HH_
 
-# include "OnlineMenu.hh"
+// # include "OnlineMenu.hh"
 # include "Box.hh"
 # include "Sprite.hh"
 # include "Button.hh"
 # include "TextField.hh"
 
 class Chat;
+class OnlineMenu;
+class IThread;
+
+using IThread_SharedPtr = std::shared_ptr<IThread>;
+//using OnlineMenu_SharedPtr = std::shared_ptr<OnlineMenu>;
+using OnlineMenu_WeakPtr = std::weak_ptr<OnlineMenu>;
 
 class LobbyMenu {
 public:
-	LobbyMenu(IGraphicEngine* engine, OnlineMenu *superview);
-	~LobbyMenu();
+	LobbyMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_WeakPtr superview);
+	virtual ~LobbyMenu();
 
 	void createRequestListPlayersPaquet();
 
@@ -27,19 +33,22 @@ private:
 	void updatePlayerList();
 
 protected:
-	IGraphicEngine* engine;
-	OnlineMenu *_superview;
-	IThread *threadReceivedListPlayers;
-	IThread *threadReceivedReadyPlayers;
-	Box* quadPlayerBox;
-	Box* left;
-	Box* commands;
-	Box* right;
-	Button* readyb;
-	Button* unReadyb;
+	IGraphicEngine_SharedPtr engine;
+	OnlineMenu_WeakPtr _superview;
+	// OnlineMenu_SharedPtr _superview;
+	IThread_SharedPtr threadReceivedListPlayers;
+	IThread_SharedPtr threadReceivedReadyPlayers;
+	Box_SharedPtr quadPlayerBox;
+	Box_SharedPtr left;
+	Box_SharedPtr commands;
+	Box_SharedPtr right;
+	Button_SharedPtr readyb;
+	Button_SharedPtr unReadyb;
 	bool playerListChanged;
 	int cond;
 	Chat* chat;
 };
+
+using LobbyMenu_SharedPtr = std::shared_ptr<LobbyMenu>;
 
 #endif /* !LOBBY_HH_ */

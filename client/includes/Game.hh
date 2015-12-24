@@ -32,7 +32,7 @@ typedef struct bonusState {
   bonusState(uint8_t _type, ITimer_SharedPtr &_timer, uint16_t _time) : type(_type), timer(_timer), time(_time), expired(0) { }
 } BonusState;
 
-typedef std::shared_ptr<BonusState>	BonusState_SharedPtr;
+using BonusState_SharedPtr = std::shared_ptr<BonusState>;
 
 class		Game
 {
@@ -43,16 +43,16 @@ private:
 	ListPlayers	&_LP;
 	ListEnemies	_LE;
 	ListSecure<BonusMalus_SharedPtr> _BM;
-	ListSecure<Text* > &_nickname;
-	ListSecure<Sprite* > &_images;
+	ListSecure<Text_SharedPtr> &_nickname;
+	ListSecure<Sprite_SharedPtr> &_images;
 	IMutex_SharedPtr _mutex;
-	ITimer		*_timer;
+	ITimer_UniquePtr	_timer;
 	int			_width;
 	int			_height;
-	Packager* _packager;
-	ITimer* _shotCooldown;
+	Packager_SharedPtr _packager;
+	ITimer_UniquePtr _shotCooldown;
 	std::list<std::string> _deadPlayersName;
-	std::map<std::string, Timer* > _deadPlayersTimer;
+	std::map<std::string, ITimer_SharedPtr > _deadPlayersTimer;
 	std::map<uint8_t, std::string> enemyTypeToSpriteString;
 	std::map<uint8_t, std::string> bonusTypeToSpriteString;
 	long _interval_shot;
@@ -60,7 +60,7 @@ private:
 	int _nbShots;
 
 public:
-	Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager);
+	Game(int width, int height, ListSecure<Sprite_SharedPtr > &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager);
 	virtual ~Game();
 
 	int	run();

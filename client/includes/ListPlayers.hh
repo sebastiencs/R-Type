@@ -34,4 +34,6 @@ private:
  uint8_t _id;
 };
 
+typedef std::shared_ptr<ListPlayers> ListPlayers_SharedPtr;
+
 #endif /* !LIST_PLAYERS_HH_ */

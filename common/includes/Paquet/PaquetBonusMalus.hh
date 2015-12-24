@@ -61,4 +61,6 @@ public:
 
 std::ostream	&operator<<(std::ostream &, PaquetBonusMalus &);
 
+using PaquetBonusMalus_SharedPtr = std::shared_ptr<PaquetBonusMalus>;
+
 #endif /* !PAQUETBONUSMALUS_H_ */

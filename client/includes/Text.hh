@@ -1,6 +1,7 @@
 #ifndef TEXT_HH_
 # define TEXT_HH_
 
+# include <memory>
 # include <SFML/Graphics/Text.hpp>
 //# include "GraphicEngine.hh"
 # include "Drawable.hpp"
@@ -9,11 +10,13 @@
 class IGraphicEngine;
 class GraphicEngine;
 
+using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
+
 class Text : public Drawable {
 public:
-	Text(const std::string& text, const std::string& font, uint16_t size, const Transformation& t, IGraphicEngine* gengine = nullptr, const Color& color = Color::None);
+	Text(const std::string& text, const std::string& font, uint16_t size, const Transformation& t, IGraphicEngine_SharedPtr &&engine = nullptr, const Color& color = Color::None);
 	Text(const Text& r);
-	~Text() {};
+	virtual ~Text() {};
 
 	// Drawable
 	virtual void draw();
@@ -38,4 +41,7 @@ private:
 	Color color;
 	GraphicEngine* engine;
 };
+
+using Text_SharedPtr = std::shared_ptr<Text>;
+
 #endif /* !TEXT_HH_ */

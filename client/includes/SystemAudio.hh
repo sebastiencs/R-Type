@@ -20,17 +20,17 @@
 
 typedef struct {
   int id;
-  std::unique_ptr<sf::Music> music;
+  std::shared_ptr<sf::Music> music;
 } Music;
 
 typedef struct {
   int id;
-  std::unique_ptr<sf::SoundBuffer> buffer;
-  std::unique_ptr<sf::Sound> sound;
+  std::shared_ptr<sf::SoundBuffer> buffer;
+  std::shared_ptr<sf::Sound> sound;
 } Sound;
 
-typedef std::unique_ptr<Music>	UMusic;
-typedef std::unique_ptr<Sound>	USound;
+typedef std::shared_ptr<Music>	UMusic;
+typedef std::shared_ptr<Sound>	USound;
 
 class		SystemAudio : public ISystemAudio
 {
@@ -38,8 +38,8 @@ private:
   std::list<UMusic>	_musics;
   std::list<USound>	_sounds;
 
-  sf::Music		*_currentMusic;
-  sf::Sound		*_currentSound;
+  std::shared_ptr<sf::Music>	_currentMusic;
+  std::shared_ptr<sf::Sound>		_currentSound;
 
 public:
   SystemAudio();

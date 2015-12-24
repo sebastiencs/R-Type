@@ -32,4 +32,6 @@ public:
 	static void createFirstUDPPackage(uint8_t _playerID);
 };
 
+using Packager_SharedPtr = std::shared_ptr<Packager>;
+
 #endif // !PACKAGER_HH

@@ -12,8 +12,8 @@
 
 class OptionMenu {
 public:
-	OptionMenu(IGraphicEngine* eng);
-	~OptionMenu();
+	OptionMenu(IGraphicEngine_SharedPtr eng);
+	virtual ~OptionMenu();
 
 	void menu();
 	void initVariables();
@@ -23,7 +23,7 @@ public:
 	bool onClick(uint32_t x, uint32_t y);
 	void onHover(uint32_t x, uint32_t y);
 
-	// CheckBox	
+	// CheckBox
 	void MuteSound();
 
 	//Button
@@ -34,10 +34,10 @@ public:
 	void getText(const char c);
 
 private:
-	IGraphicEngine *engine;
-	ParserIni* parser;
+	IGraphicEngine_SharedPtr engine;
+	Box_SharedPtr VBox;
+	ParserIni_SharedPtr parser;
 	TextField* textField;
-	Box* VBox;
 
 	std::string inputMode;
 	std::string name;

@@ -4,10 +4,10 @@
 #include "Tools.hh"
 
 NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
-	: _socketUDP(new SocketUDP(SocketUDP::CLIENT)),
-	_socketTCP(new PaquetTCP(SocketTCP::CLIENT))
+  : _socketUDP(std::make_unique<SocketUDP>(SocketUDP::CLIENT)),
+    _socketTCP(std::make_unique<PaquetTCP>(SocketTCP::CLIENT))
 {
-	PaquetFirst *paquet = new PaquetFirst();
+	auto &&paquet = std::make_shared<PaquetFirst>();
 
 	// Creation du player
 	ListPlayers &list = ListPlayers::getInstance();
@@ -39,9 +39,9 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 
 	inGame = false;
 	Callback_t fptrWrite = [this](void *c) {runWrite(reinterpret_cast<int *>(c)); return nullptr; };
-	threadWrite = new Thread(fptrWrite, &condW);
+	threadWrite = std::make_shared<Thread>(fptrWrite, &condW);
 	Callback_t fptrRead = [this](void *c) {runRead(reinterpret_cast<int *>(c)); return nullptr; };
-	threadRead = new Thread(fptrRead, &condR);
+	threadRead = std::make_shared<Thread>(fptrRead, &condR);
 }
 
 NetworkClient::~NetworkClient()
@@ -50,10 +50,8 @@ NetworkClient::~NetworkClient()
   	condW = 0;
 	if (_isConnect) {
 		threadWrite->join();
-		delete threadWrite;
 		DEBUG_MSG("ThreadWrite deleted");
 		threadRead->join();
-		delete threadRead;
 		DEBUG_MSG("ThreadRead deleted");
 	}
 	_socketTCP.reset(nullptr);
@@ -85,7 +83,7 @@ int NetworkClient::runWrite(int *cond)
 				{
 					if (fd.fd == _socketUDP->socket())
 					{
-						const Paquet *paquet = PS.getToSendUDPPackage();
+						auto &paquet = PS.getToSendUDPPackage();
 						if (paquet != nullptr) {
 //							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
@@ -95,7 +93,7 @@ int NetworkClient::runWrite(int *cond)
 					}
 					else if (fd.fd == _socketTCP->socket())
 					{
-						const Paquet *paquet = PS.getToSendTCPPackage();
+						auto &paquet = PS.getToSendTCPPackage();
 						if (paquet != nullptr) {
 //							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
@@ -148,10 +146,12 @@ int NetworkClient::runRead(int *cond)
 
 							_isConnect = false;
 							inGame = false;
-							threadWrite->close();
+							condW = 0;
+							condR = 0;
+							// threadWrite->close();
 							_socketTCP.reset(nullptr);
 							_socketUDP.reset(nullptr);
-							threadRead->close();
+							// threadRead->close();
 							return (0);
 
 						}
@@ -177,8 +177,8 @@ int NetworkClient::stop()
 
 int NetworkClient::reconnect()
 {
-	_socketTCP.reset(new SocketTCP(SocketTCP::CLIENT));
-	_socketUDP.reset(new SocketUDP(SocketUDP::CLIENT));
+	_socketTCP = std::make_unique<SocketTCP>(SocketTCP::CLIENT);
+	_socketUDP = std::make_unique<SocketUDP>(SocketUDP::CLIENT);
 
 	if ((_socketTCP->connect(_ip, _port)) == -1)
 	{
@@ -188,9 +188,9 @@ int NetworkClient::reconnect()
 	_isConnect = true;
 	inGame = false;
 	Callback_t fptrWrite = [this](void *c) {runWrite(reinterpret_cast<int *>(c)); return nullptr; };
-	threadWrite = new Thread(fptrWrite, this);
+	threadWrite = std::make_shared<Thread>(fptrWrite, this);
 	Callback_t fptrRead = [this](void *c) {runRead(reinterpret_cast<int *>(c)); return nullptr; };
-	threadRead = new Thread(fptrRead, this);
+	threadRead = std::make_shared<Thread>(fptrRead, this);
 	return (1);
 }
 

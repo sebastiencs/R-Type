@@ -40,4 +40,6 @@ private:
 
 std::ostream	&operator<<(std::ostream &, PaquetDeath &);
 
+using PaquetDeath_SharedPtr = std::shared_ptr<PaquetDeath>;
+
 #endif /* !PAQUETDEATH_HH_ */

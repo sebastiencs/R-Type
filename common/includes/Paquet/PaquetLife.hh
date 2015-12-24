@@ -44,4 +44,6 @@ private:
 
 std::ostream	&operator<<(std::ostream &, PaquetLife &);
 
+using PaquetLife_SharedPtr = std::shared_ptr<PaquetLife>;
+
 #endif /* !PAQUETLIFE_HH_ */

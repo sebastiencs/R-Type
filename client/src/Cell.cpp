@@ -2,7 +2,7 @@
 #include "TextField.hh"
 #include "Debug.hh"
 
-Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine *engine, ScrollView *_superView)
+Cell::Cell(const std::string& id, const Transformation& transformation, const std::string& name, const int nbrPlayers, IGraphicEngine_SharedPtr &engine, ScrollView_SharedPtr _superView)
 {
 	_id = id;
 	_transformation = transformation;
@@ -11,17 +11,16 @@ Cell::Cell(const std::string& id, const Transformation& transformation, const st
 	nameParty = name;
 
 	this->nbrPlayers = nbrPlayers;
-	superView = _superView;
+	superView = std::move(_superView);
 
 	std::string txt = '[' + name + ']' + "\t\t" + std::to_string(nbrPlayers) + "/4";
 
-	textField = new TextField(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
+	textField = std::make_shared<TextField>(txt, _transformation, 22, "Fipps.otf", Color::White, "TextField" + _id, engine);
 	_transformation.setBounds(textField->getTransformation().getWidth(), textField->getTransformation().getHeight());
 }
 
 Cell::~Cell()
 {
-	delete textField;
 }
 
 const std::string & Cell::getNameParty()

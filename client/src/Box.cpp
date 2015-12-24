@@ -19,10 +19,10 @@ Box::~Box()
 		clearElements();
 }
 
-void Box::addDrawable(Drawable* drawable, int32_t pos)
+void Box::addDrawable(Drawable_SharedPtr drawable, int32_t pos)
 {
 	isUpdated = false;
-	std::list<Drawable* >::iterator it = elementsList.begin();
+	auto it = elementsList.begin();
 	if (pos != -1) {
 		for (int32_t tmp = 0; tmp < pos; ++tmp)
 			++it;
@@ -32,11 +32,11 @@ void Box::addDrawable(Drawable* drawable, int32_t pos)
 		elementsList.push_back(drawable);
 }
 
-void Box::removeDrawable(Drawable * drawable)
+void Box::removeDrawable(Drawable_SharedPtr drawable)
 {
 	isUpdated = false;
 
-	auto func = [&drawable] (Drawable *id) { return (id == drawable); };
+	auto func = [&drawable] (auto &id) { return (id == drawable); };
 	elementsList.remove_if(func);
 }
 
@@ -52,19 +52,19 @@ void Box::setOrientation(Orientation orientation)
 	this->orientation = orientation;
 }
 
-Drawable* Box::getElement(const std::string & id)
+Drawable_SharedPtr Box::getElement(const std::string & id)
 {
-	return (Tools::findIn(elementsList, [&id] (Drawable *b) { return (b->getId() == id); }));
+	return (Tools::findIn(elementsList, [&id] (auto &b) { return (b->getId() == id); }));
 }
 
-const std::list<Drawable*>& Box::getElements() const
+const std::list<Drawable_SharedPtr>& Box::getElements() const
 {
 	return elementsList;
 }
 
 void Box::clearElements()
 {
-	auto clearFunc = [](Drawable *elem) { delete elem; elem = nullptr; return (true); };
+	auto clearFunc = [](auto &) { return (true); };
 
 	elementsList.remove_if(clearFunc);
 	elementsList.clear();
@@ -73,16 +73,16 @@ void Box::clearElements()
 
 void Box::setElementVisibility(const std::string & id, bool v)
 {
-	Drawable* d = Tools::findIn(elementsList, [&id](Drawable *b) { return (b->getId() == id); });
+	auto &&d = Tools::findIn(elementsList, [&id](auto &b) { return (b->getId() == id); });
 	if (d) {
 		d->setVisible(v);
 		isUpdated = false;
 	}
 }
 
-void Box::setElementVisibility(Drawable * toFind, bool v)
+void Box::setElementVisibility(Drawable_SharedPtr &toFind, bool v)
 {
-	Drawable* d = Tools::findIn(elementsList, [toFind](Drawable *b) { return (b == toFind); });
+	auto &&d = Tools::findIn(elementsList, [toFind](auto &b) { return (b == toFind); });
 	if (d) {
 		d->setVisible(v);
 		isUpdated = false;
@@ -95,7 +95,7 @@ void Box::draw()
 		return;
 	if (!isUpdated)
 		updateTransformation();
-	for (IDrawable* d : elementsList)
+	for (auto &d : elementsList)
 		d->draw();
 }
 
@@ -109,8 +109,8 @@ void Box::setTransformation(const Transformation & t)
 bool Box::onAction(uint32_t x, uint32_t y)
 {
 	if (isPressed(x, y)) {
-		for (Drawable* d : elementsList)
-			if (ICallback* dc = dynamic_cast<ICallback*>(d))
+		for (auto &d : elementsList)
+			if (ICallback* dc = dynamic_cast<ICallback*>(d.get()))
 				if (dc->onAction(x, y)) {
 					return true;
 				}
@@ -120,8 +120,8 @@ bool Box::onAction(uint32_t x, uint32_t y)
 
 void Box::onHover(uint32_t x, uint32_t y)
 {
-	for (Drawable* d : elementsList)
-		if (ICallback* dc = dynamic_cast<ICallback*>(d))
+	for (auto &d : elementsList)
+		if (ICallback* dc = dynamic_cast<ICallback*>(d.get()))
 			dc->onHover(x, y);
 }
 
@@ -150,7 +150,7 @@ void Box::updateTransformation()
 	uint16_t boundWidth = 0;
 	uint16_t boundHeight = 0;
 	bool first = true;
-	for (Drawable* d : elementsList) {
+	for (auto &d : elementsList) {
 		if (d->isVisible()) {
 			if (first) {
 				Transformation newT(d->getTransformation());

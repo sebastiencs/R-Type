@@ -17,12 +17,12 @@
 # include <SFML/Graphics/Sprite.hpp>
 # include <SFML/System/Time.hpp>
 # include "IGraphicEngine.hh"
+# include "Timer.hh"
 
 class Button;
 class Drawable;
 class Text;
 class Sprite;
-class ITimer;
 class ICallback;
 class IDrawable;
 
@@ -34,11 +34,15 @@ enum KeyAlias {
 	SPACEE
 };
 
+using RenderWindow_UniquePtr = std::shared_ptr<sf::RenderWindow>;
+using Texture_SharedPtr = std::shared_ptr<sf::Texture>;
+using Font_SharedPtr = std::shared_ptr<sf::Font>;
+
 class GraphicEngine : public IGraphicEngine {
 
 public:
 	GraphicEngine();
-	~GraphicEngine();
+	virtual ~GraphicEngine();
 
 	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
 
@@ -84,7 +88,7 @@ protected:
 	bool loadImageFromFile(const std::string& file);
 	bool loadFontFromFile(const std::string& file);
 
-	ITimer* _timer;
+	ITimer_UniquePtr _timer;
 	static sf::Time elapsedTime;
 	callback call;
 	textEnteredCallback _textEnteredcallback;
@@ -96,11 +100,11 @@ protected:
 	void* callbackArg;
 
 	std::map<KeyAlias, sf::Keyboard::Key> keyMap;
-	sf::RenderWindow* window;
+	RenderWindow_UniquePtr window;
 	std::list<ICallback *> elements;
 	std::list<IDrawable *> dElements;
-	std::map<std::string, sf::Texture*> cachedImages;
-	std::map<std::string, sf::Font*> cachedFonts;
+	std::map<std::string, Texture_SharedPtr> cachedImages;
+	std::map<std::string, Font_SharedPtr> cachedFonts;
 	std::map<uint8_t, std::string> shotTypeToSpriteString;
 };
 

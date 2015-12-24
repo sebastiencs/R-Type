@@ -12,10 +12,13 @@ class Cell;
 class Box;
 class Button;
 
-class ScrollView : public Drawable, public ICallback
+using Button_SharedPtr = std::shared_ptr<Button>;
+using Box_SharedPtr = std::shared_ptr<Box>;
+
+class ScrollView : public Drawable, public ICallback, public std::enable_shared_from_this<ScrollView>
 {
 public:
-	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine *engine);
+	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr engine);
 	virtual ~ScrollView();
 
 	void createCell(const std::string& name, int nbr);
@@ -25,7 +28,7 @@ public:
 	void incrBase();
 	void decrBase();
 
-	const std::list<Drawable*>& getListCell() const;
+	const std::list<Drawable_SharedPtr>& getListCell() const;
 	const std::string& getSelectCell() const;
 
 	void setSelectedCell(const std::string& id);
@@ -40,10 +43,10 @@ public:
 	virtual const callback& getCallback() const;
 
 private:
-	IGraphicEngine *engine;
-	Box *boxCells;
+	IGraphicEngine_SharedPtr engine;
+	Box_SharedPtr boxCells;
 
-	std::list<Button* > buttons;
+	std::list<Button_SharedPtr> buttons;
 
 	std::string selectedCell;
 
@@ -51,5 +54,7 @@ private:
 	int nbrDiplayCell;
 	int base;
 };
+
+using ScrollView_SharedPtr = std::shared_ptr<ScrollView>;
 
 #endif /* !SCROLL_VIEW_HH_ */

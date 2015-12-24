@@ -19,17 +19,17 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text* > &speudo, Packager* packager)
+Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager)
 	: _PS(PackageStorage::getInstance()),
 		_audio(SystemAudio::getInstance()),
 		_LP(ListPlayers::getInstance()),
 		_nickname(speudo),
 		_images(images),
-		_timer(new Timer()),
+		_timer(std::make_unique<Timer>()),
 		_width(width),
 		_height(height),
-		_packager(packager),
-		_shotCooldown(new Timer()),
+		_packager(std::move(packager)),
+		_shotCooldown(std::make_unique<Timer>()),
 		_interval_shot(200),
 		_nbShots(1)
 {
@@ -52,9 +52,6 @@ Game::Game(int width, int height, ListSecure<Sprite* > &images, ListSecure<Text*
 
 Game::~Game()
 {
-	delete _timer;
-	if (_shotCooldown)
-		delete _shotCooldown;
 	DEBUG_MSG("Game deleted");
 }
 
@@ -129,7 +126,7 @@ void	Game::handlingNetwork()
 		if (player) {
 			DEBUG_MSG(player->getName() << " is dead");
 			_deadPlayersName.push_back(player->getName());
-			_deadPlayersTimer[player->getName()] = new Timer();
+			_deadPlayersTimer[player->getName()] = std::make_shared<Timer>();
 			_deadPlayersTimer[player->getName()]->start();
 			if (player != _LP.getListPlayers().front()) {
 				_LP.deletePlayer(player.get()->getID());
@@ -185,7 +182,7 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
+			  auto &&sprite = std::make_shared<Sprite>("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 				bullet->setX(bullet->getX() + static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
 			}
@@ -196,26 +193,26 @@ void	Game::updateGraphic()
 
 		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
 		// t.setScale(3.5f, 3.5f);
-		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
+		auto &&vesselSprite = std::make_shared<Sprite>("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);		// Player HealthBar
 		t.setScale(10.0f, 1.0f);
-		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		auto &&lifeBG = std::make_shared<Sprite>("life-bg.png", t);
 		drawImage(lifeBG);
 		t.setScale(static_cast<float>((player->getLife() / 10)), 1.0f);
-		Sprite* life = new Sprite("life-fg.png", t);
+		auto &&life = std::make_shared<Sprite>("life-fg.png", t);
 		drawImage(life);
 
 		t.setPosition(t.getX(), player->getPosition().y - 22);		// Player Name
 		t.setScale(1.0f, 1.0f);
-		Text* text = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
+		auto &&text = std::make_shared<Text>(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);
 	}
 	for (auto &&enemy : _LE.getListEnemies()) {
 		if (!enemy->getBullets().empty()) {
 			for (auto &bullet : enemy->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
+			  auto &&sprite = std::make_shared<Sprite>("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 
 				if (bullet->getType() > 0) {
@@ -256,15 +253,15 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		Sprite* vesselSprite = new Sprite(enemyTypeToSpriteString[enemy->getType()], t);
+		auto &&vesselSprite = std::make_shared<Sprite>(enemyTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() - 15);		// Enemy health bar
 		t.setScale(10.0f, 1.0f);
-		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		auto &&lifeBG = std::make_shared<Sprite>("life-bg.png", t);
 		drawImage(lifeBG);
 		t.setScale(static_cast<float>((enemy->getLife() / 10)), 1.0f);
-		Sprite* life = new Sprite("life-fg.png", t);
+		auto &&life = std::make_shared<Sprite>("life-fg.png", t);
 		drawImage(life);
 	}
 
@@ -272,7 +269,7 @@ void	Game::updateGraphic()
 
 		bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 		Transformation t(bm->getX(), bm->getY());
-		Sprite* bonusMalus = new Sprite(bonusTypeToSpriteString[bm->getType()], t);
+		auto &&bonusMalus = std::make_shared<Sprite>(bonusTypeToSpriteString[bm->getType()], t);
 		drawImage(bonusMalus);
 	}
 
@@ -283,12 +280,11 @@ void	Game::updateGraphic()
 		std::list<std::string>::iterator it = _deadPlayersName.begin();
 		while (it != _deadPlayersName.end()) {
 			if (_deadPlayersTimer[*it] && _deadPlayersTimer[*it]->ms() > DEAD_PLAYER_DRAWTIME) {
-				delete _deadPlayersTimer[*it];
 				_deadPlayersTimer.erase(*it);
 				it = _deadPlayersName.erase(it);
 			}
 			else {
-				Text* deadPlayer = new Text(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
+				auto &&deadPlayer = std::make_shared<Text>(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
 				drawText(deadPlayer);
 				y += 15;
 				++it;

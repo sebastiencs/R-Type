@@ -13,11 +13,11 @@ class OnlineMenu;
 
 class CreateGameMenu {
 public:
-	CreateGameMenu(IGraphicEngine *engine, OnlineMenu *_superView);
+	CreateGameMenu(IGraphicEngine_SharedPtr engine, OnlineMenu_SharedPtr _superView);
 	virtual ~CreateGameMenu();
 
 
-	const TextField* getServerName() const;
+	const TextField_SharedPtr &getServerName() const;
 
 	void draw();
 	bool onClick(uint32_t x, uint32_t y);
@@ -25,14 +25,16 @@ public:
 	void getText(const char);
 
 private:
-	IGraphicEngine *engine;
-	OnlineMenu *superView;
+	IGraphicEngine_SharedPtr engine;
+	OnlineMenu_SharedPtr superView;
 
-	TextField *serverName;
+	TextField_SharedPtr serverName;
 
-	Button *ok;
-	Button *back;
-	Sprite *sprite;
+	Button_SharedPtr ok;
+	Button_SharedPtr back;
+	Sprite_SharedPtr sprite;
 };
+
+using CreateGameMenu_SharedPtr = std::shared_ptr<CreateGameMenu>;
 
 #endif

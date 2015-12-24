@@ -24,10 +24,10 @@ public:
 	void sortPaquet(void *);
 
 private:
-	Thread *thread;
+	IThread_SharedPtr thread;
 	int cond;
 
-  std::map<uint8_t, std::function<void(Paquet*)>>	_tab;
+  std::map<uint8_t, std::function<void(Paquet_SharedPtr)>>	_tab;
 };
 
 #endif /* !PACKAGE_SORTER_HH */

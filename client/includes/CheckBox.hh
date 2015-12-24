@@ -11,7 +11,7 @@ class TextField;
 class CheckBox : public Drawable, public ICallback
 {
 public:
-	CheckBox(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine* engine);
+	CheckBox(const std::string& text, const std::string& img, const Transformation& t, const Color& color, callback fptr, const std::string& id, IGraphicEngine_SharedPtr engine);
 	virtual ~CheckBox();
 
 	// ICallback
@@ -34,11 +34,11 @@ public:
 	void setCheck(bool check);
 
 private:
-	IGraphicEngine* _engine;
+	IGraphicEngine_SharedPtr _engine;
 	Color _color;
 	callback _fptr;
-	Sprite* _sprite;
-	Sprite* _spriteCheck;
+	Sprite_UniquePtr _sprite;
+	Sprite_UniquePtr _spriteCheck;
 
 	std::string _text;
 	std::string _textureName;
