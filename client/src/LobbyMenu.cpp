@@ -1,11 +1,8 @@
 #include "LobbyMenu.hh"
 #include "ListPlayers.hh"
 #include "SystemAudio.hh"
-<<<<<<< HEAD
 #include "Chat.hh"
-=======
 #include "OnlineMenu.hh"
->>>>>>> RAII
 
 LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
   : engine(std::move(eng)), _superview(std::move(superview)), cond(1)

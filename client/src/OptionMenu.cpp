@@ -202,29 +202,6 @@ void OptionMenu::menu()
 	box3->addDrawable(std::make_shared<Button>("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
 	box3->addDrawable(std::make_shared<TextField>(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
 
-// <<<<<<< HEAD
-// 	Box* box2 = new Box(Orientation::horizontal, Transformation(0, 0), "Box2");
-// 	box2->setSpacing(30);
-// 	fptr = std::bind(&OptionMenu::ChangeName, this);
-// 	box2->addDrawable(new CheckBox("Change", "CheckBox.png", transformation, Color::None, fptr, "ChangeName", engine));
-// 	box2->addDrawable(new TextField("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
-// 	box2->addDrawable(textField);
-
-// 	Box* box3 = new Box(Orientation::horizontal, Transformation(250, 300), "Box3");
-// 	box3->setSpacing(30);
-// 	box3->addDrawable(new TextField("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
-// 	box3->addDrawable(new Button("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
-// 	box3->addDrawable(new TextField(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
-// =======
-// 	// Box* box2 = new Box(Orientation::horizontal, Transformation(0, 0), "Box2");
-// 	Box_SharedPtr box2 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box2");
-// 	box2->setSpacing(30);
-// 	box2->addDrawable(std::make_shared<TextField>("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
-// 	fptr = std::bind(&OptionMenu::ChangeKeys, this);
-// 	box2->addDrawable(std::make_shared<Button>("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
-// 	box2->addDrawable(std::make_shared<TextField>(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));
-// >>>>>>> RAII
-
 	VBox->addDrawable(box2);
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box3);
