@@ -6,6 +6,8 @@
 # include "Sprite.hh"
 # include "Button.hh"
 # include "TextField.hh"
+# include "Chat.hh"
+
 
 class Chat;
 class OnlineMenu;
@@ -46,7 +48,7 @@ protected:
 	Button_SharedPtr unReadyb;
 	bool playerListChanged;
 	int cond;
-	Chat* chat;
+	Chat_SharedPtr chat;
 };
 
 using LobbyMenu_SharedPtr = std::shared_ptr<LobbyMenu>;

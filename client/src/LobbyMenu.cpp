@@ -1,7 +1,6 @@
 #include "LobbyMenu.hh"
 #include "ListPlayers.hh"
 #include "SystemAudio.hh"
-#include "Chat.hh"
 #include "OnlineMenu.hh"
 
 LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
@@ -31,7 +30,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
 
-	chat = new Chat(Transformation(750, 200), engine);
+	chat = std::make_shared<Chat>(Transformation(750, 200), engine);
 }
 
 LobbyMenu::~LobbyMenu()

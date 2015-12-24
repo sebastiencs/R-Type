@@ -145,17 +145,17 @@ void OptionMenu::ChangeName()
 		catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 		PackageStorage &PS = PackageStorage::getInstance();
 		ListPlayers& PL = ListPlayers::getInstance();
-		PaquetRename *name = new PaquetRename();
+		auto &&rename = std::make_shared<PaquetRename>();
 
 		PL.getPlayer(PL.getId())->setName(textField->getText());
-		name->setID(PL.getId());
-		name->setName(textField->getText());
-		name->createPaquet();
+		rename->setID(PL.getId());
+		rename->setName(textField->getText());
+		rename->createPaquet();
 		DEBUG_MSG("SEEEEND");
-		PS.storeToSendTCPPackage(name);
+		PS.storeToSendTCPPackage(rename);
 	}
 	isWritting = !isWritting;
-	static_cast<CheckBox *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
+	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
 }
 
 void OptionMenu::getText(const char c)
@@ -205,6 +205,6 @@ void OptionMenu::menu()
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box3);
 
-	static_cast<CheckBox *>(static_cast<Box *>(VBox->getElement("Box1"))->getElement("CheckSound"))->setCheck(muteMusic);
-	static_cast<CheckBox *>(static_cast<Box *>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
+	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box1"))->getElement("CheckSound"))->setCheck(muteMusic);
+	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
 }

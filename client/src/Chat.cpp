@@ -6,7 +6,7 @@ Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr engine) :
 	updated(true)
 {
 	_transformation = t;
-	chatBackground = std::make_shared<Sprite>("chatBackground.png", _transformation, eng);
+	chatBackground = std::make_shared<Sprite>("chatBackground.png", _transformation, std::move(eng));
 	_transformation.setBounds(chatBackground->getTransformation().getWidth(), chatBackground->getTransformation().getHeight());
 	chatBox = std::make_shared<Box>(Orientation::vertical, _transformation, "chatBox");
 	chatBox->setSpacing(10);
@@ -68,7 +68,7 @@ void Chat::addMessageToBox(const std::string & text)
 			logs.pop_front();
 		}
 	}
-	auto &&dText = std::make_shared<Text>(text, DEFAULT_FONT, 10, Transformation(0, 0), eng);
+	auto &&dText = std::make_shared<Text>(text, DEFAULT_FONT, 10, Transformation(0, 0), std::move(eng));
 	dText->setId("Text" + text);
 	chatBox->addDrawable(dText);
 }
