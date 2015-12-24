@@ -4,9 +4,9 @@
 
 PackageStorage & PackageStorage::getInstance()
 {
-	static PackageStorage *instance = nullptr;
+	static PackageStorage_SharedPtr instance = nullptr;
 	if (instance == nullptr) {
-		instance = new PackageStorage();
+	  instance = std::make_shared<PackageStorage>();
 	}
 	return *instance;
 }
