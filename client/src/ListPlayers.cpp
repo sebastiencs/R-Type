@@ -61,6 +61,11 @@ void ListPlayers::clearList()
 	  });
 }
 
+bool ListPlayers::isEmpty()
+{
+	return listPlayers.empty();
+}
+
 const ListSecure<Player_SharedPtr>& ListPlayers::getListPlayers() const
 {
 	return listPlayers;

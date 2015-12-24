@@ -79,7 +79,6 @@ int		main(int argc, char **argv)
 	catch (ErrorLoadingFile &) {
 		DEBUG_MSG("Can't load music");
 	}
-	audio.playMusicRandom();
 
 	try {
 		Packager *packager = new Packager();

@@ -14,6 +14,7 @@ NetworkClient::NetworkClient(const std::string& ip, const uint16_t port)
 	std::string name = Tools::getUser();
 	Player_SharedPtr player = std::make_shared<Player>(name, 0, 0);
 	list.addPlayer(std::move(player));
+	list.setId(0);
 	//!Creation
 
 	condR = 1;

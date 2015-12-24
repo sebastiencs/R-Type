@@ -20,6 +20,7 @@ public:
 
 	void addPlayer(Player_SharedPtr &&player);
 	void clearList();
+	bool isEmpty();
 
 	void deletePlayer(uint8_t id);
 
