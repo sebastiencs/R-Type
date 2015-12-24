@@ -10,11 +10,10 @@
 OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
   : engine(std::move(eng))
 {
-	ListPlayers& PL = ListPlayers::getInstance();
 	engine = eng;
 	VBox = std::make_shared<Box>(Orientation::vertical, Transformation(350, 350), "commandBox");
 	parser = std::make_shared<ParserIni>("conf.ini");
-	textField = new TextField("", Transformation(0, 0), 30, DEFAULT_FONT, Color::None, "NameTextField", engine);
+	textField = std::make_shared<TextField>("", Transformation(0, 0), 30, DEFAULT_FONT, Color::None, "NameTextField", engine);
 	VBox->setSpacing(25);
 	initVariables();
 	menu();

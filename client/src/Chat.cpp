@@ -1,31 +1,25 @@
 #include "Chat.hh"
-#include "Transformation.hh"
-#include "IGraphicEngine.hh"
-#include "TaskScheduler.hh"
-#include "Sprite.hh"
-#include "Box.hh"
-#include "Text.hh"
-#include "TextField.hh"
 
-Chat::Chat(const Transformation & t, IGraphicEngine * engine) :
-	engine(engine),
+
+Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr engine) :
+  eng(std::move(engine)),
 	updated(true)
 {
 	_transformation = t;
-	chatBackground = new Sprite("chatBackground.png", _transformation, engine);
+	chatBackground = std::make_shared<Sprite>("chatBackground.png", _transformation, eng);
 	_transformation.setBounds(chatBackground->getTransformation().getWidth(), chatBackground->getTransformation().getHeight());
-	chatBox = new Box(Orientation::vertical, _transformation, "chatBox");
+	chatBox = std::make_shared<Box>(Orientation::vertical, _transformation, "chatBox");
 	chatBox->setSpacing(10);
 
-	userTextField = new TextField("",
+	userTextField = std::make_shared<TextField>("",
 		Transformation(_transformation.getX() + 5, _transformation.getY() - 15 + chatBackground->getTransformation().getHeight() - 20),
 		10,
 		DEFAULT_FONT,
 		Color::White,
 		"userTextField",
-		engine);
+		eng);
 	textEnteredCallback tptr = std::bind(&Chat::getText, this, std::placeholders::_1);
-	engine->setTextEnteredCallback(tptr);
+	eng->setTextEnteredCallback(tptr);
 
 	messageReceiver = new TaskScheduler([&](void*) {		// check if a new message is pending every x ms
 		std::string text = "";
@@ -47,13 +41,7 @@ Chat::~Chat()
 		messageReceiver->stop();
 		delete messageReceiver;
 	}
-	if (chatBackground)
-		delete chatBackground;
-	if (chatBox)
-		delete chatBox;
-	if (userTextField)
-		delete userTextField;
-	engine->setTextEnteredCallback(nullptr);
+	eng->setTextEnteredCallback(nullptr);
 }
 
 void Chat::draw()
@@ -74,14 +62,13 @@ void Chat::draw()
 void Chat::addMessageToBox(const std::string & text)
 {
 	if (chatBox->getElements().size() > MESSAGE_COUNT_LIMIT) {
-		Drawable* d = chatBox->getElement("Text" + logs.front());
+		auto &&d = chatBox->getElement("Text" + logs.front());
 		if (d) {
 			chatBox->removeDrawable(d);
-			delete d;
 			logs.pop_front();
 		}
 	}
-	Text* dText = new Text(text, DEFAULT_FONT, 10, Transformation(0, 0), engine);
+	auto &&dText = std::make_shared<Text>(text, DEFAULT_FONT, 10, Transformation(0, 0), eng);
 	dText->setId("Text" + text);
 	chatBox->addDrawable(dText);
 }

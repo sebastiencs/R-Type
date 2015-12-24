@@ -37,7 +37,7 @@ private:
 	IGraphicEngine_SharedPtr engine;
 	Box_SharedPtr VBox;
 	ParserIni_SharedPtr parser;
-	TextField* textField;
+	TextField_SharedPtr textField;
 
 	std::string inputMode;
 	std::string name;
