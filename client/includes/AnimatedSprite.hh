@@ -16,7 +16,7 @@ public:
 	virtual void draw();
 
 protected:
-	Timer *_timer;
+	ITimer_SharedPtr _timer;
 	sf::IntRect _subRect;
 
 	uint16_t _width;

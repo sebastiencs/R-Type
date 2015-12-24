@@ -16,15 +16,13 @@ AnimatedSprite::AnimatedSprite(const std::string& img, long fullAnimationTime, c
 	}
 	_states = 0;
 	_animationLength = fullAnimationTime;
-	_timer = new Timer();
+	_timer = std::make_shared<Timer>();
 	_timer->start();
 	_nbrStates = std::stoi(_nameSprite.substr(_nameSprite.find('-') + 1));
 }
 
 AnimatedSprite::~AnimatedSprite()
 {
-	if (_timer)
-		delete _timer;
 }
 
 void AnimatedSprite::draw()

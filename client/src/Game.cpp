@@ -19,12 +19,12 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text* > &speudo, Packager_SharedPtr packager)
+Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager)
 	: _PS(PackageStorage::getInstance()),
 		_audio(SystemAudio::getInstance()),
 		_LP(ListPlayers::getInstance()),
 		_nickname(speudo),
-		_images(std::move(images)),
+		_images(images),
 		_timer(std::make_unique<Timer>()),
 		_width(width),
 		_height(height),
@@ -177,7 +177,7 @@ void	Game::updateGraphic()
 
 		if (!player->getBullets().empty()) {
 			for (auto &bullet : player->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
+			  auto &&sprite = std::make_shared<Sprite>("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 				bullet->setX(bullet->getX() + static_cast<uint16_t>((bullet->getSpeed() * GraphicEngine::getDeltaTimeS())));
 			}
@@ -188,26 +188,26 @@ void	Game::updateGraphic()
 
 		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
 		// t.setScale(3.5f, 3.5f);
-		Sprite* vesselSprite = new Sprite("vessel" + std::to_string(i++) + ".png", t);
+		auto &&vesselSprite = std::make_shared<Sprite>("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);		// Player HealthBar
 		t.setScale(10.0f, 1.0f);
-		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		auto &&lifeBG = std::make_shared<Sprite>("life-bg.png", t);
 		drawImage(lifeBG);
 		t.setScale(static_cast<float>((player->getLife() / 10)), 1.0f);
-		Sprite* life = new Sprite("life-fg.png", t);
+		auto &&life = std::make_shared<Sprite>("life-fg.png", t);
 		drawImage(life);
 
 		t.setPosition(t.getX(), player->getPosition().y - 22);		// Player Name
 		t.setScale(1.0f, 1.0f);
-		Text* text = new Text(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
+		auto &&text = std::make_shared<Text>(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);
 	}
 	for (auto &&enemy : _LE.getListEnemies()) {
 		if (!enemy->getBullets().empty()) {
 			for (auto &bullet : enemy->getBullets()) {
-				Sprite* sprite = new Sprite("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
+			  auto &&sprite = std::make_shared<Sprite>("bullets-1.png", Transformation(bullet->getX(), bullet->getY()));
 				drawImage(sprite);
 
 				if (bullet->getType() > 0) {
@@ -248,15 +248,15 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_bullet_enemy(b)); });
 		}
 		Transformation t(enemy->getX(), enemy->getY());		// Enemy Sprite
-		Sprite* vesselSprite = new Sprite(enemyTypeToSpriteString[enemy->getType()], t);
+		auto &&vesselSprite = std::make_shared<Sprite>(enemyTypeToSpriteString[enemy->getType()], t);
 		drawImage(vesselSprite);
 
 		t.setPosition(t.getX(), t.getY() - 15);		// Enemy health bar
 		t.setScale(10.0f, 1.0f);
-		Sprite* lifeBG = new Sprite("life-bg.png", t);
+		auto &&lifeBG = std::make_shared<Sprite>("life-bg.png", t);
 		drawImage(lifeBG);
 		t.setScale(static_cast<float>((enemy->getLife() / 10)), 1.0f);
-		Sprite* life = new Sprite("life-fg.png", t);
+		auto &&life = std::make_shared<Sprite>("life-fg.png", t);
 		drawImage(life);
 	}
 
@@ -265,7 +265,7 @@ void	Game::updateGraphic()
 		bm->setX(bm->getX() - static_cast<uint16_t>(bm->getSpeed() * GraphicEngine::getDeltaTimeS()));
 		Transformation t(bm->getX(), bm->getY());
 		t.setScale(0.5f, 0.5f);
-		Sprite* bonusMalus = new Sprite("bonus.png", t);
+		auto &&bonusMalus = std::make_shared<Sprite>("bonus.png", t);
 		drawImage(bonusMalus);
 	}
 
@@ -281,7 +281,8 @@ void	Game::updateGraphic()
 				it = _deadPlayersName.erase(it);
 			}
 			else {
-				drawText(std::make_shared<Text>(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y)));
+				auto &&deadPlayer = std::make_shared<Text>(*it + " died", DEFAULT_FONT, DEFAULT_FONT_SIZE, Transformation(15, y));
+				drawText(deadPlayer);
 				y += 15;
 				++it;
 			}
