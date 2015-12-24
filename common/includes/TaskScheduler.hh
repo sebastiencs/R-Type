@@ -16,10 +16,10 @@ public:
 	void run();
 
 private:
-	IThread *thread;
+	IThread_SharedPtr thread;
 	long interval;
 	Callback_t callcack;
-	ITimer *timer;
+	ITimer_SharedPtr timer;
 	bool running;
 	Callback_t fptr;
 };

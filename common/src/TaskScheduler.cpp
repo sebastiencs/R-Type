@@ -4,7 +4,7 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 {
 	callcack = _callback;
 	interval = _t;
-	timer = new Timer();
+	timer = std::make_shared<Timer>();
 	running = true;
 	fptr = [this](void *) {this->loop(); return nullptr; };
 	run();
@@ -12,8 +12,6 @@ TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
 
 TaskScheduler::~TaskScheduler()
 {
-	if (timer)
-		delete timer;
 }
 
 void TaskScheduler::loop()
@@ -35,6 +33,6 @@ void TaskScheduler::stop()
 
 void TaskScheduler::run()
 {
-	thread = new Thread(fptr, nullptr);
+	thread = std::make_shared<Thread>(fptr, nullptr);
 	thread->run(fptr, nullptr);
 }
