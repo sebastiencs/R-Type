@@ -60,7 +60,7 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::BONUS_MALUS]		= 0x08;
   _pSize[Paquet::LIFE]			= 0x03;
   _pSize[Paquet::DEATH]			= 0x02;
-  _pSize[Paquet::RENAME]		= 0x12;
+  _pSize[Paquet::RENAME]		= 0x16;
 }
 
 ISocketTCP	*PaquetTCP::accept()
