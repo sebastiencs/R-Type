@@ -80,6 +80,7 @@ public:
   bool			addBonusMalus(const BonusMalus_SharedPtr &bm);
   void			broadcast(const listPlayers &, const Paquet &);
   void			broadcast_nolock(const listPlayers &, const Paquet &);
+  void			renamePlayer(const uint8_t id, const std::string &&name);
 };
 
 typedef std::shared_ptr<Party>	Party_SharedPtr;

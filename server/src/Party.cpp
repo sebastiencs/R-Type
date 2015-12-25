@@ -463,3 +463,12 @@ bool			Party::addBonusMalus(const BonusMalus_SharedPtr &bm)
   }
   return false;
 }
+
+void			Party::renamePlayer(const uint8_t id, const std::string &&name)
+{
+  auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
+
+  if (player) {
+    player->setName(name);
+  }
+}

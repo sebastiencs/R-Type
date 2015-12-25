@@ -405,7 +405,31 @@ void		Manager::handlePaquet(PaquetFirstUDP_SharedPtr paquet, const Addr &addr)
   }
 }
 
-void		Manager::handlePaquet(PaquetRename_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(PaquetRename_SharedPtr paquet, const Addr &addr UNUSED)
 {
+  uint8_t	id = paquet->getID();
+
   DEBUG_MSG(*paquet);
+
+  if (paquet->getName().empty()) {
+    DEBUG_MSG("Trying to rename a player with an empty name");
+    return ;
+  }
+
+  auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
+  if (party) {
+
+    party->renamePlayer(id, paquet->getName());
+
+    auto &&players = party->getPlayers();
+    broadcast_except(players, id, *paquet);
+  }
+  else {
+
+    auto &&player = _pWaiting.findIn([id] (auto &p) { return (p->getID() == id); });
+
+    if (player) {
+      player->setName(paquet->getName());
+    }
+  }
 }
