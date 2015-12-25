@@ -85,6 +85,7 @@ public:
   void		handlePaquet(PaquetRequestPlayers_SharedPtr, const Addr &);
   void		handlePaquet(PaquetResponse_SharedPtr, const Addr &);
   void		handlePaquet(PaquetFirstUDP_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetRename_SharedPtr, const Addr &);
 };
 
 #endif /* !MANAGER_H_ */

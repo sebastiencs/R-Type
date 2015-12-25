@@ -10,7 +10,6 @@
 OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
   : engine(std::move(eng))
 {
-	engine = eng;
 	VBox = std::make_shared<Box>(Orientation::vertical, Transformation(350, 350), "commandBox");
 	parser = std::make_shared<ParserIni>("conf.ini");
 	textField = std::make_shared<TextField>("", Transformation(0, 0), 30, DEFAULT_FONT, Color::None, "NameTextField", engine);
@@ -34,25 +33,28 @@ void OptionMenu::initVariables()
 	isWritting = true;
 
 	try {
-	textField->setText(parser->getText("player", "name"));
-	PL.getPlayer(PL.getId())->setName(textField->getText());
-	inputMode = parser->getText("config", "command");
+	  textField->setText(parser->getText("player", "name"));
+	  PL.getPlayer(PL.getId())->setName(textField->getText());
+	  inputMode = parser->getText("config", "command");
 
-	if (inputMode == "ZQSD")
-		engine->setInputMode(InputMode::ZQSD);
-	else if (inputMode == "WASD")
-		engine->setInputMode(InputMode::WASD);
-	else if (inputMode == "ARROWS")
-		engine->setInputMode(InputMode::ARROWS);
-	else if (inputMode == "PAD")
-		engine->setInputMode(InputMode::PAD);
-	else
-		engine->setInputMode(InputMode::ZQSD);
+	  if (inputMode == "ZQSD")
+	    engine->setInputMode(InputMode::ZQSD);
+	  else if (inputMode == "WASD")
+	    engine->setInputMode(InputMode::WASD);
+	  else if (inputMode == "ARROWS")
+	    engine->setInputMode(InputMode::ARROWS);
+	  else if (inputMode == "PAD")
+	    engine->setInputMode(InputMode::PAD);
+	  else
+	    engine->setInputMode(InputMode::ZQSD);
 
-	muteMusic  = (parser->getValue("music", "mute") == 1 ? true : false);
-	muteMusic ? audio.playMusicRandom() : audio.stopMusic();
+	  muteMusic  = (parser->getValue("music", "mute") == 1 ? true : false);
+	  muteMusic ? audio.playMusicRandom() : audio.stopMusic();
 	}
-	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
+	catch (const ParserException& e) {
+	  audio.playMusicRandom();
+	  std::cerr << e.what() << std::endl;
+	};
 }
 
 void OptionMenu::draw()
@@ -145,13 +147,17 @@ void OptionMenu::ChangeName()
 		catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 		PackageStorage &PS = PackageStorage::getInstance();
 		ListPlayers& PL = ListPlayers::getInstance();
-		auto &&rename = std::make_shared<PaquetRename>();
+		PaquetRename_SharedPtr rename = std::make_shared<PaquetRename>();
 
 		PL.getPlayer(PL.getId())->setName(textField->getText());
 		rename->setID(PL.getId());
 		rename->setName(textField->getText());
 		rename->createPaquet();
 		DEBUG_MSG("SEEEEND");
+
+		Buffer buf(rename->getData(), rename->getSize());
+
+		std::cout << buf << std::endl;
 		PS.storeToSendTCPPackage(rename);
 	}
 	isWritting = !isWritting;

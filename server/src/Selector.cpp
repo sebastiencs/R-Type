@@ -30,6 +30,7 @@ Selector::Selector(const Manager_SharedPtr &&manager)
   _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { this->call<PaquetRequestPlayers>	(buf, addr); };
   _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetResponse>		(buf, addr); };
   _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { this->call<PaquetFirstUDP>		(buf, addr); };
+  _func[Paquet::RENAME] 	 = [this](auto &buf, auto &addr) { this->call<PaquetRename>		(buf, addr); };
 }
 
 Selector::~Selector()

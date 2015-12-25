@@ -25,16 +25,16 @@ public:
     }
 };
 
-class ParserUnavaibleException : public std::logic_error
+class ParserUnavaibleException : public ParserException
 {
 public:
   ParserUnavaibleException()
-    : std::logic_error("Parser Exception")
+    : ParserException("Parser Exception")
     {
     }
 
   ParserUnavaibleException(const std::string &str)
-    : std::logic_error(str)
+    : ParserException(str)
     {
     }
 

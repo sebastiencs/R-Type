@@ -404,3 +404,8 @@ void		Manager::handlePaquet(PaquetFirstUDP_SharedPtr paquet, const Addr &addr)
     p->addr().setPortUDP(addr.get().sin_port);
   }
 }
+
+void		Manager::handlePaquet(PaquetRename_SharedPtr paquet, const Addr &addr)
+{
+  DEBUG_MSG(*paquet);
+}

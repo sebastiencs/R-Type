@@ -2,7 +2,7 @@
 #include "PaquetRename.hh"
 
 PaquetRename::PaquetRename()
-  : _id(Paquet::RENAME)
+  : _id(Paquet::RENAME), _name()
 {
 }
 
@@ -31,12 +31,12 @@ uint8_t			PaquetRename::getID() const
 
 void			PaquetRename::setName(const std::string &name)
 {
-  std::string		tmp = name;
+  size_t		len = name.size();
 
-  if (tmp.size() > 16) {
-    tmp.resize(16);
+  if (len > sizeof(_name)) {
+    len = sizeof(_name);
   }
-  _name = tmp;
+  std::copy(name.c_str(), name.c_str() + len, _name);
 }
 
 const std::string	PaquetRename::getName() const
@@ -47,25 +47,19 @@ const std::string	PaquetRename::getName() const
 void			PaquetRename::parsePaquet()
 {
   size_t	ptr = 0;
-  char		name[17];
 
   _id = readData<uint8_t>(ptr);
   _pID = readData<uint8_t>(ptr);
-  std::fill(name, name + sizeof(name), 0);
-  readData<char>(ptr, name, sizeof(name) - 1);
-  _name = name;
+  readData<char>(ptr, _name, sizeof(_name));
 }
 
 void			PaquetRename::createPaquet()
 {
   size_t	ptr = 0;
-  char		name[16];
 
   writeData<uint8_t>(ptr, &_id);
   writeData<uint8_t>(ptr, &_pID);
-  std::fill(name, name + sizeof(name), 0);
-  std::copy(_name.begin(), _name.end(), name);
-  writeData<char>(ptr, name, sizeof(name));
+  writeData<char>(ptr, _name, sizeof(_name));
 }
 
 std::ostream	&operator<<(std::ostream &os, PaquetRename &p)

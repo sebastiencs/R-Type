@@ -31,5 +31,6 @@
 # include "PaquetLife.hh"
 # include "PaquetDeath.hh"
 # include "PaquetAttrBonus.hh"
+# include "PaquetRename.hh"
 
 #endif /* !PAQUETS_H_ */

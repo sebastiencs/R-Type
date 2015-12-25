@@ -8,7 +8,6 @@
 # include "TextField.hh"
 # include "Chat.hh"
 
-
 class Chat;
 class OnlineMenu;
 class IThread;
@@ -48,7 +47,7 @@ protected:
 	Button_SharedPtr unReadyb;
 	bool playerListChanged;
 	int cond;
-	Chat_SharedPtr chat;
+	Chat_UniquePtr chat;
 };
 
 using LobbyMenu_SharedPtr = std::shared_ptr<LobbyMenu>;
