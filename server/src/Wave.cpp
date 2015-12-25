@@ -30,7 +30,7 @@ void		Wave::getSpawnEnemy()
 
   switch(_nbWaveEnemy)
     {
-    case 2: // 2 enemies
+    case 2: // 2 normal
     case 3:
       {
 	while (++i < 2) {
@@ -41,7 +41,7 @@ void		Wave::getSpawnEnemy()
 	}
 	break;
       }
-    case 4: // 4 enemies
+    case 4: // 4 mid normal
     case 6:
     case 7:
       {
@@ -69,7 +69,53 @@ void		Wave::getSpawnEnemy()
 	_party.addEnemy(e);
 	break;
       }
-    default: // 1 enemy par defaut
+    case 10: // 2 mini boss
+      {
+	while (++i < 2) {
+	  auto e = std::make_shared<Enemy>(_party.getUniqueID(), 250, Enemy::MID_BOSS, 1000, 200 + i * 220);
+	  e->pushAction(Enemy::FOLLOWING);
+	  e->setColumn(600 + i * 100);
+	  _party.addEnemy(e);
+	}
+	break;		  
+      }
+    case 12: // 5 mid normal
+      {
+	while (++i < 5) {
+	  auto e = std::make_shared<Enemy>(_party.getUniqueID(), 120, Enemy::MID_NORMAL, 1000, 120 + i * 100);
+	  e->pushAction(Enemy::FOLLOWING);
+	  e->setColumn(600 + i * 100);
+	  _party.addEnemy(e);
+	}
+	break;
+      }
+    case 13: // 2 boss
+      {
+	while (++i < 2) {
+	  auto e = std::make_shared<Enemy>(_party.getUniqueID(), 350, Enemy::BOSS, 1000, 200 + i * 220);
+	  e->pushAction(Enemy::FOLLOWING);
+	  e->setColumn(600 + i * 100);
+	  _party.addEnemy(e);
+	}
+	break;		  
+      }
+    case 15: // 1 boss 1 mid boss 1 mid normal
+      {
+	auto e = std::make_shared<Enemy>(_party.getUniqueID(), 250, Enemy::MID_BOSS, 1000, 180);
+	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
+	_party.addEnemy(e);
+	e = std::make_shared<Enemy>(_party.getUniqueID(), 120, Enemy::MID_NORMAL, 1000, 400);
+	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
+	_party.addEnemy(e);
+	e = std::make_shared<Enemy>(_party.getUniqueID(), 350, Enemy::BOSS, 1000, 600);
+	e->pushAction(Enemy::FOLLOWING);
+	e->setColumn(700);
+	_party.addEnemy(e);
+
+      }
+    default: // 1 normal defaut
       {
 	auto e = std::make_shared<Enemy>(_party.getUniqueID(), 100, Enemy::NORMAL, 1000, 400);
 	e->pushAction(Enemy::FOLLOWING);
@@ -80,30 +126,31 @@ void		Wave::getSpawnEnemy()
   }
   i = -1;
   _nbWaveEnemy++;
+  if (_nbWaveEnemy > 16)
+    _nbWaveEnemy = 0;
 }
 
 void		Wave::getSpawnBonusMalus()
 {
   switch(_nbWaveBonusMalus)
     {
-    // case 1:
-    // case 2:
-    // case 3:
-    // case 5:
-    // case 7:
-    // case 9:
-    //   {
-    // 	_party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::LIFE, 100, 500, 500));
-    // 	break;
-    //   }
-    // case 4:
-    // case 6:
-    // case 8:
-    // case 10:
+    case 1:
+    case 2:
+    case 3:
+    case 5:
+    case 7:
+    case 9:
+      {
+    	_party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::LIFE, 100, 500, 500));
+    	break;
+      }
+    case 4:
+    case 6:
+    case 8:
+    case 10:
     default:
       {
 	_party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::TRIPLE_SHOT, 100, 500, 500));
-	// _party.addBonusMalus(std::make_shared<BonusMalus>(_party.getUniqueID(), BonusMalus::INTERVAL_SHOT, 100, 500, 500));
 	break;
       }
     }
