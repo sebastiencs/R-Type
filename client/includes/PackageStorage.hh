@@ -37,6 +37,7 @@ private:
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
 
+protected:
  	PackageStorage();
 
 public:
@@ -48,7 +49,6 @@ public:
 
 	const Paquet_SharedPtr getReceivedPackage() const;
 	const PaquetPlayerCoord_SharedPtr getPlayersPackage() const;
-	const PaquetPlayerCoord_SharedPtr getEnemiesPackage() const;
 	const PaquetObstacle_SharedPtr getObstaclesPackage() const;
 	const PaquetPlayerShot_SharedPtr getShotsPackage() const;
 	const PaquetReady_SharedPtr getReadyPackage() const;
