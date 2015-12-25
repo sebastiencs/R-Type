@@ -63,6 +63,7 @@ public:
     DEATH	        = 0x11,
     ATTR_BONUS		= 0x12,
     RENAME		= 0x13,
+    CHAT		= 0x14,
     RESPONSE		= 0xFF
   };
 

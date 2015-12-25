@@ -61,6 +61,7 @@ void	PaquetTCP::initSize()
   _pSize[Paquet::LIFE]			= 0x03;
   _pSize[Paquet::DEATH]			= 0x02;
   _pSize[Paquet::RENAME]		= 0x12;
+  _pSize[Paquet::CHAT]			= 0x22;
 }
 
 ISocketTCP	*PaquetTCP::accept()
