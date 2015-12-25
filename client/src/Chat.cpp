@@ -1,8 +1,9 @@
 #include "Chat.hh"
 
-Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr &eng) :
+Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr &eng, ListPlayers &lp) :
 	engine(eng),
-	updated(true)
+	updated(true),
+	LP(lp)
 {
 	_transformation = t;
 	chatBackground = std::make_shared<Sprite>("chatBackground.png", _transformation, std::move(engine));
@@ -20,17 +21,30 @@ Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr &eng) :
 	textEnteredCallback tptr = std::bind(&Chat::getText, this, std::placeholders::_1);
 	eng->setTextEnteredCallback(tptr);
 
+	auto &PS = PackageStorage::getInstance();
+
 	messageReceiver = std::make_shared<TaskScheduler>([&](void*) {		// check if a new message is pending every x ms
 		std::string text = "";
-		// HERE: NETWORK CODE
-		text = "coucou";
-		text = text.substr(0, STRING_SIZE_LIMIT);
-		// !
-		newLogs.push_back(text);
+
+		auto &&paquet = PS.getChatPackage();
+
+		if (paquet) {
+
+		  auto &&player = LP.getPlayer(paquet->getID());
+		  if (player) {
+		    text = player->getName() + ": ";
+		  }
+
+		  text += paquet->getMessage();
+		  newLogs.push_back(text);
+		  PS.deleteChatPackage();
+
+		}
+
 		updated = false;
 		return nullptr;
 	},
-		50
+		100
 		);
 }
 
@@ -74,7 +88,7 @@ void Chat::addMessageToBox(const std::string & text)
 void Chat::getText(const char c)
 {
 	static auto validChar = [](const char c) -> bool {
-		return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ');
+		return (c >= 0x20 && c <= 0x7E);
 	};
 
 	if (c == '\b') {
@@ -82,8 +96,11 @@ void Chat::getText(const char c)
 		userTextField->setText(tmp.substr(0, tmp.size() - 1));
 	}
 	else if (c == '\n' || c == '\r') {
-		// HERE: NETWORK CODE (remove below and do everything through network?)
-		newLogs.push_back(userTextField->getText());
+
+		if (userTextField->getText().size()) {
+			Packager::createChatPackage(LP.getId(), userTextField->getText());
+			newLogs.push_back(userTextField->getText());
+		}
 		updated = false;
 		userTextField->setText("");
 		// !

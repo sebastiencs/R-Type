@@ -15,6 +15,8 @@
 # include "Sprite.hh"
 # include "TaskScheduler.hh"
 # include "TextField.hh"
+# include "Packager.hh"
+# include "ListPlayers.hh"
 
 class TaskScheduler;
 class IGraphicEngine;
@@ -30,7 +32,7 @@ using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
 class Chat : public Drawable
 {
 public:
-	Chat(const Transformation& t, IGraphicEngine_SharedPtr &engine);
+	Chat(const Transformation& t, IGraphicEngine_SharedPtr &engine, ListPlayers &lp);
 	virtual ~Chat();
 
 	// Drawable
@@ -49,6 +51,7 @@ protected:
 	Box_SharedPtr chatBox;
 	TextField_SharedPtr userTextField;
 	bool updated;
+	ListPlayers &LP;
 };
 
 using Chat_UniquePtr = std::unique_ptr<Chat>;

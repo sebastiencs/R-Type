@@ -31,7 +31,7 @@ LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
 	commands->addDrawable(unReadyb);
 	left->addDrawable(commands);
 
-	chat = std::make_unique<Chat>(Transformation(750, 200), engine);
+	chat = std::make_unique<Chat>(Transformation(750, 200), engine, ListPlayers::getInstance());
 }
 
 LobbyMenu::~LobbyMenu()
