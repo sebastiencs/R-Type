@@ -48,16 +48,16 @@ NetworkClient::~NetworkClient()
 {
   	condR = 0;
   	condW = 0;
-	if (_isConnect) {
-		threadWrite->join();
-		DEBUG_MSG("ThreadWrite deleted");
-		threadRead->join();
-		DEBUG_MSG("ThreadRead deleted");
-	}
 	_socketTCP.reset(nullptr);
 	DEBUG_MSG("SocketTCP deleted");
 	_socketUDP.reset(nullptr);
 	DEBUG_MSG("SocketUDP deleted");
+	if (_isConnect) {
+		threadWrite->join();
+		DEBUG_MSG("ThreadWrite deleted");
+		threadRead->close();
+		DEBUG_MSG("ThreadRead deleted");
+	}
 }
 
 int NetworkClient::runWrite(int *cond)
