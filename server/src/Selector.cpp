@@ -21,33 +21,33 @@ Selector::Selector(const Manager_SharedPtr &&manager)
   _func[Paquet::FIRST]		 = [this](auto &buf, auto &addr) { this->call<PaquetFirst>		(buf, addr); };
   _func[Paquet::CREATE_PARTY]	 = [this](auto &buf, auto &addr) { this->call<PaquetCreateParty>	(buf, addr); };
   _func[Paquet::JOIN_PARTY]	 = [this](auto &buf, auto &addr) { this->call<PaquetJoinParty>		(buf, addr); };
-  _func[Paquet::LEAVE]		 = [this](auto &buf, auto &addr) { this->call<PaquetLeave>		(buf, addr); };
-  _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetObstacle>		(buf, addr); };
-  _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &addr) { this->call<PaquetPlayerCoord>	(buf, addr); };
-  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &addr) { this->call<PaquetPlayerShot>		(buf, addr); };
   _func[Paquet::READY]		 = [this](auto &buf, auto &addr) { this->call<PaquetReady>		(buf, addr); };
   _func[Paquet::REQUEST_PARTIES] = [this](auto &buf, auto &addr) { this->call<PaquetRequestParties>	(buf, addr); };
   _func[Paquet::REQUEST_PLAYERS] = [this](auto &buf, auto &addr) { this->call<PaquetRequestPlayers>	(buf, addr); };
-  _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetResponse>		(buf, addr); };
   _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { this->call<PaquetFirstUDP>		(buf, addr); };
-  _func[Paquet::RENAME] 	 = [this](auto &buf, auto &addr) { this->call<PaquetRename>		(buf, addr); };
-  _func[Paquet::CHAT]	 	 = [this](auto &buf, auto &addr) { this->call<PaquetChat>		(buf, addr); };
+  _func[Paquet::LEAVE]		 = [this](auto &buf, auto &)     { this->call<PaquetLeave>		(buf); };
+  _func[Paquet::OBSTACLE] 	 = [this](auto &buf, auto &)     { this->call<PaquetObstacle>		(buf); };
+  _func[Paquet::COORD_PLAYER]	 = [this](auto &buf, auto &)     { this->call<PaquetPlayerCoord>	(buf); };
+  _func[Paquet::PLAYER_SHOT] 	 = [this](auto &buf, auto &)     { this->call<PaquetPlayerShot>		(buf); };
+  _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &)     { this->call<PaquetResponse>		(buf); };
+  _func[Paquet::RENAME] 	 = [this](auto &buf, auto &)     { this->call<PaquetRename>		(buf); };
+  _func[Paquet::CHAT]	 	 = [this](auto &buf, auto &)     { this->call<PaquetChat>		(buf); };
 }
 
 Selector::~Selector()
 {
 }
 
-template<class PaquetType>
-auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, const Addr &)) -> decltype(func) {
+template<class PaquetType, typename... Addr>
+auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr...)) -> decltype(func) {
   return func;
 }
 
-template <typename PaquetType>
-inline void	Selector::call(const Buffer &buf, const Addr &addr)
+template <typename PaquetType, typename... Addr>
+inline void	Selector::call(const Buffer &buf, Addr... addr)
 {
   if (!_manager.expired()) {
-    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr);
+    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...);
   }
 }
 

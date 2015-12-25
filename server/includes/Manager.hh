@@ -76,17 +76,18 @@ public:
   void		handlePaquet(PaquetFirst_SharedPtr, const Addr &);
   void		handlePaquet(PaquetJoinParty_SharedPtr, const Addr &);
   void		handlePaquet(PaquetCreateParty_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetLeave_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetObstacle_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetPlayerCoord_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetPlayerShot_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetLeave_SharedPtr p);
+  void		handlePaquet(PaquetObstacle_SharedPtr p);
+  void		handlePaquet(PaquetPlayerCoord_SharedPtr p);
+  void		handlePaquet(PaquetPlayerShot_SharedPtr p);
   void		handlePaquet(PaquetReady_SharedPtr, const Addr &);
   void		handlePaquet(PaquetRequestParties_SharedPtr, const Addr &);
   void		handlePaquet(PaquetRequestPlayers_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetResponse_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetFirstUDP_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetRename_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetChat_SharedPtr, const Addr &);
+  void		handlePaquet(PaquetResponse_SharedPtr p);
+  void		handlePaquet(PaquetFirstUDP_SharedPtr p, const Addr &a);
+  void		handlePaquet(PaquetRename_SharedPtr p);
+  void		handlePaquet(PaquetChat_SharedPtr p);
+  // void		handlePaquet(PaquetChat_SharedPtr, const Addr &);
 };
 
 #endif /* !MANAGER_H_ */

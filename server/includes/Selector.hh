@@ -32,11 +32,11 @@ private:
 
   listFunc		_func;
 
-  template<class PaquetType>
-  auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, const Addr &)) -> decltype(func);
+  template<class PaquetType, typename... Addr>
+  auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr...)) -> decltype(func);
 
-  template <typename PaquetType>
-  void	call(const Buffer &buf, const Addr &addr);
+  template <typename PaquetType, typename... Addr>
+  void	call(const Buffer &buf, Addr...);
 
 public:
 
