@@ -31,6 +31,8 @@ private:
 	DequeSecure<PaquetLife_SharedPtr> life;
 	DequeSecure<PaquetDeath_SharedPtr> death;
 	DequeSecure<PaquetAttrBonus_SharedPtr> attrbonus;
+	DequeSecure<PaquetRename_SharedPtr> rename;
+	DequeSecure<PaquetChat_SharedPtr> chat;
 
 	std::unique_ptr<ISemaphore>	_semOut;
 	std::unique_ptr<ISemaphore>	_semIn;
@@ -39,7 +41,7 @@ private:
 
 public:
 
- 
+
 	static PackageStorage& getInstance();
 
 	virtual ~PackageStorage();
@@ -62,6 +64,8 @@ public:
 	const PaquetLife_SharedPtr getLifePackage() const;
 	const PaquetDeath_SharedPtr getDeathPackage() const;
 	const PaquetAttrBonus_SharedPtr getAttrBonusPackage() const;
+	const PaquetRename_SharedPtr getRenamePackage() const;
+	const PaquetChat_SharedPtr getChatPackage() const;
 
 	void storeReceivedPackage(Paquet_SharedPtr package);
 	void storePlayersPackage(PaquetPlayerCoord_SharedPtr package);
@@ -81,6 +85,8 @@ public:
 	void storeLifePackage(PaquetLife_SharedPtr package);
 	void storeDeathPackage(PaquetDeath_SharedPtr package);
 	void storeAttrBonusPackage(PaquetAttrBonus_SharedPtr package);
+	void storeRenamePackage(PaquetRename_SharedPtr package);
+	void storeChatPackage(PaquetChat_SharedPtr package);
 
 	void deleteReceivedPackage();
 	void deletePlayersPackage();
@@ -100,6 +106,8 @@ public:
 	void deleteLifePackage();
 	void deleteDeathPackage();
 	void deleteAttrBonusPackage();
+	void deleteRenamePackage();
+	void deleteChatPackage();
 
 	void waitForReceivedPackage();
 	bool isThereReceivedPackage();

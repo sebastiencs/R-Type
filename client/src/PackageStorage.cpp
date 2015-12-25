@@ -121,6 +121,18 @@ const PaquetAttrBonus_SharedPtr  PackageStorage::getAttrBonusPackage() const {
 	return attrbonus.empty() ? nullptr : attrbonus.front();
 }
 
+const PaquetRename_SharedPtr  PackageStorage::getRenamePackage() const {
+	if (!rename.empty())
+		DEBUG_MSG(*rename.front());
+	return rename.empty() ? nullptr : rename.front();
+}
+
+const PaquetChat_SharedPtr  PackageStorage::getChatPackage() const {
+	if (!chat.empty())
+		DEBUG_MSG(*chat.front());
+	return chat.empty() ? nullptr : chat.front();
+}
+
 void PackageStorage::storeReceivedPackage(Paquet_SharedPtr package) {
 	received.push_back(package);
 	_semIn->post();
@@ -211,6 +223,16 @@ void PackageStorage::storeDeathPackage(PaquetDeath_SharedPtr package)
 void PackageStorage::storeAttrBonusPackage(PaquetAttrBonus_SharedPtr package)
 {
 	attrbonus.push_back(package);
+}
+
+void PackageStorage::storeRenamePackage(PaquetRename_SharedPtr package)
+{
+	rename.push_back(package);
+}
+
+void PackageStorage::storeChatPackage(PaquetChat_SharedPtr package)
+{
+	chat.push_back(package);
 }
 
 void PackageStorage::deleteReceivedPackage()
@@ -339,6 +361,20 @@ void PackageStorage::deleteAttrBonusPackage()
 {
   if (!attrbonus.empty()) {
     attrbonus.pop_front();
+  }
+}
+
+void PackageStorage::deleteRenamePackage()
+{
+  if (!rename.empty()) {
+    rename.pop_front();
+  }
+}
+
+void PackageStorage::deleteChatPackage()
+{
+  if (!chat.empty()) {
+    chat.pop_front();
   }
 }
 

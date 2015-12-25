@@ -85,6 +85,16 @@ PackageSorter::PackageSorter()
 		PackageStorage::getInstance().storeAttrBonusPackage(store);
 		PackageStorage::getInstance().deleteReceivedPackage();
 	};
+	_tab[19] = [this](Paquet_SharedPtr paquet) {
+		auto &&store = std::make_shared<PaquetRename>(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeRenamePackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
+	_tab[20] = [this](Paquet_SharedPtr paquet) {
+		auto &&store = std::make_shared<PaquetChat>(paquet->getData(), paquet->getSize());
+		PackageStorage::getInstance().storeChatPackage(store);
+		PackageStorage::getInstance().deleteReceivedPackage();
+	};
 	_tab[0xFF] = [this](Paquet_SharedPtr paquet) {
 		auto &&store = std::make_shared<PaquetResponse>(paquet->getData(), paquet->getSize());
 		PackageStorage::getInstance().storeAnswersPackage(store);
