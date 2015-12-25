@@ -31,6 +31,7 @@ Selector::Selector(const Manager_SharedPtr &&manager)
   _func[Paquet::RESPONSE] 	 = [this](auto &buf, auto &addr) { this->call<PaquetResponse>		(buf, addr); };
   _func[Paquet::FIRST_UDP] 	 = [this](auto &buf, auto &addr) { this->call<PaquetFirstUDP>		(buf, addr); };
   _func[Paquet::RENAME] 	 = [this](auto &buf, auto &addr) { this->call<PaquetRename>		(buf, addr); };
+  _func[Paquet::CHAT]	 	 = [this](auto &buf, auto &addr) { this->call<PaquetChat>		(buf, addr); };
 }
 
 Selector::~Selector()
