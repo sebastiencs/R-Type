@@ -17,6 +17,15 @@ void Packager::createMovementPackage(uint8_t _playerID, uint16_t _x, uint16_t _y
 	PackageStorage::getInstance().storeToSendUDPPackage(movement);
 }
 
+void Packager::createChatPackage(uint8_t id, const std::string &message)
+{
+	auto &&chat = std::make_shared<PaquetChat>();
+	chat->setID(id);
+	chat->setMessage(message);
+	chat->createPaquet();
+	PackageStorage::getInstance().storeToSendTCPPackage(chat);
+}
+
 void Packager::createFirstUDPPackage(uint8_t _playerID)
 {
   	auto &&first = std::make_shared<PaquetFirstUDP>();
