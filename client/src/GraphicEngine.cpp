@@ -155,6 +155,11 @@ void GraphicEngine::setTextEnteredCallback(textEnteredCallback call)
 	_textEnteredcallback = call;
 }
 
+const textEnteredCallback& GraphicEngine::getTextEnteredCallback()
+{
+	return _textEnteredcallback;
+}
+
 void GraphicEngine::setUsableKeyPressedCallback(usableKeyPressedCallback cb)
 {
 	_usableKeyPressedCallback = cb;

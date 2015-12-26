@@ -64,6 +64,7 @@ public:
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
 
+	virtual const textEnteredCallback& getTextEnteredCallback() = 0;
 	virtual int getWindowWidth() const = 0;
 	virtual int getWindowHeight() const = 0;
 

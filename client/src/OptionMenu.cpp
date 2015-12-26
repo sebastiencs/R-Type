@@ -13,7 +13,7 @@ OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
 	VBox = std::make_shared<Box>(Orientation::vertical, Transformation(350, 350), "commandBox");
 	parser = std::make_shared<ParserIni>("conf.ini");
 	textField = std::make_shared<TextField>("", Transformation(0, 0), 30, DEFAULT_FONT, Color::None, "NameTextField", engine);
-	VBox->setSpacing(25);
+	VBox->setSpacing(40);
 	initVariables();
 	menu();
 }
@@ -139,11 +139,12 @@ void OptionMenu::ChangeName()
 	{
 		textEnteredCallback tptr;
 		tptr = std::bind(&OptionMenu::getText, this, std::placeholders::_1);
+		save = engine->getTextEnteredCallback();
 		engine->setTextEnteredCallback(tptr);
 	}
 	else
 	{
-		engine->setTextEnteredCallback(nullptr);
+		engine->setTextEnteredCallback(save);
 		try {
 			parser->setText("player", "name", textField->getText());
 		}
@@ -156,7 +157,6 @@ void OptionMenu::ChangeName()
 		rename->setID(PL.getId());
 		rename->setName(textField->getText());
 		rename->createPaquet();
-		DEBUG_MSG("SEEEEND");
 
 		Buffer buf(rename->getData(), rename->getSize());
 
@@ -204,8 +204,9 @@ void OptionMenu::menu()
 	box2->addDrawable(std::make_shared<TextField>("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
 	box2->addDrawable(textField);
 
-	Box_SharedPtr box3 = std::make_shared<Box>(Orientation::horizontal, Transformation(250, 300), "Box3");
+	Box_SharedPtr box3 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box3");
 	box3->setSpacing(30);
+	fptr = std::bind(&OptionMenu::ChangeKeys, this);
 	box3->addDrawable(std::make_shared<TextField>("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
 	box3->addDrawable(std::make_shared<Button>("Keys", "CheckBox.png", transformation, Color::None, fptr, "CheckKeys", engine));
 	box3->addDrawable(std::make_shared<TextField>(inputMode, transformation, 30, DEFAULT_FONT, Color::White, "TKeys", engine));

@@ -38,6 +38,7 @@ private:
 	Box_SharedPtr VBox;
 	ParserIni_SharedPtr parser;
 	TextField_SharedPtr textField;
+	textEnteredCallback save;
 
 	std::string inputMode;
 	std::string name;
