@@ -8,7 +8,6 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
   : engine(std::move(eng)), net(std::move(_net))
 {
 	currentPage = 0;
-	// onlineMenu = new OnlineMenu(engine);
 	onlineMenu = std::make_shared<OnlineMenu>(engine);
 	creditsMenu = std::make_shared<Credits>(engine);
 	optionMenu = std::make_shared<OptionMenu>(engine);
