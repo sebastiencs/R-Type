@@ -34,7 +34,7 @@ void OptionMenu::initVariables()
 
 	try {
 	  std::string name = parser->getText("player", "name");
-///	  textField->setText(name);
+	  textField->setText(name);
 	  if (!name.empty()) {
 	    PL.getPlayer(PL.getId())->setName(name);
 	  }
