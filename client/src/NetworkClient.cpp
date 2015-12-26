@@ -180,17 +180,20 @@ int NetworkClient::reconnect()
 	_socketTCP = std::make_unique<SocketTCP>(SocketTCP::CLIENT);
 	_socketUDP = std::make_unique<SocketUDP>(SocketUDP::CLIENT);
 
-	if ((_socketTCP->connect(_ip, _port)) == -1)
+	if ((_socketTCP->connect(_ip, _port)) == -1 || (_socketUDP->connect(_ip, _port)) == -1)
 	{
 		_isConnect = false;
+		_socketTCP.reset(nullptr);
+		_socketUDP.reset(nullptr);
 		return (-1);
 	}
 	_isConnect = true;
 	inGame = false;
+
 	Callback_t fptrWrite = [this](void *c) {runWrite(reinterpret_cast<int *>(c)); return nullptr; };
-	threadWrite = std::make_shared<Thread>(fptrWrite, this);
+	threadWrite = std::make_shared<Thread>(fptrWrite, &condW);
 	Callback_t fptrRead = [this](void *c) {runRead(reinterpret_cast<int *>(c)); return nullptr; };
-	threadRead = std::make_shared<Thread>(fptrRead, this);
+	threadRead = std::make_shared<Thread>(fptrRead, &condR);
 	return (1);
 }
 
