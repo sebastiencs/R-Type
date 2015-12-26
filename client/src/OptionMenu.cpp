@@ -34,7 +34,7 @@ void OptionMenu::initVariables()
 
 	try {
 	  std::string name = parser->getText("player", "name");
-	  textField->setText(name);
+///	  textField->setText(name);
 	  if (!name.empty()) {
 	    PL.getPlayer(PL.getId())->setName(name);
 	  }
@@ -128,7 +128,7 @@ void OptionMenu::ChangeKeys()
 	}
 	catch (const ParserException& e) { std::cerr << e.what() << std::endl; };
 
-	auto box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"));
+	auto box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box3"));
 	auto field = std::dynamic_pointer_cast<TextField>(box->getElement("TKeys"));
 	field->setText(inputMode);
 }
