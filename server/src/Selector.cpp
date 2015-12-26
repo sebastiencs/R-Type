@@ -46,8 +46,7 @@ auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr.
 #ifndef __GNUC__
 
 template <typename PaquetType, typename... T>
-inline void	Selector::call(const Buffer &buf, T... addr)
-{
+inline void	Selector::call(const Buffer &buf, T... addr) {
   if (!_manager.expired()) {
     (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...);
   }
@@ -74,18 +73,9 @@ int		Selector::execFunc(const Buffer &buf, const Addr &addr)
 
 
 #ifdef __GNUC__ // gcc is shit. seb
-template<class PaquetType>
-auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func) { return func; }
-template <typename PaquetType>
-inline void	Selector::call(const Buffer &buf) {
-  if (!_manager.expired()) {
-    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf));
-  }
-}
-template <typename PaquetType, typename... T>
-inline void	Selector::call(const Buffer &buf, T... addr) {
-  if (!_manager.expired()) {
-    (_mPtr->*resolver<PaquetType, const Addr &>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...);
-  }
-}
+template<class PaquetType> auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func) { return func; } // Overload resolver with 1 arg
+template <typename PaquetType, typename... T> inline void Selector::call(const Buffer &buf, T... addr) //  call() with 2 args. Need to give <PaquetType, const Addr &>
+{ if (!_manager.expired()) (_mPtr->*resolver<PaquetType, const Addr &>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...); }
+template <typename PaquetType> inline void Selector::call(const Buffer &buf) // call() with 1 arg. Give only <PaquetType>
+{ if (!_manager.expired()) (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf)); }
 #endif // !__GNUC__
