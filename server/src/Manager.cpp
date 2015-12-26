@@ -23,12 +23,12 @@ Manager::~Manager()
   DEBUG_MSG("Manager deleted");
 }
 
-Manager_SharedPtr	Manager::getPtr()
+const Manager_SharedPtr	Manager::getPtr()
 {
   return (shared_from_this());
 }
 
-void		Manager::write(const Paquet &paquet, const Addr &addr)
+void		Manager::write(const Paquet &paquet, const Addr &addr) const
 {
   if (!_network.expired()) {
     (_network.lock())->write(paquet, addr);
@@ -38,7 +38,7 @@ void		Manager::write(const Paquet &paquet, const Addr &addr)
   }
 }
 
-void		Manager::broadcast(const PlayerList &list, const Paquet &paquet)
+void		Manager::broadcast(const PlayerList &list, const Paquet &paquet) const
 {
   if (!_network.expired()) {
 
@@ -54,7 +54,7 @@ void		Manager::broadcast(const PlayerList &list, const Paquet &paquet)
   }
 }
 
-void		Manager::broadcast_nolock(const PlayerList &list, const Paquet &paquet)
+void		Manager::broadcast_nolock(const PlayerList &list, const Paquet &paquet) const
 {
   if (!_network.expired()) {
 
@@ -70,7 +70,7 @@ void		Manager::broadcast_nolock(const PlayerList &list, const Paquet &paquet)
   }
 }
 
-void		Manager::broadcast_except(const PlayerList &list, const uint8_t id, const Paquet &paquet)
+void		Manager::broadcast_except(const PlayerList &list, const uint8_t id, const Paquet &paquet) const
 {
   if (!_network.expired()) {
 
@@ -248,7 +248,7 @@ void		Manager::handlePaquet(const PaquetLeave_SharedPtr &&paquet)
   auto &&party = _parties.findIn([id] (auto &p) { return (p->isPlayer(id)); });
 
   if (party) {
-    Player_SharedPtr &&p = party->playerLeave(id);
+    const Player_SharedPtr &&p = party->playerLeave(id);
     if (p) {
       _pWaiting.emplace_back(p);
     }

@@ -63,13 +63,13 @@ public:
   Manager();
   virtual ~Manager();
 
-  Manager_SharedPtr	getPtr();
+  const Manager_SharedPtr	getPtr();
 
   void		deletePlayer(const Addr &);
-  void		write(const Paquet &, const Addr &);
-  void		broadcast(const PlayerList &, const Paquet &);
-  void		broadcast_nolock(const PlayerList &, const Paquet &);
-  void		broadcast_except(const PlayerList &, const uint8_t, const Paquet &);
+  void		write(const Paquet &, const Addr &) const;
+  void		broadcast(const PlayerList &, const Paquet &) const;
+  void		broadcast_nolock(const PlayerList &, const Paquet &) const;
+  void		broadcast_except(const PlayerList &, const uint8_t, const Paquet &) const;
   void		setNetwork(const INetwork_SharedPtr &&);
   uint8_t	getID() const;
 
@@ -84,7 +84,7 @@ public:
   void		handlePaquet(const PaquetRequestParties_SharedPtr &&, const Addr &);
   void		handlePaquet(const PaquetRequestPlayers_SharedPtr &&, const Addr &);
   void		handlePaquet(const PaquetResponse_SharedPtr &&);
-  void		handlePaquet(const PaquetFirstUDP_SharedPtr &&, const Addr &a);
+  void		handlePaquet(const PaquetFirstUDP_SharedPtr &&, const Addr &);
   void		handlePaquet(const PaquetRename_SharedPtr &&);
   void		handlePaquet(const PaquetChat_SharedPtr &&);
 };

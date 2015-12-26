@@ -37,6 +37,7 @@ typedef std::unique_ptr<Wave>		Wave_UniquePtr;
 
 class			Party
 {
+private:
   ISemaphore_UniquePtr	_sem;
   IThread_UniquePtr	_thread;
   Manager_WeakPtr	_manager;
@@ -54,19 +55,22 @@ class			Party
   void				updateEnemy(const Enemy_SharedPtr &);
   void				updateBonus(const BonusMalus_SharedPtr &);
 
+  void			run();
+  void			broadcast(const listPlayers &, const Paquet &);
+  void			broadcast_nolock(const listPlayers &, const Paquet &);
+
 public:
   Party(const Manager_SharedPtr &&);
   Party(const Manager_SharedPtr &&, const std::string &);
   virtual ~Party();
 
-  void			run();
   void			stop();
   const listPlayers	&getPlayers() const;
   uint8_t		getNb() const;
   const std::string	&getName() const;
   bool			addPlayer(const Player_SharedPtr);
   void			deletePlayer(const Addr &);
-  Player_SharedPtr	playerLeave(const uint8_t id);
+  const Player_SharedPtr	playerLeave(const uint8_t id);
   bool			isPlayer(const Addr &) const;
   uint8_t		getIdFromAddr(const Addr &) const;
   bool			isPlayer(const uint8_t id) const;
@@ -74,12 +78,10 @@ public:
   void			setReady(const uint8_t id, const uint8_t status);
   void			setPlayerShot(const uint8_t id, const uint16_t x, const uint16_t y, const uint16_t speed, const uint8_t type);
   bool			isRunning() const;
-  void			setRunning(const bool);
   bool			addEnemy(const Enemy_SharedPtr &enemy);
-  uint8_t		getUniqueID() const;
   bool			addBonusMalus(const BonusMalus_SharedPtr &bm);
-  void			broadcast(const listPlayers &, const Paquet &);
-  void			broadcast_nolock(const listPlayers &, const Paquet &);
+  uint8_t		getUniqueID() const;
+  void			setRunning(const bool);
   void			renamePlayer(const uint8_t id, const std::string &&name);
 };
 

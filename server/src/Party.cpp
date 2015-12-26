@@ -342,7 +342,7 @@ void			Party::deletePlayer(const Addr &addr)
   }
 }
 
-Player_SharedPtr	Party::playerLeave(const uint8_t id)
+const Player_SharedPtr	Party::playerLeave(const uint8_t id)
 {
   auto &&p = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
