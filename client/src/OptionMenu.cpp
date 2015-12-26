@@ -32,6 +32,7 @@ void OptionMenu::initVariables()
 	muteMusic = false;
 	save = nullptr;
 	isWritting = true;
+	save = nullptr;
 
 	try {
 	  std::string name = parser->getText("player", "name");
@@ -162,6 +163,7 @@ void OptionMenu::ChangeName()
 		Buffer buf(rename->getData(), rename->getSize());
 
 		std::cout << buf << std::endl;
+	     
 		PS.storeToSendTCPPackage(rename);
 	}
 	isWritting = !isWritting;
@@ -196,20 +198,20 @@ void OptionMenu::menu()
 	std::function<void()> fptr;
 	Transformation transformation(0, 0);
 
-	Box_SharedPtr box1 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box1");
+	Box_SharedPtr box1 = std::make_shared<Box>(Orientation::horizontal, transformation, "Box1");
 	box1->setSpacing(30);
 	box1->addDrawable(std::make_shared<TextField>("Mute music:\t", transformation, 30, DEFAULT_FONT, Color::White, "Sound", engine));
 	fptr = std::bind(&OptionMenu::MuteSound, this);
 	box1->addDrawable(std::make_shared<CheckBox>("Sound", "CheckBox.png", transformation, Color::None, fptr, "CheckSound", engine));
 
-	Box_SharedPtr box2 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box2");
+	Box_SharedPtr box2 = std::make_shared<Box>(Orientation::horizontal, transformation, "Box2");
 	box2->setSpacing(30);
 	fptr = std::bind(&OptionMenu::ChangeName, this);
 	box2->addDrawable(std::make_shared<CheckBox>("Change", "CheckBox.png", transformation, Color::None, fptr, "ChangeName", engine));
 	box2->addDrawable(std::make_shared<TextField>("Rename:\t", transformation, 30, DEFAULT_FONT, Color::White, "Rename", engine));
 	box2->addDrawable(textField);
 
-	Box_SharedPtr box3 = std::make_shared<Box>(Orientation::horizontal, Transformation(0, 0), "Box3");
+	Box_SharedPtr box3 = std::make_shared<Box>(Orientation::horizontal, transformation, "Box3");
 	box3->setSpacing(30);
 	fptr = std::bind(&OptionMenu::ChangeKeys, this);
 	box3->addDrawable(std::make_shared<TextField>("Input mode:\t", transformation, 30, DEFAULT_FONT, Color::White, "SKeys", engine));
