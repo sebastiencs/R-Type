@@ -318,7 +318,7 @@ const std::string	&Party::getName() const
   return (_name);
 }
 
-bool			Party::addPlayer(Player_SharedPtr player)
+bool			Party::addPlayer(const Player_SharedPtr player)
 {
   if (_running == false && _players.size() < 4) {
     _players.emplace_back(player);
@@ -342,7 +342,7 @@ void			Party::deletePlayer(const Addr &addr)
   }
 }
 
-Player_SharedPtr	Party::playerLeave(uint8_t id)
+Player_SharedPtr	Party::playerLeave(const uint8_t id)
 {
   auto &&p = _players.findIn([id] (auto &p) { return (p->getID() == id); });
 
@@ -367,12 +367,12 @@ uint8_t			Party::getIdFromAddr(const Addr &addr) const
   return ((player) ? (player->getID()) : (0xFF));
 }
 
-bool			Party::isPlayer(uint8_t id) const
+bool			Party::isPlayer(const uint8_t id) const
 {
   return (_players.findIn([id] (auto &p) { return (p->getID() == id); }) != nullptr);
 }
 
-void			Party::setCoordPlayer(uint8_t id, uint16_t x, uint16_t y)
+void			Party::setCoordPlayer(const uint8_t id, const uint16_t x, const uint16_t y)
 {
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
   PaquetPlayerCoord	paquet;
@@ -386,7 +386,7 @@ void			Party::setCoordPlayer(uint8_t id, uint16_t x, uint16_t y)
   }
 }
 
-void			Party::setReady(uint8_t id, uint8_t status)
+void			Party::setReady(const uint8_t id, const uint8_t status)
 {
   auto &&player = _players.findIn([&id](auto &p) { return (p->getID() == id); });
   if (player) {
@@ -394,7 +394,7 @@ void			Party::setReady(uint8_t id, uint8_t status)
   }
 }
 
-void			Party::setPlayerShot(uint8_t id, uint16_t x, uint16_t y, uint16_t speed, uint8_t type)
+void			Party::setPlayerShot(const uint8_t id, const uint16_t x, const uint16_t y, const uint16_t speed, const uint8_t type)
 {
   auto &&player = _players.findIn([id] (auto &p) { return (p->getID() == id); });
   if (player) {
@@ -407,7 +407,7 @@ bool			Party::isRunning() const
   return (_running);
 }
 
-void			Party::setRunning(bool run)
+void			Party::setRunning(const bool run)
 {
   _running = run;
   if (run == true) {
