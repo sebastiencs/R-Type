@@ -33,7 +33,10 @@ void OptionMenu::initVariables()
 	isWritting = true;
 
 	try {
-	  textField->setText(parser->getText("player", "name"));
+	  std::string name = parser->getText("player", "name");
+	  if (name.empty())
+	    name = Tools::getUser();
+	  textField->setText(name);
 	  PL.getPlayer(PL.getId())->setName(textField->getText());
 	  inputMode = parser->getText("config", "command");
 

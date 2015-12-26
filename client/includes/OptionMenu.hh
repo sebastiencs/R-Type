@@ -8,6 +8,7 @@
 # include "LobbyMenu.hh"
 # include "IOEvent.hh"
 # include "Box.hh"
+# include "Tools.hh"
 # include "ParserIni.hh"
 
 class OptionMenu {
