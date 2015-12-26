@@ -30,7 +30,6 @@ void OptionMenu::initVariables()
 
 	inputMode = "ZQSD";
 	muteMusic = false;
-	save = nullptr;
 	isWritting = true;
 	save = nullptr;
 
