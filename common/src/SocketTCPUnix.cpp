@@ -12,7 +12,7 @@
 #include <netdb.h>
 #include "SocketTCPUnix.hh"
 
-SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
+SocketTCPUnix::SocketTCPUnix(const CONNECTION_TYPE type)
   : _error(0),
     _addr(),
     _type(type)
@@ -36,10 +36,10 @@ SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type)
   }
 }
 
-SocketTCPUnix::SocketTCPUnix(CONNECTION_TYPE type,
-			     socket_t fd,
+SocketTCPUnix::SocketTCPUnix(const CONNECTION_TYPE type,
+			     const socket_t fd,
 			     struct sockaddr_in &addr,
-			     uint16_t port)
+			     const uint16_t port)
   : _socket(fd),
     _error(0),
     _addr(fd, addr, port),
@@ -60,7 +60,7 @@ socket_t	SocketTCPUnix::socket() const
   return (_socket);
 }
 
-int	SocketTCPUnix::connect(const std::string &addr, uint16_t port)
+int	SocketTCPUnix::connect(const std::string &addr, const uint16_t port)
 {
   if (_type == SocketTCPUnix::SERVER) {
     throw std::runtime_error("Try to connect with a server");
@@ -134,7 +134,7 @@ int	SocketTCPUnix::bind(uint16_t port)
   return (0);
 }
 
-int	SocketTCPUnix::listen(int max)
+int	SocketTCPUnix::listen(const int max)
 {
   if (_type == SocketTCPUnix::CLIENT) {
     throw std::runtime_error("Try to listen on a socket with a client");

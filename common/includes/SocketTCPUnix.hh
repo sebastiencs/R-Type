@@ -34,15 +34,15 @@ protected:
 
 public:
 
-  SocketTCPUnix(CONNECTION_TYPE);
-  SocketTCPUnix(CONNECTION_TYPE, socket_t, struct sockaddr_in &, uint16_t);
+  SocketTCPUnix(const CONNECTION_TYPE);
+  SocketTCPUnix(const CONNECTION_TYPE, const socket_t, struct sockaddr_in &, const uint16_t);
   virtual ~SocketTCPUnix();
 
   virtual socket_t	socket() const;
   virtual ISocketTCP	*accept();
-  virtual int		connect(const std::string &, uint16_t);
-  virtual int		bind(uint16_t port);
-  virtual int		listen(int max);
+  virtual int		connect(const std::string &, const uint16_t);
+  virtual int		bind(const uint16_t port);
+  virtual int		listen(const int max);
   virtual ssize_t	write(const Buffer &buf);
   virtual ssize_t	write(const Buffer &buf, const Addr &addr);
   virtual ssize_t	write(const Paquet &paquet);

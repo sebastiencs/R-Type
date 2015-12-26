@@ -30,6 +30,7 @@ typedef struct sockaddr_in sockaddr_in;
 
 # endif
 
+# include <memory>
 # include <string>
 # include "Addr.hh"
 # include "Buffer.hh"
@@ -42,8 +43,8 @@ public:
   virtual ~ISocketUDP() {};
 
   virtual socket_t	socket() const = 0;
-  virtual int		connect(const std::string &, uint16_t port) = 0;
-  virtual int		bind(uint16_t port) = 0;
+  virtual int		connect(const std::string &, const uint16_t port) = 0;
+  virtual int		bind(const uint16_t port) = 0;
   virtual ssize_t	write(const Buffer &buf) = 0;
   virtual ssize_t	write(const Buffer &buf, const Addr &addr) = 0;
   virtual ssize_t	write(const Paquet &paquet) = 0;
@@ -52,7 +53,6 @@ public:
   virtual const Addr	getAddr() const = 0;
 };
 
-#include <memory>
 typedef std::shared_ptr<ISocketUDP>	ISocketUDP_SharedPtr;
 typedef std::unique_ptr<ISocketUDP>	ISocketUDP_UniquePtr;
 typedef std::weak_ptr<ISocketUDP>	ISocketUDP_WeakPtr;

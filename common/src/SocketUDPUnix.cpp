@@ -12,7 +12,7 @@
 #include <netdb.h>
 #include "SocketUDPUnix.hh"
 
-SocketUDPUnix::SocketUDPUnix(CONNECTION_TYPE type)
+SocketUDPUnix::SocketUDPUnix(const CONNECTION_TYPE type)
   : _error(0),
     _addr(),
     _type(type),
@@ -40,7 +40,7 @@ socket_t	SocketUDPUnix::socket() const
   return (_fd);
 }
 
-int	SocketUDPUnix::connect(const std::string &addr, uint16_t port)
+int	SocketUDPUnix::connect(const std::string &addr, const uint16_t port)
 {
   struct hostent	*h;
 
@@ -66,7 +66,7 @@ int	SocketUDPUnix::connect(const std::string &addr, uint16_t port)
   return (0);
 }
 
-int	SocketUDPUnix::bind(uint16_t port)
+int	SocketUDPUnix::bind(const uint16_t port)
 {
   if (_type == SocketUDPUnix::CLIENT) {
     throw std::runtime_error("Try to bind a socket with a client");

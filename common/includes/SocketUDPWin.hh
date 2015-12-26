@@ -31,13 +31,13 @@ private:
 
 public:
 
-  SocketUDPWin(CONNECTION_TYPE);
-  SocketUDPWin(CONNECTION_TYPE, socket_t);
+  SocketUDPWin(const CONNECTION_TYPE);
+  SocketUDPWin(const CONNECTION_TYPE, const socket_t);
   virtual ~SocketUDPWin();
 
   virtual socket_t	socket() const;
-  virtual int		connect(const std::string &, uint16_t);
-  virtual int		bind(uint16_t);
+  virtual int		connect(const std::string &, const uint16_t);
+  virtual int		bind(const uint16_t);
   virtual ssize_t	write(const Buffer &buf);
   virtual ssize_t	write(const Buffer &buf, const Addr &);
   virtual ssize_t	write(const Paquet &paquet);

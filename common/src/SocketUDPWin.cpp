@@ -65,7 +65,7 @@ int	SocketUDPWin::connect(const std::string &addr, const uint16_t port)
 	return (0);
 }
 
-int	SocketUDPWin::bind(uint16_t port)
+int	SocketUDPWin::bind(const uint16_t port)
 {
   // For the Server
   _addr.sin_family = AF_INET;
