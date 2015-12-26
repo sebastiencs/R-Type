@@ -32,16 +32,17 @@ private:
 
   listFunc		_func;
 
-  template<class PaquetType, typename... Addr>
-  auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr...)) -> decltype(func);
+  template <typename PaquetType>
+  struct resolver {
+    template <typename... Args>
+    auto operator ()(void (Manager::*func)(std::shared_ptr<PaquetType>, Args...)) -> decltype(func) {
+      return func;
+    }
+  };
 
   template <typename PaquetType, typename... Addr>
   void	call(const Buffer &buf, Addr...);
 
-#ifdef __GNUC__ // gcc is shit. seb
-  template<class PaquetType> auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func);
-  template <typename PaquetType> void call(const Buffer &buf);
-#endif // !__GNUC__
 
 public:
 
@@ -51,4 +52,20 @@ public:
   int		execFunc(const Buffer &, const Addr &);
 };
 
+
 #endif /* !SELECTOR_H_ */
+
+
+  // template <typename PaquetType>
+  // struct call
+  // {
+  //   template<typename... Addr>
+  //   void	operator()(const Buffer &buf, Addr...);
+
+  // template<class PaquetType, typename... Addr>
+  // auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr...)) -> decltype(func);
+
+// #ifdef __GNUC__ // gcc is shit. seb
+//   template<class PaquetType> auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func);
+//   template <typename PaquetType> void call(const Buffer &buf);
+// #endif // !__GNUC__
