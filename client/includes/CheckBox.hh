@@ -46,4 +46,6 @@ private:
 	bool _check;
 };
 
+using CheckBox_SharedPtr = std::shared_ptr<CheckBox>;
+
 #endif /* !CHECK_BOX_H_ */

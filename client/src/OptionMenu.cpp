@@ -164,7 +164,11 @@ void OptionMenu::ChangeName()
 		PS.storeToSendTCPPackage(rename);
 	}
 	isWritting = !isWritting;
-	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
+
+	auto box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"));
+	auto check_box = std::dynamic_pointer_cast<CheckBox>(box->getElement("ChangeName"));
+	check_box->setCheck(isWritting);
+	
 }
 
 void OptionMenu::getText(const char c)
@@ -215,6 +219,11 @@ void OptionMenu::menu()
 	VBox->addDrawable(box1);
 	VBox->addDrawable(box3);
 
-	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box1"))->getElement("CheckSound"))->setCheck(muteMusic);
-	std::dynamic_pointer_cast<CheckBox>(std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"))->getElement("ChangeName"))->setCheck(isWritting);
+	auto box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box1"));
+	auto check_box = std::dynamic_pointer_cast<CheckBox>(box->getElement("CheckSound"));
+	check_box->setCheck(muteMusic);
+
+	box = std::dynamic_pointer_cast<Box>(VBox->getElement("Box2"));
+	check_box = std::dynamic_pointer_cast<CheckBox>(box->getElement("ChangeName"));
+	check_box->setCheck(isWritting);
 }

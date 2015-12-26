@@ -66,7 +66,7 @@ public:
 	virtual void setTextEnteredCallback(textEnteredCallback);
 	virtual void setUsableKeyPressedCallback(usableKeyPressedCallback);
 
-	virtual const textEnteredCallback& getTextEnteredCallback();
+	virtual textEnteredCallback getTextEnteredCallback() const;
 	virtual int getWindowWidth() const;
 	virtual int getWindowHeight() const;
 

@@ -155,7 +155,7 @@ void GraphicEngine::setTextEnteredCallback(textEnteredCallback call)
 	_textEnteredcallback = call;
 }
 
-const textEnteredCallback& GraphicEngine::getTextEnteredCallback()
+textEnteredCallback GraphicEngine::getTextEnteredCallback() const
 {
 	return _textEnteredcallback;
 }
