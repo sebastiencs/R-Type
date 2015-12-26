@@ -34,10 +34,10 @@ void OptionMenu::initVariables()
 
 	try {
 	  std::string name = parser->getText("player", "name");
-	  if (name.empty())
-	    name = Tools::getUser();
 	  textField->setText(name);
-	  PL.getPlayer(PL.getId())->setName(textField->getText());
+	  if (!name.empty()) {
+	    PL.getPlayer(PL.getId())->setName(name);
+	  }
 	  inputMode = parser->getText("config", "command");
 
 	  if (inputMode == "ZQSD")
