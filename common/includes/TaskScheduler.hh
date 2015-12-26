@@ -8,7 +8,7 @@
 
 class TaskScheduler {
 public:
-	TaskScheduler(Callback_t _callback, long _t);
+	TaskScheduler(const Callback_t &_callback, const long _t);
 	virtual ~TaskScheduler();
 
 	void loop();

@@ -114,7 +114,7 @@ const std::string &ParserIni::getText(const std::string& categorie, const std::s
   return (getData(categorie, variable));
 }
 
-void ParserIni::setValue(const std::string & categorie, const std::string& variable, int value)
+void ParserIni::setValue(const std::string & categorie, const std::string& variable, const int value)
 {
   _values[categorie][variable] = std::to_string(value);
 }

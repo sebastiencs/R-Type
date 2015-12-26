@@ -22,8 +22,8 @@ class		ISignal
 public:
   virtual ~ISignal() {};
 
-  virtual void	addSignal(int signal_id, Handler_t handler) = 0;
-  virtual bool	callHandler(int) = 0;
+  virtual void	addSignal(const int signal_id, const Handler_t &&handler) = 0;
+  virtual bool	callHandler(const int) = 0;
 };
 
 #include <memory>

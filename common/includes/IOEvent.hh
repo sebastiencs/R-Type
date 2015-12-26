@@ -37,8 +37,8 @@ public:
     POLL_WAIT = -1
   };
 
-  static int	poll(Pollfd &fds, int timeout);
-  static int	wait(int timeout);
+  static int	poll(Pollfd &fds, const int timeout);
+  static int	wait(const int timeout);
 };
 
 #endif /* !IOEVENT_H_ */

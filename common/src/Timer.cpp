@@ -30,7 +30,7 @@ void		Timer::reset()
   start();
 }
 
-bool		Timer::ms(long ms)
+bool		Timer::ms(const long ms)
 {
   std::chrono::high_resolution_clock::time_point	t2;
   t2 = std::chrono::high_resolution_clock::now();
@@ -40,7 +40,7 @@ bool		Timer::ms(long ms)
   return ((diff.count() >= ms) ? (true) : (false));
 }
 
-bool		Timer::msWait(long ms)
+bool		Timer::msWait(const long ms)
 {
   std::chrono::high_resolution_clock::time_point	t2;
   t2 = std::chrono::high_resolution_clock::now();
@@ -67,7 +67,7 @@ long		Timer::ms()
   return (static_cast<long>(diff.count()));
 }
 
-bool		Timer::ns(long ms)
+bool		Timer::ns(const long ms)
 {
   std::chrono::high_resolution_clock::time_point	t2;
   t2 = std::chrono::high_resolution_clock::now();
@@ -87,7 +87,7 @@ long		Timer::ns()
   return (static_cast<long>(diff.count()));
 }
 
-bool		Timer::sec(long s)
+bool		Timer::sec(const long s)
 {
   std::chrono::high_resolution_clock::time_point	t2;
   t2 = std::chrono::high_resolution_clock::now();
@@ -119,7 +119,7 @@ float		Timer::secFloat()
 
 #undef min
 
-bool		Timer::min(long ms)
+bool		Timer::min(const long ms)
 {
   std::chrono::high_resolution_clock::time_point	t2;
   t2 = std::chrono::high_resolution_clock::now();

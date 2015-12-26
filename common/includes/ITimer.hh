@@ -22,15 +22,15 @@ public:
   virtual ~ITimer() {};
 
   virtual void	start() = 0;
-  virtual bool	ms(long) = 0;
-  virtual bool	msWait(long) = 0;
+  virtual bool	ms(const long) = 0;
+  virtual bool	msWait(const long) = 0;
   virtual long	ms() = 0;
-  virtual bool	ns(long) = 0;
+  virtual bool	ns(const long) = 0;
   virtual long	ns() = 0;
-  virtual bool	sec(long) = 0;
+  virtual bool	sec(const long) = 0;
   virtual long	sec() = 0;
   virtual float	secFloat() = 0;
-  virtual bool	min(long) = 0;
+  virtual bool	min(const long) = 0;
   virtual long	min() = 0;
   virtual void	reset() = 0;
 };

@@ -34,15 +34,15 @@ protected:
   int _clientLen;
 public:
 
-  SocketTCPWin(CONNECTION_TYPE);
-  SocketTCPWin(CONNECTION_TYPE, socket_t, struct sockaddr_in &, uint16_t);
+  SocketTCPWin(const CONNECTION_TYPE);
+  SocketTCPWin(const CONNECTION_TYPE, const socket_t, struct sockaddr_in &, const uint16_t);
   virtual ~SocketTCPWin();
 
   virtual socket_t	socket() const;
   virtual ISocketTCP	*accept();
-  virtual int	  connect(const std::string &, uint16_t);
-  virtual int		bind(uint16_t);
-  virtual int		listen(int);
+  virtual int	  connect(const std::string &, const uint16_t);
+  virtual int		bind(const uint16_t);
+  virtual int		listen(const int);
   virtual ssize_t	write(const Buffer &buf);
   virtual ssize_t	write(const Buffer &buf, const Addr &addr);
   virtual ssize_t	write(const Paquet &paquet);

@@ -47,7 +47,7 @@ public:
   Addr(const Addr &);
   Addr(const struct sockaddr_in &);
   Addr(const socket_t &);
-  Addr(const socket_t &, const struct sockaddr_in &, uint16_t port);
+  Addr(const socket_t &, const struct sockaddr_in &, const uint16_t port);
   virtual ~Addr();
 
   Addr				&operator=(const Addr &);

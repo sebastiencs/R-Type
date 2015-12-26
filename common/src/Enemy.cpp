@@ -118,7 +118,7 @@ void	Enemy::setStatus(const int status)
   _status = status;
 }
 
-void	Enemy::pushAction(int action)
+void	Enemy::pushAction(const int action)
 {
   _actions.push(action);
 }

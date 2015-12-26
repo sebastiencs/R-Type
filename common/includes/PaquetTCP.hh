@@ -34,8 +34,8 @@ private:
   ssize_t	readDone(Buffer &);
 
 public:
-  PaquetTCP(SocketTCP::CONNECTION_TYPE);
-  PaquetTCP(CONNECTION_TYPE type, socket_t fd, struct sockaddr_in &addr, uint16_t port);
+  PaquetTCP(const SocketTCP::CONNECTION_TYPE);
+  PaquetTCP(const CONNECTION_TYPE type, const socket_t fd, struct sockaddr_in &addr, const uint16_t port);
   virtual ~PaquetTCP();
 
   virtual ISocketTCP	*accept();

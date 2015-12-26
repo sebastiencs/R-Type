@@ -1,6 +1,6 @@
 #include "TaskScheduler.hh"
 
-TaskScheduler::TaskScheduler(Callback_t _callback, long _t)
+TaskScheduler::TaskScheduler(const Callback_t &_callback, const long _t)
 {
 	callcack = _callback;
 	interval = _t;

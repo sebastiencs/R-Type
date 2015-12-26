@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include "SocketUDPWin.hh"
 
-SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
+SocketUDPWin::SocketUDPWin(const CONNECTION_TYPE type)
   : _isKnown(false),
     _addr(),
     _type(type)
@@ -33,7 +33,7 @@ SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type)
   }
 }
 
-SocketUDPWin::SocketUDPWin(CONNECTION_TYPE type, socket_t fd)
+SocketUDPWin::SocketUDPWin(const CONNECTION_TYPE type, const socket_t fd)
   : _isKnown(false)
 {
 	_socket = fd;
@@ -55,7 +55,7 @@ socket_t	SocketUDPWin::socket() const
   return (_socket);
 }
 
-int	SocketUDPWin::connect(const std::string &addr, uint16_t port)
+int	SocketUDPWin::connect(const std::string &addr, const uint16_t port)
 {
   // For the Client
   _addr.sin_family = AF_INET;

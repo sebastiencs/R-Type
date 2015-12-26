@@ -29,22 +29,22 @@ public:
   virtual void		reset();
 
   // Is n milliseconds expired from start() ( or reset() )
-  virtual bool		ms(long);
-  virtual bool		msWait(long);
+  virtual bool		ms(const long);
+  virtual bool		msWait(const long);
   // return n milliseconds from start() ( or reset() )
   virtual long		ms();
 
   // Same in nanoseconds
-  virtual bool		ns(long);
+  virtual bool		ns(const long);
   virtual long		ns();
 
   // Same in seconds
-  virtual bool		sec(long);
+  virtual bool		sec(const long);
   virtual long		sec();
   virtual float		secFloat();
 
   // Same in minutes
-  virtual bool		min(long);
+  virtual bool		min(const long);
   virtual long		min();
 };
 

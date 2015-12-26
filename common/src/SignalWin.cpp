@@ -22,12 +22,12 @@ SignalWin::~SignalWin()
 	DEBUG_MSG("SignalWin deleted");
 }
 
-void		SignalWin::addSignal(int sig, Handler_t handler)
+void		SignalWin::addSignal(const int sig, const Handler_t &&handler)
 {
 	_listHandler[sig] = handler;
 }
 
-bool		SignalWin::callHandler(int sig)
+bool		SignalWin::callHandler(const int sig)
 {
 	DEBUG_MSG("SignalWin received");
 	if (_listHandler.find(sig) != _listHandler.end()) {
@@ -52,7 +52,7 @@ SignalWin		*class_save(SignalWin *ptr_class = nullptr)
 	}
 }
 
-bool		sig_handler(int sig)
+bool		sig_handler(const int sig)
 {
 	SignalWin	*signal;
 

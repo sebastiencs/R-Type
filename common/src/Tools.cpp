@@ -11,7 +11,7 @@
 #include "Tools.hh"
 
 
-int		Tools::random(int min, int max)
+int		Tools::random(const int min, int max)
 {
   static int	done = 0;
 

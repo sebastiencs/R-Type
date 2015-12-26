@@ -29,6 +29,7 @@ typedef SSIZE_T ssize_t;
 
 # endif
 
+# include <memory>
 # include <string>
 # include "Buffer.hh"
 # include "Addr.hh"
@@ -42,9 +43,9 @@ public:
 
   virtual socket_t	socket() const = 0;
   virtual ISocketTCP	*accept() = 0;
-  virtual int		connect(const std::string &, uint16_t) = 0;
-  virtual int		bind(uint16_t) = 0;
-  virtual int		listen(int) = 0;
+  virtual int		connect(const std::string &, const uint16_t) = 0;
+  virtual int		bind(const uint16_t) = 0;
+  virtual int		listen(const int) = 0;
   virtual ssize_t	write(const Buffer &buf) = 0;
   virtual ssize_t	write(const Buffer &buf, const Addr &addr) = 0;
   virtual ssize_t	write(const Paquet &paquet) = 0;
@@ -53,7 +54,6 @@ public:
   virtual const Addr	getAddr() const = 0;
 };
 
-#include <memory>
 typedef std::shared_ptr<ISocketTCP>	ISocketTCP_SharedPtr;
 typedef std::unique_ptr<ISocketTCP>	ISocketTCP_UniquePtr;
 typedef std::weak_ptr<ISocketTCP>	ISocketTCP_WeakPtr;

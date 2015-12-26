@@ -28,11 +28,11 @@ public:
 	SignalWin();
 	virtual ~SignalWin();
 
-	virtual void	addSignal(int, Handler_t);
-	virtual bool	callHandler(int sig);
+	virtual void	addSignal(const int, const Handler_t &&);
+	virtual bool	callHandler(const int sig);
 };
 
-bool		sig_handler(int);
+bool		sig_handler(const int);
 SignalWin	*class_save(SignalWin *ptr_class);
 
 

@@ -18,7 +18,7 @@ IOEvent::~IOEvent()
 {
 }
 
-int	IOEvent::poll(Pollfd &fds, int timeout)
+int	IOEvent::poll(Pollfd &fds, const int timeout)
 {
 #ifdef __unix__
   return (::poll(fds.data(), fds.size(), timeout));
@@ -27,7 +27,7 @@ int	IOEvent::poll(Pollfd &fds, int timeout)
 #endif
 }
 
-int	IOEvent::wait(int timeout)
+int	IOEvent::wait(const int timeout)
 {
 #ifdef __unix__
   return (::poll(nullptr, 0, timeout));

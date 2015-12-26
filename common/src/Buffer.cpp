@@ -38,7 +38,7 @@ Size		Buffer::size() const
   return (_size);
 }
 
-void		Buffer::setSize(Size size)
+void		Buffer::setSize(const Size size)
 {
   if (size <= _size) {
     _size = size;
@@ -62,7 +62,7 @@ void		Buffer::reset()
   _ptr = 0;
 }
 
-const Data	&Buffer::operator[](Size id) const
+const Data	&Buffer::operator[](const Size id) const
 {
   if (id <= _size) {
     return (_buffer.get()[id]);

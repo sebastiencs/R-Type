@@ -54,7 +54,7 @@ namespace		Tools
     return ((found != input.end()) ? (true) : (false));
   }
 
-  int			random(int min, int max);
+  int			random(const int min, int max);
   const std::string	&getUser();
 
 };

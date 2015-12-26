@@ -10,7 +10,7 @@
 
 #include "PaquetTCP.hh"
 
-PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type)
+PaquetTCP::PaquetTCP(const SocketTCP::CONNECTION_TYPE type)
   : SocketTCP(type),
     _buffer(new Buffer()),
     _bufferTMP(new Buffer()),
@@ -20,10 +20,10 @@ PaquetTCP::PaquetTCP(SocketTCP::CONNECTION_TYPE type)
   initSize();
 }
 
-PaquetTCP::PaquetTCP(CONNECTION_TYPE type,
-		     socket_t fd,
+PaquetTCP::PaquetTCP(const CONNECTION_TYPE type,
+		     const socket_t fd,
 		     struct sockaddr_in &addr,
-		     uint16_t port)
+		     const uint16_t port)
   : SocketTCP(type, fd, addr, port),
     _buffer(new Buffer()),
     _bufferTMP(new Buffer()),

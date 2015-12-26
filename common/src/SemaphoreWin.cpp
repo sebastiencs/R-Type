@@ -36,7 +36,6 @@ bool	SemaphoreWin::post()
 
 bool	SemaphoreWin::wait()
 {
-	//WaitForSingleObject//WaitForMultipleObjects
 	if (WaitForSingleObject(_sem, INFINITE) == WAIT_FAILED) {
 		return (false);
 	}

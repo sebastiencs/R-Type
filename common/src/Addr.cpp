@@ -47,7 +47,7 @@ Addr::Addr(const Addr &addr)
   _port = addr._port;
 }
 
-Addr::Addr(const socket_t &fd, const struct sockaddr_in &sock, uint16_t port)
+Addr::Addr(const socket_t &fd, const struct sockaddr_in &sock, const uint16_t port)
 {
   _socket = fd;
   _addr = sock;

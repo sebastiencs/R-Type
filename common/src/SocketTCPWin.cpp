@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include "SocketTCPWin.hh"
 
-SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
+SocketTCPWin::SocketTCPWin(const CONNECTION_TYPE type)
 {
   _type = type;
   if ((_socket = ::socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
@@ -20,10 +20,10 @@ SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type)
     DEBUG_MSG("SocketTCPWin created");
 }
 
-SocketTCPWin::SocketTCPWin(CONNECTION_TYPE type,
-			   socket_t fd,
+SocketTCPWin::SocketTCPWin(const CONNECTION_TYPE type,
+			   const socket_t fd,
 			   struct sockaddr_in &addr,
-			   uint16_t port)
+			   const uint16_t port)
   : _socket(fd),
     _addr(fd, addr, port),
     _port(port),
@@ -46,7 +46,7 @@ socket_t	SocketTCPWin::socket() const
   return (_socket);
 }
 
-int	SocketTCPWin::connect(const std::string &addr, uint16_t port)
+int	SocketTCPWin::connect(const std::string &addr, const uint16_t port)
 {
   if (_type == SocketTCPWin::SERVER) {
     throw std::runtime_error("Try to connect with a server");
@@ -80,7 +80,7 @@ ISocketTCP	*SocketTCPWin::accept()
   return newClient;
 }
 
-int	SocketTCPWin::bind(uint16_t port)
+int	SocketTCPWin::bind(const uint16_t port)
 {
   if (_type == SocketTCPWin::CLIENT) {
     throw std::runtime_error("Try to connect with a server");
@@ -95,7 +95,7 @@ int	SocketTCPWin::bind(uint16_t port)
   return (0);
 }
 
-int	SocketTCPWin::listen(int max)
+int	SocketTCPWin::listen(const int max)
 {
   if (_type == SocketTCPWin::CLIENT) {
     throw std::runtime_error("Try to connect with a server");

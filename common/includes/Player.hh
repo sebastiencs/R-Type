@@ -32,8 +32,8 @@ private:
 
 public:
   Player();
-  Player(const std::string &, uint8_t, const Position &, uint8_t, int, bool);
-  Player(const std::string &name, uint8_t id, uint8_t level, const Addr & = 0, const uint16_t sizeX = 80, const uint16_t sizeY = 91);
+  Player(const std::string &, const uint8_t, const Position &, const uint8_t, const int, const bool);
+  Player(const std::string &name, const uint8_t id, const uint8_t level, const Addr & = 0, const uint16_t sizeX = 80, const uint16_t sizeY = 91);
   virtual ~Player();
 
   virtual const std::list<Bullet_SharedPtr> &getBullets() const;
@@ -45,7 +45,7 @@ public:
 
   virtual int			getLife() const;
   virtual int			&getLife();
-  virtual void			setLife(int);
+  virtual void			setLife(const int);
 
   virtual const std::string	&getName() const;
   virtual void			setName(const std::string &);
