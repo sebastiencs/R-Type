@@ -38,6 +38,13 @@ private:
   template <typename PaquetType, typename... Addr>
   void	call(const Buffer &buf, Addr...);
 
+#ifdef __GNUC__ // gcc is shit. seb
+  template<class PaquetType>
+  auto resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func);
+  template <typename PaquetType>
+  void	call(const Buffer &buf);
+#endif // !__GNUC__
+
 public:
 
   Selector(const Manager_SharedPtr &&manager);

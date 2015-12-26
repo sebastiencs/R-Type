@@ -43,13 +43,17 @@ auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>, Addr.
   return func;
 }
 
-template <typename PaquetType, typename... Addr>
-inline void	Selector::call(const Buffer &buf, Addr... addr)
+#ifndef __GNUC__
+
+template <typename PaquetType, typename... T>
+inline void	Selector::call(const Buffer &buf, T... addr)
 {
   if (!_manager.expired()) {
     (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...);
   }
 }
+
+#endif // !__GNUC__
 
 int		Selector::execFunc(const Buffer &buf, const Addr &addr)
 {
@@ -64,3 +68,24 @@ int		Selector::execFunc(const Buffer &buf, const Addr &addr)
 
   return (0);
 }
+
+
+
+
+
+#ifdef __GNUC__ // gcc is shit. seb
+template<class PaquetType>
+auto Selector::resolver(void (Manager::*func)(std::shared_ptr<PaquetType>)) -> decltype(func) { return func; }
+template <typename PaquetType>
+inline void	Selector::call(const Buffer &buf) {
+  if (!_manager.expired()) {
+    (_mPtr->*resolver<PaquetType>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf));
+  }
+}
+template <typename PaquetType, typename... T>
+inline void	Selector::call(const Buffer &buf, T... addr) {
+  if (!_manager.expired()) {
+    (_mPtr->*resolver<PaquetType, const Addr &>(&Manager::handlePaquet))(std::make_shared<PaquetType>(buf), addr...);
+  }
+}
+#endif // !__GNUC__
