@@ -70,24 +70,23 @@ public:
   void		broadcast(const PlayerList &, const Paquet &);
   void		broadcast_nolock(const PlayerList &, const Paquet &);
   void		broadcast_except(const PlayerList &, const uint8_t, const Paquet &);
-  void		setNetwork(INetwork_SharedPtr &&);
+  void		setNetwork(const INetwork_SharedPtr &&);
   uint8_t	getID() const;
 
-  void		handlePaquet(PaquetFirst_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetJoinParty_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetCreateParty_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetLeave_SharedPtr p);
-  void		handlePaquet(PaquetObstacle_SharedPtr p);
-  void		handlePaquet(PaquetPlayerCoord_SharedPtr p);
-  void		handlePaquet(PaquetPlayerShot_SharedPtr p);
-  void		handlePaquet(PaquetReady_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetRequestParties_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetRequestPlayers_SharedPtr, const Addr &);
-  void		handlePaquet(PaquetResponse_SharedPtr p);
-  void		handlePaquet(PaquetFirstUDP_SharedPtr p, const Addr &a);
-  void		handlePaquet(PaquetRename_SharedPtr p);
-  void		handlePaquet(PaquetChat_SharedPtr p);
-  // void		handlePaquet(PaquetChat_SharedPtr, const Addr &);
+  void		handlePaquet(const PaquetFirst_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetJoinParty_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetCreateParty_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetLeave_SharedPtr &&);
+  void		handlePaquet(const PaquetObstacle_SharedPtr &&);
+  void		handlePaquet(const PaquetPlayerCoord_SharedPtr &&);
+  void		handlePaquet(const PaquetPlayerShot_SharedPtr &&);
+  void		handlePaquet(const PaquetReady_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetRequestParties_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetRequestPlayers_SharedPtr &&, const Addr &);
+  void		handlePaquet(const PaquetResponse_SharedPtr &&);
+  void		handlePaquet(const PaquetFirstUDP_SharedPtr &&, const Addr &a);
+  void		handlePaquet(const PaquetRename_SharedPtr &&);
+  void		handlePaquet(const PaquetChat_SharedPtr &&);
 };
 
 #endif /* !MANAGER_H_ */

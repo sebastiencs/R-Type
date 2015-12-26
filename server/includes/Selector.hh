@@ -35,7 +35,7 @@ private:
   template <typename PaquetType>
   struct resolver {
     template <typename... Args>
-    auto operator ()(void (Manager::*func)(std::shared_ptr<PaquetType>, Args...)) -> decltype(func) {
+    auto operator ()(void (Manager::*func)(const std::shared_ptr<PaquetType> &&, Args...)) -> decltype(func) {
       return func;
     }
   };

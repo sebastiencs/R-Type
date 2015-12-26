@@ -130,7 +130,7 @@ void		Manager::deletePlayer(const Addr &addr)
   }
 }
 
-void		Manager::setNetwork(INetwork_SharedPtr &&network)
+void		Manager::setNetwork(const INetwork_SharedPtr &&network)
 {
   _network = std::move(network);
 }
@@ -146,7 +146,7 @@ uint8_t		Manager::getID() const
   return (id++);
 }
 
-void		Manager::handlePaquet(PaquetFirst_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(const PaquetFirst_SharedPtr &&paquet, const Addr &addr)
 {
   PaquetResponse	p;
 
@@ -165,7 +165,7 @@ void		Manager::handlePaquet(PaquetFirst_SharedPtr paquet, const Addr &addr)
   write(p, addr);
 }
 
-void		Manager::handlePaquet(PaquetJoinParty_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(const PaquetJoinParty_SharedPtr &&paquet, const Addr &addr)
 {
   const std::string	&name = paquet->getName();
 
@@ -205,7 +205,7 @@ void		Manager::handlePaquet(PaquetJoinParty_SharedPtr paquet, const Addr &addr)
   }
 }
 
-void		Manager::handlePaquet(PaquetCreateParty_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(const PaquetCreateParty_SharedPtr &&paquet, const Addr &addr)
 {
   const std::string	&name = paquet->getName();
 
@@ -239,7 +239,7 @@ void		Manager::handlePaquet(PaquetCreateParty_SharedPtr paquet, const Addr &addr
   write(p, addr);
 }
 
-void		Manager::handlePaquet(PaquetLeave_SharedPtr paquet)
+void		Manager::handlePaquet(const PaquetLeave_SharedPtr &&paquet)
 {
   uint8_t	id = paquet->getID();
 
@@ -266,17 +266,17 @@ void		Manager::handlePaquet(PaquetLeave_SharedPtr paquet)
     }
   }
   else {
-    std::cout << "Can't find party (PaquetLeave)" << std::endl;
+    std::cout << "Can't find party PaquetLeave)" << std::endl;
   }
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetObstacle_SharedPtr paquet UNUSED)
+void		Manager::handlePaquet(const PaquetObstacle_SharedPtr &&paquet UNUSED)
 {
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet)
+void		Manager::handlePaquet(const PaquetPlayerCoord_SharedPtr &&paquet)
 {
   uint8_t	id = paquet->getPlayerID();
 
@@ -304,7 +304,7 @@ void		Manager::handlePaquet(PaquetPlayerCoord_SharedPtr paquet)
 #endif // !DEBUG
 }
 
-void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet)
+void		Manager::handlePaquet(const PaquetPlayerShot_SharedPtr &&paquet)
 {
   uint8_t	id = paquet->getPlayerID();
 
@@ -326,7 +326,7 @@ void		Manager::handlePaquet(PaquetPlayerShot_SharedPtr paquet)
 #endif // !DEBUG
 }
 
-void		Manager::handlePaquet(PaquetReady_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(const PaquetReady_SharedPtr &&paquet, const Addr &addr)
 {
   DEBUG_MSG(*paquet);
 
@@ -358,7 +358,7 @@ void		Manager::handlePaquet(PaquetReady_SharedPtr paquet, const Addr &addr)
   }
 }
 
-void		Manager::handlePaquet(PaquetRequestParties_SharedPtr paquet UNUSED, const Addr &addr)
+void		Manager::handlePaquet(const PaquetRequestParties_SharedPtr &&paquet UNUSED, const Addr &addr)
 {
   PaquetListParties	p;
 
@@ -373,7 +373,7 @@ void		Manager::handlePaquet(PaquetRequestParties_SharedPtr paquet UNUSED, const 
   write(p, addr);
 }
 
-void		Manager::handlePaquet(PaquetRequestPlayers_SharedPtr paquet UNUSED, const Addr &addr)
+void		Manager::handlePaquet(const PaquetRequestPlayers_SharedPtr &&paquet UNUSED, const Addr &addr)
 {
   PaquetListPlayers	p;
 
@@ -387,12 +387,12 @@ void		Manager::handlePaquet(PaquetRequestPlayers_SharedPtr paquet UNUSED, const 
   write(p, addr);
 }
 
-void		Manager::handlePaquet(PaquetResponse_SharedPtr paquet UNUSED)
+void		Manager::handlePaquet(const PaquetResponse_SharedPtr &&paquet UNUSED)
 {
   // DEBUG_MSG(paquet);
 }
 
-void		Manager::handlePaquet(PaquetFirstUDP_SharedPtr paquet, const Addr &addr)
+void		Manager::handlePaquet(const PaquetFirstUDP_SharedPtr &&paquet, const Addr &addr)
 {
   DEBUG_MSG(*paquet);
 
@@ -405,7 +405,7 @@ void		Manager::handlePaquet(PaquetFirstUDP_SharedPtr paquet, const Addr &addr)
   }
 }
 
-void		Manager::handlePaquet(PaquetRename_SharedPtr paquet)
+void		Manager::handlePaquet(const PaquetRename_SharedPtr &&paquet)
 {
   uint8_t	id = paquet->getID();
 
@@ -434,7 +434,7 @@ void		Manager::handlePaquet(PaquetRename_SharedPtr paquet)
   }
 }
 
-void		Manager::handlePaquet(PaquetChat_SharedPtr paquet)
+void		Manager::handlePaquet(const PaquetChat_SharedPtr &&paquet)
 // void		Manager::handlePaquet(PaquetChat_SharedPtr paquet, const Addr &addr UNUSED)
 {
   uint8_t	id = paquet->getID();
