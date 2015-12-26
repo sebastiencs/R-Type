@@ -24,19 +24,20 @@ SignalUnix::~SignalUnix()
   DEBUG_MSG("SignalUnix deleted");
 }
 
-void		SignalUnix::addSignal(int sig, Handler_t handler)
+void		SignalUnix::addSignal(const int sig, const Handler_t &&handler)
 {
   signal(sig, sig_handler);
   _listHandler[sig] = handler;
 }
 
-bool		SignalUnix::callHandler(int sig)
+bool		SignalUnix::callHandler(const int sig)
 {
   DEBUG_MSG("SignalUnix received");
   if (_listHandler.find(sig) != _listHandler.end()) {
     _listHandler[sig]();
+    return (true);
   }
-  return (true);
+  return (false);
 }
 
 SignalUnix		*class_save(SignalUnix *ptr_class = nullptr)
@@ -52,7 +53,7 @@ SignalUnix		*class_save(SignalUnix *ptr_class = nullptr)
   }
 }
 
-void		sig_handler(int sig)
+void		sig_handler(const int sig)
 {
   SignalUnix	*signal;
 

@@ -29,11 +29,11 @@ public:
   SignalUnix();
   virtual ~SignalUnix();
 
-  virtual void	addSignal(int, Handler_t);
-  virtual bool	callHandler(int sig);
+  virtual void	addSignal(const int, const Handler_t &&);
+  virtual bool	callHandler(const int sig);
 };
 
-void		sig_handler(int);
+void		sig_handler(const int);
 SignalUnix	*class_save(SignalUnix *ptr_class);
 
 #endif /* !SIGNALUNIX_H_ */
