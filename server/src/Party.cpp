@@ -203,6 +203,7 @@ void			Party::run()
 	    if (life <= 0) {
 	      PaquetDeath paquet(player);
 	      this->broadcast(_players, paquet);
+	      this->broadcast(_players, paquet);
 	    }
 
 	    bullet->setID(0xFF);
@@ -236,6 +237,8 @@ void			Party::run()
 
 	    if (life <= 0) {
 	      PaquetDeath paquet(enemy);
+	      this->broadcast_nolock(_players, paquet);
+	      this->broadcast_nolock(_players, paquet);
 	      this->broadcast_nolock(_players, paquet);
 	      enemy->setID(0xFF);
 	    }
