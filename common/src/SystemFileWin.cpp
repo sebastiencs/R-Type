@@ -52,7 +52,7 @@ const Files	&SystemFileWin::getListFiles(const std::string &dir)
 		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
 			_files.push_back(ffd.cFileName);
 		}
-	  }
+	}
 	while (FindNextFile(hFind, &ffd) != 0);
 	FindClose(hFind);
   }

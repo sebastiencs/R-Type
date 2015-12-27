@@ -11,13 +11,15 @@
 #ifndef DYNAMICLIBWIN_H_
 # define DYNAMICLIBWIN_H_
 
+# include <iostream>
 # include "Debug.hh"
 # include "IDynamicLib.hh"
+# include "SocketsWin.hh"
 
 class		DynamicLibWin : public IDynamicLib
 {
 private:
-	void			*_lib;
+	HINSTANCE 				_lib;
 	std::function<void()>	_unused;
 
 public:

@@ -13,10 +13,12 @@
 #include "IPlugin.hh"
 
 DynamicLibWin::DynamicLibWin(const std::string &lib)
-  : _lib(0)
+  : _lib(nullptr)
 {
-  (void)_lib;
-  _unused = []() { std::cerr << "Error: Using a wrong function" << std::endl; };
+	if (!(_lib = LoadLibrary(lib.c_str()))) {
+		std::cerr << "Can't load library: " << GetLastError() << std::endl;
+		return;
+	}
   DEBUG_MSG("DynamicLibWin created");
 }
 
@@ -29,8 +31,8 @@ const Enemy_SharedPtr DynamicLibWin::getEnemy(const std::string &func) const
 {
 	IPlugin		*(*plugin)();
 
-	if (!(plugin = reinterpret_cast<IPlugin *(*)()>(dlsym(_lib, func.c_str())))) {
-		std::cerr << "Can't get symbol " << func << " : " << dlerror() << std::endl;
+	if (!(plugin = reinterpret_cast<IPlugin *(*)()>(GetProcAddress(_lib, func.c_str())))) {
+		std::cerr << "Can't get symbol: " << GetLastError() << std::endl;
 		return (nullptr);
 	}
 	else {
