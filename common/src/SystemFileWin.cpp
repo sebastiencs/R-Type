@@ -56,5 +56,8 @@ const Files	&SystemFileWin::getListFiles(const std::string &dir)
 	while (FindNextFile(hFind, &ffd) != 0);
 	FindClose(hFind);
   }
+  else {
+	  DEBUG_MSG("FindFirstFile failed");
+  }
   return (_files);
 }
