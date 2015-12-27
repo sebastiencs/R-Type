@@ -5,9 +5,10 @@ Protocole de communication pour le projet R-Type V1
 
 Toutes les chaines de caracteres seront encodees en ASCII.
 Lors de l'envoi d'une chaine de caracteres, tous les octets non utilisés sont a zero.
-Le communication est base sur un protocle UDP, le transferts de bits est en little endian.
+Le communication est base sur un protocle UDP, sauf indiqué contraire.
+Le transferts de bits est en little endian.
 
-1 - 1ere connection
+1 - TCP - 1ere connection
 
 
 Lorsqu'un client se connecte au serveur, il (le client) lui envoi quelques infos.
@@ -44,7 +45,7 @@ le type de requete/reponse.
 
 
 
-2 - Demande de la liste des parties disponible
+2 - TCP - Demande de la liste des parties disponible
 
 Le client envoi ce paquet pour demander au serveur quelles parties sont dispos
 
@@ -60,7 +61,7 @@ Client: |   ID    |
 ----------------------------------------------------
 
 
-3 - Envoi de la liste des parties disponibles
+3 - TCP - Envoi de la liste des parties disponibles
 
 Le serveur lui renvoi le nombre de parties disponibles, leurs noms et le nombre
 Le nombre de partie maximum sur un serveur est 5.
@@ -92,7 +93,7 @@ Serveur: |    ID   | NB Parties ||     Name    |   nb    ||     Name1    |   nb1
 ----------------------------------------------------
 
 
-4 - Rejoindre une partie
+4 - TCP - Rejoindre une partie
 
 Le client envoi ce paquet lorsqu'il souhaite rejoindre une partie
 Une reponse du serveur est attendue.
@@ -111,7 +112,7 @@ Client: |   ID    |     Name    |
 
 ----------------------------------------------------
 
-5 - Creer une partie
+5 - TCP - Creer une partie
 
 Le client envoi ce paquet lorsqu'il souhaite creer une partie
 Une reponse du serveur est attendue.
@@ -131,7 +132,7 @@ Client: |   ID    |     Name    |
 
 ----------------------------------------------------
 
-6 - Demande de la liste des joueurs
+6 - TCP - Demande de la liste des joueurs
 
 Le client envoi ce paquet lorsqu'il est accepté dans une partie
 Une reponse du serveur est attendue.
@@ -148,7 +149,7 @@ Client: |   ID    |
 
 ----------------------------------------------------
 
-7 - Envoit de la liste des joueurs
+7 - TCP - Envoit de la liste des joueurs
 
 Le serveur envoit ce paquet lorsqu'un client est accepté dans une partie
 
@@ -263,7 +264,7 @@ Server: |    ID   | Type Obstacle |    X     |    Y     |
 
 ----------------------------------------------------
 
-11 - Pret pour la partie
+11 - TCP - Pret pour la partie
 
 Lorsque le client se retrouve dans le lobby, il envoi ce paquet pour indiqué qu'il
 est pret a lancer la partie.
@@ -284,7 +285,7 @@ Client: |    ID   | ID Player |
 
 ----------------------------------------------------
 
-12 - La partie se lance
+12 - TCP - La partie se lance
 
 Le serveur envoi ce paquets a tous les joueurs du lobby pour leur indiquer que
 la partie debute.
@@ -461,8 +462,52 @@ Server: |    ID   |   pID   |   Time   |
 
 ----------------------------------------------------
 
+20 - TCP - Rename
 
-XX - Retour du serveur
+Le client envoi ce paquet au serveur pour changer de nom
+
+   	+---------+---------+-------------
+Server: |    ID   |   pID   |    Name     |
+	+---------+---------+-------------
+	| uint8_t | uint8_t | uint8_t[16] |
+	+---------+---------+-------------
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 19
+
+	pID: unsigned char ( 8 bits )
+	   	Id du joueur / ennemi concerne
+
+	Name: unsigned char ( 8 * 16 bits )
+	   	Nouveau nom
+
+
+----------------------------------------------------
+
+21 - TCP - Message
+
+Paquet envoyer lors de communication entre les joueurs
+
+   	+---------+---------+-------------
+Server: |    ID   |   pID   |    MSG      |
+	+---------+---------+-------------
+	| uint8_t | uint8_t | uint8_t[16] |
+	+---------+---------+-------------
+
+	ID: unsigned char ( 8 bits )
+	        Valeur: 20
+
+	pID: unsigned char ( 8 bits )
+	   	Id du joueur / ennemi concerne
+
+	MSG: unsigned char ( 8 * 32 bits )
+	   	Message
+
+
+----------------------------------------------------
+
+
+XX - TCP - Retour du serveur
 
 
 Reponse du serveur lorsque le client demande quelque chose
