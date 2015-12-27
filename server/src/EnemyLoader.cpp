@@ -10,6 +10,8 @@
 
 #include "EnemyLoader.hh"
 #include "DynamicLib.hh"
+#include "Manager.hh"
+#include "IOEvent.hh"
 
 EnemyLoader::EnemyLoader(Manager_SharedPtr &&manager, const std::string &dir)
   : _manager(std::move(manager)), _directory(dir), _running(true), _SystemFile(std::make_unique<SystemFile>())
@@ -27,11 +29,25 @@ void	EnemyLoader::startLoading()
 
     while (_running) {
 
-      // DynamicLib lib(
+      for (auto &file : _enemies) {
 
+	if (file.second == false) {
 
+	  DynamicLib lib(file.first);
+	  auto enemy = lib.getEnemy("getEnemy");
+	  //_manager.lock()->pushEnemy(enemy);
+	  file.second = true;
+
+	}
+      }
+
+      auto &files = _SystemFile->getListFiles(_directory);
+      for (auto &file : files) {
+	_enemies[file] = false;
+      }
+
+      IOEvent::wait(2000);
     }
-
   }
 }
 

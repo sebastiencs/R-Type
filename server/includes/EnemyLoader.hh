@@ -13,6 +13,7 @@
 
 # include <string>
 # include <memory>
+# include <map>
 # include "SystemFile.hh"
 
 class Manager;
@@ -25,6 +26,7 @@ class		EnemyLoader
   const std::string	_directory;
   bool			_running;
   ISystemFile_UniquePtr	_SystemFile;
+  std::map<std::string, bool>	_enemies;
 
 public:
   EnemyLoader(Manager_SharedPtr &&manager, const std::string &dir);
