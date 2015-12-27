@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "DynamicLibWin.hh"
+#include "IPlugin.hh"
 
 DynamicLibWin::DynamicLibWin(const std::string &lib)
   : _lib(0)
@@ -24,9 +25,16 @@ DynamicLibWin::~DynamicLibWin()
   DEBUG_MSG("DynamicLibWin deleted");
 }
 
-std::function<void()>	DynamicLibWin::getFunc(const std::string &func) const
+const Enemy_SharedPtr DynamicLibWin::getEnemy(const std::string &func) const
 {
-  static std::function<void()> f = []() {};
-  (void)func;
-  return (f);
+	IPlugin		*(*plugin)();
+
+	if (!(plugin = reinterpret_cast<IPlugin *(*)()>(dlsym(_lib, func.c_str())))) {
+		std::cerr << "Can't get symbol " << func << " : " << dlerror() << std::endl;
+		return (nullptr);
+	}
+	else {
+		auto e = plugin();
+		return ((e) ? (e->getEnemy()) : (nullptr));
+	}
 }

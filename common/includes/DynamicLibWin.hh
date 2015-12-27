@@ -17,14 +17,14 @@
 class		DynamicLibWin : public IDynamicLib
 {
 private:
-  void			*_lib;
-  std::function<void()>	_unused;
+	void			*_lib;
+	std::function<void()>	_unused;
 
 public:
-  DynamicLibWin(const std::string &);
-  virtual ~DynamicLibWin();
+	DynamicLibWin(const std::string &);
+	virtual ~DynamicLibWin();
 
-  virtual std::function<void()>	getFunc(const std::string &) const;
+	virtual const Enemy_SharedPtr	getEnemy(const std::string &) const;
 };
 
 #endif /* !DYNAMICLIBWIN_H_ */

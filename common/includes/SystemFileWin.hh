@@ -11,9 +11,10 @@
 #ifndef SYSTEMFILEWIN_H_
 # define SYSTEMFILEWIN_H_
 
-# include <windows.h>
 # include <string>
+# include "dirent.h"
 # include "ISystemFile.hh"
+# include "socketsWin.hh"
 
 class		SystemFileWin : public ISystemFile
 {

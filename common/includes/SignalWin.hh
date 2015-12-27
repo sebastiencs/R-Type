@@ -11,7 +11,6 @@
 #ifndef SIGNALWIN_H_
 # define SIGNALWIN_H_
 
-
 # include <windows.h>
 # include <map>
 # include "Debug.hh"
