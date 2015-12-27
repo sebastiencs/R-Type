@@ -39,13 +39,6 @@ include_directories(
   ${SFML_INCLUDE_DIR}
   )
 
-add_library(
-  Enemy1
-  SHARED
-  enemies/enemy1.hh
-  enemies/enemy1.cpp
-  )
-
 add_executable(
   Server
   ${COMMON_SOURCES}
