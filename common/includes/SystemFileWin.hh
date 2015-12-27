@@ -8,23 +8,25 @@
 // Last update Sun Dec 27 02:12:10 2015 chapui_s
 //
 
-#ifndef SYSTEMFILEUNIX_H_
-# define SYSTEMFILEUNIX_H_
+#ifndef SYSTEMFILEWIN_H_
+# define SYSTEMFILEWIN_H_
 
+# include <windows.h>
+# include <string>
 # include "ISystemFile.hh"
 
-class		SystemFileUnix : public ISystemFile
+class		SystemFileWin : public ISystemFile
 {
 private:
   Files		_files;
 
 public:
-  SystemFileUnix();
-  virtual ~SystemFileUnix();
+  SystemFileWin();
+  virtual ~SystemFileWin();
 
   virtual bool	exist(const std::string &name);
   virtual bool	isDirectory(const std::string &name);
   virtual const Files	&getListFiles(const std::string &dir);
 };
 
-#endif /* !SYSTEMFILEUNIX_H_ */
+#endif /* !SYSTEMFILEWIN_H_ */

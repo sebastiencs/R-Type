@@ -8,35 +8,37 @@
 // Last update Sun Dec 27 02:13:48 2015 chapui_s
 //
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
+#include "SystemFileWin.hh"
 #include "Debug.hh"
-#include "SystemFileUnix.hh"
 
-SystemFileUnix::SystemFileUnix()
+SystemFileWin::SystemFileWin()
 {
 }
 
-SystemFileUnix::~SystemFileUnix()
+SystemFileWin::~SystemFileWin()
 {
 }
 
-bool	SystemFileUnix::exist(const std::string &name)
+bool	SystemFileWin::exist(const std::string &name)
 {
-  return (access(name.c_str(), F_OK | X_OK) ? (false) : (true));
+  DWORD type = GetFileAttributesA(name.c_str());
+  if (type == INVALID_FILE_ATTRIBUTES)
+    return false;
+
+  if (type & FILE_ATTRIBUTE_DIRECTORY)
+    return true;
+
+  return false; 
 }
 
-bool	SystemFileUnix::isDirectory(const std::string &name)
+bool	SystemFileWin::isDirectory(const std::string &name)
 {
-  struct stat st;
+  DWORD type = GetFileAttributesA(name.c_str());
 
-  stat(name.c_str(), &st);
-  return ((S_ISDIR(st.st_mode)) ? (true) : (false));
+  return ((type & FILE_ATTRIBUTE_DIRECTORY) ? true : false);
 }
 
-const Files	&SystemFileUnix::getListFiles(const std::string &dir)
+const Files	&SystemFileWin::getListFiles(const std::string &dir)
 {
   _files.clear();
 

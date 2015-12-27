@@ -83,7 +83,7 @@ void OnlineMenu::draw()
 			createGameMenu->draw();
 		if ((!threadReceivedParties || !threadReceivedParties->isRunning()) && partyListUpdate) {
 			scrollView->emptyCell();
-			for (auto &&p : games)
+			for (auto &p : games)
 				scrollView->createCell(std::get<0>(p), std::get<1>(p));
 			games.clear();
 			partyListUpdate = false;
