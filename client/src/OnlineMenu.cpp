@@ -19,7 +19,6 @@ OnlineMenu::OnlineMenu(IGraphicEngine_SharedPtr eng)
 
 OnlineMenu::~OnlineMenu()
 {
-  std::cerr << "ONLINE MENU DESTRUCTED" << std::endl;
 	if (threadReceivedParties) {
 		cond = 0;
 		threadReceivedParties->join();
@@ -68,7 +67,7 @@ void OnlineMenu::createRequestPartiesPaquet()
 	}
 }
 
-void OnlineMenu::setPartyListUpdate(bool changed)
+void OnlineMenu::setPartyListUpdate(const bool changed)
 {
 	partyListUpdate = changed;
 }
@@ -84,7 +83,7 @@ void OnlineMenu::draw()
 			createGameMenu->draw();
 		if ((!threadReceivedParties || !threadReceivedParties->isRunning()) && partyListUpdate) {
 			scrollView->emptyCell();
-			for (PartyNB p : games)
+			for (auto &&p : games)
 				scrollView->createCell(std::get<0>(p), std::get<1>(p));
 			games.clear();
 			partyListUpdate = false;
@@ -92,7 +91,7 @@ void OnlineMenu::draw()
 	}
 }
 
-bool OnlineMenu::onClick(uint32_t x, uint32_t y)
+bool OnlineMenu::onClick(const uint32_t x, const uint32_t y)
 {
 	if (inLobby && lobby != nullptr) {
 		if (lobby->onClick(x, y))
@@ -112,7 +111,7 @@ bool OnlineMenu::onClick(uint32_t x, uint32_t y)
 	return false;
 }
 
-void OnlineMenu::onHover(uint32_t x, uint32_t y)
+void OnlineMenu::onHover(const uint32_t x, const uint32_t y)
 {
 	if (inLobby && lobby != nullptr)
 		lobby->onHover(x, y);
@@ -152,7 +151,6 @@ void OnlineMenu::joinButton()
 					threadReceivedParties.reset();
 				}
 
-				/* a changer? on att que le serv nous renvoie la liste des joueurs avant de rejoindre (= freeze)*/
 				ListPlayers &LP = ListPlayers::getInstance();
 				PaquetListPlayers_SharedPtr	paquetList = nullptr;
 
@@ -167,7 +165,6 @@ void OnlineMenu::joinButton()
 						PS.deletePlayerListPackage();
 					}
 				}
-				/* ! */
 				lobby = std::make_shared<LobbyMenu>(engine, shared_from_this());
 				return;
 			}
@@ -204,7 +201,7 @@ void OnlineMenu::onCreateGame()
 	do { paquet = PS.getAnswersPackage(); } while (!paquet && t->ms() < 3000);
 
 	if (!paquet) {
-	  std::cerr << "Answer not received" << std::endl;
+	  DEBUG_MSG("Answer not received");
 	}
 	if (paquet && paquet->getReturn() == 3) {
 		DEBUG_MSG("Can't create party");

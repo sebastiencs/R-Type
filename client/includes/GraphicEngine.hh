@@ -18,6 +18,7 @@
 # include <SFML/System/Time.hpp>
 # include "IGraphicEngine.hh"
 # include "Timer.hh"
+# include "Debug.hh"
 
 class Button;
 class Drawable;
@@ -44,7 +45,7 @@ public:
 	GraphicEngine();
 	virtual ~GraphicEngine();
 
-	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title);
+	virtual void createWindow(const uint16_t sizeX, const uint16_t sizeY, const std::string& title);
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None);
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color);
@@ -80,7 +81,7 @@ public:
 	static int32_t getDeltaTimeMS();
 	static float getDeltaTimeS();
 
-	virtual void setInputMode(InputMode mode);
+	virtual void setInputMode(const InputMode mode);
 
 	static const sf::Texture* None;
 	static const sf::Font* NoneFont;

@@ -17,7 +17,7 @@ CheckBox::~CheckBox()
 {
 }
 
-bool CheckBox::isPressed(uint32_t x, uint32_t y) const
+bool CheckBox::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();
@@ -60,12 +60,12 @@ void CheckBox::setTransformation(const Transformation & t)
 	_transformation.setBounds(_sprite->getTransformation().getWidth(), _sprite->getTransformation().getHeight());
 }
 
-void CheckBox::setEnabled(bool enabled)
+void CheckBox::setEnabled(const bool enabled)
 {
 	_enabled = enabled;
 }
 
-void CheckBox::setCheck(bool check)
+void CheckBox::setCheck(const bool check)
 {
 	_check = check;
 }
@@ -91,7 +91,7 @@ const Sprite& CheckBox::getSprite() const
 	return (*_sprite);
 }
 
-bool CheckBox::onAction(uint32_t x, uint32_t y)
+bool CheckBox::onAction(const uint32_t x, const uint32_t y)
 {
 	if (_fptr && isPressed(x, y))
 	{
@@ -102,7 +102,7 @@ bool CheckBox::onAction(uint32_t x, uint32_t y)
 	return false;
 }
 
-void CheckBox::onHover(uint32_t x, uint32_t y)
+void CheckBox::onHover(const uint32_t x, const uint32_t y)
 {
 	if (isPressed(x, y)) {
 		_sprite->setColor(Color::Darker);

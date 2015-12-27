@@ -29,7 +29,7 @@ class ListPlayers;
 
 typedef struct bonusState {
   uint8_t type; ITimer_SharedPtr timer; uint16_t time; uint8_t expired;
-  bonusState(uint8_t _type, ITimer_SharedPtr &_timer, uint16_t _time) : type(_type), timer(_timer), time(_time), expired(0) { }
+  bonusState(const uint8_t _type, ITimer_SharedPtr &_timer, const uint16_t _time) : type(_type), timer(_timer), time(_time), expired(0) { }
 } BonusState;
 
 using BonusState_SharedPtr = std::shared_ptr<BonusState>;
@@ -60,7 +60,7 @@ private:
 	int _nbShots;
 
 public:
-	Game(int width, int height, ListSecure<Sprite_SharedPtr > &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager);
+	Game(const int width, const int height, ListSecure<Sprite_SharedPtr > &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager);
 	virtual ~Game();
 
 	int	run();

@@ -34,14 +34,13 @@ public:
 	void setDisplayOption();
 	void setDisplayCredits();
 	void myexit();
-	void changedMenu();
 
 	int getCurrentPage();
 
 	void draw();
 
-	void onClick(uint32_t x, uint32_t y);
-	void onHover(uint32_t x, uint32_t y);
+	void onClick(const uint32_t x, const uint32_t y);
+	void onHover(const uint32_t x, const uint32_t y);
 
 private:
 	IGraphicEngine_SharedPtr engine;

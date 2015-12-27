@@ -24,7 +24,7 @@ public:
 	virtual void setId(const std::string& id) {
 		_id = id;
 	}
-	virtual void setVisible(bool visible) {
+	virtual void setVisible(const bool visible) {
 		_visible = visible;
 	}
 

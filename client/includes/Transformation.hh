@@ -15,16 +15,16 @@ public:
 	};
 
 	Transformation();
-	Transformation(int32_t x, int32_t y);
+	Transformation(const int32_t x, const int32_t y);
 	Transformation(const Transformation& t);
 	Transformation& operator=(const Transformation& t);
 	virtual ~Transformation();
 
-	void setPosition(int32_t x, int32_t y);
-	void setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t height);
-	void setRotation(uint16_t rotation);
-	void setScale(float x, float y);
-	void setBounds(uint16_t width, uint16_t height);
+	void setPosition(const int32_t x, const int32_t y);
+	void setCrop(uint32_t const x, const uint32_t y, const uint16_t width, const uint16_t height);
+	void setRotation(const uint16_t rotation);
+	void setScale(const float x, const float y);
+	void setBounds(const uint16_t width, const uint16_t height);
 
 	int32_t getX() const;
 	int32_t getY() const;

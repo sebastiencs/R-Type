@@ -22,8 +22,8 @@ public:
 		ScrollView_SharedPtr _superView);
 	virtual ~Cell();
 
-	const std::string& getNameParty();
-	int getNbrPlayers();
+	const std::string& getNameParty() const;
+	int getNbrPlayers() const;
 
 	//Drawable
 	virtual void draw();
@@ -31,9 +31,9 @@ public:
 
 
 	//ICallback
-	virtual bool onAction(uint32_t x, uint32_t y);
-	virtual void onHover(uint32_t x, uint32_t y);
-	virtual bool isPressed(uint32_t x, uint32_t y) const;
+	virtual bool onAction(const uint32_t x, const uint32_t y);
+	virtual void onHover(const uint32_t x, const uint32_t y);
+	virtual bool isPressed(const uint32_t x, const uint32_t y) const;
 	virtual const callback& getCallback() const;
 
 private:

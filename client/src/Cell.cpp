@@ -23,12 +23,12 @@ Cell::~Cell()
 {
 }
 
-const std::string & Cell::getNameParty()
+const std::string & Cell::getNameParty() const
 {
 	return nameParty;
 }
 
-int Cell::getNbrPlayers()
+int Cell::getNbrPlayers() const
 {
 	return nbrPlayers;
 }
@@ -44,7 +44,7 @@ void Cell::draw()
 		textField->draw();
 }
 
-bool Cell::onAction(uint32_t x, uint32_t y)
+bool Cell::onAction(const uint32_t x, const uint32_t y)
 {
 	if (isPressed(x, y)) {
 		superView->setSelectedCell(_id);
@@ -54,7 +54,7 @@ bool Cell::onAction(uint32_t x, uint32_t y)
 	return false;
 }
 
-void Cell::onHover(uint32_t x, uint32_t y)
+void Cell::onHover(const uint32_t x, const uint32_t y)
 {
 	if (isPressed(x, y)) {
 		textField->setColor(Color::Darker);
@@ -63,7 +63,7 @@ void Cell::onHover(uint32_t x, uint32_t y)
 		textField->setColor(Color::White);
 }
 
-bool Cell::isPressed(uint32_t x, uint32_t y) const
+bool Cell::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();

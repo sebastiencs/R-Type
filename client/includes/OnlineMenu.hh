@@ -26,12 +26,12 @@ public:
 	void menu();
 	void createRequestPartiesPaquet();
 
-	void setPartyListUpdate(bool changed);
+	void setPartyListUpdate(const bool changed);
 
 	void draw();
 	void onCreateGame();
-	bool onClick(uint32_t x, uint32_t y);
-	void onHover(uint32_t x, uint32_t y);
+	bool onClick(const uint32_t x, const uint32_t y);
+	void onHover(const uint32_t x, const uint32_t y);
 
 	// Join Button
 	void joinButton();

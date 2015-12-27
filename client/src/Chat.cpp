@@ -23,7 +23,7 @@ Chat::Chat(const Transformation & t, IGraphicEngine_SharedPtr &eng, ListPlayers 
 
 	auto &PS = PackageStorage::getInstance();
 
-	messageReceiver = std::make_shared<TaskScheduler>([&](void*) {		// check if a new message is pending every x ms
+	messageReceiver = std::make_shared<TaskScheduler>([&](void*) {
 		std::string text = "";
 
 		auto &&paquet = PS.getChatPackage();
@@ -60,7 +60,7 @@ void Chat::draw()
 {
 	chatBackground->draw();
 	if (!updated) {
-		for (std::string txt : newLogs) {
+		for (const std::string txt : newLogs) {
 			addMessageToBox(txt);
 			logs.push_back(txt);
 		}

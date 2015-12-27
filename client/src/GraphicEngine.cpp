@@ -23,15 +23,19 @@ GraphicEngine::GraphicEngine()
 	shotTypeToSpriteString[2] = "r-typesheet1.gif";
 	shotTypeToSpriteString[3] = "r-typesheet1.gif";
 	shotTypeToSpriteString[4] = "r-typesheet1.gif";
+
+
+	DEBUG_MSG("GraphicEngine created");
+
 }
 
 GraphicEngine::~GraphicEngine()
 {
-  std::cerr << "GRAPHIC ENGINE DELETED" << std::endl;
+  DEBUG_MSG("GraphicEngine deleted");
 	cachedImages.clear();
 }
 
-void GraphicEngine::createWindow(uint16_t sizeX, uint16_t sizeY, const std::string & title)
+void GraphicEngine::createWindow(const uint16_t sizeX, const uint16_t sizeY, const std::string & title)
 {
 	windowHeight = sizeY;
 	windowWidth = sizeX;
@@ -77,7 +81,7 @@ void GraphicEngine::handleMovements()
 	}
 }
 
-void GraphicEngine::setInputMode(InputMode mode)
+void GraphicEngine::setInputMode(const InputMode mode)
 {
 	switch (mode) {
 		case ZQSD:
@@ -287,7 +291,6 @@ void GraphicEngine::drawSplitImage(const std::string & name, const Transformatio
 
 void GraphicEngine::drawSplitImage(Sprite& sprite)
 {
-	//	transformSprite(sprite, t, color);
 	if (!sprite.hasEngine())
 		sprite.setEngine(this);
 	sprite.draw();

@@ -8,7 +8,7 @@ Packager::~Packager()
 {
 }
 
-void Packager::createMovementPackage(uint8_t _playerID, uint16_t _x, uint16_t _y)
+void Packager::createMovementPackage(const uint8_t _playerID, const uint16_t _x, const uint16_t _y)
 {
 	auto &&movement = std::make_shared<PaquetPlayerCoord>();
 	movement->setPlayerID(_playerID);
@@ -17,7 +17,7 @@ void Packager::createMovementPackage(uint8_t _playerID, uint16_t _x, uint16_t _y
 	PackageStorage::getInstance().storeToSendUDPPackage(movement);
 }
 
-void Packager::createChatPackage(uint8_t id, const std::string &message)
+void Packager::createChatPackage(const uint8_t id, const std::string &message)
 {
 	auto &&chat = std::make_shared<PaquetChat>();
 	chat->setID(id);
@@ -26,7 +26,7 @@ void Packager::createChatPackage(uint8_t id, const std::string &message)
 	PackageStorage::getInstance().storeToSendTCPPackage(chat);
 }
 
-void Packager::createFirstUDPPackage(uint8_t _playerID)
+void Packager::createFirstUDPPackage(const uint8_t _playerID)
 {
   	auto &&first = std::make_shared<PaquetFirstUDP>();
   	first->setId(_playerID);
@@ -34,7 +34,7 @@ void Packager::createFirstUDPPackage(uint8_t _playerID)
   	PackageStorage::getInstance().storeToSendUDPPackage(first);
 }
 
-void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t speed, uint16_t _x, uint16_t _y)
+void Packager::createShotPackage(const uint8_t _playerID, const uint8_t _type, const uint16_t speed, const uint16_t _x, const uint16_t _y)
 {
 	auto &&shot = std::make_shared<PaquetPlayerShot>();
 	shot->setPlayerID(_playerID);
@@ -47,7 +47,6 @@ void Packager::createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t spee
 
 void Packager::createGameListPackage()
 {
-	std::cout << "Request Create" << std::endl;
 	auto &&request = std::make_shared<PaquetRequestParties>();
 	request->createPaquet();
 	PackageStorage::getInstance().storeToSendTCPPackage(request);
@@ -60,7 +59,7 @@ void Packager::createPlayerListPackage()
 	PackageStorage::getInstance().storeToSendTCPPackage(request);
 }
 
-void Packager::createJoinPartyPackage(std::string _name)
+void Packager::createJoinPartyPackage(const std::string &_name)
 {
 	auto &&join = std::make_shared<PaquetJoinParty>();
 	join->setName(_name);
@@ -68,7 +67,7 @@ void Packager::createJoinPartyPackage(std::string _name)
 	PackageStorage::getInstance().storeToSendTCPPackage(join);
 }
 
-void Packager::createCreatePartyPackage(std::string	_name)
+void Packager::createCreatePartyPackage(const std::string &_name)
 {
 	auto &&create = std::make_shared<PaquetCreateParty>();
 	create->setName(_name);
@@ -76,7 +75,7 @@ void Packager::createCreatePartyPackage(std::string	_name)
 	PackageStorage::getInstance().storeToSendTCPPackage(create);
 }
 
-void Packager::createReadyPackage(uint8_t _playerID, uint8_t _ready)
+void Packager::createReadyPackage(const uint8_t _playerID, const uint8_t _ready)
 {
 	auto &&ready = std::make_shared<PaquetReady>();
 	ready->setID(_playerID);
@@ -85,7 +84,7 @@ void Packager::createReadyPackage(uint8_t _playerID, uint8_t _ready)
 	PackageStorage::getInstance().storeToSendTCPPackage(ready);
 }
 
-void Packager::createLeavePackage(uint8_t _playerID)
+void Packager::createLeavePackage(const uint8_t _playerID)
 {
 	auto &&leave = std::make_shared<PaquetLeave>();
 	leave->setID(_playerID);

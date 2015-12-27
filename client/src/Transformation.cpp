@@ -20,7 +20,7 @@ Transformation::Transformation()
 	_height = 0;
 }
 
-Transformation::Transformation(int32_t x, int32_t y)
+Transformation::Transformation(const int32_t x, const int32_t y)
 {
 	setPosition(x, y);
 	_hasCrop = false;
@@ -107,14 +107,14 @@ Transformation::~Transformation()
 {
 }
 
-void Transformation::setPosition(int32_t x, int32_t y)
+void Transformation::setPosition(const int32_t x, const int32_t y)
 {
 	_hasPos = true;
 	_posX = x;
 	_posY = y;
 }
 
-void Transformation::setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t height)
+void Transformation::setCrop(const uint32_t x, const uint32_t y, const uint16_t width, const uint16_t height)
 {
 	_hasCrop = true;
 	crop[SRCX] = x;
@@ -123,20 +123,20 @@ void Transformation::setCrop(uint32_t x, uint32_t y, uint16_t width, uint16_t he
 	crop[SRCHEIGHT] = height;
 }
 
-void Transformation::setRotation(uint16_t rotation)
+void Transformation::setRotation(const uint16_t rotation)
 {
 	_hasRotation = true;
 	_rotation = rotation;
 }
 
-void Transformation::setScale(float x, float y)
+void Transformation::setScale(const float x, const float y)
 {
 	_scaleX = x;
 	_scaleY = y;
 	_hasScale = true;
 }
 
-void Transformation::setBounds(uint16_t width, uint16_t height)
+void Transformation::setBounds(const uint16_t width, const uint16_t height)
 {
 	_hasBounds = true;
 	_width = width;

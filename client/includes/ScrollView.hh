@@ -18,10 +18,10 @@ using Box_SharedPtr = std::shared_ptr<Box>;
 class ScrollView : public Drawable, public ICallback, public std::enable_shared_from_this<ScrollView>
 {
 public:
-	ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr engine);
+	ScrollView(const Transformation& transformation, const int nbrDiplayCell, IGraphicEngine_SharedPtr engine);
 	virtual ~ScrollView();
 
-	void createCell(const std::string& name, int nbr);
+	void createCell(const std::string& name, const int nbr);
 
 	void emptyCell();
 
@@ -37,9 +37,9 @@ public:
 	virtual void draw();
 
 	//ICallback
-	virtual bool onAction(uint32_t x, uint32_t y);
-	virtual void onHover(uint32_t x, uint32_t y);
-	virtual bool isPressed(uint32_t x, uint32_t y) const;
+	virtual bool onAction(const uint32_t x, const uint32_t y);
+	virtual void onHover(const uint32_t x, const uint32_t y);
+	virtual bool isPressed(const uint32_t x, const uint32_t y) const;
 	virtual const callback& getCallback() const;
 
 private:

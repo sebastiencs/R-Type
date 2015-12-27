@@ -20,8 +20,8 @@ public:
 
 	// Drawable
 	void draw();
-	bool onClick(uint32_t x, uint32_t y);
-	void onHover(uint32_t x, uint32_t y);
+	bool onClick(const uint32_t x, const uint32_t y);
+	void onHover(const uint32_t x, const uint32_t y);
 
 	// CheckBox
 	void MuteSound();

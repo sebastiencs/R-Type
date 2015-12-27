@@ -19,7 +19,7 @@
 #include "Keyboard.hh"
 #include "Bullet.hh"
 
-Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager)
+Game::Game(const int width, const int height, ListSecure<Sprite_SharedPtr> &images, ListSecure<Text_SharedPtr> &speudo, Packager_SharedPtr packager)
 	: _PS(PackageStorage::getInstance()),
 		_audio(SystemAudio::getInstance()),
 		_LP(ListPlayers::getInstance()),
@@ -44,7 +44,7 @@ Game::Game(int width, int height, ListSecure<Sprite_SharedPtr> &images, ListSecu
 	bonusTypeToSpriteString[BonusMalus::TRIPLE_SHOT] = "shot-bonus.png";
 
 	DEBUG_MSG("Game created");
-	(void)_height;
+	_height = height;
 	_audio.stopMusic();
 	_timer->start();
 	_shotCooldown->start();
@@ -134,7 +134,7 @@ void	Game::handlingNetwork()
 		}
 		enem = _LE.getEnemy(death->getID());
 		if (enem) {
-			std::cout << "An enemy is dead" << std::endl;
+			DEBUG_MSG("An enemy is dead");
 			_LE.deleteEnemy(enem.get()->getID());
 		}
 		_PS.deleteDeathPackage();
@@ -191,12 +191,11 @@ void	Game::updateGraphic()
 			bulletList.remove_if([this](auto &b) { return (this->remove_elem(b)); });
 		}
 
-		Transformation t(player->getPosition().x, player->getPosition().y);		// Player Vessel
-		// t.setScale(3.5f, 3.5f);
+		Transformation t(player->getPosition().x, player->getPosition().y);
 		auto &&vesselSprite = std::make_shared<Sprite>("vessel" + std::to_string(i++) + ".png", t);
 		drawImage(vesselSprite);
 
-		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);		// Player HealthBar
+		t.setPosition(t.getX(), t.getY() + VESSEL_HEIGHT + 5);
 		t.setScale(10.0f, 1.0f);
 		auto &&lifeBG = std::make_shared<Sprite>("life-bg.png", t);
 		drawImage(lifeBG);
@@ -204,7 +203,7 @@ void	Game::updateGraphic()
 		auto &&life = std::make_shared<Sprite>("life-fg.png", t);
 		drawImage(life);
 
-		t.setPosition(t.getX(), player->getPosition().y - 22);		// Player Name
+		t.setPosition(t.getX(), player->getPosition().y - 22);
 		t.setScale(1.0f, 1.0f);
 		auto &&text = std::make_shared<Text>(player->getName(), DEFAULT_FONT, DEFAULT_FONT_SIZE, t);
 		drawText(text);

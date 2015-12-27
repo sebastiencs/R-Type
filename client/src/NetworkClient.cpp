@@ -85,7 +85,6 @@ int NetworkClient::runWrite(int *cond)
 					{
 						auto &paquet = PS.getToSendUDPPackage();
 						if (paquet != nullptr) {
-//							DEBUG_MSG("Send paquet");
 							this->writeUDP(*paquet);
 							PS.deleteToSendUDPPackage();
 							break;
@@ -95,7 +94,6 @@ int NetworkClient::runWrite(int *cond)
 					{
 						auto &paquet = PS.getToSendTCPPackage();
 						if (paquet != nullptr) {
-//							DEBUG_MSG("Send paquet");
 							this->writeTCP(*paquet);
 							PS.deleteToSendTCPPackage();
 							break;
@@ -148,10 +146,8 @@ int NetworkClient::runRead(int *cond)
 							inGame = false;
 							condW = 0;
 							condR = 0;
-							// threadWrite->close();
 							_socketTCP.reset(nullptr);
 							_socketUDP.reset(nullptr);
-							// threadRead->close();
 							return (0);
 
 						}
@@ -204,12 +200,12 @@ int NetworkClient::handleFirst(PaquetFirst first)
 	return 0;
 }
 
-void NetworkClient::setInGame(bool _inGame)
+void NetworkClient::setInGame(const bool _inGame)
 {
 	inGame = _inGame;
 }
 
-bool NetworkClient::getIsConnect()
+bool NetworkClient::getIsConnect() const
 {
 	return _isConnect;
 }

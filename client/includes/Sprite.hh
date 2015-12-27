@@ -28,7 +28,7 @@ public:
 	const std::string& getImage() const;
 	const Color& getColor() const;
 
-	bool isPressed(uint32_t x, uint32_t y);
+	bool isPressed(const uint32_t x, const uint32_t y) const;
 	bool hasEngine() const;
 
 protected:

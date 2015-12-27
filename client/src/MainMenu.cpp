@@ -49,16 +49,7 @@ MainMenu::MainMenu(IGraphicEngine_SharedPtr eng, NetworkClient_SharedPtr _net)
 
 MainMenu::~MainMenu() {
 
-  std::cerr << "MAIN MANU DESTRUCTED" << std::endl;
-  std::cerr << "Online COUNT: " << onlineMenu.use_count() << std::endl;
-  // delete onlineMenu;
-  // onlineMenu.reset();
-	elements.clear();
-}
-
-void MainMenu::changedMenu()
-{
-	// If button exist, erase it
+  elements.clear();
 }
 
 int MainMenu::getCurrentPage()
@@ -100,14 +91,14 @@ void MainMenu::draw()
 			Packager::createFirstUDPPackage(paquet->getData());
 			ListPlayers &list = ListPlayers::getInstance();
 			list.setId(paquet->getData());
-			std::cout << "------------> ID : " << static_cast<int>(list.getId()) << std::endl;
+			DEBUG_MSG("------------> ID : " << static_cast<int>(list.getId()) << std::endl);
 		}
 		PC.deleteAnswersPackage();
 	}
 
 }
 
-void MainMenu::onClick(uint32_t x, uint32_t y)
+void MainMenu::onClick(const uint32_t x, const uint32_t y)
 {
 	for (auto &d : elements) {
 		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
@@ -132,7 +123,7 @@ void MainMenu::onClick(uint32_t x, uint32_t y)
 			return;
 }
 
-void MainMenu::onHover(uint32_t x, uint32_t y)
+void MainMenu::onHover(const uint32_t x, const uint32_t y)
 {
 	for (auto &d : elements) {
 		if (ICallback* b = dynamic_cast<ICallback*>(d.get())) {
@@ -154,28 +145,24 @@ void MainMenu::onHover(uint32_t x, uint32_t y)
 void MainMenu::setDisplayOnline()
 {
 	currentPage = 1;
-	changedMenu();
 	DEBUG_MSG("Set Current Page to Online");
 }
 
 void MainMenu::setDisplayOffline()
 {
 	currentPage = 2;
-	changedMenu();
 	DEBUG_MSG("Set Current Page to Offline");
 }
 
 void MainMenu::setDisplayOption()
 {
 	currentPage = 3;
-	changedMenu();
 	DEBUG_MSG("Set Current Page to Option");
 }
 
 void MainMenu::setDisplayCredits()
 {
 	currentPage = 4;
-	changedMenu();
 	DEBUG_MSG("Set Current Page to Credits");
 }
 

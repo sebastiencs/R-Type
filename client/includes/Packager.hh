@@ -17,21 +17,21 @@ public:
 	Packager();
 	virtual ~Packager();
 
-	static void createMovementPackage(uint8_t _playerID, uint16_t _x,	uint16_t _y);
-	static void createShotPackage(uint8_t _playerID, uint8_t _type, uint16_t speed, uint16_t _x, uint16_t _y);
+	static void createMovementPackage(const uint8_t _playerID, const uint16_t _x, const uint16_t _y);
+	static void createShotPackage(const uint8_t _playerID, const uint8_t _type, const uint16_t speed, const uint16_t _x, const uint16_t _y);
 
-	static void createChatPackage(uint8_t id, const std::string &message);
+	static void createChatPackage(const uint8_t id, const std::string &message);
 
 	static void createGameListPackage();
 	static void createPlayerListPackage();
 
-	static void createJoinPartyPackage(std::string	_name);
-	static void createCreatePartyPackage(std::string _name);
+	static void createJoinPartyPackage(const std::string &_name);
+	static void createCreatePartyPackage(const std::string &_name);
 
-	static void createReadyPackage(uint8_t	_playerID, uint8_t _ready);
-	static void createLeavePackage(uint8_t	_playerID);
+	static void createReadyPackage(const uint8_t _playerID, const uint8_t _ready);
+	static void createLeavePackage(const uint8_t _playerID);
 
-	static void createFirstUDPPackage(uint8_t _playerID);
+	static void createFirstUDPPackage(const uint8_t _playerID);
 };
 
 using Packager_SharedPtr = std::shared_ptr<Packager>;

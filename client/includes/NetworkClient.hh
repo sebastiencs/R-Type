@@ -45,8 +45,8 @@ public:
       return true;
     return false;
   }
-  bool getIsConnect();
-  void setInGame(bool _inGame);
+  bool getIsConnect() const;
+  void setInGame(const bool _inGame);
 
 private:
 

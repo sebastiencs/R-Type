@@ -4,11 +4,10 @@
 
 # include <iostream>
 # include <functional>
+# include <deque>
+# include <memory>
 # include "Transformation.hh"
 # include "Color.hh"
-# include <deque>
-//# include "Text.hh"
-//# include "Sprite.hh"
 
 class Text;
 class Sprite;
@@ -35,7 +34,7 @@ enum InputMode {
 };
 
 typedef std::function<void()> callback;
-typedef std::function<void(uint32_t, uint32_t)> mouseCallback;
+typedef std::function<void(const uint32_t, const uint32_t)> mouseCallback;
 typedef std::function<void(const char)> textEnteredCallback;
 typedef std::function<void(const std::deque<UsableKeys>&)> usableKeyPressedCallback;
 
@@ -43,7 +42,7 @@ class IGraphicEngine {
 public:
 	virtual ~IGraphicEngine() {};
 
-	virtual void createWindow(uint16_t sizeX, uint16_t sizeY, const std::string& title) = 0;
+	virtual void createWindow(const uint16_t sizeX, const uint16_t sizeY, const std::string& title) = 0;
 
 	virtual void drawImage(const std::string& name, const Transformation& transformation, const Color& color = Color::None) = 0;
 	virtual void drawSplitImage(const std::string& name, const Transformation& transformation, const Color& color) = 0;
@@ -60,7 +59,7 @@ public:
 	virtual void setTextEnteredCallback(textEnteredCallback) = 0;
 	virtual void setUsableKeyPressedCallback(usableKeyPressedCallback) = 0;
 
-	virtual void setInputMode(InputMode) = 0;
+	virtual void setInputMode(const InputMode) = 0;
 	virtual void handleEvents() = 0;
 	virtual void launch() = 0;
 
@@ -70,8 +69,6 @@ public:
 
 	virtual void closeWindow() = 0;
 };
-
-# include <memory>
 
 using IGraphicEngine_SharedPtr = std::shared_ptr<IGraphicEngine>;
 

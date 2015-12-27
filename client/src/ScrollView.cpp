@@ -3,7 +3,7 @@
 #include "Button.hh"
 #include "Box.hh"
 
-ScrollView::ScrollView(const Transformation& transformation, int nbrDiplayCell, IGraphicEngine_SharedPtr eng)
+ScrollView::ScrollView(const Transformation& transformation, const int nbrDiplayCell, IGraphicEngine_SharedPtr eng)
   : engine(std::move(eng))
 {
 	callback fptr;
@@ -30,7 +30,7 @@ ScrollView::~ScrollView()
 	buttons.clear();
 }
 
-void ScrollView::createCell(const std::string& name, int nbr)
+void ScrollView::createCell(const std::string& name, const int nbr)
 {
   boxCells->addDrawable(std::make_shared<Cell>(std::to_string(nbrCell), Transformation(_transformation.getX(), _transformation.getY()), name, nbr, engine, shared_from_this()));
 	++nbrCell;
@@ -86,7 +86,7 @@ void ScrollView::draw()
 		b->draw();
 }
 
-bool ScrollView::onAction(uint32_t x, uint32_t y)
+bool ScrollView::onAction(const uint32_t x, const uint32_t y)
 {
 	int i = 0;
 
@@ -106,7 +106,7 @@ bool ScrollView::onAction(uint32_t x, uint32_t y)
 	return false;
 }
 
-void ScrollView::onHover(uint32_t x, uint32_t y)
+void ScrollView::onHover(const uint32_t x, const uint32_t y)
 {
 	int i = 0;
 
@@ -122,7 +122,7 @@ void ScrollView::onHover(uint32_t x, uint32_t y)
 		b->onHover(x, y);
 }
 
-bool ScrollView::isPressed(uint32_t x, uint32_t y) const
+bool ScrollView::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();

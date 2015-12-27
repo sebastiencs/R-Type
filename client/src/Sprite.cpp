@@ -64,7 +64,7 @@ void Sprite::setColor(const Color & newColor)
 void Sprite::transform(const Transformation & t, const Color & color)
 {
 	if (t.hasPosition())
-		sprite.setPosition((float)t.getX(), (float)t.getY());
+	  sprite.setPosition(static_cast<float>(t.getX()), static_cast<float>(t.getY()));
 	if (t.hasRotation())
 		sprite.rotate(t.getRotation());
 	if (color.isUsed())
@@ -72,7 +72,7 @@ void Sprite::transform(const Transformation & t, const Color & color)
 	if (t.hasScale())
 		sprite.setScale(t.getScaleX(), t.getScaleY());
 
-	_transformation.setBounds((uint16_t)sprite.getGlobalBounds().width, (uint16_t)sprite.getGlobalBounds().height);
+	_transformation.setBounds(static_cast<uint16_t>(sprite.getGlobalBounds().width), static_cast<uint16_t>(sprite.getGlobalBounds().height));
 }
 
 const std::string & Sprite::getImage() const
@@ -85,7 +85,7 @@ const Color & Sprite::getColor() const
 	return color;
 }
 
-bool Sprite::isPressed(uint32_t x, uint32_t y)
+bool Sprite::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();

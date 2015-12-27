@@ -20,7 +20,6 @@ OptionMenu::OptionMenu(IGraphicEngine_SharedPtr eng)
 
 OptionMenu::~OptionMenu()
 {
-  std::cerr << "OPTION MENU DESTRUCTED" << std::endl;
 }
 
 void OptionMenu::initVariables()
@@ -67,14 +66,14 @@ void OptionMenu::draw()
 		VBox->draw();
 }
 
-bool OptionMenu::onClick(uint32_t x, uint32_t y)
+bool OptionMenu::onClick(const uint32_t x, const uint32_t y)
 {
 	if (VBox->onAction(x, y))
 		return true;
 	return false;
 }
 
-void OptionMenu::onHover(uint32_t x, uint32_t y)
+void OptionMenu::onHover(const uint32_t x, const uint32_t y)
 {
 	VBox->onHover(x, y);
 }

@@ -21,11 +21,11 @@ class		ISystemAudio
 public:
   virtual ~ISystemAudio() {};
 
-  virtual void	loadMusic(const std::string &file, int id) = 0;
-  virtual void	loadSound(const std::string &file, int id) = 0;
+  virtual void	loadMusic(const std::string &file, const int id) = 0;
+  virtual void	loadSound(const std::string &file, const int id) = 0;
 
-  virtual void	playMusic(int id) = 0;
-  virtual void	playSound(int id) = 0;
+  virtual void	playMusic(const int id) = 0;
+  virtual void	playSound(const int id) = 0;
 
   virtual void	playMusicRandom() = 0;
 
