@@ -8,7 +8,6 @@
 // Last update Wed Nov 11 15:40:25 2015 chapui_s
 //
 
-#include <iostream>
 #include "DynamicLibWin.hh"
 #include "IPlugin.hh"
 
