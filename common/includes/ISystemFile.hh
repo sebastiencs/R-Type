@@ -24,7 +24,7 @@ public:
 
   virtual bool	exist(const std::string &name); // is file or directory exist
   virtual bool	isDirectory(const std::string &name); // is a directory ( not a file )
-  virtual const Files	&&getListFiles(const std::string &dir); // return files list in directory
+  virtual const Files	&getListFiles(const std::string &dir); // return files list in directory
 };
 
 
