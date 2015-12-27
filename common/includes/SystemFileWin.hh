@@ -12,9 +12,8 @@
 # define SYSTEMFILEWIN_H_
 
 # include <string>
-# include "dirent.h"
+# include "SocketsWin.hh"
 # include "ISystemFile.hh"
-# include "socketsWin.hh"
 
 class		SystemFileWin : public ISystemFile
 {

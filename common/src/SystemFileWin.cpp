@@ -42,22 +42,19 @@ const Files	&SystemFileWin::getListFiles(const std::string &dir)
 {
   _files.clear();
 
-  DIR *dp;
-  struct dirent *ep;
+  TCHAR szDir[MAX_PATH];
+  WIN32_FIND_DATA ffd;
 
-  dp = opendir (dir.c_str());
-  if (dp) {
-
-    while ((ep = readdir(dp))) {
-      DEBUG_MSG(std::string("Files: ") + ep->d_name);
-      _files.push_back(ep->d_name);
-    }
-
-    closedir(dp);
+  sprintf_s(szDir, "%s/*.*", dir.c_str());
+  HANDLE hFind = FindFirstFile(szDir, &ffd);
+  if (hFind != INVALID_HANDLE_VALUE) {
+	do {
+		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+			_files.push_back(ffd.cFileName);
+		}
+	  }
+	while (FindNextFile(hFind, &ffd) != 0);
+	FindClose(hFind);
   }
-  else {
-    DEBUG_MSG("Can't open directory");
-  }
-
   return (_files);
 }
