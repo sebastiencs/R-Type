@@ -76,7 +76,7 @@ public:
 
       if (id == COORD_PLAYER || id == PLAYER_SHOT || id == OBSTACLE
 	  || id == LEAVE || id == ENEMY || id == LIFE || id == DEATH
-	  || id == ATTR_BONUS) {
+	  || id == ATTR_BONUS || id == BONUS_MALUS) {
 	return (UDP);
       }
       else {
