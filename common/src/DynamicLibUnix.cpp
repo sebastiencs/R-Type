@@ -14,8 +14,6 @@
 DynamicLibUnix::DynamicLibUnix(const std::string &lib)
   : _lib(0)
 {
-  _unused = []() { std::cerr << "Error: Using a wrong function" << std::endl; };
-
   if (!(_lib = dlopen(lib.c_str(), RTLD_LAZY | RTLD_GLOBAL | RTLD_NOW))) {
     std::cerr << "Can't load library " << lib << " : " << dlerror() << std::endl;
     return ;
@@ -31,15 +29,16 @@ DynamicLibUnix::~DynamicLibUnix()
   }
 }
 
-std::function<void()>	DynamicLibUnix::getFunc(const std::string &func) const
+const Enemy_SharedPtr	DynamicLibUnix::getEnemy(const std::string &func) const
 {
-  void			*symbole = 0;
+  Enemy			*(*enemy)();
 
-  if (!(symbole = dlsym(_lib, func.c_str()))) {
+  if (!(enemy = reinterpret_cast<Enemy *(*)()>(dlsym(_lib, func.c_str())))) {
     std::cerr << "Can't get symbol " << func << " : " << dlerror() << std::endl;
-    return (_unused);
+    return (nullptr);
   }
   else {
-    return (*reinterpret_cast<std::function<void()>*>(symbole));
+    Enemy_SharedPtr	e(enemy());
+    return (e);
   }
 }

@@ -25,7 +25,7 @@ public:
   DynamicLibUnix(const std::string &);
   virtual ~DynamicLibUnix();
 
-  virtual std::function<void()>	getFunc(const std::string &) const;
+  virtual const Enemy_SharedPtr	getEnemy(const std::string &) const;
 };
 
 #endif /* !DYNAMICLIBUNIX_H_ */

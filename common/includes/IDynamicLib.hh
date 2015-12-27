@@ -12,13 +12,14 @@
 # define IDYNAMICLIB_H_
 
 # include <functional>
+# include "Enemy.hh"
 
 class		IDynamicLib
 {
 public:
   virtual ~IDynamicLib() {};
 
-  virtual std::function<void()>	getFunc(const std::string &) const = 0;
+  virtual const Enemy_SharedPtr	getEnemy(const std::string &) const = 0;
 };
 
 

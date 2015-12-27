@@ -13,6 +13,7 @@
 
 # include <list>
 # include <string>
+# include <memory>
 
 using Files = std::list<std::string>;
 
@@ -27,5 +28,6 @@ public:
   virtual const Files	&getListFiles(const std::string &dir); // return files list in directory
 };
 
+using ISystemFile_UniquePtr = std::unique_ptr<ISystemFile>;
 
 #endif /* !ISYSTEMFILE_H_ */
