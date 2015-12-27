@@ -25,11 +25,13 @@ DisplayUpdater::DisplayUpdater(Packager_SharedPtr _packager, NetworkClient_Share
 
 	graphicEngine->createWindow(1024, 768, "R-Type");
 	graphicEngine->launch();
+
+  DEBUG_MSG("DisplayUpdater created");
 }
 
 DisplayUpdater::~DisplayUpdater()
 {
-  std::cerr << "DISPLAY UPDATE DESTRUCTED" << std::endl;
+  DEBUG_MSG("DisplayUpdater deleted");
   if (threadGame) {
     cond = 0;
     threadGame->join();
@@ -71,15 +73,6 @@ void DisplayUpdater::launchObserver()
 		    me += 1;
 		  }
 		}
-		// list.sort([] (auto &p1, auto &p2) -> bool { return (p1->getID() < p2->getID()); });
-
-		// uint8_t i = 1;
-		// for (auto &p : instance.getListPlayers()) {
-		//   if (p->getID() == instance.getId()) {
-		//     me = i;
-		//   }
-		//   i += 1;
-		// }
 		auto &&player = instance.getPlayer(instance.getId());
 		player->setY(100 + 100 * me);
 
@@ -91,7 +84,7 @@ void DisplayUpdater::launchObserver()
 		_game = std::make_shared<Game>(width, height, images, _nickname, packager);
 
 		inGame = true;
-		graphicEngine->setMouseClickCallback(nullptr);	// In game, don't bother to call MainMenu::OnClick
+		graphicEngine->setMouseClickCallback(nullptr);
 		graphicEngine->setMouseMovedCallback(nullptr);
 		usableKeyPressedCallback ptr = std::bind(&Game::handlePlayerMovement, _game, std::placeholders::_1);
 		graphicEngine->setUsableKeyPressedCallback(ptr);
@@ -102,7 +95,6 @@ void DisplayUpdater::launchObserver()
 		mainmenu.reset();
 
 		threadGame = std::make_shared<Thread>([&](void *) -> void * {
-			// mainmenu.reset();
 			while (cond) {
 				if (_game->run()) {
 					dead = true;
@@ -151,7 +143,6 @@ void DisplayUpdater::game()
 				dead = false;
 				cond = 0;
 				threadGame->join();
-				// threadGame->close();
 				graphicEngine->setUsableKeyPressedCallback(nullptr);
 				_game = nullptr;
 				graphicEngine->closeWindow();

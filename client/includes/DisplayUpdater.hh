@@ -14,6 +14,7 @@
 # include "Mutex.hh"
 # include "Text.hh"
 # include "Sprite.hh"
+# include "Debug.hh"
 
 class MainMenu;
 class OnlineMenu;

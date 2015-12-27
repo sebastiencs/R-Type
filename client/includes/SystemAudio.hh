@@ -14,6 +14,7 @@
 # include <SFML/Audio.hpp>
 # include <memory>
 # include <list>
+# include <stdexcept>
 # include "ISystemAudio.hh"
 
 # define RS_PATH "ressources/"
@@ -47,11 +48,11 @@ public:
 
   static SystemAudio &getInstance();
 
-  virtual void	loadMusic(const std::string &file, int id);
-  virtual void	loadSound(const std::string &file, int id);
+  virtual void	loadMusic(const std::string &file, const int id);
+  virtual void	loadSound(const std::string &file, const int id);
 
-  virtual void	playMusic(int id);
-  virtual void	playSound(int id);
+  virtual void	playMusic(const int id);
+  virtual void	playSound(const int id);
 
   virtual void	playMusicRandom();
 
@@ -59,8 +60,6 @@ public:
   virtual void	stopSound();
 
 };
-
-# include <stdexcept>
 
 class		ErrorLoadingFile : public std::runtime_error
 {

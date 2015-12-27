@@ -39,7 +39,7 @@ SystemAudio &SystemAudio::getInstance()
   return ((ptr) ? (*ptr) : (*(ptr = std::make_unique<SystemAudio>())));
 }
 
-void	SystemAudio::loadMusic(const std::string &file, int id)
+void	SystemAudio::loadMusic(const std::string &file, const int id)
 {
 
   if (Tools::findIt(_musics, [&id] (const UMusic &m) { return (m->id == id); }) != _musics.end()) {
@@ -64,7 +64,7 @@ void	SystemAudio::loadMusic(const std::string &file, int id)
   }
 }
 
-void	SystemAudio::loadSound(const std::string &file, int id)
+void	SystemAudio::loadSound(const std::string &file, const int id)
 {
 
   if (Tools::findIt(_sounds, [&id] (const USound &m) { return (m->id == id); }) != _sounds.end()) {
@@ -94,7 +94,7 @@ void	SystemAudio::loadSound(const std::string &file, int id)
   }
 }
 
-void	SystemAudio::playMusic(int id)
+void	SystemAudio::playMusic(const int id)
 {
   auto it = Tools::findIt(_musics, [&id] (const UMusic &m) { return (m->id == id); });
 
@@ -107,7 +107,7 @@ void	SystemAudio::playMusic(int id)
   }
 }
 
-void	SystemAudio::playSound(int id)
+void	SystemAudio::playSound(const int id)
 {
   auto it = Tools::findIt(_sounds, [&id] (const USound &s) { return (s->id == id); });
 

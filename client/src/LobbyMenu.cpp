@@ -32,11 +32,13 @@ LobbyMenu::LobbyMenu(IGraphicEngine_SharedPtr eng, OnlineMenu_WeakPtr superview)
 	left->addDrawable(commands);
 
 	chat = std::make_unique<Chat>(Transformation(750, 200), engine, ListPlayers::getInstance());
+
+        DEBUG_MSG("LobbyMenu created");
 }
 
 LobbyMenu::~LobbyMenu()
 {
-  std::cerr << "LOBBY DESTRUCTED" << std::endl;
+  DEBUG_MSG("LobbyMenu deleted");
 	if (threadReceivedListPlayers) {
 		cond = 0;
 		threadReceivedListPlayers->join();
@@ -115,22 +117,19 @@ void LobbyMenu::draw()
 		chat->draw();
 }
 
-void LobbyMenu::onHover(uint32_t x, uint32_t y)
+void LobbyMenu::onHover(const uint32_t x, const uint32_t y)
 {
 	left->onHover(x, y);
-//	right->onHover(x, y);
 }
 
-bool LobbyMenu::onClick(uint32_t x, uint32_t y)
+bool LobbyMenu::onClick(const uint32_t x, const uint32_t y)
 {
 	if (left->onAction(x, y))
 		return true;
-	//if (right->onAction(x, y)
-	//	return true;
 	return false;
 }
 
-void LobbyMenu::setPlayerListChanged(bool changed)
+void LobbyMenu::setPlayerListChanged(const bool changed)
 {
 	playerListChanged = changed;
 }
@@ -172,7 +171,7 @@ void LobbyMenu::ready()
 void LobbyMenu::updatePlayerList()
 {
 	quadPlayerBox->clearElements();
-	ListPlayers& playerList = ListPlayers::getInstance();
+	const ListPlayers& playerList = ListPlayers::getInstance();
 	std::string ready = "Unready";
 	Color cReady = Color::Red;
 	size_t t = 0;

@@ -22,12 +22,12 @@ public:
 	void clearList();
 	bool isEmpty();
 
-	void deletePlayer(uint8_t id);
+	void deletePlayer(const uint8_t id);
 
 	const ListSecure<Player_SharedPtr> &getListPlayers() const;
-	Player_SharedPtr getPlayer(uint8_t id);
+	Player_SharedPtr getPlayer(const uint8_t id);
 	uint8_t getId() const;
-	void setId(uint8_t id);
+	void setId(const uint8_t id);
 
 private:
  ListSecure<Player_SharedPtr> listPlayers;

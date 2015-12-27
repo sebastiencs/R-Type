@@ -1,6 +1,6 @@
 #include "Color.hh"
 
-Color::Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha, bool used) :
+Color::Color(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha, const bool used) :
 	_r(red), _g(green), _b(blue), _a(alpha), _used(used)
 {
 }

@@ -28,15 +28,15 @@ public:
 
   ListEnemies &operator=(const ListEnemies &) = delete;
 
-  void		addEnemy(Enemy_SharedPtr player);
-  void		handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y);
+  void		addEnemy(Enemy_SharedPtr enemy);
+  void		handleEnnemy(const uint8_t id, const uint8_t life, const uint8_t type, const uint16_t x, const uint16_t y);
   void		clearList();
 
-  void		deleteEnemy(uint8_t id);
+  void		deleteEnemy(const uint8_t id);
 
   const ListSecure<Enemy_SharedPtr> &getListEnemies() const;
   ListSecure<Enemy_SharedPtr> &getListEnemies();
-  Enemy_SharedPtr	getEnemy(uint8_t id);
+  Enemy_SharedPtr	getEnemy(const uint8_t id);
 
 };
 

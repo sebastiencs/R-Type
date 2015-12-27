@@ -36,7 +36,7 @@ public:
     KEY_SPACE
   };
 
-  static bool isKeyPressed(int code);
+  static bool isKeyPressed(const int code);
 };
 
 #endif /* !KEYBOARD_H_ */

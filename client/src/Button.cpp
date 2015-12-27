@@ -15,7 +15,7 @@ Button::~Button()
 {
 }
 
-bool Button::isPressed(uint32_t x, uint32_t y) const
+bool Button::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();
@@ -53,7 +53,7 @@ void Button::setTransformation(const Transformation & t)
 
 }
 
-void Button::setEnabled(bool enabled)
+void Button::setEnabled(const bool enabled)
 {
 	_enabled = enabled;
 }
@@ -74,7 +74,7 @@ const Sprite& Button::getSprite() const
 	return (*_sprite);
 }
 
-bool Button::onAction(uint32_t x, uint32_t y)
+bool Button::onAction(const uint32_t x, const uint32_t y)
 {
 	if (_fptr && isPressed(x, y))
 	{
@@ -84,7 +84,7 @@ bool Button::onAction(uint32_t x, uint32_t y)
 	return false;
 }
 
-void Button::onHover(uint32_t x, uint32_t y)
+void Button::onHover(const uint32_t x, const uint32_t y)
 {
 	if (isPressed(x, y)) {
 		_sprite->setColor(Color::Darker);

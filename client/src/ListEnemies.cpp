@@ -17,7 +17,7 @@ void ListEnemies::addEnemy(Enemy_SharedPtr enemy)
   _enemies.push_back(enemy);
 }
 
-void		ListEnemies::handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t x, uint16_t y)
+void		ListEnemies::handleEnnemy(const uint8_t id, const uint8_t life, const uint8_t type, const uint16_t x, const uint16_t y)
 {
   Enemy_SharedPtr	e;
 
@@ -29,7 +29,7 @@ void		ListEnemies::handleEnnemy(uint8_t id, uint8_t life, uint8_t type, uint16_t
   e->setY(y);
 }
 
-void ListEnemies::deleteEnemy(uint8_t id)
+void ListEnemies::deleteEnemy(const uint8_t id)
 {
   _enemies.remove_if([this, id] (auto &e) {
       if (e->getID() == id) {
@@ -57,7 +57,7 @@ ListSecure<Enemy_SharedPtr> &ListEnemies::getListEnemies()
   return _enemies;
 }
 
-Enemy_SharedPtr ListEnemies::getEnemy(uint8_t id)
+Enemy_SharedPtr ListEnemies::getEnemy(const uint8_t id)
 {
   return (_enemies.findIn([id] (auto &e) { return (e->getID() == id); }));
 }

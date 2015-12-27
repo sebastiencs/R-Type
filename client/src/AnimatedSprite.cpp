@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "AnimatedSprite.hh"
 
-AnimatedSprite::AnimatedSprite(const std::string& img, long fullAnimationTime, const Transformation& t, IGraphicEngine* engine, const Color& color)
+AnimatedSprite::AnimatedSprite(const std::string& img, const long fullAnimationTime, const Transformation& t, IGraphicEngine* engine, const Color& color)
 	: Sprite(img, t), _nameSprite(img)
 {
 	_transformation = t;
@@ -27,8 +27,8 @@ AnimatedSprite::~AnimatedSprite()
 
 void AnimatedSprite::draw()
 {
-	_width = sprite.getTextureRect().width;// getTransformation().getWidth();
-	_height = sprite.getTextureRect().height;//getTransformation().getHeight();
+	_width = sprite.getTextureRect().width;
+	_height = sprite.getTextureRect().height;
 	if (_timer->ms() > _animationLength) {
 		_states %= _nbrStates;
 		++_states;

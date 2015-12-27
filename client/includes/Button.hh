@@ -17,9 +17,9 @@ public:
 	virtual ~Button();
 
 	// ICallback
-	bool isPressed(uint32_t x, uint32_t y) const;
-	bool onAction(uint32_t x, uint32_t y);
-	void onHover(uint32_t x, uint32_t y);
+	bool isPressed(const uint32_t x, const uint32_t y) const;
+	bool onAction(const uint32_t x, const uint32_t y);
+	void onHover(const uint32_t x, const uint32_t y);
 	const callback& getCallback() const;
 
 	// Drawable
@@ -31,7 +31,7 @@ public:
 	const Color& getColor() const;
 
 	virtual void setTransformation(const Transformation& t);
-	void setEnabled(bool enabled);
+	void setEnabled(const bool enabled);
 
 private:
 	IGraphicEngine_SharedPtr &_engine;

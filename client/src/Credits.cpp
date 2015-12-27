@@ -3,6 +3,9 @@
 Credits::Credits(IGraphicEngine_SharedPtr eng)
   : engine(std::move(eng))
 {
+
+  DEBUG_MSG("Credits created");
+  
   authors.push_front(std::make_shared<TextField>("Developpement :", Transformation(250, 300 + 35 * 0), 32, "Fipps.otf", Color::White, "DevTitle", engine));
   authors.push_front(std::make_shared<TextField>("", Transformation(250, 300 + 35 * 1), 32, "Fipps.otf", Color::White, "DevTitle", engine));
   authors.push_front(std::make_shared<TextField>("                Sebastien Chapuis", Transformation(250, 300 + 35 * 2), 32, "Fipps.otf", Color::White, "DChapuis", engine));
@@ -19,11 +22,11 @@ Credits::Credits(IGraphicEngine_SharedPtr eng)
 
 Credits::~Credits()
 {
-  std::cerr << "CREDIT DESTRUCTED" << std::endl;
+  DEBUG_MSG("Credits deleted");
 }
 
 void Credits::draw()
 {
-	for (auto &t : authors)
+	for (auto &&t : authors)
 		t->draw();
 }

@@ -14,7 +14,7 @@ private:
 	uint8_t _a;
 	bool _used;
 public:
-	Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255, bool used = true);
+	Color(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha = 255, const bool used = true);
 
 	uint32_t getColor() const;
 	bool isUsed() const;

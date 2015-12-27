@@ -36,7 +36,7 @@ void ListPlayers::addPlayer(Player_SharedPtr &&player)
 	listPlayers.push_back(player);
 }
 
-void ListPlayers::deletePlayer(uint8_t id)
+void ListPlayers::deletePlayer(const uint8_t id)
 {
   listPlayers.remove_if([this, id] (auto &p) {
       if (p->getID() == id) {
@@ -71,7 +71,7 @@ const ListSecure<Player_SharedPtr>& ListPlayers::getListPlayers() const
 	return listPlayers;
 }
 
-Player_SharedPtr ListPlayers::getPlayer(uint8_t id)
+Player_SharedPtr ListPlayers::getPlayer(const uint8_t id)
 {
 	for (auto &p : listPlayers)
 		if (p->getID() == id)
@@ -84,8 +84,8 @@ uint8_t ListPlayers::getId() const
 	return _id;
 }
 
-void ListPlayers::setId(uint8_t id)
+void ListPlayers::setId(const uint8_t id)
 {
-	_id = id;
+  _id = id;
   listPlayers.front()->setID(id);
 }

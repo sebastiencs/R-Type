@@ -2,7 +2,7 @@
 #include "Debug.hh"
 
 CheckBox::CheckBox(const std::string & text, const std::string& img, const Transformation & t, const Color & color, callback fptr, const std::string& id, IGraphicEngine_SharedPtr& engine)
-  : _engine(std::move(engine)), _color(color), _fptr(fptr), _text(text), _textureName(img), _enabled(true)
+  : _engine(engine), _color(color), _fptr(fptr), _text(text), _textureName(img), _enabled(true)
 {
 	_transformation = t;
 	_id = id;

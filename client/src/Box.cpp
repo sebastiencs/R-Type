@@ -2,7 +2,7 @@
 #include "Box.hh"
 #include "Tools.hh"
 
-Box::Box(Orientation orientation, const Transformation& transformation, const std::string& id, bool deleteChilds) :
+Box::Box(const Orientation orientation, const Transformation& transformation, const std::string& id, const bool deleteChilds) :
 	isUpdated(false),
 	orientation(orientation),
 	spacing(0),
@@ -19,7 +19,7 @@ Box::~Box()
 		clearElements();
 }
 
-void Box::addDrawable(Drawable_SharedPtr drawable, int32_t pos)
+void Box::addDrawable(Drawable_SharedPtr drawable, const int32_t pos)
 {
 	isUpdated = false;
 	auto it = elementsList.begin();
@@ -40,13 +40,13 @@ void Box::removeDrawable(Drawable_SharedPtr drawable)
 	elementsList.remove_if(func);
 }
 
-void Box::setSpacing(uint16_t spacing)
+void Box::setSpacing(const uint16_t spacing)
 {
 	isUpdated = false;
 	this->spacing = spacing;
 }
 
-void Box::setOrientation(Orientation orientation)
+void Box::setOrientation(const Orientation orientation)
 {
 	isUpdated = false;
 	this->orientation = orientation;
@@ -71,7 +71,7 @@ void Box::clearElements()
 	isUpdated = false;
 }
 
-void Box::setElementVisibility(const std::string & id, bool v)
+void Box::setElementVisibility(const std::string & id, const bool v)
 {
 	auto &&d = Tools::findIn(elementsList, [&id](auto &b) { return (b->getId() == id); });
 	if (d) {
@@ -80,7 +80,7 @@ void Box::setElementVisibility(const std::string & id, bool v)
 	}
 }
 
-void Box::setElementVisibility(Drawable_SharedPtr &toFind, bool v)
+void Box::setElementVisibility(Drawable_SharedPtr &toFind, const bool v)
 {
 	auto &&d = Tools::findIn(elementsList, [toFind](auto &b) { return (b == toFind); });
 	if (d) {
@@ -106,7 +106,7 @@ void Box::setTransformation(const Transformation & t)
 	updateTransformation();
 }
 
-bool Box::onAction(uint32_t x, uint32_t y)
+bool Box::onAction(const uint32_t x, const uint32_t y)
 {
 	if (isPressed(x, y)) {
 		for (auto &d : elementsList)
@@ -118,14 +118,14 @@ bool Box::onAction(uint32_t x, uint32_t y)
 	return false;
 }
 
-void Box::onHover(uint32_t x, uint32_t y)
+void Box::onHover(const uint32_t x, const uint32_t y)
 {
 	for (auto &d : elementsList)
 		if (ICallback* dc = dynamic_cast<ICallback*>(d.get()))
 			dc->onHover(x, y);
 }
 
-bool Box::isPressed(uint32_t x, uint32_t y) const
+bool Box::isPressed(const uint32_t x, const uint32_t y) const
 {
 	uint32_t mx = _transformation.getX();
 	uint32_t my = _transformation.getY();

@@ -24,7 +24,7 @@ void Keyboard::_init() {
   _keys[KEY_SPACE] = sf::Keyboard::Space;
 }
 
-bool Keyboard::isKeyPressed(int code) {
+bool Keyboard::isKeyPressed(const int code) {
 
   static int init = 0;
 
@@ -38,7 +38,5 @@ bool Keyboard::isKeyPressed(int code) {
   if (key != _keys.end()) {
     return (sf::Keyboard::isKeyPressed(key->second));
   }
-  else {
-    return (false);
-  }
+  return (false);
 }

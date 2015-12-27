@@ -7,6 +7,7 @@
 # include "IGraphicEngine.hh"
 # include "TextField.hh"
 # include "ScrollView.hh"
+# include "Debug.hh"
 
 class Credits
 {
