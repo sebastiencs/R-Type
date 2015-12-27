@@ -20,12 +20,11 @@ using Files = std::list<std::string>;
 class		ISystemFile
 {
 public:
-  ISystemFile();
   virtual ~ISystemFile() {};
 
-  virtual bool	exist(const std::string &name); // is file or directory exist
-  virtual bool	isDirectory(const std::string &name); // is a directory ( not a file )
-  virtual const Files	&getListFiles(const std::string &dir); // return files list in directory
+  virtual bool	exist(const std::string &name) = 0; // is file or directory exist
+  virtual bool	isDirectory(const std::string &name) = 0; // is a directory ( not a file )
+  virtual const Files	&getListFiles(const std::string &dir) = 0; // return files list in directory
 };
 
 using ISystemFile_UniquePtr = std::unique_ptr<ISystemFile>;

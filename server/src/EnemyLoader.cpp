@@ -34,8 +34,8 @@ void	EnemyLoader::startLoading()
 	if (file.second == false) {
 
 	  DynamicLib lib(file.first);
-	  auto enemy = lib.getEnemy("getEnemy");
-	  //_manager.lock()->pushEnemy(enemy);
+	  auto enemy = lib.getEnemy("loadEnemy");
+	  //_manager.lock()->pushEnemy(enemy->getEnemy());
 	  file.second = true;
 
 	}

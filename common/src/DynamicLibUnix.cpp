@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "DynamicLibUnix.hh"
+#include "IPlugin.hh"
 
 DynamicLibUnix::DynamicLibUnix(const std::string &lib)
   : _lib(0)
@@ -31,14 +32,14 @@ DynamicLibUnix::~DynamicLibUnix()
 
 const Enemy_SharedPtr	DynamicLibUnix::getEnemy(const std::string &func) const
 {
-  Enemy			*(*enemy)();
+  IPlugin		*(*plugin)();
 
-  if (!(enemy = reinterpret_cast<Enemy *(*)()>(dlsym(_lib, func.c_str())))) {
+  if (!(plugin = reinterpret_cast<IPlugin *(*)()>(dlsym(_lib, func.c_str())))) {
     std::cerr << "Can't get symbol " << func << " : " << dlerror() << std::endl;
     return (nullptr);
   }
   else {
-    Enemy_SharedPtr	e(enemy());
-    return (e);
+    auto e = plugin();
+    return ((e) ? (e->getEnemy()) : (nullptr));
   }
 }
