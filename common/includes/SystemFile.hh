@@ -13,8 +13,10 @@
 
 # ifdef __unix__
 #  include "SystemFileUnix.hh"
+using SystemFile = SystemFileUnix;
 # elif defined(_WIN32)
 #  include "SystemFileWin.hh"
+using SystemFile = SystemFileWin;
 # else
 #  error "Platform Unknown"
 # endif
