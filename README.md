@@ -8,11 +8,11 @@ The purpose of this project is to create a one to four players game, based on a 
 Build:  
 
 Windows  
-	mkdir build; cd build;  
+	`mkdir build; cd build;  
 	cmake -G "Visual Studio 14 2015" -DSFML_ROOT=$DIR_INSTAL_SFML ..  
-	Open solution in Visual Studio  
+	Open solution in Visual Studio  `
 
 Unix  
-	mkdir build; cd build  
+	`mkdir build; cd build  
 	cmake ..  
-	make -j 8  
+	make -j 8  `
